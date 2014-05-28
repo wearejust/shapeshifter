@@ -13,10 +13,10 @@ $time-fast: .2s; $time: .4s; $time-slow: .6s;
 // .js .js-fade-size-slide-fast { @include transition(compact(opacity $time-fast ease-in-out, width $time-fast ease-in-out, height $time-fast ease-in-out)); }
 // .js .js-fade-size-slide-slow { @include transition(compact(opacity $time-slow ease-in-out, width $time-slow ease-in-out, height $time-slow ease-in-out)); }
 
-.js .js-fade-translate {
-	-webkit-transition: opacity $time ease-in-out, -webkit-transform $time ease-in-out;
-	-moz-transition: opacity $time ease-in-out, -moz-transform $time ease-in-out;
-	-ms-transition: opacity $time ease-in-out, -ms-transform $time ease-in-out;
-	-o-transition: opacity $time ease-in-out, -o-transform $time ease-in-out;
-	transition: opacity $time ease-in-out, transform $time ease-in-out;
+.js .js-transform {
+	-webkit-transition: -webkit-transform $time-fast ease-in-out;
+	-moz-transition: -moz-transform $time-fast ease-in-out;
+	-ms-transition: -ms-transform $time-fast ease-in-out;
+	-o-transition: -o-transform $time-fast ease-in-out;
+	transition: transform $time-fast ease-in-out;
 }

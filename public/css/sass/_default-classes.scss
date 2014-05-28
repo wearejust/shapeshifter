@@ -1,7 +1,7 @@
 .inline { display: inline; }
 .inline-block { display: inline-block; }
 .list { list-style: none; list-style-image: none; padding-left: 0; }
-.accessibility, .js .js-accessibility { clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); height: 1px; overflow: hidden; position: absolute !important; width: 1px; }
+.accessibility, .js .js-accessibility, .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text { clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); height: 1px; overflow: hidden; position: absolute !important; width: 1px; }
 .accessibility:focus, .accessibility:active { clip: auto; height: auto; overflow: visible; position: fixed; width: auto; }
 .group:before, .group:after { content: " "; display: table; }
 .group:after { clear: both; }
@@ -24,7 +24,6 @@
 .fb_iframe_widget span { width: auto !important; }
 .fb_iframe_widget iframe { width: 100% !important; }
 .fb_ltr, .fb_iframe_widget_lift { max-width: none; }
-.clean { text-decoration: none; }
 
 %list { list-style: none; list-style-image: none; padding-left: 0; }
 %no-select { -webkit-touch-callout: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; -webkit-user-select: none; user-select: none; }

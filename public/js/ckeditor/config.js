@@ -43,7 +43,7 @@ CKEDITOR.editorConfig = function (config) {
     // The toolbar groups arrangement, optimized for two toolbar rows.
 
     config.toolbar = [
-        [ 'Format', 'Bold', 'Italic', 'Subscript', 'Superscript', 'PasteFromWord', 'Link', 'Source', 'Image' ]
+        [ 'Format', 'Bold', 'Italic', 'Subscript', 'Superscript', 'PasteFromWord', 'Link', 'Source' ]
     ];
 
     // Remove some buttons, provided by the standard plugins, which we don't
@@ -51,7 +51,7 @@ CKEDITOR.editorConfig = function (config) {
     config.removeButtons = 'Underline,Subscript,Superscript';
 
     // Se the most common block elements.
-    config.format_tags = 'p;h1;h2;h3;pre';
+    config.format_tags = 'p;h2';
 
     // Make dialogs simpler.
     config.removeDialogTabs = 'image:advanced;link:advanced';

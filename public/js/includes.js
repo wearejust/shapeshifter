@@ -2,7 +2,7 @@
 // VARIABLES
 // -----------------------------------------------------------
 var $document=$(document), $html=$('html'), $window=$(window), $body=$('body'), $bodyHtml=$('body, html');
-window.TOUCH=(function(){try{document.createEvent('TouchEvent');return true;}catch(e){return false;}})();
+//window.TOUCH=(function(){try{document.createEvent('TouchEvent');return true;}catch(e){return false;}})();
 window.DEVELOPMENT=(function(){return ((window.location.href.indexOf('.dev/')!=-1)||(window.location.href.indexOf('10.0.22.')!=-1));})();
 
 
