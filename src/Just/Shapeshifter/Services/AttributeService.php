@@ -28,13 +28,14 @@ class AttributeService
 
         foreach ($records as $rec)
         {
-            foreach ($rec->toArray() as $k=>$r)
+            foreach ($rec->getOriginal() as $k=>$r)
             {
                 if ( in_array($k, $_ignored) || ! isset($attributes[$k])  ) {
                     continue;
                 }
 
                 $attributes[$k]->setAttributeValue($r);
+
                 $rec->setAttribute($k, $attributes[$k]->getDisplayValue() );
             }
         }

@@ -12,8 +12,6 @@ class UserController extends AdminController
     protected $descriptor = "last_name";
     protected $orderby = array('id','asc');
     protected $disabledActions = array(
-        'create',
-        'delete',
         'drag'
     );
 

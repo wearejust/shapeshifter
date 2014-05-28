@@ -152,7 +152,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function deleteFile($file)
     {
-        $file = $this->absoluteStorageDir .DIRECTORY_SEPARATOR. $file;
+        $file = $this->absoluteStorageDir . $file;
 
         if (file_exists($file))
         {
@@ -237,7 +237,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function getAbsolutePath()
     {
-        return public_path() . DIRECTORY_SEPARATOR . $this->relativeStorageDir;
+        return public_path() . $this->relativeStorageDir;
     }
 
     /**

@@ -38,9 +38,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
                 <div class="content-body">
                     @yield('content')
                 </div>
-                <div id="dialog-confirm" style="display: none;">
-                    <p>{{ __('dialog.remove') }}</p>
-                </div>
             </div>
         </div>
     </div>

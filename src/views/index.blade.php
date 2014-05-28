@@ -76,6 +76,11 @@
                                         <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button">X</button>
                                         {{ Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id))))) }}
                                         {{ Form::close() }}
+
+                                        <div class="dialog-confirm" style="display: none;">
+                                            <p>{{ __('dialog.remove') }}</p>
+                                        </div>
+
                                     </div>
                                 </div>
                             </td>
