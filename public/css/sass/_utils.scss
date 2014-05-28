@@ -1,0 +1,229 @@
+$fix-mqW: false !default;
+$fix-mqH: false !default;
+
+@mixin respond-min-width($width) {
+	@if $fix-mqW {
+		@if $fix-mqW >= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (min-width: $width) {
+			@content;
+		}
+	}
+}
+@mixin respond-max-width($width) {
+	@if $fix-mqW {
+		@if $fix-mqW <= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (max-width: $width) {
+			@content;
+		}
+	}
+}
+@mixin respond-min-height($height) {
+	@if $fix-mqH {
+		@if $fix-mqH >= $height {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (min-height: $height) {
+			@content;
+		}
+	}
+}
+@mixin respond-max-height($height) {
+	@if $fix-mqH {
+		@if $fix-mqH <= $height {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (max-height: $height) {
+			@content;
+		}
+	}
+}
+
+@mixin respond-min-combi($width, $height) {
+	@if $fix-mqW {
+		@if $fix-mqW >= $width {
+			@content;	
+		}
+	} @else if $fix-mqH {
+		@if $fix-mqH >= $height {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (min-width: $width) and (min-height: $height) {
+			@content;
+		}
+	}
+}
+
+@mixin respond-max-combi($width, $height) {
+	@if $fix-mqW {
+		@if $fix-mqW <= $width {
+			@content;	
+		}
+	} @else if $fix-mqH {
+		@if $fix-mqH <= $height {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (max-width: $width) and (max-height: $height) {
+			@content;
+		}
+	}
+}
+
+@mixin old-ie {
+	@if $old-ie {
+		@content;
+	}
+}
+
+@mixin keyframes ($name, $props) {
+    .#{$name} {
+        -moz-animation: $name $props;
+        -o-animation: $name $props;
+        -webkit-animation: $name $props;
+        animation: $name $props;
+    }
+    @-moz-keyframes $name { @content; }
+    @-o-keyframes $name { @content; }
+    @-webkit-keyframes $name { @content; }
+    @keyframes $name { @content; }
+}
+
+@function em($pxval, $base: $base) {
+	@if (unitless($pxval)) {
+		$pxval: $pxval * 1px;
+	}
+
+	@if (unitless($base)) {
+		$base: $base * 1px;
+	}
+
+	@return $pxval / $base * 1em;
+}
+
+@function globalPerc($base) {
+	$global: percentage((100 / 16) * $base) / 100;
+	@return $global;
+}
+
+@function cols($colcount, $partial: 1) {
+	$total: (percentage(100 / $colcount) / 100) * $partial;
+	@return $total;
+}
+@mixin columns($colcount: 1, $partial: 1) {
+	width: cols($colcount, $partial);
+}
+@mixin font-size($sizeValue: 1) {
+	font-size: ($sizeValue * 16) + px;
+	font-size: $sizeValue + rem;
+}
+
+
+
+// http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin rem-fallback($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $pxValues: #{$pxValues + $value*16}px;
+
+    @if $i < $max {
+      $pxValues: #{$pxValues + " "};
+    }
+  } 
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $remValues: #{$remValues + $value}rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + " "};
+    }
+  } 
+  
+  #{$property}: $pxValues; 
+  #{$property}: $remValues; 
+}
+
+
+
+//============================================================
+//
+// arrow
+//
+// @param width           :  px, em
+// @param height          :  px, em
+// @param direction       :  up, down, left, right
+// @param color           :  hex, rgb
+//
+//============================================================
+
+@mixin arrow($width: 20px, $height: 20px, $direction: up, $color: red){
+  
+  width: 0; 
+  height: 0;
+  
+  // Right
+  @if $direction == right{
+    border-top: $height/2 solid transparent;
+    border-bottom: $height/2 solid transparent;
+    border-left: $width solid $color;
+}
+  // Left
+  @if $direction == left{
+    border-top: $height/2 solid transparent;
+    border-bottom: $height/2 solid transparent;
+    border-right: $width solid $color;
+}
+  // Up
+  @if $direction == up{
+    border-left: $width/2 solid transparent;
+    border-right: $width/2 solid transparent;
+    border-bottom: $height solid $color;
+}  // Down
+  @if $direction == down{
+    border-left: $width/2 solid transparent;
+    border-right: $width/2 solid transparent;
+    border-top: $height solid $color;
+}
+
+}
+
+@mixin form-control-focus($color: #999) {
+  $color-rgba: rgba(red($color), green($color), blue($color), .2);
+  &:focus {
+    border-color: $color;
+    outline: 0;
+   // @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+  }
+}
+
+@mixin placeholder($color: #999) {
+  &:-moz-placeholder            { color: $color; } // Firefox 4-18
+  &::-moz-placeholder           { color: $color;   // Firefox 19+
+                                  opacity: 1; } // See https://github.com/twbs/bootstrap/pull/11526
+  &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}

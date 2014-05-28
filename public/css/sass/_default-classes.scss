@@ -1,0 +1,41 @@
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.list { list-style: none; list-style-image: none; padding-left: 0; }
+.accessibility, .js .js-accessibility { clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); height: 1px; overflow: hidden; position: absolute !important; width: 1px; }
+.accessibility:focus, .accessibility:active { clip: auto; height: auto; overflow: visible; position: fixed; width: auto; }
+.group:before, .group:after { content: " "; display: table; }
+.group:after { clear: both; }
+.container { position: relative; }
+.wrapper { margin-left: auto; margin-right: auto; }
+.link-alt:focus, .link-alt:hover { background-color: transparent; }
+.link-alt:active { @include box-shadow(none); }
+.normal { font-weight: normal; }
+.heading { text-transform: uppercase; }
+.heading-alt { text-transform: lowercase; }
+.row { white-space: nowrap; }
+.item { float: left; }
+.item-alt { float: right; }
+.item-start { clear: both; }
+.box { @include box-sizing(content-box); }
+.number::-webkit-outer-spin-button, .number::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.video { background-color: #000; display: block; padding-bottom: 56.25%; position: relative; }
+.video iframe, .video object, .video embed { height: 100%; left: 0; margin: 0; position: absolute; top: 0; width: 100%; }
+.fb_iframe_widget, .fb_iframe_widget span { display: block !important; }
+.fb_iframe_widget span { width: auto !important; }
+.fb_iframe_widget iframe { width: 100% !important; }
+.fb_ltr, .fb_iframe_widget_lift { max-width: none; }
+.clean { text-decoration: none; }
+
+%list { list-style: none; list-style-image: none; padding-left: 0; }
+%no-select { -webkit-touch-callout: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; -webkit-user-select: none; user-select: none; }
+%group {
+	&:before, &:after { content: " "; display: table; }
+	&:after { clear: both; }
+}
+%accessibility, .js .js-accessibility { clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); height: 1px; overflow: hidden; position: absolute !important; width: 1px;
+	&:focus, &:active { clip: auto; height: auto; overflow: visible; position: fixed; width: auto; }
+}
+%link-alt {
+	&:focus, &:hover, &:active { background-color: transparent; }
+	&:active { @include box-shadow(none); }
+}

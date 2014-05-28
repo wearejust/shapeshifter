@@ -1,0 +1,22 @@
+$time-fast: .2s; $time: .4s; $time-slow: .6s;
+.no-transition, .no-transitions * { @include transition(0 !important); }
+.js .js-fade { @include transition(compact(opacity $time ease-in-out)); }
+// .js .js-fade-fast { @include transition(compact(opacity $time-fast ease-in-out)); }
+// .js .js-fade-slow { @include transition(compact(opacity $time-slow ease-in-out)); }
+// .js .js-slide { @include transition(compact(top $time ease-in-out, bottom $time ease-in-out, left $time ease-in-out, right $time ease-in-out)); }
+// .js .js-slide-fast { @include transition(compact(top $time-fast ease-in-out, bottom $time-fast ease-in-out, left $time-fast ease-in-out, right $time-fast ease-in-out)); }
+// .js .js-slide-slow { @include transition(compact(top $time-slow ease-in-out, bottom $time-slow ease-in-out, left $time-slow ease-in-out, right $time-slow ease-in-out)); }
+// .js .js-fade-slide { @include transition(compact(opacity $time ease-in-out, top $time ease-in-out, bottom $time ease-in-out, left $time ease-in-out, right $time ease-in-out)); }
+// .js .js-fade-slide-fast { @include transition(compact(opacity $time-fast ease-in-out, top $time-fast ease-in-out, bottom $time-fast ease-in-out, left $time-fast ease-in-out, right $time-fast ease-in-out)); }
+// .js .js-fade-slide-slow { @include transition(compact(opacity $time-slow ease-in-out, top $time-slow ease-in-out, bottom $time-slow ease-in-out, left $time-slow ease-in-out, right $time-slow ease-in-out)); }
+// .js .js-fade-size-slide { @include transition(compact(opacity $time ease-in-out, width $time ease-in-out, height $time ease-in-out)); }
+// .js .js-fade-size-slide-fast { @include transition(compact(opacity $time-fast ease-in-out, width $time-fast ease-in-out, height $time-fast ease-in-out)); }
+// .js .js-fade-size-slide-slow { @include transition(compact(opacity $time-slow ease-in-out, width $time-slow ease-in-out, height $time-slow ease-in-out)); }
+
+.js .js-fade-translate {
+	-webkit-transition: opacity $time ease-in-out, -webkit-transform $time ease-in-out;
+	-moz-transition: opacity $time ease-in-out, -moz-transform $time ease-in-out;
+	-ms-transition: opacity $time ease-in-out, -ms-transform $time ease-in-out;
+	-o-transition: opacity $time ease-in-out, -o-transform $time ease-in-out;
+	transition: opacity $time ease-in-out, transform $time ease-in-out;
+}

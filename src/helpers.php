@@ -1,0 +1,51 @@
+<?php
+
+function userCanCreate($actions)
+{
+    return userCanAction('create', $actions);
+}
+
+function userCanDelete($actions)
+{
+    return userCanAction('delete', $actions);
+}
+
+function userCanDrag($actions)
+{
+    return userCanAction('drag', $actions);
+}
+
+function userCanAction($action, $actions)
+{
+    return ! in_array($action, $actions);
+}
+
+if ( ! function_exists('__'))
+{
+	function __($string)
+	{
+		$string = 'shapeshifter::site.' . $string;
+
+		if (Lang::has( $string ))
+		{
+		    return Lang::get($string);
+		}
+
+		return $string;
+	}
+}
+
+if ( ! function_exists('translateAttribute'))
+{
+	function translateAttribute($string)
+	{
+		$new = 'shapeshifter::attributes.' . $string;
+
+		if (Lang::has( $new ))
+		{
+		    return ucfirst( Lang::get($new) );
+		}
+
+		return ucfirst( $string );
+	}
+}
