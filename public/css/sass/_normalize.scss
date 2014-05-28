@@ -11,7 +11,7 @@ blockquote:before, blockquote:after, q:before, q:after { content: ""; content: n
 pre, code, kbd, samp, button, datalist, input, select, textarea, .default { font-size: 1em; }
 pre, code, kbd, samp { font-family: monospace, monospace; }
 strong, b { font-weight: bold; }
-em, i, dfn, .special { font-style: italic; }
+em, i, dfn, span[lang], .special { font-style: italic; }
 img, video, object, iframe, legend, textarea, label, article, aside, audio, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, marquee, video, .block, .wrap, .group, .paragraph, .fb_iframe_widget span { display: block; }
 img, video, object, iframe { max-width: 100%; }
 img, video { height: auto; width: auto; }
@@ -37,7 +37,7 @@ input[type="text"], input[type="number"], input[type="email"], input[type="tel"]
 input[type="checkbox"], input[type="radio"] { background-color: transparent; border-width: 0; @include box-shadow(none); float: left; margin: .075em .5em 0 0; padding: 0; width: auto; }
 input[type="checkbox"]:focus, input[type="radio"]:focus { background-color: transparent; }
 input[type="checkbox"] + label, input[type="radio"] + label { float: left; margin-bottom: 0; }
-input[type="search"] { -webkit-appearance: textfield; }
+input[type="search"] { -webkit-appearance: none; }
 input[type="search"]::-webkit-search-decoration { display: none; }
 select { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 :focus, :active { /*position: relative; top: 1px;*/ @include transition(compact(none)); }

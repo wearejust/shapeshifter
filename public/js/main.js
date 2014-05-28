@@ -41,6 +41,10 @@ $(function() {
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
 
+	$('.alert-success').addClass('alert-success-active').execute(3800, function(){
+		$(this).removeClass('alert-success-active');
+	});
+
 	/*
 	$('.sortable').nestedSortable({
 		forcePlaceholderSize: true,
@@ -465,7 +469,7 @@ var SortableTable = function(table) {
 	this.tbody = this.table.find('tbody');
 
 	this.options = {
-		'itemsMax': 10,
+		'itemsMax': 30,
 		'sortable': this.table.hasClass('js-datatable-order')
 	};
 
@@ -493,7 +497,7 @@ var SortableTable = function(table) {
 		'bSort' : !this.options.sortable,
 		'aaSorting': [],
         "oLanguage": {
-            "sProcessing": "Laden...",
+            "sProcessing": "Laden…",
             "sLengthMenu": "_MENU_ resultaten weergeven",
             "sZeroRecords": "Nee, geen resultaten.",
             "sInfo": "_START_ to _END_ from _TOTAL_ results",
@@ -502,7 +506,7 @@ var SortableTable = function(table) {
             "sInfoPostFix": "",
             "sEmptyTable": "Nee, geen resultaten in de tabel.",
             "sInfoThousands": ".",
-            "sLoadingRecords": "Een moment geduld aub - bezig met laden...",
+            "sLoadingRecords": "Een moment geduld a.u.b. - bezig met laden…",
             "oPaginate": {
                 "sFirst": "Eerste",
                 "sLast": "Laatste",

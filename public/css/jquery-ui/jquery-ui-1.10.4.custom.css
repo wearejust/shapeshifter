@@ -314,7 +314,7 @@ button.ui-button::-moz-focus-inner {
 	position: absolute;
 	top: 2px;
 	width: 1.8em;
-	height: 1.8em;
+	bottom: 0;
 }
 .ui-datepicker .ui-datepicker-prev-hover,
 .ui-datepicker .ui-datepicker-next-hover {
