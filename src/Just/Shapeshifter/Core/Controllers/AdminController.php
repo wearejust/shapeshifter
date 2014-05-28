@@ -214,7 +214,7 @@ abstract class AdminController extends Controller {
         $this->model = $this->beforeDestroy($this->model);
 
         if ( $this->repo->delete() ) {
-            Notification::success('Het item is verwijderd!');
+            Notification::success('Het item is verwijderd.');
         }
 
         return Redirect::back();

@@ -1,14 +1,13 @@
 <div class="form-group">
-    <div class="col-3">
+    <div class="form-label">
         {{ Form::label($name, $label) }}
     </div>
-    <div class="col-9">
+    <div class="form-field">
         <div class="form-control">
-            <div class="col-6">
+            <div class="" style="width: 50%;">
                 {{ Form::select($name, $select)  }}
             </div>
         </div>
         @include('shapeshifter::layouts.helptext')
     </div>
 </div>
-

@@ -30,7 +30,7 @@ return array(
             )
         ),
         array(
-            'title' => 'CMS Gebruikers',
+            'title' => 'CMS-gebruikers',
             'url' => '#',
             'children' => array(
                 array(

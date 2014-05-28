@@ -5,7 +5,7 @@
 <title>Content — {{ Config::get('shapeshifter::config.customer') }}</title>
 <meta content="" name="description">
 <meta content="wearejust.com" name="author">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"> <!-- remove when not responsive -->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"> <!-- remove when not responsive -->
 <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
 <meta name="msapplication-TileImage" content="/apple-touch-icon-precomposed.png">
 <meta name="msapplication-TileColor" content="#ffffff">
@@ -38,6 +38,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
                 <div class="content-body">
                     @yield('content')
                 </div>
+                <div id="dialog-confirm" style="display: none;">
+                    <p>{{ __('dialog.remove') }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -45,14 +48,14 @@ document.documentElement.className=TOUCH?"js touch":"js";
         <div class="breadcrumbs">
             <ul class="breadcrumbs-list list group">
                 <li class="breadcrumbs-item">
-                    <a class="breadcrumbs-link breadcrumbs-first indent link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
+                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
                 </li>
                 @foreach ($breadcrumbs as $crumb)
                 <li class="breadcrumbs-item">
                     @if ($crumb == end($breadcrumbs))
-                        <span class="breadcrumbs-link accent">{{ $crumb['title'] }}</span>
+                        <span class="breadcrumbs-link">{{ $crumb['title'] }}</span>
                     @else
-                        <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}">{{ $crumb['title'] }}</a>
+                        <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}"><span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span></a>
                     @endif
                 </li>
                 @endforeach
