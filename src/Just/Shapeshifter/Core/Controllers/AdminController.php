@@ -242,7 +242,10 @@ abstract class AdminController extends Controller {
         $breadcrumbService = new BreadcrumbService();
         $menuService = new MenuService();
 
-        $this->data['currentUser'] = Sentry::getUser();
+        $user = Sentry::getUser();
+        $user->setDisabledActions($this->disabledActions);
+
+        $this->data['currentUser'] = $user;
         $this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
         $this->data['menu'] = $menuService->generateMenu();
         $this->data['tabs'] = $attributeService->attributesToTabs($this->mode, $this->attributes, $this->model);
