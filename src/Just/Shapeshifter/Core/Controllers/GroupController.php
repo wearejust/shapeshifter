@@ -13,6 +13,7 @@ class GroupController extends AdminController
     protected $model = 'Just\Shapeshifter\Core\Models\Group';
     protected $descriptor = "name";
     protected $orderby = array('name','asc');
+    protected $disabledActions = array('drag');
 
     protected $rules = array(
         'name' => 'required',
