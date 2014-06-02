@@ -4,7 +4,7 @@
 <div class="content-body-inner">
     <h1>{{ $title }}</h1>
     <div class="group">
-        @if (userCanCreate($disabledActions))
+        @if ($currentUser->can('create'))
         <div class="add-item">
             <a class="btn btn-default add-item-button" href="{{ route($routes['create'], $ids) }}" id="add-item">{{ __('form.create') }}</a>
         </div>
@@ -32,13 +32,13 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section-sub section-start js-datatable {{ userCanDrag($disabledActions) ? 'js-datatable-order' : 'js-datatable-sortable' }}">
+                <table class="section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : 'js-datatable-sortable' }}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
-                        <th class="table-header {{ ! userCanDrag($disabledActions) && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}">
+                        <th class="table-header {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
-                                @if ( ! userCanDrag($disabledActions))
+                                @if ( ! $currentUser->can('drag'))
                                 <span class="table-header-sort">
                                     <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
                                     <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>
@@ -49,10 +49,10 @@
                         </th>
                         @endif
                         @endforeach
-                        @if (userCanDrag($disabledActions))
+                        @if ($currentUser->can('drag'))
                         <th class="table-header table-order js-disable-sort table-header-last"></th>
                         @endif
-                        @if (userCanDelete($disabledActions))
+                        @if ($currentUser->can('delete'))
                         <th class="table-header table-control js-disable-sort"></th>
                         @endif
                     </thead>
@@ -61,15 +61,15 @@
                         <tr class="table-row table-actions js-transform" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                             @foreach ($attributes as $attr)
                                 @if ( ! $attr->hasFlag('hide_list'))
-                                <td class="table-cell {{ ! userCanDrag($disabledActions) && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
+                                <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
                                 @endif
                             @endforeach
-                            @if (userCanDrag($disabledActions))
+                            @if ($currentUser->can('drag'))
                             <td class="table-cell table-order table-cell-last">
                                 <button class="js-sortable-handle tricon link-alt item-alt" type="button"><span class="accessibility">Verplaatsen</span></button>
                             </td>
                             @endif
-                            @if (userCanDelete($disabledActions))
+                            @if ($currentUser->can('delete'))
                             <td class="table-cell table-control">
                                 <div class="container">
                                     <div class="table-control-content">

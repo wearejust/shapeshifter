@@ -1,25 +1,5 @@
 <?php
 
-function userCanCreate($actions)
-{
-    return userCanAction('create', $actions);
-}
-
-function userCanDelete($actions)
-{
-    return userCanAction('delete', $actions);
-}
-
-function userCanDrag($actions)
-{
-    return userCanAction('drag', $actions);
-}
-
-function userCanAction($action, $actions)
-{
-    return ! in_array($action, $actions);
-}
-
 if ( ! function_exists('__'))
 {
 	function __($string)

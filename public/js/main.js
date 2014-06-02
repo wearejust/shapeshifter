@@ -2,8 +2,6 @@
 // DOCUMENT ON READY 
 // -----------------------------------------------------------
 $(function() {
-	
-//    $('#dialog-confirm').dialog({autoOpen: false});
 
     Menu = new Menu();
 
@@ -468,6 +466,9 @@ var SortableTable = function(table) {
 	this.element = this.table.closest('.content-body');
 	this.tbody = this.table.find('tbody');
 
+    this.defaultOrderIndex = this.table.find('[data-header-title="'+this.table.attr('data-sort-column')+'"]').index();
+    this.defaultOrder = this.table.attr('data-sort-order');
+
 	this.options = {
 		'itemsMax': 30,
 		'sortable': this.table.hasClass('js-datatable-order')
@@ -488,14 +489,14 @@ var SortableTable = function(table) {
     $.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
 
 	this.table = this.table.dataTable({
-		'sDom': 't',
+        "aaSorting": [[ this.defaultOrderIndex, this.defaultOrder ]],
+        'sDom': 't',
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['js-disable-sort']
         }],
 		'bPaginate': false,
 		'bSort' : !this.options.sortable,
-		'aaSorting': [],
         "oLanguage": {
             "sProcessing": "Laden…",
             "sLengthMenu": "_MENU_ resultaten weergeven",
