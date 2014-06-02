@@ -1366,7 +1366,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 
 /* line 101, sass/main.scss */
 .form-options {
-  margin: -1.1em -1.5em;
+  margin-left: -1.5em;
+  margin-right: -1.5em;
 }
 
 /* line 102, sass/main.scss */
@@ -2247,7 +2248,9 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 
   /* line 246, sass/main.scss */
   .form-options {
+    margin-bottom: -1.1em;
     margin-left: 0;
+    margin-top: -1.1em;
     padding-left: 0;
     padding-right: 0;
   }

@@ -122,16 +122,16 @@ class FileAttribute extends Attribute implements iAttributeInterface
     {
         if ( ! $this->value ) return null;
 
-        if ($this->isImage())
+        if (!file_exists($this->absoluteStorageDir . '/' . $this->value))
+        {
+            return __('form.file.doesntexist');
+        }
+        else if ($this->isImage())
         {
             return sprintf("<img src='%s' alt=''>",
                 Image::open($this->absoluteStorageDir . $this->value)->resize(243, null)->inline()
             );
 
-        }
-        else if (!file_exists($this->absoluteStorageDir . '/' . $this->value))
-        {
-            return __('form.file.doesntexist');
         }
 
         if ($this->hasFlag('force'))
