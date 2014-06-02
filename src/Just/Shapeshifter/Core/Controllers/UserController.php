@@ -10,7 +10,7 @@ class UserController extends AdminController
 
     protected $model = 'Just\Shapeshifter\Core\Models\User';
     protected $descriptor = "last_name";
-    protected $orderby = array('id','asc');
+    protected $orderby = array('email','asc');
     protected $disabledActions = array(
         'create',
         'delete',

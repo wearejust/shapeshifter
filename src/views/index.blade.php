@@ -9,7 +9,7 @@
             <a class="btn btn-default add-item-button" href="{{ route($routes['create'], $ids) }}" id="add-item">{{ __('form.create') }}</a>
         </div>
         @endif
-        @if (count($records))
+        @if (count($records) && $currentUser->can('sort'))
         <div class="filter-search">
             <form action="" class="section-start section-end" method="get">
                 <fieldset>
@@ -32,13 +32,13 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : 'js-datatable-sortable' }}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
+                <table class="section-sub section-start {{ $currentUser->can('sort') ? 'js-datatable' : ''}} {{ $currentUser->can('drag') ? 'js-datatable-order' : 'js-datatable-sortable' }}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
                         <th class="table-header {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
-                                @if ( ! $currentUser->can('drag'))
+                                @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
                                 <span class="table-header-sort">
                                     <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
                                     <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>
