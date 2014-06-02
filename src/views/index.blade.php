@@ -32,13 +32,13 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : 'js-datatable-sortable' }}">
+                <table class="section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : 'js-datatable-sortable' }}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
-                        <th class="table-header {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}">
+                        <th class="table-header {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
-                                @if ($currentUser->can('drag'))
+                                @if ( ! $currentUser->can('drag'))
                                 <span class="table-header-sort">
                                     <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
                                     <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>

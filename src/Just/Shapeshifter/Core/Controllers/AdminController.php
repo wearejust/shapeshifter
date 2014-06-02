@@ -246,6 +246,7 @@ abstract class AdminController extends Controller {
         $user->setDisabledActions($this->disabledActions);
 
         $this->data['currentUser'] = $user;
+        $this->data['orderBy'] = $this->orderby;
         $this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
         $this->data['menu'] = $menuService->generateMenu();
         $this->data['tabs'] = $attributeService->attributesToTabs($this->mode, $this->attributes, $this->model);
@@ -359,6 +360,9 @@ abstract class AdminController extends Controller {
         }
         else if ( ! class_exists($this->model) ) {
             throw new ClassNotExistException("Class [{$this->model}] doest not exist");
+        }
+        else if ( (count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc')) {
+            throw new PropertyNotExistException("Second property [orderby] must be `asc` or `desc`");
         }
     }
 
