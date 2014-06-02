@@ -4,7 +4,9 @@
     </div>
     <div class="form-field">
         <div class="form-control">
-            {{  Form::password($name) }}
+        	<div class="" style="width: 50%;">
+            	{{  Form::password($name) }}
+            </div>
         </div>
         @include('shapeshifter::layouts.helptext')
     </div>

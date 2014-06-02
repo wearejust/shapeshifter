@@ -98,7 +98,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .form-group:before, .form-group:after { content: " "; display: table; }
 .form-group:after { clear: both; }
 .form-label { margin-bottom: .5em; }
-.form-options { margin: -1.1em -1.5em; }
+.form-options { margin-left: -1.5em; margin-right: -1.5em; }
 .form-options-content { margin: -1px 0; }
 .form-option { margin: 1px 0; }
 .form-option-label { background-color: #e5e5e5; padding: 1em 1.5em; }
@@ -243,7 +243,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   .form-group { margin-bottom: 1px; margin-top: 1px; }
   .form-label { float: left; margin-bottom: 0; width: 33.333%; }
   .form-field { float: right; width: 66.667%; }
-  .form-options { margin-left: 0; padding-left: 0; padding-right: 0; }
+  .form-options { margin-bottom: -1.1em; margin-left: 0; margin-top: -1.1em; padding-left: 0; padding-right: 0; }
   .form-option-control { padding-left: 1em; padding-right: 1em; }
   .form-control { margin-top: -.75em; }
   .form-control:only-child { margin-bottom: -.75em; }
