@@ -53,7 +53,7 @@
                     <th class="table-header table-order js-disable-sort table-header-last"></th>
                     @endif
                     @if ($currentUser->can('delete'))
-                    <th class="table-header table-control js-disable-sort"></th>o
+                    <th class="table-header table-control js-disable-sort"></th>
                     @endif
                     </thead>
                     <tbody>
