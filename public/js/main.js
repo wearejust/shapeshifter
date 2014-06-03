@@ -479,9 +479,10 @@ var SortableTable = function(options, table) {
 	this.element.append(this.hideButton);
 	this.hideButton.on('click', this.itemsHide.bind(this));
 
-	this.showButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show more</button>');
+	this.showButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="show-more-amount"></span> more</button>');
 	this.element.append(this.showButton);
 	this.showButton.on('click', this.itemsShow.bind(this));
+	this.showButtonAmount = this.showButton.find('.show-more-amount');
 
 	$.fn.dataTableExt.oStdClasses.sRowEmpty = "table-cell";
 	$.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
@@ -574,10 +575,30 @@ var SortableTable = function(options, table) {
 	}
 
 	this.itemsHide();
+
+	this.element.execute(this, function() {
+		this.wrap = this.element.find('.dataTables_wrapper');
+		this.wrap.css('position', 'relative');
+	});
 }
 
-SortableTable.prototype.update = function() {
+SortableTable.prototype.wrapLock = function(release) {
+	if (release) {
+		this.wrap.css({
+			'height': '',
+			'overflow': ''
+		});
 
+	} else {
+		this.wrap.css({
+			'height': (this.wrap.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px',
+			'overflow': 'hidden'
+		});
+	}
+}
+
+
+SortableTable.prototype.update = function() {
 	$.ajax({
 		'type': 'POST',
 		'url': '/admin/ajax/sortorderchange',
@@ -600,10 +621,19 @@ SortableTable.prototype.update = function() {
 
 SortableTable.prototype.search = function(e) {
 	var value = $(e.currentTarget).val();
-	this.table.fnFilter(value);
-	if (this.options.sortable) {
-		this.sortHandles.toggle(!value.length);
-	}
+	this.wrapLock();
+	this.tbody.children().show().execute(this, function() {
+		this.table.fnFilter(value);
+		this.showButton.hide();
+		this.hideButton.hide();
+		if (this.tbody.children().length > this.options.itemsMax) {
+			this.itemsHide();
+		}
+		this.wrapLock(true);
+		if (this.options.sortable) {
+			this.sortHandles.toggle(!value.length);
+		}
+	});
 }
 
 SortableTable.prototype.itemsHide = function(e) {
@@ -611,17 +641,15 @@ SortableTable.prototype.itemsHide = function(e) {
 	if (items.length > this.options.itemsMax) {
 		this.showButton.show();
 		this.hideButton.hide();
+		this.showButtonAmount.text(items.length - this.options.itemsMax);
 
-		if (!this.wrap) {
+		if (!e) {
 			items.slice(this.options.itemsMax).hide();
 		} else {
 			var item = items.eq(this.options.itemsMax-1);
 			this.wrap.css('overflow', 'hidden').animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px'}, function() {
 				items.slice(this.options.itemsMax).hide();
-				this.wrap.css({
-					'height': '',
-					'overflow': ''
-				});
+				this.wrapLock(true);
 			}.bind(this));
 		}
 	}
@@ -630,14 +658,7 @@ SortableTable.prototype.itemsHide = function(e) {
 SortableTable.prototype.itemsShow = function(e) {
 	var items = this.tbody.children();
 	if (items.length > this.options.itemsMax) {
-		if (!this.wrap) {
-			this.wrap = this.element.find('.dataTables_wrapper');
-			this.wrap.css('position', 'relative');
-		}
-		this.wrap.css({
-			'height': (this.wrap.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px',
-			'overflow': 'hidden'
-		});
+		this.wrapLock();
 
 		items.slice(this.options.itemsMax).show();
 		this.showButton.hide();
@@ -645,10 +666,7 @@ SortableTable.prototype.itemsShow = function(e) {
 
 		var item = items.last();
 		this.wrap.animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px'}, function() {
-			this.wrap.css({
-				'height': '',
-				'overflow': ''
-			});
+			this.wrapLock(true);
 		}.bind(this));
 
 	}
