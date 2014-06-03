@@ -14,9 +14,9 @@
 </ul>
 @endif
 
-@if ( ! Notification::all()->isEmpty())
+@if ( Notification::get('error')->first())
 <div class="messages">
-    {{ Notification::showAll() }}
+    {{ Notification::showError() }}
 </div>
 @endif
 
