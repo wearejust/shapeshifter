@@ -487,7 +487,7 @@ var SortableTable = function(options, table) {
 	$.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
 	$.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
 
-	if (this.defaultOrderIndex >= 0) {
+    if (this.defaultOrderIndex >= 0 && this.table.hasClass('js-datatable-sortable')) {
 		var sorting = [[this.defaultOrderIndex, this.defaultOrder]];
 	}else {
 		var sorting = [];
