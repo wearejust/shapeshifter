@@ -12,15 +12,6 @@
 */
 class DropdownAttribute extends Attribute implements iAttributeInterface
 {
-    /**
-     * All the labels of the current attribute
-     *
-     * @var mixed
-     *
-     * @access protected
-     */
-	protected $labels;
-
    /**
     * All the values of the current attribute
     *
@@ -40,11 +31,14 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
      * @access public
      * @return mixed Value.
      */
-	public function __construct($name = '', $values = array(), $flags = array())
-	{
+    public function __construct($name = '', $values = array(), $labels = array(), $flags = array())
+    {
 		$this->name = $name;
 		$this->flags = $flags;
-		$this->values = $values;
+
+        if ( ! $labels) $labels = $values;
+
+        $this->values = array_combine($labels, $values);
 	}
 
     /**

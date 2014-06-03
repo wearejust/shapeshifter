@@ -73,8 +73,10 @@ class ManyToManyFacebookRelation extends OneToManyRelation
             throw new MethodNotExistException("Relation method [{$this->function}] doest not exist on [{$modelName}] model");
         }
 
-        $results = $this->model->{$this->function}()->get(array('id',"{$descriptor} as name"))->toJson();
-        $all = $this->destination->repo->getModel()->get(array('id',"{$descriptor} as name"))->toJson();
+        $table = $this->destination->repo->getModel()->getTable();
+
+        $results = $this->model->{$this->function}()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
+        $all = $this->destination->repo->getModel()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 
         return View::make('ManyToManyFacebookRelation',  compact('results', 'all', 'name', 'label'));
     }

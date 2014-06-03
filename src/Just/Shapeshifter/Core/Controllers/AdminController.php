@@ -32,6 +32,7 @@ abstract class AdminController extends Controller {
     protected $descriptor = "id";
     protected $orderby = array('sortorder', 'asc');
     protected $rules = array();
+    protected $filter = array();
     protected $parent = null;
 
     /**
@@ -84,7 +85,7 @@ abstract class AdminController extends Controller {
         $this->mode = 'index';
         $this->model = $this->repo->getNew();
 
-        $records = $this->repo->getListRecords($this->orderby, $this->getParentInfo());
+        $records = $this->repo->getListRecords($this->orderby, $this->getParentInfo(), $this->filter);
 
         $this->data['ids'] = func_get_args();
         $this->data['title'] = $this->plural;

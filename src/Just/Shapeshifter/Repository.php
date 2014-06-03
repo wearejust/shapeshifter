@@ -31,7 +31,7 @@ class Repository
      * @param $parentField
      * @return mixed
      */
-    public function getListRecords($orderBy, $parentField)
+    public function getListRecords($orderBy, $parentField = array(), $filter = array())
     {
         $service = new AttributeService();
         $query = $this->model;
@@ -39,6 +39,11 @@ class Repository
         if (count($parentField) == 2)
         {
             $query = $query->where($parentField[0], $parentField[1]);
+        }
+
+        if (count($filter) == 2)
+        {
+            $query = $query->where($filter[0], $filter[1]);
         }
 
         $records = $query->orderBy($orderBy[0], $orderBy[1])->get();

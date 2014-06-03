@@ -5,7 +5,7 @@
 	<div class="form-field">
         <div class="form-control">
         	<div class="" style="width: 50%;">
-      	    	{{ Form::select($name, $values, $value) }}
+                {{ Form::select($name, $values) }}
       	    </div>
         </div>
     	@include('shapeshifter::layouts.helptext')
