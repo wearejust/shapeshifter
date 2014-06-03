@@ -527,8 +527,8 @@ var SortableTable = function(options, table) {
 	this.items.find('td:not(.table-order, .table-control)').on('click', function(e) {
 		window.location = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
 	});
-
-	if (TOUCH) {
+	
+	if (TOUCH && this.items.find('.table-control').length) {
 		this.items.on('touchstart', function(e) {
 			var t = e.originalEvent.touches[0];
 			this.itemTouchStart = {
