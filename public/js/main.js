@@ -601,7 +601,9 @@ SortableTable.prototype.update = function() {
 SortableTable.prototype.search = function(e) {
 	var value = $(e.currentTarget).val();
 	this.table.fnFilter(value);
-	this.sortHandles.toggle(!value.length);
+	if (this.options.sortable) {
+		this.sortHandles.toggle(!value.length);
+	}
 }
 
 SortableTable.prototype.itemsHide = function(e) {
