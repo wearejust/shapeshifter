@@ -58,7 +58,7 @@
                     </thead>
                     <tbody>
                     @foreach ($records as $rec)
-                    <tr class="table-row table-actions js-transform" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
+                    <tr class="table-row table-actions js-transform" data-disabled-actions="{{ in_array($rec->id, $disableEditing) ? 'edit' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
                         <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
@@ -73,9 +73,11 @@
                         <td class="table-cell table-control">
                             <div class="container">
                                 <div class="table-control-content">
+                                    @if ( ! in_array($rec->id, $disableDeleting) )
                                     <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button">X</button>
                                     {{ Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id))))) }}
                                     {{ Form::close() }}
+                                    @endif
                                 </div>
                             </div>
                         </td>

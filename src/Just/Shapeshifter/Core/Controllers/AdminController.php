@@ -1,7 +1,7 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
 use Controller;
-use Illuminate\Database\Eloquent\Collection;
+use HTML;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Exceptions\ClassNotExistException;
 use Just\Shapeshifter\Exceptions\PropertyNotExistException;
@@ -18,31 +18,109 @@ use Route;
 use Sentry;
 use URL;
 use View;
-use HTML;
 
 abstract class AdminController extends Controller {
 
-    public $data = array();
-    public $attributes = array();
-    public $mode;
+    /**
+     * @var \Just\Shapeshifter\Repository
+     */
     public $repo;
 
-    protected $allowTimestamps = true;
-    protected $disabledActions = array();
-    protected $descriptor = "id";
-    protected $orderby = array('sortorder', 'asc');
-    protected $rules = array();
-    protected $filter = array();
-    protected $parent = null;
+    /**
+     * This data array holds all the data that will be send to the view
+     *
+     * @var array
+     */
+    protected $data = array();
 
     /**
+     * All the attributes
+     *
+     * @var array
+     */
+    protected $attributes = array();
+
+    /**
+     * The mode of the current action (create, edit)
+     *
+     * @var
+     */
+    protected $mode;
+
+    /**
+     * Allow timestamp fields (created_at, updated_at) in the node
+     *
+     * @var bool
+     */
+    protected $allowTimestamps = true;
+
+    /**
+     * Disable some actions in the node (drag, sort, create, delete)
+     *
+     * @var array
+     */
+    protected $disabledActions = array();
+
+    /**
+     * Array of record ids which cannot be deleted in the node
+     *
+     * @var array
+     */
+    protected $disableDeleting = array();
+
+    /**
+     * Array of record ids which cannot be edited in the node
+     *
+     * @var array
+     */
+    protected $disableEditing = array();
+
+    /**
+     * Array of the validation rules in the form (see laravel validation)
+     *
+     * @var array
+     */
+    protected $rules = array();
+
+    /**
+     * Insert an array of raw where clauses, the node will extends the query with
+     * those extra where clauses.
+     *
+     * @var array
+     */
+    protected $filter = array();
+
+    /**
+     * The field in the table who is responsible for displaying the descriptor
+     *
+     * @var string
+     */
+    protected $descriptor = 'id';
+
+    /**
+     * The field and method who are responsible for the ordering
+     *
+     * @var array
+     */
+    protected $orderby = array('sortorder', 'asc');
+
+    /**
+     * If an node has an belongsTo relation (comment has post) the database
+     * field of the table is needed
+     *
+     * @var null
+     */
+    protected $parent = null;
+
+
+    /**
+     * Function that is needed in the node, this descripbes how the node will
+     * looks like, what it can/cannot do.
+     *
      * @return mixed
      */
     abstract protected function configureFields();
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->checkRequirements();
@@ -53,16 +131,12 @@ abstract class AdminController extends Controller {
     }
 
     /**
-     *
+     *  This method is always fired, this is the base of whole shapeshifter
      */
     protected function initAttributes()
     {
         $this->configureFields();
-
-        if ($this->allowTimestamps)
-        {
-            $this->addTimestampFields();
-        }
+        $this->addTimestampFields();
 
         $this->repo->setAttributes($this->attributes, $this->repo->getRules());
 
@@ -254,6 +328,8 @@ abstract class AdminController extends Controller {
         $this->data['descriptor'] = $this->getDescriptor();
         $this->data['cancel'] = $this->generateCancelLink();
         $this->data['disabledActions'] = $this->disabledActions;
+        $this->data['disableDeleting'] = $this->disableDeleting;
+        $this->data['disableEditing'] = $this->disableEditing;
         $this->data['model'] = $this->model;
 
         $this->data['attributes'] = $this->attributes;
@@ -341,12 +417,13 @@ abstract class AdminController extends Controller {
     }
 
     /**
+     *  This function generates timestampfield when those fields
+     *  doen't exist in the table of the model
      *
      */
     private function generateTimestampFields()
     {
         $ts = new TimestampHelper();
-
         $ts->createTimestampFields($this->repo->getModel()->getTable());
     }
 
@@ -359,20 +436,26 @@ abstract class AdminController extends Controller {
         if ( ! isset($this->singular) || ! isset($this->plural) || ! isset($this->model) ) {
             throw new PropertyNotExistException("Property [singular] or [plural] or [model] does not exist");
         }
-        else if ( ! class_exists($this->model) ) {
-            throw new ClassNotExistException("Class [{$this->model}] doest not exist");
-        }
-        else if ( (count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc')) {
-            throw new PropertyNotExistException("Second property [orderby] must be `asc` or `desc`");
+        else {
+            if ( ! class_exists($this->model) ) {
+                throw new ClassNotExistException("Class [{$this->model}] doest not exist");
+            }
+            else {
+                if ( (count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc') ) {
+                    throw new PropertyNotExistException("Second property [orderby] must be `asc` or `desc`");
+                }
+            }
         }
     }
 
+    /**
+     * @return null
+     */
     private function getLastVisibleAttribute()
     {
         $last = null;
-        foreach ($this->attributes as $attribute)
-        {
-            if ( ! $attribute->hasFlag('hide_list')) {
+        foreach ($this->attributes as $attribute) {
+            if ( ! $attribute->hasFlag('hide_list') ) {
                 $last = $attribute;
             }
         }
@@ -380,10 +463,16 @@ abstract class AdminController extends Controller {
         return $last;
     }
 
+    /**
+     *  Dynamically add those timestampfields when allowd
+     *
+     */
     private function addTimestampFields()
     {
-        $this->add(new Attribute\ReadonlyAttribute('updated_at', array('hide_add', 'hide_list')));
-        $this->add(new Attribute\ReadonlyAttribute('created_at', array('hide_add', 'hide_list')));
+        if ( $this->allowTimestamps ) {
+            $this->add(new Attribute\ReadonlyAttribute('updated_at', array('hide_add', 'hide_list')));
+            $this->add(new Attribute\ReadonlyAttribute('created_at', array('hide_add', 'hide_list')));
+        }
     }
 
     /**
@@ -419,6 +508,8 @@ abstract class AdminController extends Controller {
     }
 
     /**
+     * Trigger is fired before an new record is saved to the database
+     *
      * @param $model
      * @return mixed
      */
@@ -428,15 +519,8 @@ abstract class AdminController extends Controller {
     }
 
     /**
-     * @param $model
-     * @return mixed
-     */
-    public function beforeUpdate($model)
-    {
-        return $model;
-    }
-
-    /**
+     * Trigger is fired after an new record is saved to the database
+     *
      * @param $model
      * @return mixed
      */
@@ -446,6 +530,19 @@ abstract class AdminController extends Controller {
     }
 
     /**
+     * Trigger is fired before an new record is updated to the database
+     *
+     * @param $model
+     * @return mixed
+     */
+    public function beforeUpdate($model)
+    {
+        return $model;
+    }
+
+    /**
+     * Trigger is fired after an record is updated to the database
+     *
      * @param $model
      * @return mixed
      */
@@ -455,6 +552,8 @@ abstract class AdminController extends Controller {
     }
 
     /**
+     * Trigger is fired before an record will be deleted
+     *
      * @param $model
      * @return mixed
      */

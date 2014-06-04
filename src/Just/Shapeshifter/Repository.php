@@ -2,9 +2,9 @@
 
 use DB;
 use Input;
+use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Services\AttributeService;
 use Lang;
-use Just\Shapeshifter\Exceptions\ValidationException;
 use Notification;
 use Request;
 use Schema;
@@ -13,9 +13,25 @@ use Validator;
 
 class Repository
 {
+
+    /**
+     * @var
+     */
     protected $model;
+
+    /**
+     * @var
+     */
     protected $attributes;
+
+    /**
+     * @var
+     */
     protected $rules;
+
+    /**
+     * @var
+     */
     protected $orderby;
 
     /**
@@ -41,9 +57,9 @@ class Repository
             $query = $query->where($parentField[0], $parentField[1]);
         }
 
-        if (count($filter) == 2)
+        foreach ($filter as $fil)
         {
-            $query = $query->where($filter[0], $filter[1]);
+            $query = $query->whereRaw($fil);
         }
 
         $records = $query->orderBy($orderBy[0], $orderBy[1])->get();
