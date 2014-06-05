@@ -54,6 +54,7 @@ class ShapeshifterServiceProvider extends ServiceProvider {
      */
     protected function overridePackageDefaults()
     {
+        Config::set('cartalyst/sentry::throttling.enabled', ($this->app->environment() !== 'local'));
         Config::set('cartalyst/sentry::users.model', 'Just\Shapeshifter\Core\Models\User');
         Config::set('cartalyst/sentry::groups.model', 'Just\Shapeshifter\Core\Models\Group');
         Config::set('cartalyst/sentry::throttling.model', 'Just\Shapeshifter\Core\Models\Throttle');
