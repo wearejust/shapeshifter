@@ -72,13 +72,13 @@
                             @if ($currentUser->can('delete'))
                             <td class="table-cell table-control">
                                 <div class="container">
+                                    @if ( ! in_array($rec->id, $disableDeleting) )
                                     <div class="table-control-content">
-                                        @if ( ! in_array($rec->id, $disableDeleting) )
                                         <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button">X</button>
                                         {{ Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id))))) }}
                                         {{ Form::close() }}
-                                        @endif
                                     </div>
+                                    @endif
                                 </div>
                             </td>
                             @endif
