@@ -279,8 +279,8 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   .footer { left: 22.5em; }
 }
 
-.js-datatable { display: none; }
-.js-datatable.dataTable { display: table; }
+.js .js-datatable { display: none; }
+.js .js-datatable.dataTable { display: table; }
 
 .login-area-form .alert { margin-left: 0; margin-right: 0; padding: .65em .75em; }
 
