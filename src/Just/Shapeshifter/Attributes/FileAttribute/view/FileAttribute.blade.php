@@ -1,42 +1,42 @@
-<div class="form-group">
-    <div class="form-label">
+<label class="form-group">
+    <span class="form-label">
         {{ Form::label($name, $label) }}
-    </div>
-    <div class="form-field js-image-container">
-        <div class="form-control" style="display: table; table-layout: fixed; width: 100%;">
-            <div class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                <div class="media-wrapper" style="margin: 0 3px 0 0;">
-                    <div class="media-wrapper-content">
-                        <div class="media-wrapper-content-wrapper">
-                            <div class="media-wrapper-content-wrapper-inner">
-                                {{ Form::file($name) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6" style="display: table-cell; vertical-align: top; width: 50%;">
-                <div class="media-wrapper" style="margin: 0 0 0 3px;">
+    </span>
+    <span class="form-field js-image-container">
+        <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
+            <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
+                <span class="media-wrapper" style="margin: 0 3px 0 0;">
+                    <span class="media-wrapper-content">
+                        <span class="media-wrapper-content-wrapper">
+                            <span class="media-wrapper-content-wrapper-inner">
+                                {{ Form::file($name, null, array('class' => 'form-field-content')) }}
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </span>
+            <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
+                <span class="media-wrapper" style="margin: 0 0 0 3px;">
                     @if ($value)
-                    <div class="media-wrapper-content">
-                        <div class="media-wrapper-content-wrapper">
-                            <div class="media-wrapper-content-wrapper-inner">
+                    <span class="media-wrapper-content">
+                        <span class="media-wrapper-content-wrapper">
+                            <span class="media-wrapper-content-wrapper-inner">
                                 {{ $value }}
-                            </div>
-                        </div>
-                    </div>
+                            </span>
+                        </span>
+                    </span>
                     <a class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;">X</a>
                     @endif
-                </div>
-            </div>
-        </div>
+                </span>
+            </span>
+        </span>
         {{--
-        <div class="group paragraph section-end">
-            <div class="col-6">
+        <span class="group paragraph section-end">
+            <span style="display: block; width: 50%;">
                 {{ Form::select($name . '_existing', $relatives) }}
-            </div>
-        </div>
+            </span>
+        </span>
         --}}
         @include('shapeshifter::layouts.helptext')
-    </div>
-</div>
+    </span>
+</label>

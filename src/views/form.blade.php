@@ -21,7 +21,7 @@
 @endif
 
 <div class="section section-start section-main">
-    {{ Form::model($model, array('class' => 'section-start','enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) }}
+    {{ Form::model($model, array('class' => 'section-start', 'enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) }}
     <fieldset class="section-start">
         <legend class="accessibility">{{ $title }}</legend>
         @foreach ($tabs as $k=>$tab)
@@ -35,7 +35,7 @@
         @endforeach
         <div class="offset-control-list">
             <ul class="control-list list">
-                <li class="control-item">{{ Form::submit( __('form.save'), array( 'class' => 'btn')) }}</li>
+                <li class="control-item">{{ Form::submit( __('form.save'), array('class' => 'btn')) }}</li>
                 <li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>
             </ul>
         </div>

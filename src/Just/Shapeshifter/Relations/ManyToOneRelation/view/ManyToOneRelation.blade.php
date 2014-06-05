@@ -1,13 +1,14 @@
-<div class="form-group">
-    <div class="form-label">
-        {{ Form::label($name, $label) }}
-    </div>
-    <div class="form-field">
-        <div class="form-control">
-            <div class="" style="width: 50%;">
-                {{ Form::select($name, $select)  }}
-            </div>
-        </div>
+<label class="form-group">
+    <span class="form-label">
+        {{$label}}
+    </span>
+    <span class="form-field">
+        <span class="form-control">
+            <span class="" style="display: block; width: 50%;">
+                {{ Form::select($name, $select, null, array('class' => 'form-field-content')) }}
+                <span class="form-group-highlight"></span>
+            </span>
+        </span>
         @include('shapeshifter::layouts.helptext')
-    </div>
-</div>
+    </span>
+</label>
