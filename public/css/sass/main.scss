@@ -107,6 +107,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-option-label { background-color: #e5e5e5; padding: 1em 1.5em; }
 .form-option-label:focus, .form-option-label:hover, .form-option-label:active { background-color: #d5d5d5; }
 .form-control { display: block; }
+.form-field-short { width: 25%; }
+.form-field-medium { width: 50%; }
 .form-field-content { position: relative; z-index: 2; }
 
 .login { background-color: #ebebeb; }
