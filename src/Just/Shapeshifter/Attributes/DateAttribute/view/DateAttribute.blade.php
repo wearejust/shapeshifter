@@ -1,13 +1,12 @@
-<div class="form-group">
-    <div class="form-label">
-        {{ Form::label($name, $label) }}
-    </div>
-    <div class="form-field">
-    	<div class="form-control">
-    		<div class="" style="width: 50%;">
-        		{{ Form::text($name, null, array('class' => 'datepicker', 'placeholder' => 'dd-mm-jjjj')) }}
-        	</div>
-        </div>
+<label class="form-group">
+    <span class="form-label">
+        {{$label}}
+    </span>
+    <span class="form-field">
+    	<span class="form-control" style="width: 50%;">
+    		{{ Form::text($name, null, array('class' => 'form-field-content datepicker', 'placeholder' => 'dd-mm-jjjj')) }}
+            <span class="form-group-highlight"></span>
+        </span>
         @include('shapeshifter::layouts.helptext')
-    </div>
-</div>
+    </span>
+</label>
