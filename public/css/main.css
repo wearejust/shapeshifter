@@ -2414,12 +2414,12 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   }
 }
 /* line 282, sass/main.scss */
-.js-datatable {
+.js .js-datatable {
   display: none;
 }
 
 /* line 283, sass/main.scss */
-.js-datatable.dataTable {
+.js .js-datatable.dataTable {
   display: table;
 }
 

@@ -2390,12 +2390,12 @@ th, td {
 }
 
 /* line 282, sass/main.scss */
-.js-datatable {
+.js .js-datatable {
   display: none;
 }
 
 /* line 283, sass/main.scss */
-.js-datatable.dataTable {
+.js .js-datatable.dataTable {
   display: table;
 }
 
