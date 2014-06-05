@@ -4,12 +4,9 @@
 
 <h1>{{ $title }}</h1>
 @if (count($tabs) > 1)
-<ul class="nav nav-tabs" data-tabs="tabs" id="tabs">
+<ul>
     @foreach ($tabs as $k=>$tab)
-        <li><a href="#{{ Str::slug($k) }}" data-toggle="tab">{{ $k == '_default' ? 'General' : $k }}</a></li>
-        @foreach ($tab['attributes'] as $attr)
-        <li><a href="#{{ Str::slug($attr->getDestinationName()) }}" data-toggle="tab">{{ $attr->getDestinationName() }}</a></li>
-        @endforeach
+    <li><a href="#{{ Str::slug($k) }}">{{ $k == '_default' ? 'Algemeen' : $k }}</a></li>
     @endforeach
 </ul>
 @endif
@@ -25,7 +22,7 @@
     <fieldset class="section-start">
         <legend class="accessibility">{{ $title }}</legend>
         @foreach ($tabs as $k=>$tab)
-            <div class="tab-pane" id="{{ Str::slug($k) }}">
+            <div id="{{ Str::slug($k) }}">
                 @foreach ($tab as $attr)
                     @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
                         {{ $attr->display() }}
