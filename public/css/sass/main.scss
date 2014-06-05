@@ -243,7 +243,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   .content-body { padding-bottom: 2.75em; padding-top: 2.75em; }
   .data-wrapper { overflow: visible; }
   .table-control-remove-button { @include opacity(0); }
-  .table-actions:hover .table-control-remove-button { @include opacity(1); }
+  .table-row-deletable:hover .table-control-remove-button { @include opacity(1); }
   .form-group, .alert, .content-alt, .form-options { margin-right: -2.75em; }
   .form-group, .alert, .content-alt { margin-left: -2.75em; }
   .form-group { margin-bottom: 1px; margin-top: 1px; }

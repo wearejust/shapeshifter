@@ -2249,7 +2249,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   }
 
   /* line 246, sass/main.scss */
-  .table-actions:hover .table-control-remove-button {
+  .table-row-deletable:hover .table-control-remove-button {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
   }
