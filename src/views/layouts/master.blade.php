@@ -24,7 +24,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') }}
 <script src="/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js"></script>
-<script></script>
 </head>
 <!--[if lte IE 8]>      <body class="ie8">     <![endif]-->
 <!--[if gte IE 9]><!--> <body>             <!--<![endif]-->

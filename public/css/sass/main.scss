@@ -121,8 +121,10 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .data-wrapper { overflow: hidden; }
 
 .table-row { @include transition(compcact(.1s)); }
-tbody tr:nth-child(odd) { background-color: #f2f2f2; }
+.table-row:nth-child(odd) { background-color: #f2f2f2; }
 .table-row.ui-sortable-helper:hover .table-control-remove-button { display: none; }
+.table-row-editable { cursor: pointer; }
+.table-row-editable:hover { background-color: #ddd; }
 th, td/*, .table-cell, .table-header*/ { display: none; padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }
 .table-order, .table-control { display: table-cell; }
 th:nth-child(-n+2), td:nth-child(-n+2) { display: table-cell; }​
@@ -143,8 +145,6 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .table-control-item { margin: 0; display: inline-block; vertical-align: top; margin-right: .15em; }
 .table-control-remove-button { bottom: 0; height: 4.071em; left: 0; margin: 0; position: absolute; top: 0; width: 100%; }
 .table-control-active { @include transform(translate(-4.071em, 0)); }
-.table-actions { cursor: pointer; }
-.table-actions:hover { background-color: #ddd; }
 
 .sortable { margin: 0; }
 .sortable li { margin: 0; }

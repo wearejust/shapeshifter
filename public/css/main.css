@@ -1478,7 +1478,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 124, sass/main.scss */
-tbody tr:nth-child(odd) {
+.table-row:nth-child(odd) {
   background-color: #f2f2f2;
 }
 
@@ -1488,40 +1488,50 @@ tbody tr:nth-child(odd) {
 }
 
 /* line 126, sass/main.scss */
+.table-row-editable {
+  cursor: pointer;
+}
+
+/* line 127, sass/main.scss */
+.table-row-editable:hover {
+  background-color: #ddd;
+}
+
+/* line 128, sass/main.scss */
 th, td {
   display: none;
   padding-top: 1.375em;
   padding-bottom: 1.375em;
 }
 
-/* line 127, sass/main.scss */
+/* line 129, sass/main.scss */
 .table-order, .table-control {
   display: table-cell;
 }
 
-/* line 128, sass/main.scss */
+/* line 130, sass/main.scss */
 th:nth-child(-n+2), td:nth-child(-n+2) {
   display: table-cell;
 }
 
-/* line 129, sass/main.scss */
+/* line 131, sass/main.scss */
 ​
 th.sorting, .table-header-sort-item-active-asc, .table-header-sort-item-active-desc {
   cursor: pointer;
 }
 
-/* line 130, sass/main.scss */
+/* line 132, sass/main.scss */
 th.sorting:hover, .table-header-sort-item-active-asc:hover, .table-header-sort-item-active-desc:hover {
   background-color: #ddd;
 }
 
-/* line 131, sass/main.scss */
+/* line 133, sass/main.scss */
 th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-sort-item-active-asc, th.table-order.table-header-sort-item-active-desc, th.table-control.table-header-sort-item-active-asc, th.table-control.table-header-sort-item-active-desc, th.sorting.table-order:hover, th.sorting.table-control:hover {
   background-color: transparent;
   cursor: auto;
 }
 
-/* line 132, sass/main.scss */
+/* line 134, sass/main.scss */
 .table-header-sort {
   margin-right: .25em;
   position: absolute;
@@ -1529,7 +1539,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   top: 0;
 }
 
-/* line 133, sass/main.scss */
+/* line 135, sass/main.scss */
 .table-header-sort-item {
   display: block;
   font-size: 10px;
@@ -1538,47 +1548,47 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   opacity: 0.25;
 }
 
-/* line 134, sass/main.scss */
+/* line 136, sass/main.scss */
 .table-header-sort-item:before {
   display: inline-block;
   vertical-align: top;
 }
 
-/* line 135, sass/main.scss */
+/* line 137, sass/main.scss */
 .table-header-sort-item-asc:before {
   content: "▲";
 }
 
-/* line 136, sass/main.scss */
+/* line 138, sass/main.scss */
 .table-header-sort-item-desc:before {
   content: "▼";
 }
 
-/* line 137, sass/main.scss */
+/* line 139, sass/main.scss */
 .table-header-sort-item-active-asc .table-header-sort-item-asc, .table-header-sort-item-active-desc .table-header-sort-item-desc {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
-/* line 138, sass/main.scss */
+/* line 140, sass/main.scss */
 .table-order {
   display: none;
   width: 22px;
 }
 
-/* line 139, sass/main.scss */
+/* line 141, sass/main.scss */
 .js .table-order {
   display: table-cell;
 }
 
-/* line 140, sass/main.scss */
+/* line 142, sass/main.scss */
 .table-control {
   position: relative;
   padding: 0;
   width: 1px;
 }
 
-/* line 141, sass/main.scss */
+/* line 143, sass/main.scss */
 .table-control-content {
   height: 100%;
   left: 100%;
@@ -1588,14 +1598,14 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   width: 4.071em;
 }
 
-/* line 142, sass/main.scss */
+/* line 144, sass/main.scss */
 .table-control-list {
   display: none;
   margin: 0;
   /*position: absolute; top: .25em; bottom: 0; left: -25%; right: 0;*/
 }
 
-/* line 143, sass/main.scss */
+/* line 145, sass/main.scss */
 .table-control-item {
   margin: 0;
   display: inline-block;
@@ -1603,7 +1613,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   margin-right: .15em;
 }
 
-/* line 144, sass/main.scss */
+/* line 146, sass/main.scss */
 .table-control-remove-button {
   bottom: 0;
   height: 4.071em;
@@ -1614,23 +1624,13 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   width: 100%;
 }
 
-/* line 145, sass/main.scss */
+/* line 147, sass/main.scss */
 .table-control-active {
   -webkit-transform: translate(-4.071em, 0);
   -moz-transform: translate(-4.071em, 0);
   -ms-transform: translate(-4.071em, 0);
   -o-transform: translate(-4.071em, 0);
   transform: translate(-4.071em, 0);
-}
-
-/* line 146, sass/main.scss */
-.table-actions {
-  cursor: pointer;
-}
-
-/* line 147, sass/main.scss */
-.table-actions:hover {
-  background-color: #ddd;
 }
 
 /* line 149, sass/main.scss */
