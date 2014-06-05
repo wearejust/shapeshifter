@@ -1,11 +1,12 @@
-<div class="form-group">
-    <div class="form-label">
-        {{ Form::label($name, $label) }}
-    </div>
-    <div class="form-field">
-    	<div class="form-control">
-	        {{ Form::textarea($name) }}
-	    </div>
+<label class="form-group">
+    <span class="form-label">
+        {{$name}}
+    </span>
+    <span class="form-field">
+    	<span class="form-control">
+	        {{ Form::textarea($name, null, array('class' => 'form-field-content')) }}
+	        <span class="form-group-highlight"></span>
+	    </span>
 	    @include('shapeshifter::layouts.helptext')
-    </div>
-</div>
+    </span>
+</label>

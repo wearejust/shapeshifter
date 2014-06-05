@@ -462,7 +462,7 @@ $.fn.sortableTable = function(options) {
 
 var SortableTable = function(options, table) {
 	this.options = $.extend({
-		'itemsMax': 5
+		'itemsMax': 25
 	}, options);
 
 	this.table = table;
