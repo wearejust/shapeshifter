@@ -7,6 +7,7 @@ use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
+use Just\Shapeshifter\Core\Models\User;
 use View;
 use Input;
 use Validator;
@@ -18,7 +19,10 @@ class AuthController extends \Controller
 {
     public function getLogin()
     {
-        return View::make('shapeshifter::login');
+        return View::make('shapeshifter::login', array(
+            'model' => new User(),
+            'currentUser' => null
+        ));
     }
 
     public function postLogin()

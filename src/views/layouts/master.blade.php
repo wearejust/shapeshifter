@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<title>Beheer – {{ Config::get('shapeshifter::config.customer') }}</title>
+<title>Beheer &mdash; {{ Config::get('shapeshifter::config.customer') }}</title>
 <meta content="" name="description">
 <meta content="wearejust.com" name="author">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"> <!-- remove when not responsive -->
@@ -25,8 +25,11 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') }}
 <script src="/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js"></script>
 </head>
-<!--[if lte IE 8]>      <body class="ie8">     <![endif]-->
-<!--[if gte IE 9]><!--> <body>             <!--<![endif]-->
+<!--[if lte IE 8]><body class="{{ ! $currentUser ? 'login ' : '' }}ie8"><![endif]-->
+<!--[if gte IE 9]><!--> <body class="{{ ! $currentUser ? 'login ' : '' }}"><!--<![endif]-->
+@if ( ! $currentUser)
+    @yield('login')
+@else
 <p class="menu-nav">
     <a class="menu-nav-button"><span class="accessibility">Menu</span></a>
 </p>
@@ -105,6 +108,8 @@ document.documentElement.className=TOUCH?"js touch":"js";
         {{ Notification::showSuccess() }}
     @endif
 </div>
+@endif
+
 {{ HTML::script('/packages/just/shapeshifter/js/jquery-tokeninput/src/jquery.tokeninput.js') }}
 {{ HTML::script('/packages/just/shapeshifter/js/ckeditor/ckeditor.js') }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-ui.min.js") }}
