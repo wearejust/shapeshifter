@@ -93,7 +93,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .form { border-top: 1px solid #e6e6e6; }
 .form-group, .alert { margin-left: -1.5em; margin-right: -1.5em; padding-bottom: 1.1em; padding-top: 1.1em; }
 .form-group { background-color: #f2f2f2; display: block; margin-bottom: .5em; margin-top: .5em; position: relative; }
-label.form-group:hover, .form-field-content:focus + .form-group-highlight { background-color: #ddd; }
+label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight { background-color: #ddd; }
 .form-group-highlight { bottom: 0; left: 0; position: absolute; right: 0; top: 0; z-index: 1; }
 .form-group:first-child { margin-top: 0; }
 .form-group:last-child { margin-bottom: 0; }

@@ -1330,7 +1330,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 96, sass/main.scss */
-label.form-group:hover, .form-field-content:focus + .form-group-highlight {
+label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight {
   background-color: #ddd;
 }
 
