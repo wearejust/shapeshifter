@@ -1,4 +1,6 @@
 <?php namespace Just\Shapeshifter\Attributes;
+
+use App;
 use View;
 
 /**
@@ -104,7 +106,7 @@ abstract class Attribute
      */
     public function display()
     {
-        $attribute = implode('', array_slice(explode('\\', get_class($this)), -1));
+        $attribute = App::make('ReflectionClass', array($this))->getShortName();
 
         if ($this->hasFlag('readonly'))
         {

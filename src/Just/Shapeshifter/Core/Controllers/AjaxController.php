@@ -1,10 +1,10 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
+use Controller;
 use Input;
 use Krucas\Notification\Facades\Notification;
 use Request;
 use Response;
-use Controller;
 
 class AjaxController extends Controller
 {

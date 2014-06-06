@@ -7,13 +7,13 @@ use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
-use Just\Shapeshifter\Core\Models\User;
-use View;
 use Input;
-use Validator;
-use Redirect;
+use Just\Shapeshifter\Core\Models\User;
 use Notification;
+use Redirect;
 use Sentry;
+use Validator;
+use View;
 
 class AuthController extends \Controller
 {

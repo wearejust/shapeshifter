@@ -1,6 +1,5 @@
 <?php namespace Just\Shapeshifter\Services;
 
-use Just\Shapeshifter\Relations\OneToManyRelation;
 use Route;
 
 class AttributeService

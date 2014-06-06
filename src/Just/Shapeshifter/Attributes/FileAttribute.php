@@ -1,8 +1,8 @@
 <?php namespace Just\Shapeshifter\Attributes;
 
 use Gregwar\Image\Image;
-use Input;
 use HTML;
+use Input;
 use Just\Shapeshifter\Exceptions\DirDoesNotExistException;
 use Just\Shapeshifter\Exceptions\DirNotWritableException;
 

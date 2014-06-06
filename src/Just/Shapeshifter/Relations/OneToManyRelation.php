@@ -87,25 +87,20 @@ class OneToManyRelation extends Relation
 
         $routes = Route::getRoutes();
         $controller = $this->resolveControllerByName($routes);
-        $title = $controller->getTitle();
 
         $node = explode('.', $this->destination, -1);
         $path = explode('/', Request::path(), -1);
         $numerics = array_filter($path, 'is_numeric');
 
         $path = array_filter($path, function($val) {
-            return !is_numeric($val);
+            return ! is_numeric($val);
         });
 
-        $path = array_merge($path, array(last($node), 'index'));
-        $route = route(implode('.', $path), $numerics);
-        $function = $this->function;
-
-        if (str_contains($route, '?')) {
-            throw new ShapeShifterException('The named route is already defined');
-        }
-
-        return View::make('shapeshifter::relations.OneToManyRelation', compact('route', 'title', 'function'));
+        return View::make('shapeshifter::relations.OneToManyRelation', array(
+            'route' => $this->getDestinationRoute($path, $node, $numerics),
+            'title' => $controller->getTitle(),
+            'function' => $this->function
+        ));
     }
 
     /**
@@ -150,6 +145,25 @@ class OneToManyRelation extends Relation
         $action = head(explode('@', $action));
 
         return new $action;
+    }
+
+    /**
+     * @param $path
+     * @param $node
+     * @param $numerics
+     * @throws \Just\Shapeshifter\ShapeShifterException
+     * @return string
+     */
+    private function getDestinationRoute($path, $node, $numerics)
+    {
+        $route = route(implode('.', array_merge($path, array(last($node), 'index'))), $numerics);
+
+        if (str_contains($route, '?'))
+        {
+            throw new ShapeShifterException('The named route is already defined');
+        }
+
+        return $route;
     }
 
 }
