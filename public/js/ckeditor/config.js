@@ -35,6 +35,8 @@ CKEDITOR.editorConfig = function (config) {
     config.extraPlugins = 'autogrow';
     config.removePlugins = 'elementspath, contextmenu, resize';
 
+    config.autoGrow_maxHeight = 500;
+
 
     // Define changes to default configuration here.
     // For the complete reference:

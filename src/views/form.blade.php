@@ -21,24 +21,34 @@
 
 <div class="section section-start section-main">
     {{ Form::model($model, array('class' => 'section-start', 'enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) }}
-    <fieldset class="section-start">
-        <legend class="accessibility">{{ $title }}</legend>
-        @foreach ($tabs as $k=>$tab)
-            <div class="tab-pane" id="{{ Str::slug($k) }}">
-                @foreach ($tab as $attr)
-                    @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
-                        {{ $attr }}
-                    @endif
-                @endforeach
-            </div>
-        @endforeach
-        <div class="offset-control-list">
+    <div class="section">
+        <fieldset class="section section-sub">
+            <legend class="accessibility">{{ $title }}</legend>
+            @foreach ($tabs as $k=>$tab)
+                <div class="tab-pane" id="{{ Str::slug($k) }}">
+                    @foreach ($tab as $attr)
+                        @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
+                            {{ $attr }}
+                        @endif
+                    @endforeach
+                </div>
+            @endforeach
+        </fieldset>
+        <fieldset class="section section-sub">
+            <legend class="accent"><span class="" style="display: block; margin-bottom: 1.375rem;">Subkop</span></legend>
+            @foreach ($tab as $attr)
+                @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
+                    {{ $attr }}
+                @endif
+            @endforeach
+        </fieldset>
+        <div class="offset-control-list paragraph section section-end">
             <ul class="control-list list">
                 <li class="control-item">{{ Form::submit( __('form.save'), array('class' => 'btn')) }}</li>
                 <li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>
             </ul>
         </div>
-    </fieldset>
+    </div>
     {{ Form::close() }}
 </div>
 
