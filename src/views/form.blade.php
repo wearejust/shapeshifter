@@ -22,7 +22,7 @@
     <fieldset class="section-start">
         <legend class="accessibility">{{ $title }}</legend>
         @foreach ($tabs as $k=>$tab)
-            <div id="{{ Str::slug($k) }}">
+            <div class="tab-pane" id="{{ Str::slug($k) }}">
                 @foreach ($tab as $attr)
                     @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
                         {{ $attr->display() }}

@@ -105,7 +105,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-options-content { margin: -1px 0; }
 .form-option { margin: 1px 0; }
 .form-option-label { background-color: #e5e5e5; padding: 1em 1.5em; }
-.form-option-label:focus, .form-option-label:hover, .form-option-label:active { background-color: #d5d5d5; }
+.form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked { background-color: #d5d5d5; }
 .form-control { display: block; }
 .form-field-short { width: 25%; }
 .form-field-medium { width: 50%; }
@@ -161,6 +161,8 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .sortable-item:before { content: ""; background-image: inline-image("public/css/images/triangle-arrow.png"); background-repeat: no-repeat; background-position: center center; display: block; width: 7px; height: 11px; position: absolute; top: 50%; left: 1.45em; margin-top: -5px; }
 .sortable-item.open:before { content: ""; background-image: inline-image("public/css/images/triangle-arrow-down.png"); width: 11px; height: 7px; margin-top: -3px; }
 .sortable-placeholder { outline: 1px dashed #000; }
+
+.js .tab-pane {  }
 
 .media-wrapper { display: block; margin-left: 1px; padding-bottom: 100%; position: relative; }
 .media-wrapper-content { background-color: #fff; border: 1px solid #ddd; bottom: 0; left: 0; position: absolute; right: 0; top: 0; }

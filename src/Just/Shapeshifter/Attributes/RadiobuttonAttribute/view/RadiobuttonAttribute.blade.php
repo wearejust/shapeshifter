@@ -8,8 +8,8 @@
 				<div class="form-options-content">
 					@foreach ($values as $value)
 			        <div class="form-option">
+				        {{ Form::radio($name, $value, null, array('class' => 'form-option-field', 'id' => 'radio-' . $value)) }}
 				        <label class="form-option-label" for="radio-{{ $value }}">
-				            {{ Form::radio($name, $value, null, array('id' => 'radio-' . $value)) }}
 				            {{ $value }}
 				        </label>
 				    </div>
