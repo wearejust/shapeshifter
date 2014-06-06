@@ -26,9 +26,8 @@ a:visited { color: lighten($primary-color, 20%); }
 a:focus, a:hover, a:active { background-color: $primary-color; color: #fff; text-shadow: none; }
 a:focus, a:hover, a:active, u, .link { text-decoration: none; }
 a:active, button:active, input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active, input:active + label, input + label:active { @include box-shadow(inset 0 0 1em rgba(0, 0, 0, .2)); }
-datalist, input, select, textarea, .token-input-list-facebook, .sp-replacer { background-color: #fff; border: 1px solid #ddd; @include box-shadow(none); color: $text-color; line-height: normal; }
-datalist, input, select, textarea, .token-input-list-facebook { padding-bottom: .75em; padding-top: .75em; @include placeholder(); }
-datalist, input, select, textarea { padding-left: 1em; padding-right: 1em; }
+datalist, input, select, textarea, .input, .sp-replacer { background-color: #fff; border: 1px solid #ddd; @include box-shadow(none); color: $text-color; line-height: normal; }
+datalist, input, select, textarea, .input { padding: .75em 1em; @include placeholder(); }
 /*datalist:focus, input:focus, select:focus, textarea:focus, ul.token-input-list-facebook.token-input-focused-facebook:focus { border-color: #bbb; }*/
 input[type="file"] { border-width: 0; }
 select { height: 37px; }
@@ -261,8 +260,8 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   .form-field { float: right; width: 66.667%; }
   .form-options { margin-bottom: -1.1em; margin-left: 0; margin-top: -1.1em; padding-left: 0; padding-right: 0; }
   .form-option-control { padding-left: 1em; padding-right: 1em; }
-  .form-control { margin-top: -.75em; }
-  .form-control:only-child { margin-bottom: -.75em; }
+  .form-control { margin-top: -.825em; }
+  .form-control:only-child { margin-bottom: -.825em; }
   .alert-success { margin: 0; padding-left: 1.5em; padding-right: 1.5em; }
   .sortable-handle { padding-right: 2.75em; }
   .add-item-button { margin: 0 -1.25em; }
