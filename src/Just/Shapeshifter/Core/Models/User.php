@@ -1,5 +1,6 @@
 <?php namespace Just\Shapeshifter\Core\Models;
 
+use App;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUser;
 
 class User extends SentryUser
