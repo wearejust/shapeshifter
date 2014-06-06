@@ -30,6 +30,7 @@ abstract class Attribute
      * @var string
      *
     * @access public
+     *
      */
     public $value;
 
@@ -284,6 +285,20 @@ abstract class Attribute
     {
         return $this->html;
     }
+
+    public function hide()
+    {
+        $this->flags[] = 'hide';
+    }
+
+    public function show()
+    {
+        if (($key = array_search('hide', $this->flags)) !== false)
+        {
+            unset($this->flags[$key]);
+        }
+    }
+
 }
 
 ?>

@@ -27,7 +27,7 @@
             @foreach ($tabs as $k=>$tab)
                 <div class="tab-pane" id="{{ Str::slug($k) }}">
                     @foreach ($tab as $attr)
-                        @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
+                        @if ( ! Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
                             {{ $attr }}
                         @endif
                     @endforeach
@@ -53,7 +53,7 @@
 </div>
 
 @foreach ($tab as $attr)
-    @if (Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
+    @if (Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
         {{ $attr }}
     @endif
 @endforeach
