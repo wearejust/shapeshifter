@@ -103,9 +103,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-label { margin-bottom: .5em; position: relative; z-index: 2; }
 .form-options { margin-left: -1.5em; margin-right: -1.5em; }
 .form-options-content { margin: -1px 0; }
-.form-option { margin: 1px 0; }
-.form-option-label { background-color: #e5e5e5; padding: 1em 1.5em; }
+.form-option { margin: 1px 0; position: relative; }
+.form-option-label { background-color: #e5e5e5; padding: 1em 1.5em 1em 3em; }
 .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked { background-color: #d5d5d5; }
+.form-option-field { left: 1.5em; position: absolute; top: 1em; }
 .form-control { display: block; }
 .form-field-short { width: 25%; }
 .form-field-medium { width: 50%; }
