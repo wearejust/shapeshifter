@@ -27,7 +27,7 @@ a:focus, a:hover, a:active { background-color: $primary-color; color: #fff; text
 a:focus, a:hover, a:active, u, .link { text-decoration: none; }
 a:active, button:active, input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active, input:active + label, input + label:active { @include box-shadow(inset 0 0 1em rgba(0, 0, 0, .2)); }
 datalist, input, select, textarea, .token-input-list-facebook, .sp-replacer { background-color: #fff; border: 1px solid #ddd; @include box-shadow(none); color: $text-color; line-height: normal; }
-datalist, input, select, textarea, .token-input-list-facebook { padding-bottom: .75em; padding-top: .75em; @include form-control-focus(); @include placeholder(); }
+datalist, input, select, textarea, .token-input-list-facebook { padding-bottom: .75em; padding-top: .75em; @include placeholder(); }
 datalist, input, select, textarea { padding-left: 1em; padding-right: 1em; }
 /*datalist:focus, input:focus, select:focus, textarea:focus, ul.token-input-list-facebook.token-input-focused-facebook:focus { border-color: #bbb; }*/
 input[type="file"] { border-width: 0; }
@@ -105,9 +105,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-options { margin-left: -1.5em; margin-right: -1.5em; }
 .form-options-content { margin: -1px 0; }
 .form-option { margin: 1px 0; position: relative; }
-.form-option-label { background-color: #e5e5e5; float: none !important; padding: 1em 1.5em 1em 3em; }
+.form-option-label { background-color: #e5e5e5; float: none !important; padding: 1em 2.75em 1em 2.5em; }
 .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked + .form-option-label { background-color: #d5d5d5; }
-.form-option-field { float: none; left: 1.5em; margin-right: 0; position: absolute; top: 1em; }
+.form-option-field { float: none; left: 1em; margin-right: 0; position: absolute; top: 1em; }
 .form-control { display: block; }
 .form-field-short { width: 25%; }
 .form-field-medium { width: 50%; }

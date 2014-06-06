@@ -796,25 +796,20 @@ datalist, input, select, textarea, .token-input-list-facebook {
   padding-bottom: .75em;
   padding-top: .75em;
 }
-/* line 215, sass/_utils.scss */
-datalist:focus, input:focus, select:focus, textarea:focus, .token-input-list-facebook:focus {
-  border-color: #999999;
-  outline: 0;
-}
-/* line 223, sass/_utils.scss */
+/* line 214, sass/_utils.scss */
 datalist:-moz-placeholder, input:-moz-placeholder, select:-moz-placeholder, textarea:-moz-placeholder, .token-input-list-facebook:-moz-placeholder {
   color: #999999;
 }
-/* line 224, sass/_utils.scss */
+/* line 215, sass/_utils.scss */
 datalist::-moz-placeholder, input::-moz-placeholder, select::-moz-placeholder, textarea::-moz-placeholder, .token-input-list-facebook::-moz-placeholder {
   color: #999999;
   opacity: 1;
 }
-/* line 226, sass/_utils.scss */
+/* line 217, sass/_utils.scss */
 datalist:-ms-input-placeholder, input:-ms-input-placeholder, select:-ms-input-placeholder, textarea:-ms-input-placeholder, .token-input-list-facebook:-ms-input-placeholder {
   color: #999999;
 }
-/* line 227, sass/_utils.scss */
+/* line 218, sass/_utils.scss */
 datalist::-webkit-input-placeholder, input::-webkit-input-placeholder, select::-webkit-input-placeholder, textarea::-webkit-input-placeholder, .token-input-list-facebook::-webkit-input-placeholder {
   color: #999999;
 }
@@ -1410,7 +1405,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight {
 .form-option-label {
   background-color: #e5e5e5;
   float: none !important;
-  padding: 1em 1.5em 1em 3em;
+  padding: 1em 2.75em 1em 2.5em;
 }
 
 /* line 109, sass/main.scss */
@@ -1421,7 +1416,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight {
 /* line 110, sass/main.scss */
 .form-option-field {
   float: none;
-  left: 1.5em;
+  left: 1em;
   margin-right: 0;
   position: absolute;
   top: 1em;
