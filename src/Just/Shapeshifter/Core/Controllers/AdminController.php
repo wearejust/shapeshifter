@@ -4,6 +4,7 @@ use Controller;
 use HTML;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Exceptions\ClassNotExistException;
+use Just\Shapeshifter\Exceptions\InvalidArgumentException;
 use Just\Shapeshifter\Exceptions\PropertyNotExistException;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Helpers\TimestampHelper;
@@ -313,13 +314,14 @@ abstract class AdminController extends Controller {
      */
     protected function setupView($template)
     {
-        array_map(function($a) {
-            $a->compile();
-        }, $this->attributes);
-
         $attributeService = new AttributeService();
         $breadcrumbService = new BreadcrumbService();
         $menuService = new MenuService();
+
+        if (method_exists($this, 'addDependencies'))
+        {
+            $this->addDependencies();
+        }
 
         $user = Sentry::getUser();
         $user->setDisabledActions($this->disabledActions);
@@ -342,6 +344,10 @@ abstract class AdminController extends Controller {
         $this->data['controller'] = get_class($this);
         $this->data['parent'] = $this->parent;
         $this->data['attributes'] = $this->attributes;
+
+        array_map(function($attribute) {
+            $attribute->compile();
+        }, $this->data['attributes']);
 
         return View::make("shapeshifter::{$template}", $this->data);
     }
@@ -553,6 +559,16 @@ abstract class AdminController extends Controller {
     public function afterUpdate($model)
     {
         return $model;
+    }
+
+    public function getAttribute($key)
+    {
+        if (array_key_exists($key, $this->attributes))
+        {
+            return $this->attributes[$key];
+        }
+
+        throw new InvalidArgumentException("Key [{$key}] doesnt exist in attributes list");
     }
 
     /**
