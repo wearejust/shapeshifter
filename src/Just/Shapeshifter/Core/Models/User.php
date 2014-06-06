@@ -16,4 +16,27 @@ class User extends SentryUser
     {
         $this->disabledActions = $disabledActions;
     }
+
+
+    public function getPersistCode()
+    {
+        if (App::environment() !== 'local')
+        {
+            return parent::getPersistCode();
+        }
+
+        if ( ! $this->persist_code)
+        {
+            $this->persist_code = $this->getRandomString();
+
+            // Our code got hashed
+            $persistCode = $this->persist_code;
+
+            $this->save();
+
+            return $persistCode;
+        }
+
+        return $this->persist_code;
+    }
 }
