@@ -1408,17 +1408,20 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight {
 /* line 107, sass/main.scss */
 .form-option-label {
   background-color: #e5e5e5;
+  float: none !important;
   padding: 1em 1.5em 1em 3em;
 }
 
 /* line 108, sass/main.scss */
-.form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked {
+.form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked + .form-option-label {
   background-color: #d5d5d5;
 }
 
 /* line 109, sass/main.scss */
 .form-option-field {
+  float: none;
   left: 1.5em;
+  margin-right: 0;
   position: absolute;
   top: 1em;
 }
