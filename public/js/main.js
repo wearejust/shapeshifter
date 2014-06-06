@@ -5,6 +5,7 @@ $(function() {
 
 	Menu = new Menu();
 
+	$('.tab-list').tabbed();
 	$('.js-datatable').sortableTable();
 	$('.acc-container').accordion();
 	$(".tokeninput").tokenInput(null,
@@ -382,6 +383,49 @@ $.fn.removeDialog = function() {
 
 
 
+
+
+
+// -----------------------------------------------------------
+// TABBED
+// -----------------------------------------------------------
+$.fn.tabbed = function(options) {
+	var items = $(this);
+	items.each(function(index, item) {
+		item = $(item);
+		if (!item.data('tabbed')) {
+			item.data('tabbed', new Tabbed(options, item));
+		}
+	});
+	return items;
+}
+
+var Tabbed = function(options, element) {
+	this.element = $(element);
+	this.tabs = this.element.find('a');
+
+	this.pages = $([]);
+	this.tabs.each(function(index, item) {
+		item = $($(item).attr('href'));
+		item.attr('id', 'js-' + item.attr('id'));
+		this.pages = this.pages.add(item);
+	}.bind(this));
+
+	$window.hashchange(this.change.bind(this));
+	this.change();
+}
+
+Tabbed.prototype.change = function(e) {
+	var hash = window.location.hash.replace('#','');
+	var tab = this.tabs.filter('[href="#'+hash+'"]');
+	if (!e && !tab.length) tab = this.tabs.eq(0).find('a');
+
+	this.tabs.removeClass('tab-list-item-button-active');
+	tab.addClass('tab-list-item-button-active');
+
+	this.pages.hide();
+	this.pages.filter('#js-' + hash).show();
+}
 
 
 
