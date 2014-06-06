@@ -107,6 +107,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-option-label { background-color: #e5e5e5; padding: 1em 1.5em; }
 .form-option-label:focus, .form-option-label:hover, .form-option-label:active { background-color: #d5d5d5; }
 .form-control { display: block; }
+.form-field-short { width: 25%; }
+.form-field-medium { width: 50%; }
 .form-field-content { position: relative; z-index: 2; }
 
 .login { background-color: #ebebeb; }
@@ -122,8 +124,6 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .add-item-button { margin: 0 -.75em; }
 .filter-search { float: right; max-width: 12em; }
 .search-control { background-color: lighten($tertiary-color, 5%); }
-
-.data-wrapper { overflow: hidden; }
 
 .table-row { @include transition(compcact(.1s)); }
 .table-row:nth-child(odd) { background-color: #f2f2f2; }
@@ -223,6 +223,8 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .js .menu-activated .header, .js .menu-activated .header-top { width: 17.5em; }
 .js .login { @include transition(compact(none)); }
 
+.js.touch .dataTables_wrapper { overflow: hidden; }
+
 @include respond-min-width(30em) {
 	.breadcrumbs-link-text { display: inline; }
 	.breadcrumbs-link:after { content: ""; }
@@ -241,7 +243,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   .content-body { padding-bottom: 2.75em; padding-top: 2.75em; }
   .data-wrapper { overflow: visible; }
   .table-control-remove-button { @include opacity(0); }
-  .table-actions:hover .table-control-remove-button { @include opacity(1); }
+  .touch .table-control-remove-button, .table-row-deletable:hover .table-control-remove-button { @include opacity(1); }
   .form-group, .alert, .content-alt, .form-options { margin-right: -2.75em; }
   .form-group, .alert, .content-alt { margin-left: -2.75em; }
   .form-group { margin-bottom: 1px; margin-top: 1px; }

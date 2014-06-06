@@ -3,7 +3,7 @@
         {{$label}}
     </span>
     <span class="form-field">
-        <span class="form-control">
+        <span class="form-control form-field-short">
             {{ Form::text($name, null, array('class' => 'form-field-content colorpicker')) }}
             <span class="form-group-highlight"></span>
         </span>

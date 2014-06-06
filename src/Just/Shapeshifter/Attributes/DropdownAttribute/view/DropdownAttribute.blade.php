@@ -3,7 +3,7 @@
         {{$label}}
     </span>
 	<span class="form-field">
-        <span class="form-control" style="width: 50%;">
+        <span class="form-control form-field-medium">
             {{ Form::select($name, $values, null, array('class' => 'form-field-content')) }}
             <span class="form-group-highlight"></span>
         </span>
