@@ -59,8 +59,6 @@ class ManyToManyFacebookRelation extends OneToManyRelation
 	{
         if (! $this->model) return null;
 
-        View::addLocation(__DIR__ . '/view/');
-
         $name = $this->name;
         $label = translateAttribute($name);
 
@@ -78,7 +76,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $results = $this->model->{$this->function}()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
         $all = $this->destination->repo->getModel()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 
-        return View::make('ManyToManyFacebookRelation',  compact('results', 'all', 'name', 'label'));
+        return View::make('shapeshifter::relations.ManyToManyFacebookRelation',  compact('results', 'all', 'name', 'label'));
     }
 
     /**

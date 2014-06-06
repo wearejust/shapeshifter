@@ -123,8 +123,6 @@ abstract class Attribute
 
     protected function view($attribute)
     {
-        View::addLocation( __DIR__ . '/' . $attribute . '/view/');
-
         $array = array();
         foreach (get_object_vars($this) as $k=>$item) {
             ${$k} = $item; $array[] = $k;
@@ -133,7 +131,7 @@ abstract class Attribute
         $label = $this->getLabel($name);
         $array[] = 'label';
 
-        return View::make($attribute, compact($array));
+        return View::make('shapeshifter::attributes.'.$attribute, compact($array));
     }
 
     /**

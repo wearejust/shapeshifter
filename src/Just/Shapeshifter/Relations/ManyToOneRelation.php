@@ -32,13 +32,11 @@ class ManyToOneRelation extends OneToManyRelation
      */
 	public function display()
 	{
-        View::addLocation( __DIR__ . '/view');
-
         $name = $this->foreign;
         $select = $this->getValuesForSelect();
         $label = $this->getLabel($name);
 
-        return View::make('ManyToOneRelation', compact('name', 'label', 'select'));
+        return View::make('shapeshifter::relations.ManyToOneRelation', compact('name', 'label', 'select'));
 	}
 
     /**

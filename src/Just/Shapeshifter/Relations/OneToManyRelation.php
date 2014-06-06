@@ -105,9 +105,7 @@ class OneToManyRelation extends Relation
             throw new ShapeShifterException('The named route is already defined');
         }
 
-        View::addLocation(__DIR__ . '/view/');
-
-        return View::make('OneToManyRelation', compact('route', 'title', 'function'));
+        return View::make('shapeshifter::relations.OneToManyRelation', compact('route', 'title', 'function'));
     }
 
     /**
