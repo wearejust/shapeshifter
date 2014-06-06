@@ -82,8 +82,15 @@ abstract class Attribute
     public $required = false;
 
     /**
+     * Generated HTML for the attribute
+     *
+     * @var string
+     */
+    protected $html = '';
+
+    /**
      * __construct
-     * 
+     *
      * @param string $name  Description.
      * @param array  $flags Description.
      *
@@ -95,7 +102,7 @@ abstract class Attribute
         $this->name = $name;
         $this->flags = $flags;
     }
-    
+
     /**
      * Base display function to display the view of the attribute.
      * Each attribute has it's own view, with the name (ReadonlyAttribute.blade.php)
@@ -104,16 +111,23 @@ abstract class Attribute
      * @access public
      * @return mixed Value.
      */
-    public function display()
+    public function compile()
     {
         $attribute = App::make('ReflectionClass', array($this))->getShortName();
 
         if ($this->hasFlag('readonly'))
         {
-            return $this->readonly();
+            $this->html = $this->readonly();
         }
+        else
+        {
+            $this->html = $this->view($attribute);
+        }
+    }
 
-        return $this->view($attribute);
+    public function __toString()
+    {
+        return $this->html;
     }
 
     protected function readonly()
@@ -122,6 +136,7 @@ abstract class Attribute
 
         return $this->view($attribute);
     }
+
 
     protected function view($attribute)
     {
@@ -133,13 +148,13 @@ abstract class Attribute
         $label = $this->getLabel($name);
         $array[] = 'label';
 
-        return View::make('shapeshifter::attributes.'.$attribute, compact($array));
+        return View::make('shapeshifter::attributes.'.$attribute, compact($array))->render();
     }
 
     /**
      * This function is fired when in edit mode (form). This function returns
      * an string, which is placed into the form field
-     * 
+     *
      * @access public
      * @return string.
      */
@@ -164,7 +179,7 @@ abstract class Attribute
     /**
      * This function is fired when in an list view. Each attribute can have it's own function
      * and the return value is the thing you can see in the list
-     * 
+     *
      *
      * @access public
      * @return mixed Value.
@@ -175,9 +190,9 @@ abstract class Attribute
     }
 
     /**
-     * This function is fired when an record is saved. It means each attribute can 
-     * have it's own function to specifiy what is saved in the Database. 
-     * 
+     * This function is fired when an record is saved. It means each attribute can
+     * have it's own function to specifiy what is saved in the Database.
+     *
      * @access public
      * @return mixed Value.
      */
@@ -188,7 +203,7 @@ abstract class Attribute
 
     /**
      * Sets the tab
-     * 
+     *
      * @param mixed $tab Description.
      *
      * @access public
@@ -201,7 +216,7 @@ abstract class Attribute
 
     /**
      * setRequired
-     * 
+     *
      * @param mixed $required Description.
      *
      * @access public
@@ -214,7 +229,7 @@ abstract class Attribute
 
     /**
      * setHelpText
-     * 
+     *
      * @param mixed $text Description.
      *
      * @access public
@@ -227,7 +242,7 @@ abstract class Attribute
 
     /**
      * hasFlag
-     * 
+     *
      * @param mixed $flag Description.
      *
      * @access public
@@ -236,11 +251,11 @@ abstract class Attribute
     public function hasFlag($flag = false)
     {
         return $this->flags && is_array($this->flags) && in_array($flag, $this->flags);
-    }    
+    }
 
     /**
      * addFlag
-     * 
+     *
      * @param mixed $flag Description.
      *
      * @access public
@@ -263,6 +278,11 @@ abstract class Attribute
         }
 
         return $label;
+    }
+
+    public function getHtml()
+    {
+        return $this->html;
     }
 }
 

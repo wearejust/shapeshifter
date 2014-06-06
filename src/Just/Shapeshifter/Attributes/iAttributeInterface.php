@@ -16,7 +16,8 @@ interface iAttributeInterface
     public function getDisplayValue();
     public function getEditValue();
     public function getSaveValue();
-    public function display();
+    public function compile();
+    public function __toString();
 }
 
 ?>

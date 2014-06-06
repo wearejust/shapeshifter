@@ -25,7 +25,7 @@ class ManyToManyCheckboxRelation extends ManyToManyFacebookRelation {
      * @throws \Just\Shapeshifter\Exceptions\MethodNotExistException
      * @return mixed Value.
      */
-    public function display()
+    public function compile()
     {
         if ( ! $this->model ) return null;
 
@@ -36,12 +36,12 @@ class ManyToManyCheckboxRelation extends ManyToManyFacebookRelation {
         $results = $this->model->{$this->function}()->get(array($table . '.id', "{$descriptor} as name"))->lists('id');
         $all = $this->destination->repo->getModel()->get(array($table . '.id', "{$descriptor} as name"))->lists('name', 'id');
 
-        return View::make('shapeshifter::relations.ManyToManyCheckboxRelation',  array(
+        $this->html = View::make('shapeshifter::relations.ManyToManyCheckboxRelation',  array(
             'results' => $results,
             'all' => $all,
             'name' => $this->name,
             'label' => translateAttribute($this->name)
-        ));
+        ))->render();
     }
 
     /**

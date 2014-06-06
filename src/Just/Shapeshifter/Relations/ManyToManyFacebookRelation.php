@@ -55,7 +55,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      * @throws \Just\Shapeshifter\Exceptions\MethodNotExistException
      * @return mixed Value.
      */
-	public function display()
+	public function compile()
 	{
         if (! $this->model) return null;
 
@@ -67,12 +67,12 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $results = $this->model->{$this->function}()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
         $all = $this->destination->repo->getModel()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 
-        return View::make('shapeshifter::relations.ManyToManyFacebookRelation',  array(
+        $this->html = View::make('shapeshifter::relations.ManyToManyFacebookRelation',  array(
             'results' => $results,
             'all' => $all,
             'name' => $this->name,
             'label' => translateAttribute($this->name)
-        ));
+        ))->render();
     }
 
     /**

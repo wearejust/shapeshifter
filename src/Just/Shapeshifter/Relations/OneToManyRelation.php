@@ -81,7 +81,7 @@ class OneToManyRelation extends Relation
      * @throws \Just\Shapeshifter\ShapeShifterException
      * @return mixed Value.
      */
-	public function display()
+	public function compile()
 	{
         if ($this->fromcontroller->mode !== 'edit') return null;
 
@@ -96,11 +96,11 @@ class OneToManyRelation extends Relation
             return ! is_numeric($val);
         });
 
-        return View::make('shapeshifter::relations.OneToManyRelation', array(
+        $this->html = View::make('shapeshifter::relations.OneToManyRelation', array(
             'route' => $this->getDestinationRoute($path, $node, $numerics),
             'title' => $controller->getTitle(),
             'function' => $this->function
-        ));
+        ))->render();
     }
 
     /**
