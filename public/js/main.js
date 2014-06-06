@@ -5,6 +5,7 @@ $(function() {
 
 	Menu = new Menu();
 
+	$('.tab-list').tabbed();
 	$('.js-datatable').sortableTable();
 	$('.acc-container').accordion();
 	$(".tokeninput").tokenInput(null,
@@ -386,6 +387,49 @@ $.fn.removeDialog = function() {
 
 
 // -----------------------------------------------------------
+// TABBED
+// -----------------------------------------------------------
+$.fn.tabbed = function(options) {
+	var items = $(this);
+	items.each(function(index, item) {
+		item = $(item);
+		if (!item.data('tabbed')) {
+			item.data('tabbed', new Tabbed(options, item));
+		}
+	});
+	return items;
+}
+
+var Tabbed = function(options, element) {
+	this.element = $(element);
+	this.tabs = this.element.find('a');
+
+	this.pages = $([]);
+	this.tabs.each(function(index, item) {
+		item = $($(item).attr('href'));
+		item.attr('id', 'js-' + item.attr('id'));
+		this.pages = this.pages.add(item);
+	}.bind(this));
+
+	$window.hashchange(this.change.bind(this));
+	this.change();
+}
+
+Tabbed.prototype.change = function(e) {
+	var hash = window.location.hash.replace('#','');
+	var tab = this.tabs.filter('[href="#'+hash+'"]');
+	if (!e && !tab.length) tab = this.tabs.eq(0).find('a');
+
+	this.tabs.removeClass('tab-list-item-button-active');
+	tab.addClass('tab-list-item-button-active');
+
+	this.pages.hide();
+	this.pages.filter('#js-' + hash).show();
+}
+
+
+
+// -----------------------------------------------------------
 // VIDEO PREVIEW
 // -----------------------------------------------------------
 $.fn.videoPreview = function(options) {
@@ -402,14 +446,11 @@ $.fn.videoPreview = function(options) {
 var VideoPreview = function(options, element) {
 	this.element = $(element);
 	this.input = this.element.find('.embedded-video-input');
-	this.video = this.element.find('.video-preview');
-	this.videoFrame = this.video.find('iframe');
-	this.image = this.element.find('.video-preview-loader');
+	this.input.on('change keyup', this.change.bind(this));
 
 	this.patternVimeo = /(videos|video|channels|\.com)\/([\d]+)/;
 	this.patternYoutube = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
 
-	this.input.on('change keyup', this.change.bind(this));
 	this.change();
 }
 
@@ -428,8 +469,23 @@ VideoPreview.prototype.change = function() {
 		src = '//youtube.com/embed/' + youtube[1] + '?modestbranding=1&showinfo=0&rel=0&autohide=1&iv_load_policy=3&hd=1';
 	}
 
-	this.videoFrame.attr('src', src);
-	this.video.toggleClass('hide', !src.length);
+	if (this.video) {
+		this.video.remove();
+	}
+
+	if (src.length) {
+		this.video = $('<span class="block container paragraph" style="z-index: 2;"> \
+			          		<span class="video-preview-loader"></span> \
+							<span class="hide section section-end paragraph video"> \
+								<iframe src="' + src + '" width="522" height="380" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> \
+							</span> \
+						</span>');
+		this.video.find('iframe').on('load', function() {
+			this.video.find('.video-preview-loader').remove();
+			this.video.find('.video').removeClass('hide');
+		}.bind(this));
+		this.element.append(this.video);
+	}
 }
 
 
