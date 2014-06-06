@@ -7,7 +7,7 @@
             <div class="form-options">
                 <div class="form-options-content">
                     @foreach ($all as $value => $label)
-                    <div class="form-option">
+                    <div class="section form-option">
                         {{ Form::checkbox($name . '['.$value.']', 1, in_array($value, $results), array('class' => 'form-option-field', 'id' => 'multiple-checkbox-' . $name . '-' .$value)) }}
                         <label class="form-option-label" for="multiple-checkbox-{{ $name }}-{{ $value }}">
                             {{ $label }}
