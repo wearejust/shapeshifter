@@ -10,6 +10,7 @@
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
                                 {{ Form::file($name, null, array('class' => 'form-field-content')) }}
+                                <span class="form-group-highlight"></span>
                             </span>
                         </span>
                     </span>
@@ -25,7 +26,7 @@
                             </span>
                         </span>
                     </span>
-                    <a class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;">X</a>
+                    <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                     @endif
                 </span>
             </span>
