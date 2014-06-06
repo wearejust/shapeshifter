@@ -1405,7 +1405,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight {
 .form-option-label {
   background-color: #e5e5e5;
   float: none !important;
-  padding: 1em 1.5em 1em 3em;
+  padding: 1em 2.75em 1em 2.5em;
 }
 
 /* line 109, sass/main.scss */
@@ -1416,7 +1416,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight {
 /* line 110, sass/main.scss */
 .form-option-field {
   float: none;
-  left: 1.5em;
+  left: 1em;
   margin-right: 0;
   position: absolute;
   top: 1em;
