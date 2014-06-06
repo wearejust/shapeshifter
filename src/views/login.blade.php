@@ -1,24 +1,6 @@
-<!doctype html>
-<html lang="nl">
-<head>
-<meta charset="utf-8">
-<title>Content — {{ Config::get('shapeshifter::config.customer') }}</title>
-<meta content="" name="description">
-<meta content="wearejust.com" name="author">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
-<meta name="msapplication-TileImage" content="/apple-touch-icon-precomposed.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="apple-mobile-web-app-title" content="Content">
-<script>document.documentElement.className="js"</script>
-<!--[if IE]><![endif]-->
-<link href="/apple-touch-icon-precomposed.png" rel="image_src">
-<link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
-<!--[if (lte IE 8)&(!IEMobile)]><link href="/packages/just/shapeshifter/css/all-old-ie.css" rel="stylesheet"><![endif]-->
-<!--[if gte IE 9]><!--><link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet"><!--<![endif]-->
-</head>
-<!--[if lte IE 8]>      <body class="login ie8">     <![endif]-->
-<!--[if gte IE 9]><!--> <body class="login">     <!--<![endif]-->
+@extends('shapeshifter::layouts.master')
+
+@section('login')
 <div class="login-header-area">
     <div class="page">
         <div class="content">
@@ -53,3 +35,4 @@
         </div>
     </div>
 </div>
+@stop

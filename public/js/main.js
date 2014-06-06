@@ -525,12 +525,12 @@ var SortableTable = function(options, table) {
 	});
 
 	this.items = this.tbody.children();
-	this.items.find('td:not(.table-order, .table-control)').on('click', function(e) {
+	this.items.filter('.table-row-editable').find('td:not(.table-order, .table-control)').on('click', function(e) {
 		window.location = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
 	});
-	
-	if (TOUCH && this.items.find('.table-control').length) {
-		this.items.on('touchstart', function(e) {
+
+	if (TOUCH) {
+		this.items.filter('.table-row-deletable').on('touchstart', function(e) {
 			var t = e.originalEvent.touches[0];
 			this.itemTouchStart = {
 				'pageX': t.pageX,
