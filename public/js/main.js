@@ -462,27 +462,27 @@ $.fn.sortableTable = function(options) {
 
 var SortableTable = function(options, table) {
 	this.options = $.extend({
-		'itemsMax': 25
+		'itemsMax': 20
 	}, options);
 
 	this.table = table;
 	this.element = this.table.closest('.content-body');
 	this.tbody = this.table.find('tbody');
 
+	this.options.itemsMaxRanged = this.options.itemsMax + 5;
 	this.options.sortable = this.table.hasClass('js-datatable-order');
 	this.defaultOrderIndex = this.table.find('[data-header-title="'+this.table.attr('data-sort-column')+'"]').index();
 	this.defaultOrder = this.table.attr('data-sort-order');
 
 	this.element.find('.search-control').on('keyup blur', this.search.bind(this));
 
-	this.hideButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show less</button>');
-	this.element.append(this.hideButton);
-	this.hideButton.on('click', this.itemsHide.bind(this));
+	this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more</span><span class="toggle-button-less" style="display: none;">less</span></button>');
+	this.element.append(this.toggleButton);
+	this.toggleButton.on('click', this.itemsToggle.bind(this));
+	this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
+	this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
+	this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
 
-	this.showButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="show-more-amount"></span> more</button>');
-	this.element.append(this.showButton);
-	this.showButton.on('click', this.itemsShow.bind(this));
-	this.showButtonAmount = this.showButton.find('.show-more-amount');
 
 	$.fn.dataTableExt.oStdClasses.sRowEmpty = "table-cell";
 	$.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
@@ -624,9 +624,11 @@ SortableTable.prototype.search = function(e) {
 	this.wrapLock();
 	this.tbody.children().show().execute(this, function() {
 		this.table.fnFilter(value);
-		this.showButton.hide();
-		this.hideButton.hide();
-		if (this.tbody.children().length > this.options.itemsMax) {
+		this.toggleButton.hide();
+		this.toggleButtonMore.hide();
+		this.toggleButtonLess.hide();
+
+		if (this.tbody.children().length > this.options.itemsMaxRanged) {
 			this.itemsHide();
 		}
 		this.wrapLock(true);
@@ -636,14 +638,23 @@ SortableTable.prototype.search = function(e) {
 	});
 }
 
+SortableTable.prototype.itemsToggle = function(e) {
+	if (this.toggleButtonMore.is(':visible')) {
+		this.itemsShow(e);
+	} else {
+		this.itemsHide(e);
+	}
+}
+
 SortableTable.prototype.itemsHide = function(e) {
 	var items = this.tbody.children();
-	if (items.length > this.options.itemsMax) {
-		this.showButton.show();
-		this.hideButton.hide();
-		this.showButtonAmount.text(items.length - this.options.itemsMax);
+	if (items.length > this.options.itemsMaxRanged) {
+		this.toggleButton.show();
+		this.toggleButtonMore.show();
+		this.toggleButtonLess.hide();
 
 		if (!e) {
+			this.toggleButtonAmount.text(items.length - this.options.itemsMax);
 			items.slice(this.options.itemsMax).hide();
 		} else {
 			var item = items.eq(this.options.itemsMax-1);
@@ -657,12 +668,14 @@ SortableTable.prototype.itemsHide = function(e) {
 
 SortableTable.prototype.itemsShow = function(e) {
 	var items = this.tbody.children();
-	if (items.length > this.options.itemsMax) {
+	if (items.length > this.options.itemsMaxRanged) {
 		this.wrapLock();
 
 		items.slice(this.options.itemsMax).show();
-		this.showButton.hide();
-		this.hideButton.show();
+
+		this.toggleButton.show();
+		this.toggleButtonMore.hide();
+		this.toggleButtonLess.show();
 
 		var item = items.last();
 		this.wrap.animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px'}, function() {

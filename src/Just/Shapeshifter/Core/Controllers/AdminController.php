@@ -313,6 +313,10 @@ abstract class AdminController extends Controller {
      */
     protected function setupView($template)
     {
+        array_map(function($a) {
+            $a->compile();
+        }, $this->attributes);
+
         $attributeService = new AttributeService();
         $breadcrumbService = new BreadcrumbService();
         $menuService = new MenuService();
@@ -337,10 +341,7 @@ abstract class AdminController extends Controller {
         $this->data['mode'] = $this->mode;
         $this->data['controller'] = get_class($this);
         $this->data['parent'] = $this->parent;
-
-        $this->data['attributes'] = array_map(function($a) {
-            $a->compile();
-        }, $this->attributes);
+        $this->data['attributes'] = $this->attributes;
 
         return View::make("shapeshifter::{$template}", $this->data);
     }
