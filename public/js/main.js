@@ -388,60 +388,49 @@ $.fn.removeDialog = function() {
 // -----------------------------------------------------------
 // VIDEO PREVIEW
 // -----------------------------------------------------------
-var VideoPreview = function(node) {
-	this.container = $(node);
-	this.video = this.container.find('.embedded-video-input');
-	this.videoPreview = this.container.find('.video-preview');
-	this.loadImage = this.container.find('.video-preview-loader');
-
-	this.video.on('change keyup', this.previewVideo.bind(this));
-
-	if (this.video.val())
-	{
-		this.previewVideo();
-	}
-}
-
-VideoPreview.prototype.previewVideo = function() {
-	var vimeoPattern = /(videos|video|channels|\.com)\/([\d]+)/;
-	var youtubePattern = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
-
-	var vimeo = (this.video.val().match(vimeoPattern));
-	var youtube = (this.video.val().match(youtubePattern));
-
-	if (vimeo && vimeo[2].length)
-	{
-		this.videoPreview.find('iframe').attr('src', '//player.vimeo.com/video/'+vimeo[2]+'?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff');
-	}
-	else if (youtube && youtube[1].length)
-	{
-		this.videoPreview.find('iframe').attr('src', '//youtube.com/embed/' + youtube[1]+'?modestbranding=1&showinfo=0&rel=0&autohide=1&iv_load_policy=3&hd=1');
-	}
-	else
-	{
-		this.videoPreview.addClass('hide');
-		return;
-	}
-
-	this.loadImage.removeClass('hide');
-	this.videoPreview.find('iframe').on('load', function() {
-		this.loadImage.addClass('hide');
-		this.videoPreview.removeClass('hide');
-	}.bind(this));
-}
-
-$.fn.videoPreview = function() {
-	$(this).each(function(index, el) {
-		el = $(el);
-		var instance = el.data('videoPreview');
-		if (!instance) {
-			el.data('videoPreview', new VideoPreview(this));
+$.fn.videoPreview = function(options) {
+	var items = $(this);
+	items.each(function(index, item) {
+		item = $(item);
+		if (!item.data('videoPreview')) {
+			item.data('videoPreview', new VideoPreview(options, item));
 		}
-	})
+	});
+	return items;
 }
 
+var VideoPreview = function(options, element) {
+	this.element = $(element);
+	this.input = this.element.find('.embedded-video-input');
+	this.video = this.element.find('.video-preview');
+	this.videoFrame = this.video.find('iframe');
+	this.image = this.element.find('.video-preview-loader');
 
+	this.patternVimeo = /(videos|video|channels|\.com)\/([\d]+)/;
+	this.patternYoutube = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?(?=.*v=((\w|-){11}))(?:\S+)?$/;
 
+	this.input.on('change keyup', this.change.bind(this));
+	this.change();
+}
+
+VideoPreview.prototype.change = function() {
+	var val = this.input.val();
+	if (this.val == val) return;
+	this.val = val;
+
+	var vimeo = this.val.match(this.patternVimeo);
+	var youtube = this.val.match(this.patternYoutube);
+
+	src = '';
+	if (vimeo && vimeo[2].length) {
+		src = '//player.vimeo.com/video/' + vimeo[2] + '?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff';
+	} else if (youtube && youtube[1].length) {
+		src = '//youtube.com/embed/' + youtube[1] + '?modestbranding=1&showinfo=0&rel=0&autohide=1&iv_load_policy=3&hd=1';
+	}
+
+	this.videoFrame.attr('src', src);
+	this.video.toggleClass('hide', !src.length);
+}
 
 
 

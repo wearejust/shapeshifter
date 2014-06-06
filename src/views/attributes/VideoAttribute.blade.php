@@ -11,7 +11,6 @@
 
         <!-- met js toevoegen -->
         <span class="block container" style="z-index: 2;">
-            <span class="hide video-preview-loader paragraph"></span>
             <span class="hide section section-end paragraph video video-preview">
                 <iframe src="" width="522" height="380" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
             </span>
