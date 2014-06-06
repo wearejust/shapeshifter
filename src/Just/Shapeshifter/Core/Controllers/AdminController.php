@@ -332,12 +332,15 @@ abstract class AdminController extends Controller {
         $this->data['disableEditing'] = $this->disableEditing;
         $this->data['model'] = $this->model;
 
-        $this->data['attributes'] = $this->attributes;
         $this->data['lastVisibleAttribute'] = $this->getLastVisibleAttribute();
         $this->data['singular'] = $this->singular;
         $this->data['mode'] = $this->mode;
         $this->data['controller'] = get_class($this);
         $this->data['parent'] = $this->parent;
+
+        $this->data['attributes'] = array_map(function($a) {
+            $a->compile();
+        }, $this->attributes);
 
         return View::make("shapeshifter::{$template}", $this->data);
     }

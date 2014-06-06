@@ -7,6 +7,10 @@ use View;
 
 class ManyToOneRelation extends OneToManyRelation
 {
+
+    /**
+     * @var mixed
+     */
     protected $foreign;
 
     /**
@@ -30,13 +34,13 @@ class ManyToOneRelation extends OneToManyRelation
      * @access public
      * @return mixed Value.
      */
-	public function display()
+	public function compile()
 	{
-        $name = $this->foreign;
-        $select = $this->getValuesForSelect();
-        $label = $this->getLabel($name);
-
-        return View::make('shapeshifter::relations.ManyToOneRelation', compact('name', 'label', 'select'));
+        $this->html = View::make('shapeshifter::relations.ManyToOneRelation', array(
+            'name' => $this->foreign,
+            'label' => $this->getLabel($this->foreign),
+            'select' => $this->getValuesForSelect(),
+        ))->render();
 	}
 
     /**
