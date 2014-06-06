@@ -418,7 +418,7 @@ var Tabbed = function(options, element) {
 Tabbed.prototype.change = function(e) {
 	var hash = window.location.hash.replace('#','');
 	var tab = this.tabs.filter('[href="#'+hash+'"]');
-	if (!e && !tab.length) tab = this.tabs.eq(0).find('a');
+	if (!e && !tab.length) tab = this.tabs.eq(0);
 
 	this.tabs.removeClass('tab-list-item-button-active');
 	tab.addClass('tab-list-item-button-active');
