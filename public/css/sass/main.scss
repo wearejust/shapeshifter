@@ -112,6 +112,11 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight { back
 .form-field-medium { width: 50%; }
 .form-field-content { position: relative; z-index: 2; }
 
+.tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; margin: 0; }
+.tab-list-item { float: left; font-size: 1.5em; font-weight: bold; margin: 0; }
+.tab-list-item-button { border-color: #f2f2f2; border-width: 0 1px 0 0; display: block; padding: 1em 2.75rem; text-decoration: none; }
+.tab-list-item-button-active { background-color: #f2f2f2; }
+
 .login { background-color: #ebebeb; }
 .login-header-area { background-color: $primary-color; padding: 2em 0; }
 .login-header { text-align: center; color: #fff; margin: 0; text-decoration: underline; text-transform: uppercase; }

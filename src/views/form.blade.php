@@ -4,9 +4,11 @@
 
 <h1>{{ $title }}</h1>
 @if (count($tabs) > 1)
-<ul>
+<ul class="tab-list content-alt group">
     @foreach ($tabs as $k=>$tab)
-    <li><a href="#{{ Str::slug($k) }}">{{ $k == '_default' ? 'Algemeen' : $k }}</a></li>
+    <li class="tab-list-item">
+        <a class="tab-list-item-button" href="#{{ Str::slug($k) }}">{{ $k == '_default' ? 'Algemeen' : $k }}</a>
+    </li>
     @endforeach
 </ul>
 @endif
