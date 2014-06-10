@@ -1330,8 +1330,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 96, sass/main.scss */
-label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight {
-  background-color: #ddd;
+label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked + .form-option-label {
+  background-color: #d4d4d4;
 }
 
 /* line 97, sass/main.scss */
@@ -1398,21 +1398,17 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .form-option-label {
   background-color: #e5e5e5;
   float: none !important;
-  padding: 1em 2.75em 1em 2.5em;
+  padding: 1.1em 2.75em 1.1em 2.5em;
 }
 
-/* line 108, sass/main.scss */
-.form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked + .form-option-label {
-  background-color: #d5d5d5;
-}
-
+/*.form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:checked + .form-option-label { background-color: #d5d5d5; }*/
 /* line 109, sass/main.scss */
 .form-option-field {
   float: none;
   left: 1em;
   margin-right: 0;
   position: absolute;
-  top: 1em;
+  top: 1.1em;
 }
 
 /* line 110, sass/main.scss */
