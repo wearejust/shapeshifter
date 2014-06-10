@@ -1330,7 +1330,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 96, sass/main.scss */
-label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:checked + .form-option-label {
+label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:focus + .form-option-label, .form-option-field:checked + .form-option-label {
   background-color: #d4d4d4;
 }
 
