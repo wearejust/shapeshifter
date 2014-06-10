@@ -89,14 +89,14 @@ document.documentElement.className=TOUCH?"js touch":"js";
             @endforeach
         </ul>
     </div>
-    <div class="header-top">
-        <div class="system-account">
-            <div class="container">
-                <p class="system-user">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</p>
-                <p class="system-log">
-                    <a href="{{ route('admin-logout') }}" class="system-log-button"><span class="accessibility">{{ __('user.logout') }}</span></a>
-                </p>
-            </div>
+</div>
+<div class="header-top">
+    <div class="system-account">
+        <div class="container">
+            <p class="system-user">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</p>
+            <p class="system-log">
+                <a href="{{ route('admin-logout') }}" class="system-log-button"><span class="accessibility">{{ __('user.logout') }}</span></a>
+            </p>
         </div>
     </div>
 </div>
@@ -109,7 +109,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
     @endif
 </div>
 @endif
-
 {{ HTML::script('/packages/just/shapeshifter/js/jquery-tokeninput/src/jquery.tokeninput.js') }}
 {{ HTML::script('/packages/just/shapeshifter/js/ckeditor/ckeditor.js') }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-ui.min.js") }}

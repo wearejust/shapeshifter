@@ -22,7 +22,7 @@
                         @endif
                         <div class="separate">
                             {{ Form::label('email', __('login.email'), array('class' => 'accessibility')) }}
-                            {{ Form::text('email', null, array('placeholder' => __('login.email'), 'autofocus')) }}
+                            {{ Form::email('email', null, array('placeholder' => __('login.email'), 'autofocus')) }}
                         </div>
                         <div class="separate">
                             {{ Form::label('password', __('login.password'), array('class' => 'accessibility')) }}
