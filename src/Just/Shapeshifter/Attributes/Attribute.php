@@ -128,6 +128,8 @@ abstract class Attribute
 
     public function __toString()
     {
+        $this->compile();
+
         return $this->html;
     }
 
