@@ -26,7 +26,7 @@ a:visited { color: lighten($primary-color, 20%); }
 a:focus, a:hover, a:active { background-color: $primary-color; color: #fff; text-shadow: none; }
 a:focus, a:hover, a:active, u, .link { text-decoration: none; }
 a:active, button:active, input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:active, input:active + label, input + label:active { @include box-shadow(inset 0 0 1em rgba(0, 0, 0, .2)); }
-datalist, input, select, textarea, .input, .sp-replacer { background-color: #fff; border: 1px solid #ddd; @include box-shadow(none); color: $text-color; line-height: normal; }
+datalist, input, select, textarea, .input, .sp-replacer { background-color: #fff; border: 1px solid #dadada; @include box-shadow(none); color: $text-color; line-height: normal; }
 datalist, input, select, textarea, .input { padding: .75em 1em; @include placeholder(); }
 /*datalist:focus, input:focus, select:focus, textarea:focus, ul.token-input-list-facebook.token-input-focused-facebook:focus { border-color: #bbb; }*/
 input[type="file"] { border-width: 0; }

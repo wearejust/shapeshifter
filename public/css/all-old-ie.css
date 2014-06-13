@@ -783,7 +783,7 @@ a:active, button:active, input[type="button"]:active, input[type="submit"]:activ
 /* line 29, sass/main.scss */
 datalist, input, select, textarea, .input, .sp-replacer {
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #dadada;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
