@@ -24,24 +24,30 @@
     <div class="section">
         <fieldset class="section section-sub">
             <legend class="accessibility">{{ $title }}</legend>
-            @foreach ($tabs as $k=>$tab)
-                <div class="tab-pane" id="{{ Str::slug($k) }}">
-                    @foreach ($tab as $attr)
-                        @if ( ! Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
-                            {{ $attr }}
-                        @endif
-                    @endforeach
-                </div>
-            @endforeach
+            <div class="section">
+                @foreach ($tabs as $k=>$tab)
+                    <div class="tab-pane" id="{{ Str::slug($k) }}">
+                        @foreach ($tab as $attr)
+                            @if ( ! Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
+                                {{ $attr }}
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
         </fieldset>
+        {{--
         <fieldset class="section section-sub">
             <legend class="accent"><span class="" style="display: block; margin-bottom: 1.375rem;">Subkop</span></legend>
-            @foreach ($tab as $attr)
-                @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
-                    {{ $attr }}
-                @endif
-            @endforeach
+            <div class="section">
+                @foreach ($tab as $attr)
+                    @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
+                        {{ $attr }}
+                    @endif
+                @endforeach
+            </div>
         </fieldset>
+        --}}
         <div class="offset-control-list paragraph section section-end">
             <ul class="control-list list">
                 <li class="control-item">{{ Form::submit( __('form.save'), array('class' => 'btn')) }}</li>

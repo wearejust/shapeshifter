@@ -1,7 +1,7 @@
 <div class="form-group">
 	<fieldset>
 		<legend class="form-label wrap section-end">
-			<span class="block form-label">{{ $label }}</span>
+			<span class="form-label form-legend">{{ $label }}</span>
 		</legend>
 		<div class="form-field radio">
 			<div class="form-options">
