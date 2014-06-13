@@ -13,7 +13,7 @@ html, .text { line-height: 1.375; }
 html { font-size: globalPerc($base); }
 body { background-color: #fff; position: relative; }
 h1, h2, h3, h4, h5, h6, .accent { font-weight: bold; }
-h1, .title { font-size: 3.5em; line-height: 1; margin-bottom: .65em; margin-top: .65em; }
+h1, .title { font-size: 3em; line-height: 1; margin-bottom: .65em; margin-top: .65em; }
 h2, .title-sub, .onetomany-relation-content h1 { font-size: 2em; line-height: 1.1; margin-bottom: 1em; margin-top: 2em; }
 h2:first-child, h3:first-child, p:first-child, /*ul:first-child, ol:first-child, li:first-child, */blockquote:first-child, img:first-child, form:first-child, fieldset:first-child, pre:first-child, .section:first-child, h2 + h3, h2 + p, h3 + p, legend + p { margin-top: 0; }
 h2:last-child, h3:last-child, p:last-child, /*ul:last-child, ol:last-child, li:last-child, */blockquote:last-child, img:last-child, form:last-child, fieldset:last-child, pre:last-child, .section:last-child { margin-bottom: 0; }
@@ -112,9 +112,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .form-field-content, .form-single-checkbox { position: relative; z-index: 2; }
 .form-single-checkbox { float: none !important; }
 
-.tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; margin: 0; }
-.tab-list-item { float: left; font-size: 1.5em; font-weight: bold; margin: 0; }
-.tab-list-item-button { border-color: #f2f2f2; border-width: 0 1px 0 0; display: block; padding: 1em 2.75rem; text-decoration: none; }
+.tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; margin-bottom: 0; margin-top: 0; }
+.tab-list-item { float: left; font-weight: bold; margin: 0; }
+.tab-list-item-button { border-color: #f2f2f2; border-width: 0 1px 0 0; display: block; padding: 1em 1.5rem; text-decoration: none; }
 .tab-list-item-button:focus, .tab-list-item-button:hover, .tab-list-item-button:active { background-color: #ddd; color: #000; }
 .tab-list-item-button-active { background-color: #f2f2f2; }
 
@@ -241,18 +241,20 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 
 @include respond-min-width(40em) {
   body { background-color: #ebebeb; }
+  h1. .title { font-size: 3.5em; }
   h1, .onetomany-relation-content h1 { margin: -2.75rem 0 0; padding: 2.75rem 0; }
   .onetomany-relation-content h1 { margin-bottom: .75em; margin-top: 0; padding: 0; }
   th, td { display: table-cell; padding-left: 1.375em; padding-right: 1.375em; }
   .page { padding: 0 4.071em; }
   .touch .page { padding: 0; }
   .content-body { background-color: #fff; border-color: #ddd; border-width: 0 1px; }
-  .content-body, .form-group, .alert, .footer-content, .table-header-last, .table-cell-last { padding-right: 2.75em; }
-  .content-body, .form-group, .alert, .footer-content, th:first-child, td:first-child { padding-left: 2.75em; }
+  .content-body, .form-group, .alert, .footer-content, .tab-list-item-button, .table-header-last, .table-cell-last { padding-right: 2.75rem; }
+  .content-body, .form-group, .alert, .footer-content, .tab-list-item-button, th:first-child, td:first-child { padding-left: 2.75rem; }
   .content-body { padding-bottom: 2.75em; padding-top: 2.75em; }
   .data-wrapper { overflow: visible; }
   .table-control-remove-button { @include opacity(0); }
   .touch .table-control-remove-button, .table-row-deletable:hover .table-control-remove-button { @include opacity(1); }
+  .tab-list-item { font-size: 1.5em; }
   .form-group, .alert, .content-alt, .form-options { margin-right: -2.75em; }
   .form-group, .alert, .content-alt { margin-left: -2.75em; }
   .form-group { margin-bottom: 1px; margin-top: 1px; }
