@@ -26,7 +26,7 @@ sub, sup { font-size: 75%; line-height: 0; position: relative; }
 sub { bottom: -0.25em; }
 sup { top: -0.5em; }
 
-body { font-family: sans-serif, Arial; font-size: 14px; line-height: normal; color: #000; background-color: #fff; padding: .75em 1em; }
+body { font-family: sans-serif, Arial; font-size: 14px; line-height: 1.375; color: #000; background-color: #fff; margin: .75em 1em; padding: 0; }
 .cke_editable { }
 h1, h2, h3, h4, h5, h6, .accent { font-weight: bold; }
 h2 { font-size: 1.375em; line-height: 1.1; margin-bottom: 1em; margin-top: 2em; }
