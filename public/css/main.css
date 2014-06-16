@@ -2497,14 +2497,20 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   display: table;
 }
 
-/* line 301, sass/main.scss */
+/* line 300, sass/main.scss */
+.js .ckeditor {
+  height: 244px;
+  visibility: hidden;
+}
+
+/* line 302, sass/main.scss */
 .login-area-form .alert {
   margin-left: 0;
   margin-right: 0;
   padding: .65em .75em;
 }
 
-/* line 303, sass/main.scss */
+/* line 304, sass/main.scss */
 .lightbox {
   bottom: 0;
   left: 0;
@@ -2515,7 +2521,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   z-index: 9999;
 }
 
-/* line 304, sass/main.scss */
+/* line 305, sass/main.scss */
 .lightbox-overlay {
   background-color: #000;
   height: 100%;
@@ -2528,47 +2534,47 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
   z-index: 9999;
 }
 
-/* line 306, sass/main.scss */
+/* line 307, sass/main.scss */
 .section-main {
   margin-bottom: 5.5em;
   margin-top: 5.5em;
 }
 
-/* line 307, sass/main.scss */
+/* line 308, sass/main.scss */
 .section-sub {
   margin-bottom: 2.75em;
   margin-top: 2.75em;
 }
 
-/* line 308, sass/main.scss */
+/* line 309, sass/main.scss */
 .section-row {
   margin-bottom: 1px;
   margin-top: 1px;
 }
 
-/* line 309, sass/main.scss */
+/* line 310, sass/main.scss */
 .section-start {
   margin-top: 0;
 }
 
-/* line 310, sass/main.scss */
+/* line 311, sass/main.scss */
 .section-end {
   margin-bottom: 0;
 }
 
-/* line 312, sass/main.scss */
+/* line 313, sass/main.scss */
 .js .js-hide, .js .js-remove, .hide {
   display: none;
 }
 
 /*.js textarea { overflow-y: hidden; }*/
 /*.js textarea, */
-/* line 314, sass/main.scss */
+/* line 315, sass/main.scss */
 .js .js-cover {
   visibility: hidden;
 }
 
-/* line 315, sass/main.scss */
+/* line 316, sass/main.scss */
 .js .js-transparent {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -2576,7 +2582,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 
 /* print */
 @media print {
-  /* line 321, sass/main.scss */
+  /* line 322, sass/main.scss */
   * {
     background: transparent !important;
     box-shadow: none !important;
@@ -2584,48 +2590,48 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
     text-shadow: none !important;
   }
 
-  /* line 322, sass/main.scss */
+  /* line 323, sass/main.scss */
   aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu {
     display: none;
   }
 
-  /* line 323, sass/main.scss */
+  /* line 324, sass/main.scss */
   a[href]:after {
     content: " (" attr(href) ") ";
     font-size: 90%;
   }
 
-  /* line 324, sass/main.scss */
+  /* line 325, sass/main.scss */
   a[href^="/"]:after {
     content: " (http://" attr(href) ") ";
   }
 
-  /* line 325, sass/main.scss */
+  /* line 326, sass/main.scss */
   abbr:after {
     content: " (" attr(title) ")";
   }
 
-  /* line 326, sass/main.scss */
+  /* line 327, sass/main.scss */
   thead {
     display: table-header-group;
   }
 
-  /* line 327, sass/main.scss */
+  /* line 328, sass/main.scss */
   tr, img, pre, blockquote {
     page-break-inside: avoid;
   }
 
-  /* line 328, sass/main.scss */
+  /* line 329, sass/main.scss */
   img {
     max-width: 100% !important;
   }
 
-  /* line 329, sass/main.scss */
+  /* line 330, sass/main.scss */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
 
-  /* line 330, sass/main.scss */
+  /* line 331, sass/main.scss */
   h2, h3, p {
     orphans: 3;
     widows: 3;

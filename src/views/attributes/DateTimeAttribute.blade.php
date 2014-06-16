@@ -4,7 +4,7 @@
     </span>
     <span class="form-field">
     	<span class="form-control form-field-medium">
-        	{{ Form::text($name, null, array('class' => 'form-field-content datetimepicker')) }}
+        	{{ Form::text($name, null, array('class' => 'form-field-content datetimepicker', 'autocorrect' => 'off')) }}
             <span class="form-group-highlight"></span>
         </span>
         @include('shapeshifter::layouts.helptext')

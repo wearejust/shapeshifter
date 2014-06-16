@@ -22,11 +22,11 @@
                         @endif
                         <div class="separate">
                             {{ Form::label('email', __('login.email'), array('class' => 'accessibility')) }}
-                            {{ Form::email('email', null, array('placeholder' => __('login.email'), 'autofocus')) }}
+                            {{ Form::email('email', null, array('placeholder' => __('login.email'), 'autofocus', 'autocorrect' => 'off')) }}
                         </div>
                         <div class="separate">
                             {{ Form::label('password', __('login.password'), array('class' => 'accessibility')) }}
-                            {{ Form::password('password', array('placeholder' => __('login.password'))) }}
+                            {{ Form::password('password', array('placeholder' => __('login.password'), 'autocorrect' => 'off')) }}
                         </div>
                         <button class="btn full" type="submit">{{__('login.signin')}}</button>
                     </fieldset>

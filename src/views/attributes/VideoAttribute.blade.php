@@ -4,7 +4,7 @@
     </span>
     <span class="form-field embedded-video">
         <span class="form-control">
-            {{  Form::text($name, null, array('class' => 'form-field-content embedded-video-input')) }}
+            {{  Form::text($name, null, array('class' => 'form-field-content embedded-video-input', 'autocorrect' => 'off')) }}
             <span class="form-group-highlight"></span>
         </span>
         @include('shapeshifter::layouts.helptext')

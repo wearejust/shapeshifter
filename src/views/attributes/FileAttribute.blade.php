@@ -9,7 +9,7 @@
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
-                                {{ Form::file($name, null, array('class' => 'form-field-content')) }}
+                                {{ Form::file($name, null, array('class' => 'form-field-content', 'autocorrect' => 'off')) }}
                                 <span class="form-group-highlight"></span>
                             </span>
                         </span>
