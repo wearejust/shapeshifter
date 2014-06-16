@@ -2341,6 +2341,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 /* line 265, sass/main.scss */
 .form-field-short {
+  min-width: 0;
   width: 25%;
 }
 

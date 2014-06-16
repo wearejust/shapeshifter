@@ -2343,6 +2343,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 
   /* line 265, sass/main.scss */
   .form-field-short {
+    min-width: 0;
     width: 25%;
   }
 
