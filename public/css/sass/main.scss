@@ -168,8 +168,6 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .sortable-item.open:before { content: ""; background-image: inline-image("public/css/images/triangle-arrow-down.png"); width: 11px; height: 7px; margin-top: -3px; }
 .sortable-placeholder { outline: 1px dashed #000; }
 
-.js .tab-pane {  }
-
 .media-wrapper { display: block; margin-left: 1px; padding-bottom: 100%; position: relative; }
 .media-wrapper-content { background-color: #fff; border: 1px solid #ddd; bottom: 0; left: 0; position: absolute; right: 0; top: 0; }
 .media-wrapper-content-wrapper { display: table; height: 100%; table-layout: fixed; width: 100%; }

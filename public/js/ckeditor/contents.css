@@ -19,7 +19,7 @@ img, video, object, iframe, legend, textarea, label, article, aside, audio, canv
 img, video, object, iframe { max-width: 100%; }
 img, video { height: auto; width: auto; }
 img { vertical-align: middle; }
-ol, ul { list-style-position: outside; }
+ol, ul { list-style-position: outside; margin-left: 2em; }
 ol { list-style-type: decimal; }
 ul { list-style-type: disc; }
 sub, sup { font-size: 75%; line-height: 0; position: relative; }
