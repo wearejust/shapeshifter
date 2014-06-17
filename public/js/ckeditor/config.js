@@ -31,7 +31,7 @@ CKEDITOR.editorConfig = function (config) {
     config.entities = false;
 
     config.extraPlugins = 'autogrow';
-    config.removePlugins = 'elementspath, contextmenu, resize, tabletools, forms, font, document, div, underline, magicline';
+    config.removePlugins = 'elementspath, contextmenu, resize, tabletools, forms, font, document, div, underline, magicline, flash, iframe';
 
     config.autoGrow_onStartup = true;
     config.autoGrow_maxHeight = 500;
