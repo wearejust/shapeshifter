@@ -3,6 +3,9 @@
 @section('content')
 <div class="content-body-inner">
     <h1>{{ $title }}</h1>
+
+    <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod.</p>
+
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">

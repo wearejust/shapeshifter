@@ -159,6 +159,14 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .table-control-remove-button { bottom: 0; height: 4.071em; left: 0; margin: 0; position: absolute; top: 0; width: 100%; }
 .table-control-active { @include transform(translate(-4.071em, 0)); }
 
+.mini-gallery-list { margin: -1px; }
+.mini-gallery-list-item { display: inline-block; margin: 1px 0; vertical-align: top; width: 20%; }
+.mini-gallery-list-item-content { display: block; margin: 0 1px; }
+.mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; }
+.mini-gallery-add { background-color: #000; color: #fff; height: 100%; padding: 0; width: 100%; }
+.mini-gallery-thumb { background-color: #fff; border: 1px solid #dadada; @include box-sizing(border-box); height: 100%; width: 100%; }
+.mini-gallery-thumb-selected { border-color: #999; }
+
 .sortable { margin: 0; }
 .sortable li { margin: 0; }
 .sortable-item { @include transition(compact(.3s)); padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; position: relative; background-image: inline-image("public/css/images/tricon.png"); background-repeat: no-repeat; background-position: 97.5% center; }
