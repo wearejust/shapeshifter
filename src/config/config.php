@@ -10,7 +10,7 @@ return array(
 	| The name of the customer.
 	|
 	*/
-	'customer' => 'JUST',
+	'customer' => 'Just',
 	'customer-image' => 'http://wearejust.com/apple-touch-icon-precomposed.png',
 
 	/*
