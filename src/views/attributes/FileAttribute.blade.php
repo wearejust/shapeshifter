@@ -45,7 +45,7 @@
                             <span class="mini-gallery-list-item-content">
                                 <span class="mini-gallery-list-item-content-inner">
                                     <span class="mini-gallery-add fill">+</span>
-                                    <input id="" type="file" multiple style="bottom: 0; height: 100%; left: 0; opacity: 0; padding: 0; position: absolute; right: 0; top: 0; width: 100%;">
+                                    <input class="mini-gallery-add-button" id="" type="file" multiple>
                                 </span>
                             </span>
                         <!--</li>-->
