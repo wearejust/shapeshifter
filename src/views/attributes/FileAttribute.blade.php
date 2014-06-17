@@ -10,7 +10,7 @@
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
                                 {{--
-                                {{ Form::file($name, array('class' => 'form-field-content', 'autocorrect' => 'off')) }}
+                                {{ Form::file($name, array('accept' => '', class' => 'form-field-content', 'autocorrect' => 'off')) }}
                                 <!--<span class="form-group-highlight"></span>-->
                                 --}}
                                 
@@ -45,7 +45,7 @@
                             <span class="mini-gallery-list-item-content">
                                 <span class="mini-gallery-list-item-content-inner">
                                     <span class="mini-gallery-add fill">+</span>
-                                    <input class="mini-gallery-add-button" id="" type="file" multiple>
+                                    <input accept="image/*" class="mini-gallery-add-button" id="" type="file" multiple>
                                 </span>
                             </span>
                         <!--</li>-->
