@@ -7,6 +7,8 @@ CKEDITOR.editorConfig = function (config) {
 
     config.filebrowserBrowseUrl = '/admin/elfinder';
 
+    //config.contentsCss = '/css/mysitestyles.css';
+
     config.entities = false;
     config.entities_latin = false;
 
@@ -24,18 +26,17 @@ CKEDITOR.editorConfig = function (config) {
 
     config.resize_enabled = false;
 
-    config.startupFocus = false;
-
-
-    config.scayt_autoStartup = false;
-    //config.scayt_autoStartup = true;
-
     config.disableNativeSpellChecker = false;
 
-    config.extraPlugins = 'autogrow';
-    config.removePlugins = 'elementspath, contextmenu, resize';
+    config.entities = false;
 
+    config.extraPlugins = 'autogrow';
+    config.removePlugins = 'elementspath, contextmenu, resize, tabletools';
+
+    config.autoGrow_onStartup = true;
     config.autoGrow_maxHeight = 500;
+
+    config.startupOutlineBlocks = true;
 
 
     // Define changes to default configuration here.
@@ -45,12 +46,14 @@ CKEDITOR.editorConfig = function (config) {
     // The toolbar groups arrangement, optimized for two toolbar rows.
 
     config.toolbar = [
-        [ 'Format', 'Bold', 'Italic', 'Subscript', 'Superscript', 'PasteFromWord', 'Link' ]
+        [ 'Format'],
+        [ 'PasteFromWord' ],
+        [ 'Bold', 'Italic' ],
+        [ 'Subscript', 'Superscript' ],
+        [ 'NumberedList', 'BulletedList' ],
+        [ 'Link', 'Unlink' ],
+        [ 'SpecialChar' ]
     ];
-
-    // Remove some buttons, provided by the standard plugins, which we don't
-    // need to have in the Standard(s) toolbar.
-    config.removeButtons = 'Underline,Subscript,Superscript';
 
     // Se the most common block elements.
     config.format_tags = 'p;h2';
@@ -60,11 +63,7 @@ CKEDITOR.editorConfig = function (config) {
     config.linkShowAdvancedTab = false;
     config.linkShowTargetTab = false;
 
-
-    config.pasteFromWordRemoveFontStyles = true;
-    config.pasteFromWordRemoveStyles = true;
     config.pasteFromWordNumberedHeadingToList = true;
-    // config.pasteFromWordPromptCleanup = true; // Moet toch gebeuren, dus geen melding geven
 
     config.forcePasteAsPlainText = true; // Webkit double paste bug
 
