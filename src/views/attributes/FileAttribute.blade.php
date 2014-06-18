@@ -1,4 +1,4 @@
-<label class="form-group">
+<label class="form-group js-fileattribute">
     <span class="form-label">
         {{ $label }}
     </span>

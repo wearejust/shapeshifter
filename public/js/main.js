@@ -217,39 +217,48 @@ $.fn.fileattribute = function() {
 }
 
 var FileAttribute = function(element) {
-	if (!element.length) return;
+	 if (!(window.File && window.FileReader && window.FileList && window.Blob) || !element.length) return;
 	this.element = element;
-	this.form = this.element.find('form');
-	this.buttonAdd = this.element.find('.js-button-add');
 
+	this.input = this.element.find('input[type="file"]');
+	this.input.change(this.change.bind(this));
 
-	
+	this.list = this.element.find('.mini-gallery-list');
+	this.item = this.list.find('.mini-gallery-list-item').last();
+	this.queue = [];
 
-
-
-
-		// $(function() {
-		// $('input[type="file"]').change(function(e) {
-		// 	var img = $(this).closest('.controls').find('img');
-		// 	if (this.files && this.files[0]) {
-		// 		img.closest('.row').removeClass('hide');
-		// 		var reader = new FileReader();
-		// 		reader.onload = function(e) {
-		// 			if (!img.attr('data-original')) {
-		// 				img.attr('data-original', img.attr('src'));
-		// 			}
-		// 			img.attr('src', e.target.result);
-		// 		}
-		// 		reader.readAsDataURL(this.files[0]);
-		// 	} else {
-		// 		if (!$(this).val()) {
-		// 			img.closest('.row').addClass('hide');
-		// 		}
-		// 		img.attr('src', img.attr('data-original'));
-		// 	}
-		// });
+	this.reader = new FileReader();
+	this.reader.onload = this.loaded.bind(this);
 }
 
+FileAttribute.prototype.change = function(e) {
+	if (e.currentTarget.files) {
+		for (var i=0; i<e.currentTarget.files.length; i++) {
+			var item = this.item.clone();
+			this.item.after(item);
+			this.queue.push({
+				'item': item,
+				'file': e.currentTarget.files[i]
+			});
+		}
+		this.load();
+	}
+}
+
+FileAttribute.prototype.load = function() {
+	if (!this.loading && this.queue.length) {
+		this.loading = true;
+		this.reader.readAsDataURL(this.queue[this.queue.length-1].file);
+	}
+}
+
+FileAttribute.prototype.loaded = function(e) {
+	var obj = this.queue.pop();
+	obj.item.find('.loader').removeClass('loader');
+	obj.item.find('.mini-gallery-thumb').attr('src', e.target.result);
+	this.loading = false;
+	this.load();
+}
 
 
 
