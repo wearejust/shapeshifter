@@ -15,7 +15,7 @@ body { background-color: #fff; position: relative; }
 h1, h2, h3, h4, h5, h6, .accent { font-weight: bold; }
 h1, .title { font-size: 3em; line-height: 1; margin-bottom: .65em; margin-top: .65em; }
 h2, .title-sub, .onetomany-relation-content h1 { font-size: 2em; line-height: 1.1; margin-bottom: 1em; margin-top: 2em; }
-h2:first-child, h3:first-child, p:first-child, /*ul:first-child, ol:first-child, li:first-child, */blockquote:first-child, img:first-child, form:first-child, fieldset:first-child, pre:first-child, .section:first-child, h2 + h3, h2 + p, h3 + p, legend + p { margin-top: 0; }
+h2:first-child, h3:first-child, p:first-child, /*ul:first-child, ol:first-child, li:first-child, */blockquote:first-child, img:first-child, form:first-child, fieldset:first-child, pre:first-child, .section:first-child, h1 + h2, h1 + p, h2 + h3, h2 + p, h3 + p, legend + p { margin-top: 0; }
 h2:last-child, h3:last-child, p:last-child, /*ul:last-child, ol:last-child, li:last-child, */blockquote:last-child, img:last-child, form:last-child, fieldset:last-child, pre:last-child, .section:last-child { margin-bottom: 0; }
 p, ul, ol, li, blockquote, img, table, form, fieldset, pre, iframe, object, embed, video, audio, figure, canvas, .paragraph, h3, .ui-dialog-buttonset { margin-top: $paragraph-margin; }
 p, ul, ol, li, blockquote, img, table, form, fieldset, pre, iframe, object, embed, video, audio, figure, canvas, .paragraph { margin-bottom: $paragraph-margin; }
@@ -43,13 +43,14 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 /*.page { padding-left: 1.5em; padding-right: 1.5em; }*/
 .content { margin-right: auto; margin-left: auto; max-width: 60em; }
 .content-alt { margin-left: -1.5em; margin-right: -1.5em; }
-.grid-row:before, .grid-row:after { content: " "; display: table; }
-.grid-row:after { clear: both; }
+.quiet { font-size: 90%; color: #838383; }
+.loader { display: block; position: relative; }
+.loader:after { background-repeat: no-repeat; background-position: center; @include background-size(100%); content: ""; display: block; height: 16px; left: 50%; margin: -8px 0 0 -8px; position: absolute; top: 50%; width: 16px; }
+
 .menu-nav { left: 1.5em; margin: 0; opacity: 1; position: absolute; top: 1.125em; z-index: 11; }
 .js .menu-nav { position: fixed; }
 .menu-nav-button { @include border-radius(4px); display: inline-block; margin: -7px; overflow: hidden; padding: 7px; text-decoration: none; vertical-align: top; }
 .menu-nav-button:before { @include background-size(100%); background-image: inline-image("public/css/images/menu.png"); background-position: center; background-repeat: no-repeat; content: ""; display: block; height: 15px; overflow: hidden; width: 21px; }
-.quiet { font-size: 90%; color: #838383; }
 
 .content-wrapper { display: table; position: relative; table-layout: fixed; width: 100%; }
 .main-content { padding-bottom: 1.5em; padding-top: 0; }
@@ -166,9 +167,10 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .mini-gallery-add { background-color: #000; color: #fff; height: 100%; padding: 0; text-align: center; width: 100%; }
 .mini-gallery-add-button { bottom: 0; height: 100%; left: 0; @include opacity(0); padding: 0; position: absolute; right: 0; top: 0; width: 100%; }
 .mini-gallery-add-button::-webkit-file-upload-button { visibility: hidden; }
-.mini-gallery-thumb-button { background-color: #fff; @include box-sizing(border-box); border: 1px solid #dadada; height: 100%; padding: 0; width: 100%; }
+.mini-gallery-thumb-button { background-color: #fff; border: 1px solid #dadada; position: absolute; }
+.mini-gallery-thumb-button:after { background-image: inline-image("public/css/images/ajax-loader-2.gif"); }
 .mini-gallery-thumb-button-selected { border-color: #999; }
-.mini-gallery-thumb { height: 100%; width: 100%; }
+.mini-gallery-thumb { z-index: 10; }
 
 .sortable { margin: 0; }
 .sortable li { margin: 0; }
@@ -185,7 +187,7 @@ th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-so
 .media-wrapper-content-wrapper-inner { display: table-cell; height: 100%; padding: 1em; vertical-align: middle; width: 100%; }
 
 .video-preview {  }
-.video-preview-loader { background: url("public/css/images/ajax-loader.gif") no-repeat center; @include background-size(100%); display: block; height: 16px; margin: $paragraph-margin auto; width: 16px; }
+.video-preview-loader { background-image: inline-image("public/css/images/ajax-loader.gif"); margin: $paragraph-margin auto; }
 
 .header, .header-top, .system-name { color: #fff; }
 .header, .header-top { width: 0; }

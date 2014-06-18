@@ -52,14 +52,14 @@
                         <li class="mini-gallery-list-item">
                             <span class="mini-gallery-list-item-content">
                                 <span class="mini-gallery-list-item-content-inner">
-                                    <button class="mini-gallery-thumb-button fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
+                                    <button class="mini-gallery-thumb-button loader fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
                                 </span>
                             </span>
                         <!--</li>-->
                         <li class="mini-gallery-list-item">
                             <span class="mini-gallery-list-item-content">
                                 <span class="mini-gallery-list-item-content-inner">
-                                    <button class="mini-gallery-thumb-button mini-gallery-thumb-button-selected fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
+                                    <button class="mini-gallery-thumb-button loader mini-gallery-thumb-button-selected fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
                                 </span>
                             </span>
                         <!--</li>-->
