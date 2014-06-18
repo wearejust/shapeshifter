@@ -170,6 +170,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-thumb-button { background-color: #fff; border: 1px solid #dadada; position: absolute; }
 .mini-gallery-thumb-button:after { background-image: inline-image("public/css/images/ajax-loader-2.gif"); }
 .mini-gallery-thumb { z-index: 10; }
+.mini-gallery-input { z-index: -1; }
 .mini-gallery-input:checked + .mini-gallery-thumb-button { border-color: #999; }
 
 .sortable { margin: 0; }
