@@ -316,22 +316,22 @@ button.ui-button::-moz-focus-inner {
 	width: 1.8em;
 	bottom: 0;
 }
-.ui-datepicker .ui-datepicker-prev-hover,
+/*.ui-datepicker .ui-datepicker-prev-hover,
 .ui-datepicker .ui-datepicker-next-hover {
 	top: 1px;
-}
+}*/
 .ui-datepicker .ui-datepicker-prev {
 	left: 2px;
 }
 .ui-datepicker .ui-datepicker-next {
 	right: 2px;
 }
-.ui-datepicker .ui-datepicker-prev-hover {
+/*.ui-datepicker .ui-datepicker-prev-hover {
 	left: 1px;
 }
 .ui-datepicker .ui-datepicker-next-hover {
 	right: 1px;
-}
+}*/
 .ui-datepicker .ui-datepicker-prev span,
 .ui-datepicker .ui-datepicker-next span {
 	display: block;
@@ -820,15 +820,15 @@ body .ui-tooltip {
 }
 .ui-widget-content a {
 	color: #222222;
-}*/
+}
 .ui-widget-header {
 	/*border: 1px solid #aaaaaa;
 	background: #cccccc url("images/ui-bg_highlight-soft_75_cccccc_1x100.png") 50% 50% repeat-x;
 	color: #222222;
-	font-weight: bold;*/
+	font-weight: bold;
 	background: #000;
 }
-/*.ui-widget-header a {
+.ui-widget-header a {
 	color: #222222;
 }*/
 
