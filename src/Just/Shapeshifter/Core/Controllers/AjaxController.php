@@ -1,6 +1,7 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
 use Controller;
+use Illuminate\Support\Collection;
 use Input;
 use Krucas\Notification\Facades\Notification;
 use Request;
@@ -59,6 +60,22 @@ class AjaxController extends Controller
 		return Response::json( array('message' => (string)Notification::successInstant('De nieuwe volgorde is opgeslagen'), 'status' => 200) );
 	}
 
+    protected function upload()
+    {
+        $storageDir = Input::get('storagedir');
+        $input = Input::file('files');
+        $files = new Collection();
+        
+        foreach ($input as $file) {
+            if ($file->isValid()) {
+                $name = $file->getClientOriginalName();
+                $file->move(public_path() . $storageDir, $name);
+                $files->push($storageDir . $name);
+            }
+        }
+
+        return $files;
+    }
 }
 
 ?>

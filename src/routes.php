@@ -23,6 +23,7 @@ Route::group(array('prefix' => 'admin'), function()
 
         Route::get('logout', array('as' => 'admin-logout', 'uses' => 'Just\Shapeshifter\Core\Controllers\AuthController@getLogout'));
         Route::post('ajax/sortorderchange', 'Just\Shapeshifter\Core\Controllers\AjaxController@sortorderChange')->before('ajax');
+        Route::post('ajax/upload', 'Just\Shapeshifter\Core\Controllers\AjaxController@upload')->before('ajax');
 
         Route::resource('users', 'Just\Shapeshifter\Core\Controllers\UserController');
         Route::resource('groups', 'Just\Shapeshifter\Core\Controllers\GroupController');

@@ -16,7 +16,6 @@
                                 --}}
 
                                 <p>Kies een eerder geüploade afbeelding of gebruiken de "+"-knop om (meer) afbeeldingen te uploaden.</p>
-
                             </span>
                         </span>
                     </span>
@@ -30,30 +29,23 @@
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
                                         <span class="mini-gallery-add fill">+</span>
-                                        <input accept="image/*" class="mini-gallery-add-button fill" id="" type="file" multiple>
+                                        <input accept="image/*" class="mini-gallery-add-button fill" name="files[]" type="file" data-index="{{ count($existing) }}" data-storage-dir="{{ $relativeStorageDir }}" multiple>
                                     </span>
                                 </span>
                             <!--</li>-->
-                            <li class="mini-gallery-list-item">
+
+                            @foreach ($existing as $key => $image)
+                            <li class="mini-gallery-list-item{{ !$image ? ' hide':'' }}">
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
-                                        <input class="mini-gallery-input accessibility" id="option1" name="files" type="radio" value="">
-                                        <label class="mini-gallery-thumb-button loader fill" for="option1">
-                                            <img alt="" class="mini-gallery-thumb fill" src="">
+                                        <input class="mini-gallery-input accessibility" id="option{{ $key }}" name="files" type="radio" value="">
+                                        <label class="mini-gallery-thumb-button fill" for="option{{ $key }}">
+                                            <img alt="" class="mini-gallery-thumb fill" src="{{ $image }}">
                                         </label>
                                     </span>
                                 </span>
                             <!--</li>-->
-                            <li class="mini-gallery-list-item">
-                                <span class="mini-gallery-list-item-content">
-                                    <span class="mini-gallery-list-item-content-inner">
-                                        <input class="mini-gallery-input accessibility" id="option2" name="files" type="radio" value="">
-                                        <label class="mini-gallery-thumb-button loader fill" for="option2">
-                                            <img alt="" class="mini-gallery-thumb fill" src="">
-                                        </label>
-                                    </span>
-                                </span>
-                            <!--</li>-->
+                            @endforeach
                         </ul>
                     </fieldset>
                 </span>
