@@ -1742,6 +1742,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 /* line 163, sass/main.scss */
 .mini-gallery-list {
+  display: block;
   margin: -1px;
 }
 
@@ -1771,26 +1772,15 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-add {
   background-color: #000;
   color: #fff;
+  font-size: 34px;
   font-weight: bold;
-  height: 100%;
-  padding: 0;
   text-align: center;
-  width: 100%;
 }
 
 /* line 168, sass/main.scss */
 .mini-gallery-add-button {
-  bottom: 0;
-  font-size: 34px;
-  height: 100%;
-  left: 0;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 100%;
 }
 
 /* line 169, sass/main.scss */

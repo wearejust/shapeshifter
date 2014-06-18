@@ -24,30 +24,38 @@
             </span>
             <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
                 <span class="mini-gallery" style="display: block; margin: 0 0 0 3px;">
-                    <ul class="mini-gallery-list">
-                        <li class="mini-gallery-list-item">
-                            <span class="mini-gallery-list-item-content">
-                                <span class="mini-gallery-list-item-content-inner">
-                                    <span class="mini-gallery-add fill">+</span>
-                                    <input accept="image/*" class="mini-gallery-add-button" id="" type="file" multiple>
+                    <fieldset>
+                        <ul class="mini-gallery-list">
+                            <li class="mini-gallery-list-item">
+                                <span class="mini-gallery-list-item-content">
+                                    <span class="mini-gallery-list-item-content-inner">
+                                        <span class="mini-gallery-add fill">+</span>
+                                        <input accept="image/*" class="mini-gallery-add-button fill" id="" type="file" multiple>
+                                    </span>
                                 </span>
-                            </span>
-                        <!--</li>-->
-                        <li class="mini-gallery-list-item">
-                            <span class="mini-gallery-list-item-content">
-                                <span class="mini-gallery-list-item-content-inner">
-                                    <button class="mini-gallery-thumb-button loader fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
+                            <!--</li>-->
+                            <li class="mini-gallery-list-item">
+                                <span class="mini-gallery-list-item-content">
+                                    <span class="mini-gallery-list-item-content-inner">
+                                        <input class="accessibility" id="" name="" type="radio" value="">
+                                        <label class="mini-gallery-thumb-button loader fill">
+                                            <img alt="" class="mini-gallery-thumb fill" src="">
+                                        </label>
+                                    </span>
                                 </span>
-                            </span>
-                        <!--</li>-->
-                        <li class="mini-gallery-list-item">
-                            <span class="mini-gallery-list-item-content">
-                                <span class="mini-gallery-list-item-content-inner">
-                                    <button class="mini-gallery-thumb-button loader mini-gallery-thumb-button-selected fill" type="button"><img alt="" class="mini-gallery-thumb fill" src=""></button>
+                            <!--</li>-->
+                            <li class="mini-gallery-list-item">
+                                <span class="mini-gallery-list-item-content">
+                                    <span class="mini-gallery-list-item-content-inner">
+                                        <input class="accessibility" id="" name="" type="radio" value="">
+                                        <label class="mini-gallery-thumb-button loader mini-gallery-thumb-button-selected fill">
+                                            <img alt="" class="mini-gallery-thumb fill" src="">
+                                        </label>
+                                    </span>
                                 </span>
-                            </span>
-                        <!--</li>-->
-                    </ul>
+                            <!--</li>-->
+                        </ul>
+                    </fieldset>
                 </span>
             </span>
         </span>
