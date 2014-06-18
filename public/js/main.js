@@ -44,7 +44,7 @@ $(function() {
 		$(this).removeClass('alert-success-active');
 	});
 
-	$('.js-fileattribute').fileattribute();
+	$('.js-multifileattribute').multifileattribute();
 
 	/*
 	 $('.sortable').nestedSortable({
@@ -207,16 +207,16 @@ $.fn.accordion = function(settings) {
 
 // http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/
 
-$.fn.fileattribute = function() {
+$.fn.multifileattribute = function() {
 	return $(this).each(function(index, item) {
 		item = $(item);
-		if (!item.data('fileattribute')) {
-			item.data('fileattribute', new FileAttribute(item));
+		if (!item.data('multifileattribute')) {
+			item.data('multifileattribute', new MultiFileAttribute(item));
 		}
 	});
 }
 
-var FileAttribute = function(element) {
+var MultiFileAttribute = function(element) {
 	 if (!(window.File && window.FileReader && window.FileList && window.Blob) || !element.length) return;
 	this.element = element;
 
@@ -231,7 +231,7 @@ var FileAttribute = function(element) {
 	this.reader.onload = this.loaded.bind(this);
 }
 
-FileAttribute.prototype.change = function(e) {
+MultiFileAttribute.prototype.change = function(e) {
 	if (e.currentTarget.files) {
 		for (var i=0; i<e.currentTarget.files.length; i++) {
 			var item = this.item.clone();
@@ -245,14 +245,14 @@ FileAttribute.prototype.change = function(e) {
 	}
 }
 
-FileAttribute.prototype.load = function() {
+MultiFileAttribute.prototype.load = function() {
 	if (!this.loading && this.queue.length) {
 		this.loading = true;
 		this.reader.readAsDataURL(this.queue[this.queue.length-1].file);
 	}
 }
 
-FileAttribute.prototype.loaded = function(e) {
+MultiFileAttribute.prototype.loaded = function(e) {
 	var obj = this.queue.pop();
 	obj.item.find('.loader').removeClass('loader');
 	obj.item.find('.mini-gallery-thumb').attr('src', e.target.result);
@@ -263,7 +263,7 @@ FileAttribute.prototype.loaded = function(e) {
 
 
 /*
-var FileAttribute = function() {
+var MultiFileAttribute = function() {
 	this.input = $('input[type="file"]');
 	this.form = this.input.closest('form');
 
@@ -272,7 +272,7 @@ var FileAttribute = function() {
 	this.dialog();
 }
 
-FileAttribute.prototype.dialog = function() {
+MultiFileAttribute.prototype.dialog = function() {
 	this.confirmDialog = $('.dialog-confirm');
 
 	this.confirmTrigger = $('.js-confirm-dialog-trigger');
@@ -283,7 +283,7 @@ FileAttribute.prototype.dialog = function() {
 	}.bind(this));
 }
 
-FileAttribute.prototype.confirmInit = function(e) {
+MultiFileAttribute.prototype.confirmInit = function(e) {
 	this.confirmDialog.dialog({
 		autoOpen: false,
 		resizable: false,
@@ -305,7 +305,7 @@ FileAttribute.prototype.confirmInit = function(e) {
 	});
 }
 
-FileAttribute.prototype.change = function(e) {
+MultiFileAttribute.prototype.change = function(e) {
 	var target = e.currentTarget;
 	var $target = $(target);
 

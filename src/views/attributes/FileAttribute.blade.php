@@ -1,4 +1,4 @@
-<label class="form-group js-fileattribute">
+<label class="form-group">
     <span class="form-label">
         {{ $label }}
     </span>
@@ -9,7 +9,7 @@
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
-                                {{ Form::file($name, array('accept' => '', class => 'form-field-content', 'autocorrect' => 'off')) }}
+                                {{ Form::file($name, array('accept' => '', 'class' => 'form-field-content', 'autocorrect' => 'off')) }}
                                 <!--<span class="form-group-highlight"></span>-->
                             </span>
                         </span>
