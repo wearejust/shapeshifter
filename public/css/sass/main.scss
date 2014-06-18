@@ -164,8 +164,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-list-item { display: inline-block; margin: 1px 0; vertical-align: top; width: 20%; }
 .mini-gallery-list-item-content { display: block; margin: 0 1px; }
 .mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; }
-.mini-gallery-add { background-color: #000; color: #fff; height: 100%; padding: 0; text-align: center; width: 100%; }
-.mini-gallery-add-button { bottom: 0; height: 100%; left: 0; @include opacity(0); padding: 0; position: absolute; right: 0; top: 0; width: 100%; }
+.mini-gallery-add { background-color: #000; color: #fff; font-weight: bold; height: 100%; padding: 0; text-align: center; width: 100%; }
+.mini-gallery-add-button { bottom: 0; font-size: 34px; height: 100%; left: 0; @include opacity(0); padding: 0; position: absolute; right: 0; top: 0; width: 100%; }
 .mini-gallery-add-button::-webkit-file-upload-button { visibility: hidden; }
 .mini-gallery-thumb-button { background-color: #fff; border: 1px solid #dadada; position: absolute; }
 .mini-gallery-thumb-button:after { background-image: inline-image("public/css/images/ajax-loader-2.gif"); }

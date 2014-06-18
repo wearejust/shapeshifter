@@ -1771,6 +1771,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-add {
   background-color: #000;
   color: #fff;
+  font-weight: bold;
   height: 100%;
   padding: 0;
   text-align: center;
@@ -1780,6 +1781,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* line 168, sass/main.scss */
 .mini-gallery-add-button {
   bottom: 0;
+  font-size: 34px;
   height: 100%;
   left: 0;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
