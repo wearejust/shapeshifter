@@ -1806,7 +1806,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 }
 
 /* line 173, sass/main.scss */
-.mini-gallery-input:checked + .mini-gallery-thumb-buttonm {
+.mini-gallery-input:checked + .mini-gallery-thumb-button {
   border-color: #999;
 }
 
