@@ -48,7 +48,7 @@
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
                                         <input class="mini-gallery-input accessibility" id="" name="" type="radio" value="">
-                                        <label class="mini-gallery-thumb-button loader mini-gallery-thumb-button-selected fill">
+                                        <label class="mini-gallery-thumb-button loader fill">
                                             <img alt="" class="mini-gallery-thumb fill" src="">
                                         </label>
                                     </span>

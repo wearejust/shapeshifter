@@ -1801,13 +1801,13 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 }
 
 /* line 172, sass/main.scss */
-.mini-gallery-thumb-button-selected {
-  border-color: #999;
+.mini-gallery-thumb {
+  z-index: 10;
 }
 
 /* line 173, sass/main.scss */
-.mini-gallery-thumb {
-  z-index: 10;
+.mini-gallery-input:checked + .mini-gallery-thumb-buttonm {
+  border-color: #999;
 }
 
 /* line 175, sass/main.scss */
