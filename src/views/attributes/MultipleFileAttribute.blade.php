@@ -15,7 +15,7 @@
                                 <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                                 --}}
 
-                                <p>Kies een eerder geüploade afbeelding of gebruiken de "+"-knop om een of meerdere afbeeldingen te uploaden.</p>
+                                <p>Kies een eerder geüploade afbeelding of gebruiken de "+"-knop om (meer) afbeeldingen te uploaden.</p>
 
                             </span>
                         </span>
@@ -37,8 +37,8 @@
                             <li class="mini-gallery-list-item">
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
-                                        <input class="accessibility" id="" name="" type="radio" value="">
-                                        <label class="mini-gallery-thumb-button loader fill">
+                                        <input class="mini-gallery-input accessibility" id="option1" name="files" type="radio" value="">
+                                        <label class="mini-gallery-thumb-button loader fill" for="option1">
                                             <img alt="" class="mini-gallery-thumb fill" src="">
                                         </label>
                                     </span>
@@ -47,8 +47,8 @@
                             <li class="mini-gallery-list-item">
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
-                                        <input class="accessibility" id="" name="" type="radio" value="">
-                                        <label class="mini-gallery-thumb-button loader mini-gallery-thumb-button-selected fill">
+                                        <input class="mini-gallery-input accessibility" id="option2" name="files" type="radio" value="">
+                                        <label class="mini-gallery-thumb-button loader fill" for="option2">
                                             <img alt="" class="mini-gallery-thumb fill" src="">
                                         </label>
                                     </span>
