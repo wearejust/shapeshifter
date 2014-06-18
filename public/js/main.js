@@ -44,7 +44,7 @@ $(function() {
 		$(this).removeClass('alert-success-active');
 	});
 
-	$('.js-fileattribute').fileattribute();
+	$('.js-multifileattribute').multifileattribute();
 
 	/*
 	 $('.sortable').nestedSortable({
@@ -207,54 +207,63 @@ $.fn.accordion = function(settings) {
 
 // http://geniuscarrier.com/how-to-style-a-html-file-upload-button-in-pure-css/
 
-$.fn.fileattribute = function() {
+$.fn.multifileattribute = function() {
 	return $(this).each(function(index, item) {
 		item = $(item);
-		if (!item.data('fileattribute')) {
-			item.data('fileattribute', new FileAttribute(item));
+		if (!item.data('multifileattribute')) {
+			item.data('multifileattribute', new MultiFileAttribute(item));
 		}
 	});
 }
 
-var FileAttribute = function(element) {
-	if (!element.length) return;
+var MultiFileAttribute = function(element) {
+	 if (!(window.File && window.FileReader && window.FileList && window.Blob) || !element.length) return;
 	this.element = element;
-	this.form = this.element.find('form');
-	this.buttonAdd = this.element.find('.js-button-add');
 
+	this.input = this.element.find('input[type="file"]');
+	this.input.change(this.change.bind(this));
 
-	
+	this.list = this.element.find('.mini-gallery-list');
+	this.item = this.list.find('.mini-gallery-list-item').last();
+	this.queue = [];
 
+	this.reader = new FileReader();
+	this.reader.onload = this.loaded.bind(this);
+}
 
+MultiFileAttribute.prototype.change = function(e) {
+	if (e.currentTarget.files) {
+		for (var i=0; i<e.currentTarget.files.length; i++) {
+			var item = this.item.clone();
+			this.item.after(item);
+			this.queue.push({
+				'item': item,
+				'file': e.currentTarget.files[i]
+			});
+		}
+		this.load();
+	}
+}
 
+MultiFileAttribute.prototype.load = function() {
+	if (!this.loading && this.queue.length) {
+		this.loading = true;
+		this.reader.readAsDataURL(this.queue[this.queue.length-1].file);
+	}
+}
 
-		// $(function() {
-		// $('input[type="file"]').change(function(e) {
-		// 	var img = $(this).closest('.controls').find('img');
-		// 	if (this.files && this.files[0]) {
-		// 		img.closest('.row').removeClass('hide');
-		// 		var reader = new FileReader();
-		// 		reader.onload = function(e) {
-		// 			if (!img.attr('data-original')) {
-		// 				img.attr('data-original', img.attr('src'));
-		// 			}
-		// 			img.attr('src', e.target.result);
-		// 		}
-		// 		reader.readAsDataURL(this.files[0]);
-		// 	} else {
-		// 		if (!$(this).val()) {
-		// 			img.closest('.row').addClass('hide');
-		// 		}
-		// 		img.attr('src', img.attr('data-original'));
-		// 	}
-		// });
+MultiFileAttribute.prototype.loaded = function(e) {
+	var obj = this.queue.pop();
+	obj.item.find('.loader').removeClass('loader');
+	obj.item.find('.mini-gallery-thumb').attr('src', e.target.result);
+	this.loading = false;
+	this.load();
 }
 
 
 
-
 /*
-var FileAttribute = function() {
+var MultiFileAttribute = function() {
 	this.input = $('input[type="file"]');
 	this.form = this.input.closest('form');
 
@@ -263,7 +272,7 @@ var FileAttribute = function() {
 	this.dialog();
 }
 
-FileAttribute.prototype.dialog = function() {
+MultiFileAttribute.prototype.dialog = function() {
 	this.confirmDialog = $('.dialog-confirm');
 
 	this.confirmTrigger = $('.js-confirm-dialog-trigger');
@@ -274,7 +283,7 @@ FileAttribute.prototype.dialog = function() {
 	}.bind(this));
 }
 
-FileAttribute.prototype.confirmInit = function(e) {
+MultiFileAttribute.prototype.confirmInit = function(e) {
 	this.confirmDialog.dialog({
 		autoOpen: false,
 		resizable: false,
@@ -296,7 +305,7 @@ FileAttribute.prototype.confirmInit = function(e) {
 	});
 }
 
-FileAttribute.prototype.change = function(e) {
+MultiFileAttribute.prototype.change = function(e) {
 	var target = e.currentTarget;
 	var $target = $(target);
 
