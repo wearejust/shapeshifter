@@ -218,36 +218,81 @@ var MultipleFileAttribute = function(element) {
 	this.element = element;
 
 	this.input = this.element.find('input[type="file"]');
-	this.input.change(this.change.bind(this));
-	this.input.wrap('<form action="" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
+	this.input.on('change', this.upload.bind(this));
+	this.storageDir = this.input.attr('data-storage-dir');
+	this.index = parseInt(this.input.attr('data-index'));
+	this.input.wrap('<form action="/admin/ajax/upload" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
 	this.form = this.input.parent();
 
 	this.list = this.element.find('.mini-gallery-list');
 	this.item = this.list.find('.mini-gallery-list-item').last();
+	this.list.find('input[name="files"]').on('change', this.change.bind(this));
+
+	if (this.item.hasClass('hide')) {
+		this.item.remove();
+		this.item.removeClass('hide');
+	} else {
+		this.item = this.item.clone();
+		this.item.find('img').attr('src', '');
+	}
+	this.item.find('label').addClass('loader');
 }
 
-MultipleFileAttribute.prototype.change = function(e) {
-	if (e.currentTarget.files) {
-		for (var i=e.currentTarget.files.length-1; i>=0; i--) {
+MultipleFileAttribute.prototype.upload = function(e) {
+	if (!this.loading && e.currentTarget.files) {
+		for (var i=0; i<e.currentTarget.files.length; i++) {
+			this.index++;
 			var item = this.item.clone();
-			this.item.after(item);
-			if (!i) item.find('input[type="radio"]').attr('checked', 'checked');
+			item.find('input[name="files"]').attr('id', 'option' + this.index).on('change', this.change.bind(this));
+			item.find('label').attr('for', 'option' + this.index);
+			item.find('img').addClass('hide');
+			this.list.append(item);
 		}
 		this.form.ajaxSubmit({
-			'progress': this.loaded.bind(this),
-			'error': this.loaded.bind(this),
-			'success': this.loaded.bind(this)
+			'data': { 'storagedir': this.storageDir },
+			'success': this.uploaded.bind(this)
 		});
 	}
 }
 
-MultipleFileAttribute.prototype.loaded = function(e) {
-	console.log(e);
-	// var obj = this.queue.pop();
-	// obj.item.find('.loader').removeClass('loader');
-	// obj.item.find('.mini-gallery-thumb').attr('src', e.target.result);
-	// this.loading = false;
-	// this.load();
+MultipleFileAttribute.prototype.uploaded = function(data) {
+	var images = [];
+	this.list.find('img').each(function(index, item) {
+		images.push($(item).attr('src'));
+	});
+
+	var n, item, items = this.list.find('label.loader');
+	for (var i=0; i<data.length; i++) {
+		n = images.indexOf(data[i]);
+		if (n != -1) {
+			if (!i) {
+				item = this.list.find('.mini-gallery-list-item:eq(' + (n + 1) + ') input[type="radio"]');
+				item.attr('checked', 'checked');
+				item.trigger('change');
+			}
+
+		} else {
+			item = items.eq(i).closest('.mini-gallery-list-item');
+			item.find('label').removeClass('loader');
+			item.find('img').removeClass('hide').attr('src', data[i]);
+			if (!i) item.find('input[type="radio"]').attr('checked', 'checked');
+		}
+	}
+
+	this.list.execute(this, function() {
+		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
+		this.loading = false;
+	});
+}
+
+MultipleFileAttribute.prototype.change = function(e) {
+	if (!this.preview) {
+		this.preview = $('<img class="wrapper" alt="">');
+		this.element.find('.media-wrapper-content-wrapper-inner').html(this.preview);
+	}
+
+	var str = $(e.currentTarget).closest('.mini-gallery-list-item').find('img').attr('src');
+	this.preview.attr('src', str);
 }
 
 
