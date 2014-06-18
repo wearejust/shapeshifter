@@ -139,12 +139,12 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-row.ui-sortable-helper:hover .table-control-remove-button { display: none; }
 .table-row-editable { cursor: pointer; }
 .table-row-editable:hover { background-color: #ddd; }
-th, td/*, .table-cell, .table-header*/ { display: none; padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }
+.table-cell, .table-header { display: none; padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }
 .table-order, .table-control { display: table-cell; }
-th:nth-child(-n+2), td:nth-child(-n+2) { display: table-cell; }​
-th.sorting, .table-header-sort-item-active-asc, .table-header-sort-item-active-desc { cursor: pointer; }
-th.sorting:hover, .table-header-sort-item-active-asc:hover, .table-header-sort-item-active-desc:hover  { background-color: #ddd; }
-th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-sort-item-active-asc, th.table-order.table-header-sort-item-active-desc, th.table-control.table-header-sort-item-active-asc, th.table-control.table-header-sort-item-active-desc, th.sorting.table-order:hover, th.sorting.table-control:hover { background-color: transparent; cursor: auto; }
+.table-cell:nth-child(-n+2), .table-header:nth-child(-n+2) { display: table-cell; }​
+.table-header.sorting, .table-header-sort-item-active-asc, .table-header-sort-item-active-desc { cursor: pointer; }
+.table-header.sorting:hover, .table-header-sort-item-active-asc:hover, .table-header-sort-item-active-desc:hover  { background-color: #ddd; }
+.table-header.sorting.table-order, .table-header.sorting.table-control, .table-header.table-order.table-header-sort-item-active-asc, .table-header.table-order.table-header-sort-item-active-desc, .table-header.table-control.table-header-sort-item-active-asc, .table-header.table-control.table-header-sort-item-active-desc, .table-header.sorting.table-order:hover, .table-header.sorting.table-control:hover { background-color: transparent; cursor: auto; }
 .table-header-sort { margin-right: .25em; position: absolute; right: 100%; top: 0; }
 .table-header-sort-item { display: block; font-size: 10px; line-height: 1; @include opacity(.25); }
 .table-header-sort-item:before { display: inline-block; vertical-align: top; }

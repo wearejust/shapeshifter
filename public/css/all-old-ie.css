@@ -1605,7 +1605,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 }
 
 /* line 142, sass/main.scss */
-th, td {
+.table-cell, .table-header {
   display: none;
   padding-top: 1.375em;
   padding-bottom: 1.375em;
@@ -1617,23 +1617,23 @@ th, td {
 }
 
 /* line 144, sass/main.scss */
-th:nth-child(-n+2), td:nth-child(-n+2) {
+.table-cell:nth-child(-n+2), .table-header:nth-child(-n+2) {
   display: table-cell;
 }
 
 /* line 145, sass/main.scss */
 ​
-th.sorting, .table-header-sort-item-active-asc, .table-header-sort-item-active-desc {
+.table-header.sorting, .table-header-sort-item-active-asc, .table-header-sort-item-active-desc {
   cursor: pointer;
 }
 
 /* line 146, sass/main.scss */
-th.sorting:hover, .table-header-sort-item-active-asc:hover, .table-header-sort-item-active-desc:hover {
+.table-header.sorting:hover, .table-header-sort-item-active-asc:hover, .table-header-sort-item-active-desc:hover {
   background-color: #ddd;
 }
 
 /* line 147, sass/main.scss */
-th.sorting.table-order, th.sorting.table-control, th.table-order.table-header-sort-item-active-asc, th.table-order.table-header-sort-item-active-desc, th.table-control.table-header-sort-item-active-asc, th.table-control.table-header-sort-item-active-desc, th.sorting.table-order:hover, th.sorting.table-control:hover {
+.table-header.sorting.table-order, .table-header.sorting.table-control, .table-header.table-order.table-header-sort-item-active-asc, .table-header.table-order.table-header-sort-item-active-desc, .table-header.table-control.table-header-sort-item-active-asc, .table-header.table-control.table-header-sort-item-active-desc, .table-header.sorting.table-order:hover, .table-header.sorting.table-control:hover {
   background-color: transparent;
   cursor: auto;
 }
