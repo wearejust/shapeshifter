@@ -1,6 +1,6 @@
 <label class="form-group">
     <span class="form-label">
-        {{$name}}
+        {{ $label }}
     </span>
     <span class="form-field">
     	<span class="form-control">
