@@ -2,6 +2,7 @@
 
 use Gregwar\Image\Image;
 use HTML;
+use Str;
 use Input;
 use Just\Shapeshifter\Exceptions\DirDoesNotExistException;
 use Just\Shapeshifter\Exceptions\DirNotWritableException;
@@ -194,13 +195,16 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function moveUploadedFile()
     {
-        if (Input::hasFile($this->name))
-        {
+        if ( Input::hasFile($this->name) ) {
+            $file = Input::file($this->name);
+            $extension = '.' . $file->getClientOriginalExtension();
+
             $filename = Input::file($this->name)->getClientOriginalName();
+            $filename = Str::slug(str_replace($extension, '', $filename));
 
-            Input::file($this->name)->move( $this->absoluteStorageDir, $filename );
+            Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
 
-            $this->value = $filename;
+            $this->value = $filename . $extension;
         }
 
         return '';
