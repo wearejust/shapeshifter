@@ -262,7 +262,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.touch .page { padding: 0; }
 	.content-body { background-color: #fff; border-color: #ddd; border-width: 0 1px; }
 	.content-body, .form-group, .alert, .footer-content, .tab-list-item-button, .table-header-last, .table-cell-last { padding-right: 2.75rem; }
-	.content-body, .form-group, .alert, .footer-content, .tab-list-item-button, th:first-child, td:first-child { padding-left: 2.75rem; }
+	.content-body, .form-group, .alert, .footer-content, .tab-list-item-button, .table-header:first-child, .table-cell:first-child { padding-left: 2.75rem; }
 	.content-body { padding-bottom: 2.75em; padding-top: 2.75em; }
 	.data-wrapper { overflow: visible; }
 	.table-control-remove-button { @include opacity(0); }
@@ -330,15 +330,15 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* print */
 
 @media print {
-  * { background: transparent !important; box-shadow: none !important; color: #000 !important; text-shadow: none !important; }
-  aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu { display: none; }
-  a[href]:after { content: " (" attr(href) ") "; font-size: 90%; }
-  a[href^="/"]:after { content: " (http://" attr(href) ") "; }
-  abbr:after { content: " (" attr(title) ")"; }
-  thead { display: table-header-group; }
-  tr, img, pre, blockquote { page-break-inside: avoid; }
-  img { max-width: 100% !important; }
-  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
-  h2, h3, p { orphans: 3; widows: 3; }
-  @page { margin: .5cm; }
+	* { background: transparent !important; box-shadow: none !important; color: #000 !important; text-shadow: none !important; }
+	aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu { display: none; }
+	a[href]:after { content: " (" attr(href) ") "; font-size: 90%; }
+	a[href^="/"]:after { content: " (http://" attr(href) ") "; }
+	abbr:after { content: " (" attr(title) ")"; }
+	thead { display: table-header-group; }
+	tr, img, pre, blockquote { page-break-inside: avoid; }
+	img { max-width: 100% !important; }
+	h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+	h2, h3, p { orphans: 3; widows: 3; }
+	@page { margin: .5cm; }
 }

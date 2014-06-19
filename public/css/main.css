@@ -2279,7 +2279,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   }
 
   /* line 265, sass/main.scss */
-  .content-body, .form-group, .alert, .footer-content, .tab-list-item-button, th:first-child, td:first-child {
+  .content-body, .form-group, .alert, .footer-content, .tab-list-item-button, .table-header:first-child, .table-cell:first-child {
     padding-left: 2.75rem;
   }
 
