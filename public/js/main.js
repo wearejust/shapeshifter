@@ -502,7 +502,7 @@ VideoPreview.prototype.change = function() {
 	}
 
 	if (src.length) {
-		this.video = $('<span class="block container paragraph" style="z-index: 2;"> \
+		this.video = $('<span class="section block container paragraph" style="z-index: 2;"> \
 							<span class="loader video-preview-loader"></span> \
 							<span class="hide section section-end paragraph video"> \
 								<iframe src="' + src + '" width="522" height="380" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> \
