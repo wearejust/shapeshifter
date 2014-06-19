@@ -1114,12 +1114,12 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 70, sass/main.scss */
-.js .alert-success {
+.js .footer .alert-success {
   top: 3.357em;
 }
 
 /* line 71, sass/main.scss */
-.js .alert-success-active {
+.js .footer .alert-success-active {
   top: 0;
 }
 
