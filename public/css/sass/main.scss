@@ -153,7 +153,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-header-sort-item-active-asc .table-header-sort-item-asc, .table-header-sort-item-active-desc .table-header-sort-item-desc { @include opacity(1); }
 .table-order { display: none; width: 22px; }
 .js .table-order { display: table-cell; }
-.table-control { position: relative; padding: 0; width: 1px; }
+.table-control { position: relative; padding: 0 !important; width: 1px; }
 .table-control-content { height: 100%; left: 100%; margin: 0; position: absolute; top: 0; width: 4.071em; }
 .table-control-list { display: none; margin: 0; /*position: absolute; top: .25em; bottom: 0; left: -25%; right: 0;*/ }
 .table-control-item { margin: 0; display: inline-block; vertical-align: top; margin-right: .15em; }

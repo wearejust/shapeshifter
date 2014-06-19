@@ -1602,7 +1602,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* line 156, sass/main.scss */
 .table-control {
   position: relative;
-  padding: 0;
+  padding: 0 !important;
   width: 1px;
 }
 
