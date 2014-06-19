@@ -22,7 +22,7 @@ class GroupController extends AdminController
     protected function configureFields()
     {
         $this->add( new Attribute\TextAttribute('name'));
-        $this->add( new Relation\ManyToManyFacebookRelation($this, 'admin.users', 'users'));
+        $this->add( new Relation\ManyToManyFacebookRelation($this, 'users', 'users'));
 
         foreach ($this->getAllPermissionRoutes() as $p)
         {

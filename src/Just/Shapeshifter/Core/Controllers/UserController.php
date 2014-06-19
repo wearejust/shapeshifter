@@ -34,7 +34,7 @@ class UserController extends AdminController
         $this->add( new Attribute\PasswordAttribute('password', array('hide_list')));
         $this->add( new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
-        $this->add( new Relation\ManyToManyFacebookRelation($this, 'admin.groups', 'groups'));
+        $this->add( new Relation\ManyToManyFacebookRelation($this, 'groups', 'groups'));
 
         $this->add( new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
     }

@@ -28,6 +28,13 @@ abstract class AdminController extends Controller {
     public $repo;
 
     /**
+     * The mode of the current action (create, edit)
+     *
+     * @var
+     */
+    public  $mode;
+
+    /**
      * This data array holds all the data that will be send to the view
      *
      * @var array
@@ -40,13 +47,6 @@ abstract class AdminController extends Controller {
      * @var array
      */
     protected $attributes = array();
-
-    /**
-     * The mode of the current action (create, edit)
-     *
-     * @var
-     */
-    protected $mode;
 
     /**
      * Allow timestamp fields (created_at, updated_at) in the node
@@ -226,6 +226,7 @@ abstract class AdminController extends Controller {
         $this->data['ids'] = func_get_args();
 
         try {
+            $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
             $this->repo->save($this, $this->getParentInfo());
         } catch (ValidationException $e) {
             $errors = array_map('strtolower', $e->getErrors()->all());
@@ -405,7 +406,10 @@ abstract class AdminController extends Controller {
             $edit = explode('.', $this->data['routes']['edit']);
             unset($edit[count($edit) - 2]);
 
-            array_pop($parameters);
+            if ($this->mode == 'edit')
+            {
+                array_pop($parameters);
+            }
 
             return route(implode('.', $edit), $parameters);
         }
