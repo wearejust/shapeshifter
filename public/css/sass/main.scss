@@ -113,6 +113,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .form-single-checkbox { float: none !important; }
 
 label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:focus + .form-option-label, .form-option-field:checked + .form-option-label { background-color: #d4d4d4; }
+/*.form-single-checkbox:checked + .form-group-highlight, */.form-option-field:checked:focus + .form-option-label, .form-option-field:checked:hover + .form-option-label, .form-option-field:checked:active + .form-option-label, .form-option-field:checked + .form-option-label:hover, .form-option-field:checked + .form-option-label:active { background-color: #c1c1c1; }
 
 .tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; margin-bottom: 0; margin-top: 0; }
 .tab-list-item { float: left; font-weight: bold; margin: 0; }
