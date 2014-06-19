@@ -1,4 +1,4 @@
-/* line 1, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 1, sass/_normalize.scss */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, button, datalist, input, select, textarea, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figcaption, figure, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   background-position: center;
   background-repeat: no-repeat;
@@ -15,24 +15,24 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   white-space: inherit;
 }
 
-/* line 2, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 2, sass/_normalize.scss */
 html, body {
   height: 100%;
 }
 
-/* line 3, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 3, sass/_normalize.scss */
 html, button, datalist, input, select, textarea {
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* line 4, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 4, sass/_normalize.scss */
 html {
   overflow-y: scroll;
 }
 
-/* line 5, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 5, sass/_normalize.scss */
 body {
   background: #fff;
   /*-moz-font-feature-settings: "liga=1, dlig=1"; -ms-font-feature-settings: "liga", "dlig"; -o-font-feature-settings: "liga", "dlig"; -webkit-font-feature-settings: "liga", "dlig"; font-feature-settings: "liga", "dlig";*/
@@ -42,120 +42,120 @@ body {
   word-wrap: break-word;
 }
 
-/* line 6, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 6, sass/_normalize.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
   table-layout: fixed;
 }
 
-/* line 7, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 7, sass/_normalize.scss */
 th, td, textarea {
   vertical-align: top;
 }
 
-/* line 8, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 8, sass/_normalize.scss */
 th {
   font-weight: bold;
   text-align: left;
 }
 
-/* line 9, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 9, sass/_normalize.scss */
 blockquote, q {
   quotes: none;
 }
 
-/* line 10, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 10, sass/_normalize.scss */
 blockquote:before, blockquote:after, q:before, q:after {
   content: "";
   content: none;
 }
 
-/* line 11, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 11, sass/_normalize.scss */
 pre, code, kbd, samp, button, datalist, input, select, textarea, .default {
   font-size: 1em;
 }
 
-/* line 12, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 12, sass/_normalize.scss */
 pre, code, kbd, samp {
   font-family: monospace, monospace;
 }
 
-/* line 13, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 13, sass/_normalize.scss */
 strong, b {
   font-weight: bold;
 }
 
-/* line 14, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 14, sass/_normalize.scss */
 em, i, dfn, span[lang], .special {
   font-style: italic;
 }
 
-/* line 15, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 15, sass/_normalize.scss */
 img, video, object, iframe, legend, textarea, label, article, aside, audio, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, marquee, video, .block, .wrap, .group, .paragraph, .fb_iframe_widget span {
   display: block;
 }
 
-/* line 16, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 16, sass/_normalize.scss */
 img, video, object, iframe {
   max-width: 100%;
 }
 
-/* line 17, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 17, sass/_normalize.scss */
 img, video {
   height: auto;
   width: auto;
 }
 
-/* line 18, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 18, sass/_normalize.scss */
 img {
   vertical-align: middle;
 }
 
-/* line 19, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 19, sass/_normalize.scss */
 ol, ul {
   list-style-position: outside;
 }
 
-/* line 20, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 20, sass/_normalize.scss */
 ol {
   list-style-type: decimal;
 }
 
-/* line 21, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 21, sass/_normalize.scss */
 ul {
   list-style-type: disc;
 }
 
-/* line 22, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 22, sass/_normalize.scss */
 sub, sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
 }
 
-/* line 23, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 23, sass/_normalize.scss */
 sub {
   bottom: -0.25em;
 }
 
-/* line 24, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 24, sass/_normalize.scss */
 sup {
   top: -0.5em;
 }
 
-/* line 25, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 25, sass/_normalize.scss */
 legend, .wrap {
   overflow: hidden;
 }
 
-/* line 26, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 26, sass/_normalize.scss */
 legend {
   white-space: normal;
 }
 
 /*label, .label { margin-bottom: .25em; }*/
-/* line 28, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 28, sass/_normalize.scss */
 textarea {
   min-height: 8em;
   overflow: auto;
@@ -163,12 +163,12 @@ textarea {
   resize: vertical;
 }
 
-/* line 29, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 29, sass/_normalize.scss */
 button, datalist, input, select, textarea, legend, label, .label, .form-label, .form-field {
   line-height: normal;
 }
 
-/* line 30, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 30, sass/_normalize.scss */
 button, datalist, input, select, textarea {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -183,12 +183,12 @@ button, datalist, input, select, textarea {
   margin: 0;
 }
 
-/* line 31, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 31, sass/_normalize.scss */
 button, input[type="button"], input[type="submit"], input[type="checkbox"], input[type="file"], input[type="radio"], input[type="reset"], label, select, a {
   cursor: pointer;
 }
 
-/* line 32, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 32, sass/_normalize.scss */
 button, html input[type="button"], input[type="submit"], input[type="reset"] {
   -webkit-appearance: button;
   background-color: transparent;
@@ -199,30 +199,30 @@ button, html input[type="button"], input[type="submit"], input[type="reset"] {
   width: auto;
 }
 
-/* line 33, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 33, sass/_normalize.scss */
 button[disabled], input[disabled] {
   cursor: default;
 }
 
-/* line 34, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 34, sass/_normalize.scss */
 button::-moz-focus-inner, input::-moz-focus-inner {
   border-width: 0;
   padding: 0;
 }
 
-/* line 35, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 35, sass/_normalize.scss */
 datalist, input, select, textarea, fieldset, legend, table, .full {
   width: 100%;
 }
 
-/* line 36, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 36, sass/_normalize.scss */
 input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"] {
   -moz-appearance: none;
   -webkit-appearance: none;
 }
 
 /* remove mobile input shadow */
-/* line 37, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 37, sass/_normalize.scss */
 input[type="checkbox"], input[type="radio"] {
   background-color: transparent;
   border-width: 0;
@@ -235,35 +235,35 @@ input[type="checkbox"], input[type="radio"] {
   width: auto;
 }
 
-/* line 38, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 38, sass/_normalize.scss */
 input[type="checkbox"]:focus, input[type="radio"]:focus {
   background-color: transparent;
 }
 
-/* line 39, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 39, sass/_normalize.scss */
 input[type="checkbox"] + label, input[type="radio"] + label {
   float: left;
   margin-bottom: 0;
 }
 
-/* line 40, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 40, sass/_normalize.scss */
 input[type="search"] {
   -webkit-appearance: none;
 }
 
-/* line 41, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 41, sass/_normalize.scss */
 input[type="search"]::-webkit-search-decoration {
   display: none;
 }
 
-/* line 42, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 42, sass/_normalize.scss */
 select {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* line 43, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 43, sass/_normalize.scss */
 :focus, :active {
   /*position: relative; top: 1px;*/
   -webkit-transition: none;
@@ -272,7 +272,7 @@ select {
   transition: none;
 }
 
-/* line 44, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_normalize.scss */
+/* line 44, sass/_normalize.scss */
 :focus {
   outline: none;
 }
@@ -284,12 +284,12 @@ select {
 * Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
 /* Layout helpers
 ----------------------------------*/
-/* line 9, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 9, sass/_datepicker.scss */
 .ui-helper-hidden {
   display: none;
 }
 
-/* line 10, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 10, sass/_datepicker.scss */
 .ui-helper-hidden-accessible {
   border: 0;
   clip: rect(0 0 0 0);
@@ -301,7 +301,7 @@ select {
   width: 1px;
 }
 
-/* line 11, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 11, sass/_datepicker.scss */
 .ui-helper-reset {
   margin: 0;
   padding: 0;
@@ -313,23 +313,18 @@ select {
   list-style: none;
 }
 
-/* line 12, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 12, sass/_datepicker.scss */
 .ui-helper-clearfix:before, .ui-helper-clearfix:after {
   content: "";
   display: table;
 }
 
-/* line 13, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 13, sass/_datepicker.scss */
 .ui-helper-clearfix:after {
   clear: both;
 }
 
-/* line 14, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-helper-clearfix {
-  zoom: 1;
-}
-
-/* line 15, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 14, sass/_datepicker.scss */
 .ui-helper-zfix {
   width: 100%;
   height: 100%;
@@ -342,7 +337,7 @@ select {
 
 /* Interaction Cues
 ----------------------------------*/
-/* line 20, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 19, sass/_datepicker.scss */
 .ui-state-disabled {
   cursor: default !important;
 }
@@ -350,7 +345,7 @@ select {
 /* Icons
 ----------------------------------*/
 /* states and images */
-/* line 27, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 26, sass/_datepicker.scss */
 .ui-icon {
   display: block;
   text-indent: -99999px;
@@ -361,7 +356,7 @@ select {
 /* Misc visuals
 ----------------------------------*/
 /* Overlays */
-/* line 34, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 33, sass/_datepicker.scss */
 .ui-widget-overlay {
   position: absolute;
   top: 0;
@@ -370,7 +365,7 @@ select {
   height: 100%;
 }
 
-/* line 35, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 34, sass/_datepicker.scss */
 .ui-datepicker {
   width: 17em;
   padding: .2em .2em 0;
@@ -379,14 +374,14 @@ select {
   padding: 0 1em 0 1em;
 }
 
-/* line 36, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 35, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-header {
   position: relative;
   padding: .2em 0;
   /*background-color: #000; color: #fff; margin-left: -1em; margin-right: -1em;*/
 }
 
-/* line 37, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 36, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
   position: absolute;
   top: 2px;
@@ -394,32 +389,32 @@ select {
   height: 1.8em;
 }
 
-/* line 38, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 37, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover {
   top: 1px;
 }
 
-/* line 39, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 38, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-prev {
   left: 2px;
 }
 
-/* line 40, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 39, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-next {
   right: 2px;
 }
 
-/* line 41, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 40, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-prev-hover {
   left: 1px;
 }
 
-/* line 42, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 41, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-next-hover {
   right: 1px;
 }
 
-/* line 43, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 42, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {
   display: block;
   position: absolute;
@@ -429,31 +424,30 @@ select {
   margin-top: -8px;
 }
 
-/* line 44, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 43, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-title {
   margin: 0 2.3em;
   line-height: 1.8em;
   text-align: center;
 }
 
-/* line 45, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 44, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-title select {
   font-size: 1em;
   margin: 1px 0;
 }
 
-/* line 46, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 45, sass/_datepicker.scss */
 .ui-datepicker select.ui-datepicker-month-year {
   width: 100%;
 }
 
-/* line 48, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker select.ui-datepicker-month,
-.ui-datepicker select.ui-datepicker-year {
+/* line 46, sass/_datepicker.scss */
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
   width: 49%;
 }
 
-/* line 49, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 47, sass/_datepicker.scss */
 .ui-datepicker table {
   width: 100%;
   font-size: .9em;
@@ -461,7 +455,7 @@ select {
   margin: 0 0 .4em;
 }
 
-/* line 50, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 48, sass/_datepicker.scss */
 .ui-datepicker th {
   padding: .7em .3em;
   text-align: center;
@@ -469,13 +463,13 @@ select {
   border: 0;
 }
 
-/* line 51, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 49, sass/_datepicker.scss */
 .ui-datepicker td {
   border: 0;
   padding: 1px;
 }
 
-/* line 52, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 50, sass/_datepicker.scss */
 .ui-datepicker td span, .ui-datepicker td a {
   display: block;
   padding: .2em;
@@ -483,7 +477,7 @@ select {
   text-decoration: none;
 }
 
-/* line 53, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 51, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-buttonpane {
   background-image: none;
   margin: .7em 0 0 0;
@@ -493,7 +487,7 @@ select {
   border-bottom: 0;
 }
 
-/* line 54, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 52, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-buttonpane button {
   float: right;
   margin: .5em .2em .4em;
@@ -503,147 +497,66 @@ select {
   overflow: visible;
 }
 
-/* line 55, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 53, sass/_datepicker.scss */
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
   float: left;
 }
 
 /* with multiple calendars */
-/* line 58, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 56, sass/_datepicker.scss */
 .ui-datepicker.ui-datepicker-multi {
   width: auto;
 }
 
-/* line 59, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 57, sass/_datepicker.scss */
 .ui-datepicker-multi .ui-datepicker-group {
   float: left;
 }
 
-/* line 60, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 58, sass/_datepicker.scss */
 .ui-datepicker-multi .ui-datepicker-group table {
   width: 95%;
   margin: 0 auto .4em;
 }
 
-/* line 61, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 59, sass/_datepicker.scss */
 .ui-datepicker-multi-2 .ui-datepicker-group {
   width: 50%;
 }
 
-/* line 62, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 60, sass/_datepicker.scss */
 .ui-datepicker-multi-3 .ui-datepicker-group {
   width: 33.3%;
 }
 
-/* line 63, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 61, sass/_datepicker.scss */
 .ui-datepicker-multi-4 .ui-datepicker-group {
   width: 25%;
 }
 
-/* line 64, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 62, sass/_datepicker.scss */
 .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header {
   border-left-width: 0;
 }
 
-/* line 65, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 63, sass/_datepicker.scss */
 .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
   border-left-width: 0;
 }
 
-/* line 66, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 64, sass/_datepicker.scss */
 .ui-datepicker-multi .ui-datepicker-buttonpane {
   clear: left;
 }
 
-/* line 67, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
+/* line 65, sass/_datepicker.scss */
 .ui-datepicker-row-break {
   clear: both;
   width: 100%;
-  font-size: 0em;
+  font-size: 0;
 }
 
-/* RTL support */
-/* line 70, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl {
-  direction: rtl;
-}
-
-/* line 71, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-prev {
-  right: 2px;
-  left: auto;
-}
-
-/* line 72, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-next {
-  left: 2px;
-  right: auto;
-}
-
-/* line 73, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-prev:hover {
-  right: 1px;
-  left: auto;
-}
-
-/* line 74, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-next:hover {
-  left: 1px;
-  right: auto;
-}
-
-/* line 75, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-buttonpane {
-  clear: right;
-}
-
-/* line 76, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-buttonpane button {
-  float: left;
-}
-
-/* line 77, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current {
-  float: right;
-}
-
-/* line 78, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-group {
-  float: right;
-}
-
-/* line 79, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header {
-  border-right-width: 0;
-  border-left-width: 1px;
-}
-
-/* line 80, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
-  border-right-width: 0;
-  border-left-width: 1px;
-}
-
-/* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
-/* line 83, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_datepicker.scss */
-.ui-datepicker-cover {
-  position: absolute;
-  /*must have*/
-  z-index: -1;
-  /*must have*/
-  filter: mask();
-  /*must have*/
-  top: -4px;
-  /*must have*/
-  left: -4px;
-  /*must have*/
-  width: 200px;
-  /*must have*/
-  height: 200px;
-  /*must have*/
-}
-
-/* line 2, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_transitions.scss */
+/* line 2, sass/_transitions.scss */
 .no-transition, .no-transitions * {
   -webkit-transition: 0 !important;
   -moz-transition: 0 !important;
@@ -651,7 +564,7 @@ select {
   transition: 0 !important;
 }
 
-/* line 3, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_transitions.scss */
+/* line 3, sass/_transitions.scss */
 .js .js-fade {
   -webkit-transition: opacity 0.4s ease-in-out;
   -moz-transition: opacity 0.4s ease-in-out;
@@ -659,7 +572,7 @@ select {
   transition: opacity 0.4s ease-in-out;
 }
 
-/* line 16, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_transitions.scss */
+/* line 16, sass/_transitions.scss */
 .js .js-transform {
   -webkit-transition: -webkit-transform 0.2s ease-in-out;
   -moz-transition: -moz-transform 0.2s ease-in-out;
@@ -795,20 +708,20 @@ datalist, input, select, textarea, .input, .sp-replacer {
 datalist, input, select, textarea, .input {
   padding: .75em 1em;
 }
-/* line 214, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_utils.scss */
+/* line 214, sass/_utils.scss */
 datalist:-moz-placeholder, input:-moz-placeholder, select:-moz-placeholder, textarea:-moz-placeholder, .input:-moz-placeholder {
   color: #999999;
 }
-/* line 215, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_utils.scss */
+/* line 215, sass/_utils.scss */
 datalist::-moz-placeholder, input::-moz-placeholder, select::-moz-placeholder, textarea::-moz-placeholder, .input::-moz-placeholder {
   color: #999999;
   opacity: 1;
 }
-/* line 217, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_utils.scss */
+/* line 217, sass/_utils.scss */
 datalist:-ms-input-placeholder, input:-ms-input-placeholder, select:-ms-input-placeholder, textarea:-ms-input-placeholder, .input:-ms-input-placeholder {
   color: #999999;
 }
-/* line 218, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_utils.scss */
+/* line 218, sass/_utils.scss */
 datalist::-webkit-input-placeholder, input::-webkit-input-placeholder, select::-webkit-input-placeholder, textarea::-webkit-input-placeholder, .input::-webkit-input-placeholder {
   color: #999999;
 }
@@ -839,24 +752,24 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 /*::-moz-selection { background-color: rgba(, , , .7); color: #fff; text-shadow: none; }
 ::selection { background-color: rgba(, , , .7); color: #fff; text-shadow: none; }*/
 /*::selection:window-inactive { background-color: ; }*/
-/* line 1, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 1, sass/_default-classes.scss */
 .inline {
   display: inline;
 }
 
-/* line 2, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 2, sass/_default-classes.scss */
 .inline-block {
   display: inline-block;
 }
 
-/* line 3, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 3, sass/_default-classes.scss */
 .list {
   list-style: none;
   list-style-image: none;
   padding-left: 0;
 }
 
-/* line 4, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 4, sass/_default-classes.scss */
 .accessibility, .js .js-accessibility, .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -866,7 +779,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   width: 1px;
 }
 
-/* line 5, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 5, sass/_default-classes.scss */
 .accessibility:focus, .accessibility:active {
   clip: auto;
   height: auto;
@@ -875,83 +788,83 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   width: auto;
 }
 
-/* line 6, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 6, sass/_default-classes.scss */
 .group:before, .group:after {
   content: " ";
   display: table;
 }
 
-/* line 7, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 7, sass/_default-classes.scss */
 .group:after {
   clear: both;
 }
 
-/* line 8, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 8, sass/_default-classes.scss */
 .container {
   position: relative;
 }
 
-/* line 9, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 9, sass/_default-classes.scss */
 .wrapper {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 10, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 10, sass/_default-classes.scss */
 .link-alt:focus, .link-alt:hover {
   background-color: transparent;
 }
 
-/* line 11, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 11, sass/_default-classes.scss */
 .link-alt:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 12, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 12, sass/_default-classes.scss */
 .normal {
   font-weight: normal;
 }
 
-/* line 13, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 13, sass/_default-classes.scss */
 .heading {
   text-transform: uppercase;
 }
 
-/* line 14, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 14, sass/_default-classes.scss */
 .heading-alt {
   text-transform: lowercase;
 }
 
-/* line 15, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 15, sass/_default-classes.scss */
 .row {
   white-space: nowrap;
 }
 
-/* line 16, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 16, sass/_default-classes.scss */
 .item {
   float: left;
 }
 
-/* line 17, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 17, sass/_default-classes.scss */
 .item-alt {
   float: right;
 }
 
-/* line 18, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 18, sass/_default-classes.scss */
 .item-start {
   clear: both;
 }
 
-/* line 19, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 19, sass/_default-classes.scss */
 .box {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 
-/* line 20, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 20, sass/_default-classes.scss */
 .fill {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -967,13 +880,13 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   width: 100%;
 }
 
-/* line 21, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 21, sass/_default-classes.scss */
 .number::-webkit-outer-spin-button, .number::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* line 22, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 22, sass/_default-classes.scss */
 .video {
   background-color: #000;
   display: block;
@@ -981,7 +894,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   position: relative;
 }
 
-/* line 23, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 23, sass/_default-classes.scss */
 .video iframe, .video object, .video embed {
   height: 100%;
   left: 0;
@@ -991,27 +904,27 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   width: 100%;
 }
 
-/* line 24, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 24, sass/_default-classes.scss */
 .fb_iframe_widget, .fb_iframe_widget span {
   display: block !important;
 }
 
-/* line 25, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 25, sass/_default-classes.scss */
 .fb_iframe_widget span {
   width: auto !important;
 }
 
-/* line 26, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 26, sass/_default-classes.scss */
 .fb_iframe_widget iframe {
   width: 100% !important;
 }
 
-/* line 27, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 27, sass/_default-classes.scss */
 .fb_ltr, .fb_iframe_widget_lift {
   max-width: none;
 }
 
-/* line 35, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 35, sass/_default-classes.scss */
 .js .js-accessibility {
   clip: rect(1px 1px 1px 1px);
   clip: rect(1px, 1px, 1px, 1px);
@@ -1020,7 +933,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   position: absolute !important;
   width: 1px;
 }
-/* line 36, /Users/jaspervanderkamp/Sites/boilerplate/laravel/workbench/just/shapeshifter/public/css/sass/_default-classes.scss */
+/* line 36, sass/_default-classes.scss */
 .js .js-accessibility:focus, .js .js-accessibility:active {
   clip: auto;
   height: auto;
@@ -1201,12 +1114,12 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 70, sass/main.scss */
-.js .alert-success {
+.js .footer .alert-success {
   top: 3.357em;
 }
 
 /* line 71, sass/main.scss */
-.js .alert-success-active {
+.js .footer .alert-success-active {
   top: 0;
 }
 
