@@ -257,7 +257,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	h1, .title { font-size: 3.5em; }
 	h1, .onetomany-relation-content h1 { margin: -2.75rem 0 0; padding: 2.75rem 0; }
 	.onetomany-relation-content h1 { margin-bottom: .75em; margin-top: 0; padding: 0; }
-	th, td { display: table-cell; padding-left: 1.375em; padding-right: 1.375em; }
+	.table-header, .table-cell { display: table-cell; padding-left: 1.375em; padding-right: 1.375em; }
 	.page { padding: 0 4.071em; }
 	.touch .page { padding: 0; }
 	.content-body { background-color: #fff; border-color: #ddd; border-width: 0 1px; }

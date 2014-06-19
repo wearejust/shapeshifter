@@ -2250,7 +2250,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   }
 
   /* line 260, sass/main.scss */
-  th, td {
+  .table-header, .table-cell {
     display: table-cell;
     padding-left: 1.375em;
     padding-right: 1.375em;
