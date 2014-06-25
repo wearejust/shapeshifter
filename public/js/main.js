@@ -213,14 +213,40 @@ $.fn.multiplefileattribute = function() {
 	});
 }
 
+var MultipleFileAttributes = function() {
+	this.items = [];
+}
+MultipleFileAttributes.prototype.add = function(item) {
+	this.items.push(item);
+	return this.items.length;
+}
+MultipleFileAttributes.prototype.loaders = function(storageDir, amount) {
+	var i, item;
+	for (i=0; i<this.items.length; i++) {
+		item = this.items[i];
+		if (item.storageDir == storageDir) {
+			item.loaders(amount);
+		}
+	}
+}
+MultipleFileAttributes.prototype.update = function(storageDir, data) {
+	var i, item;
+	for (i=0; i<this.items.length; i++) {
+		item = this.items[i];
+		if (item.storageDir == storageDir) {
+			item.update(data);
+		}
+	}
+}
+MultipleFileAttributes = new MultipleFileAttributes();
+
 var MultipleFileAttribute = function(element) {
 	if (!element.length) return;
 	this.element = element;
-
-	this.index = 0;
+	this.id = MultipleFileAttributes.add(this);
 
 	var input = this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
-	input.closest('.mini-gallery-list-item').removeClass('hide');
+	input.closest('.mini-gallery-list-item').addClass('mini-gallery-list-item-input').removeClass('hide');
 
 	this.dragInput = this.element.find('.mini-gallery-add-button').clone();
 	this.dragInput.addClass('js-multiplefileattribute-draginput');
@@ -263,20 +289,7 @@ MultipleFileAttribute.prototype.drag = function(e) {
 MultipleFileAttribute.prototype.upload = function(e) {
 	if (!this.loading && e.currentTarget.files) {
 		this.drag();
-
-		var i, item, input;
-		for (i=0; i<e.currentTarget.files.length; i++) {
-			this.index++;
-			item = this.item.clone();
-			item.find('label').attr('for', 'uploaded-radio-' + this.index);
-			item.find('img').addClass('hide');
-			input = item.find('.mini-gallery-input');
-			input.attr('id', 'uploaded-radio-' + this.index);
-			input.attr('value','');
-			input.on('change', this.change.bind(this));
-			this.list.append(item);
-		}
-
+		MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files.length)
 		this.input = $(e.currentTarget);
 		this.input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
 		this.input.execute(this, function() {
@@ -288,15 +301,37 @@ MultipleFileAttribute.prototype.upload = function(e) {
 	}
 }
 
+MultipleFileAttribute.prototype.loaders = function(amount) {
+	var i, item, input;
+	for (i=0; i<amount; i++) {
+		item = this.item.clone();
+		item.find('label').attr('for', 'multiplefileattribute-' + this.id + '-radio-' + i);
+		item.find('img').addClass('hide');
+		input = item.find('.mini-gallery-input');
+		input.attr('id', 'multiplefileattribute-' + this.id + '-radio-' + i);
+		input.attr('value','');
+		input.on('change', this.change.bind(this));
+		this.list.append(item);
+	}
+}
+
 MultipleFileAttribute.prototype.uploaded = function(data) {
 	this.input.unwrap();
 	this.list.find('.mini-gallery-input').prop('checked', false);
 	this.drag();
 
+	MultipleFileAttributes.update(this.storageDir, data);
+
+	this.list.execute(this, function() {
+		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
+		this.loading = false;
+	});
+}
+
+MultipleFileAttribute.prototype.update = function(data) {
 	var i = 0, str, item, items = this.list.find('label.loader');
 	for (str in data) {
 		this.list.find('.mini-gallery-input[value="' + str + '"]').closest('.mini-gallery-list-item').remove();
-
 		item = items.eq(i).closest('.mini-gallery-list-item');
 		item.find('label').removeClass('loader');
 		item.find('img').removeClass('hide').attr('src', data[str]);
@@ -308,11 +343,6 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 		}
 		i++;
 	}
-
-	this.list.execute(this, function() {
-		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
-		this.loading = false;
-	});
 }
 
 MultipleFileAttribute.prototype.change = function(e) {
