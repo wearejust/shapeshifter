@@ -137,7 +137,6 @@ abstract class AdminController extends Controller {
     protected function initAttributes()
     {
         $this->configureFields();
-        $this->addTimestampFields();
 
         $this->repo->setAttributes($this->attributes, $this->repo->getRules());
 
@@ -323,6 +322,8 @@ abstract class AdminController extends Controller {
         {
             $this->addDependencies();
         }
+
+        $this->addTimestampFields();
 
         $user = Sentry::getUser();
         $user->setDisabledActions($this->disabledActions);
