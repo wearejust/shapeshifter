@@ -302,6 +302,8 @@ MultipleFileAttribute.prototype.upload = function(e) {
 }
 
 MultipleFileAttribute.prototype.loaders = function(amount) {
+	this.list.find('.mini-gallery-input-update').removeClass('mini-gallery-input-update');
+
 	var i, item, input;
 	for (i=0; i<amount; i++) {
 		item = this.item.clone();
@@ -322,6 +324,13 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 
 	MultipleFileAttributes.update(this.storageDir, data);
 
+	var item = this.list.find('.mini-gallery-input-update');
+	if (item.length) {
+		item.removeClass('mini-gallery-input-update');
+		item.prop('checked', true);
+		item.trigger('change');
+	}
+
 	this.list.execute(this, function() {
 		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
 		this.loading = false;
@@ -337,10 +346,7 @@ MultipleFileAttribute.prototype.update = function(data) {
 		item.find('img').removeClass('hide').attr('src', data[str]);
 		item = item.find('.mini-gallery-input');
 		item.val(str);
-		if (!i) {
-			item.prop('checked', true);
-			item.trigger('change');
-		}
+		if (!i) item.addClass('mini-gallery-input-update');
 		i++;
 	}
 }
