@@ -219,15 +219,14 @@ var MultipleFileAttribute = function(element) {
 
 	this.index = 0;
 
-	this.element.children().wrapAll('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
-	this.form = this.element.find('.js-multiplefileattribute-form');
+	var input = this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
+	input.closest('.mini-gallery-list-item').removeClass('hide');
 
-	this.dragInput = this.form.find('.mini-gallery-add-button').clone();
+	this.dragInput = this.element.find('.mini-gallery-add-button').clone();
 	this.dragInput.addClass('js-multiplefileattribute-draginput');
 	this.dragInput.wrap('<div class="js-multiplefileattribute-draginput-wrap fill"></div>');
 	this.dragInputWrap = this.dragInput.parent();
-	this.form.prepend(this.dragInputWrap);
-
+	this.element.prepend(this.dragInputWrap);
 	this.element.on('dragover dragleave', this.drag.bind(this));
 	this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
 
@@ -263,6 +262,8 @@ MultipleFileAttribute.prototype.drag = function(e) {
 
 MultipleFileAttribute.prototype.upload = function(e) {
 	if (!this.loading && e.currentTarget.files) {
+		this.drag();
+
 		var i, item, input;
 		for (i=0; i<e.currentTarget.files.length; i++) {
 			this.index++;
@@ -275,15 +276,20 @@ MultipleFileAttribute.prototype.upload = function(e) {
 			input.on('change', this.change.bind(this));
 			this.list.append(item);
 		}
-		this.drag();
-		this.form.closest('form').ajaxSubmit({
-			'data': { 'storagedir': this.storageDir },
-			'success': this.uploaded.bind(this)
+
+		this.input = $(e.currentTarget);
+		this.input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
+		this.input.execute(this, function() {
+			this.input.parent().ajaxSubmit({
+				'data': { 'storagedir': this.storageDir },
+				'success': this.uploaded.bind(this)
+			});
 		});
 	}
 }
 
 MultipleFileAttribute.prototype.uploaded = function(data) {
+	this.input.unwrap();
 	this.list.find('.mini-gallery-input').prop('checked', false);
 	this.drag();
 

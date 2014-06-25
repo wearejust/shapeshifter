@@ -28,7 +28,7 @@
                 <span class="mini-gallery" style="display: block; margin: 0 0 0 3px;">
                     <fieldset>
                         <ul class="mini-gallery-list">
-                            <li class="mini-gallery-list-item">
+                            <li class="mini-gallery-list-item hide">
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
                                         <span class="mini-gallery-add fill">+</span>
