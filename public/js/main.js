@@ -204,15 +204,6 @@ $.fn.accordion = function(settings) {
 // -----------------------------------------------------------
 // FILE ATTRIBUTE
 // -----------------------------------------------------------
-$.fn.multiplefileattribute = function() {
-	return $(this).each(function(index, item) {
-		item = $(item);
-		if (!item.data('multiplefileattribute')) {
-			item.data('multiplefileattribute', new MultipleFileAttribute(item));
-		}
-	});
-}
-
 var MultipleFileAttributes = function() {
 	this.items = [];
 }
@@ -239,6 +230,15 @@ MultipleFileAttributes.prototype.update = function(storageDir, data) {
 	}
 }
 MultipleFileAttributes = new MultipleFileAttributes();
+
+$.fn.multiplefileattribute = function() {
+	return $(this).each(function(index, item) {
+		item = $(item);
+		if (!item.data('multiplefileattribute')) {
+			item.data('multiplefileattribute', new MultipleFileAttribute(item));
+		}
+	});
+}
 
 var MultipleFileAttribute = function(element) {
 	if (!element.length) return;
