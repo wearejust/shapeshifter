@@ -219,12 +219,15 @@ var MultipleFileAttribute = function(element) {
 
 	this.index = 0;
 
-	var input = this.element.find('.mini-gallery-add-button');
-	input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
+	this.element.children().wrapAll('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
+	this.form = this.element.find('.js-multiplefileattribute-form');
 
-	this.dragform = input.parent().clone();
-	this.dragform.addClass('js-multiplefileattribute-dragform');
-	this.element.prepend(this.dragform);
+	this.dragInput = this.form.find('.mini-gallery-add-button').clone();
+	this.dragInput.addClass('js-multiplefileattribute-draginput');
+	this.dragInput.wrap('<div class="js-multiplefileattribute-draginput-wrap fill"></div>');
+	this.dragInputWrap = this.dragInput.parent();
+	this.form.prepend(this.dragInputWrap);
+
 	this.element.on('dragover dragleave', this.drag.bind(this));
 	this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
 
@@ -242,34 +245,38 @@ var MultipleFileAttribute = function(element) {
 		this.item = this.item.clone();
 		this.item.find('img').attr('src', '');
 	}
-	this.item.find('.mini-gallery-input').removeAttr('checked');
+	this.item.find('.mini-gallery-input').prop('checked', false);
 	this.item.find('label').addClass('loader');
 }
 
 MultipleFileAttribute.prototype.drag = function(e) {
 	if (e && e.type == 'dragover') {
-		this.dragform.execute(this, function() {
-			this.dragform.addClass('active');
+		this.dragInputWrap.execute(this, function() {
+			this.dragInputWrap.addClass('active');
 		});
 	} else {
-		this.dragform.execute(this, 100, function() {
-			this.dragform.removeClass('active');
+		this.dragInputWrap.execute(this, 100, function() {
+			this.dragInputWrap.removeClass('active');
 		});
 	}
 }
 
 MultipleFileAttribute.prototype.upload = function(e) {
 	if (!this.loading && e.currentTarget.files) {
-		for (var i=0; i<e.currentTarget.files.length; i++) {
+		var i, item, input;
+		for (i=0; i<e.currentTarget.files.length; i++) {
 			this.index++;
-			var item = this.item.clone();
-			item.find('.mini-gallery-input').attr('id', 'uploaded-radio-' + this.index).on('change', this.change.bind(this));
+			item = this.item.clone();
 			item.find('label').attr('for', 'uploaded-radio-' + this.index);
 			item.find('img').addClass('hide');
+			input = item.find('.mini-gallery-input');
+			input.attr('id', 'uploaded-radio-' + this.index);
+			input.attr('value','');
+			input.on('change', this.change.bind(this));
 			this.list.append(item);
 		}
 		this.drag();
-		$(e.currentTarget).closest('form').ajaxSubmit({
+		this.form.closest('form').ajaxSubmit({
 			'data': { 'storagedir': this.storageDir },
 			'success': this.uploaded.bind(this)
 		});
@@ -277,27 +284,20 @@ MultipleFileAttribute.prototype.upload = function(e) {
 }
 
 MultipleFileAttribute.prototype.uploaded = function(data) {
-	this.list.find('.mini-gallery-input').removeAttr('checked');
+	this.list.find('.mini-gallery-input').prop('checked', false);
+	this.drag();
 
-	var values = [];
-	this.list.find('.mini-gallery-input').each(function(index, item) {
-		values.push($(item).attr('value'));
-	});
-
-	var n, i = 0, obj, item, items = this.list.find('label.loader');
-	for (obj in data) {
-		n = values.indexOf(obj);
-		if (n != -1) {
-			item = this.list.find('.mini-gallery-list-item:eq(' + (n + 1) + ')').remove();
-		}
+	var i = 0, str, item, items = this.list.find('label.loader');
+	for (str in data) {
+		this.list.find('.mini-gallery-input[value="' + str + '"]').closest('.mini-gallery-list-item').remove();
 
 		item = items.eq(i).closest('.mini-gallery-list-item');
 		item.find('label').removeClass('loader');
-		item.find('img').removeClass('hide').attr('src', data[obj]);
+		item.find('img').removeClass('hide').attr('src', data[str]);
 		item = item.find('.mini-gallery-input');
-		item.val(obj);
+		item.val(str);
 		if (!i) {
-			item.attr('checked', 'checked');
+			item.prop('checked', true);
 			item.trigger('change');
 		}
 		i++;

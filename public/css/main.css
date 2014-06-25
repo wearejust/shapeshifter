@@ -519,7 +519,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .mini-gallery-list-item-content { display: block; margin: 0 1px; }
 
-.mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; }
+.mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; z-index: 0; }
 
 .mini-gallery-add { background-color: #000; color: #fff; font-size: 34px; font-weight: bold; text-align: center; }
 
@@ -665,9 +665,11 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .js.touch .dataTables_wrapper { overflow: hidden; }
 
-.js-multiplefileattribute-dragform { display: none; position: absolute; width: 100%; height: 100%; z-index: 999; top: 0; left: 0; background-color: #ccc; }
+.js-multiplefileattribute-form { margin: 0; padding: 0; }
 
-.js-multiplefileattribute-dragform.active { display: block; }
+.js-multiplefileattribute-draginput-wrap { display: none; background-color: #ccc; }
+
+.js-multiplefileattribute-draginput-wrap.active { display: block; z-index: 999; }
 
 @media screen and (min-width: 30em) { .breadcrumbs-link-text { display: inline; }
   .breadcrumbs-link:after { content: ""; } }

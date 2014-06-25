@@ -32,7 +32,7 @@
                                 <span class="mini-gallery-list-item-content">
                                     <span class="mini-gallery-list-item-content-inner">
                                         <span class="mini-gallery-add fill">+</span>
-                                        <input accept="image/*" class="mini-gallery-add-button fill" name="files[]" type="file" data-index="{{ count($existing) }}" multiple>
+                                        <input accept="image/*" class="mini-gallery-add-button fill" name="files[]" type="file" multiple>
                                     </span>
                                 </span>
                             <!--</li>-->
