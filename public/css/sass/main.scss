@@ -248,6 +248,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .js.touch .dataTables_wrapper { overflow: hidden; }
 
+.js-multiplefileattribute-dragform { display: none; position: absolute; width: 100%; height: 100%; z-index: 999; top: 0; left: 0; background-color: #ccc; }
+.js-multiplefileattribute-dragform.active { display: block; }
+
 @include respond-min-width(30em) {
 	.breadcrumbs-link-text { display: inline; }
 	.breadcrumbs-link:after { content: ""; }

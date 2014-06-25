@@ -217,16 +217,23 @@ var MultipleFileAttribute = function(element) {
 	if (!element.length) return;
 	this.element = element;
 
-	this.input = this.element.find('input[type="file"]');
-	this.input.on('change', this.upload.bind(this));
-	this.storageDir = this.input.attr('data-storage-dir');
-	this.index = parseInt(this.input.attr('data-index'));
-	this.input.wrap('<form action="/admin/ajax/upload" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
-	this.form = this.input.parent();
+	this.index = 0;
 
+	var input = this.element.find('.mini-gallery-add-button');
+	input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
+
+	this.dragform = input.parent().clone();
+	this.dragform.addClass('js-multiplefileattribute-dragform');
+	this.element.prepend(this.dragform);
+	this.element.on('dragover dragleave', this.drag.bind(this));
+	this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
+
+	this.preview = this.element.find('.media-wrapper-content-wrapper-inner img');
+	this.storageDir = this.preview.attr('data-storage-dir');
+	
 	this.list = this.element.find('.mini-gallery-list');
 	this.item = this.list.find('.mini-gallery-list-item').last();
-	this.list.find('input[name="files"]').on('change', this.change.bind(this));
+	this.list.find('.mini-gallery-input').on('change', this.change.bind(this));
 
 	if (this.item.hasClass('hide')) {
 		this.item.remove();
@@ -235,7 +242,20 @@ var MultipleFileAttribute = function(element) {
 		this.item = this.item.clone();
 		this.item.find('img').attr('src', '');
 	}
+	this.item.find('.mini-gallery-input').removeAttr('checked');
 	this.item.find('label').addClass('loader');
+}
+
+MultipleFileAttribute.prototype.drag = function(e) {
+	if (e && e.type == 'dragover') {
+		this.dragform.execute(this, function() {
+			this.dragform.addClass('active');
+		});
+	} else {
+		this.dragform.execute(this, 100, function() {
+			this.dragform.removeClass('active');
+		});
+	}
 }
 
 MultipleFileAttribute.prototype.upload = function(e) {
@@ -243,12 +263,13 @@ MultipleFileAttribute.prototype.upload = function(e) {
 		for (var i=0; i<e.currentTarget.files.length; i++) {
 			this.index++;
 			var item = this.item.clone();
-			item.find('input[name="files"]').attr('id', 'option' + this.index).on('change', this.change.bind(this));
-			item.find('label').attr('for', 'option' + this.index);
+			item.find('.mini-gallery-input').attr('id', 'uploaded-radio-' + this.index).on('change', this.change.bind(this));
+			item.find('label').attr('for', 'uploaded-radio-' + this.index);
 			item.find('img').addClass('hide');
 			this.list.append(item);
 		}
-		this.form.ajaxSubmit({
+		this.drag();
+		$(e.currentTarget).closest('form').ajaxSubmit({
 			'data': { 'storagedir': this.storageDir },
 			'success': this.uploaded.bind(this)
 		});
@@ -256,27 +277,30 @@ MultipleFileAttribute.prototype.upload = function(e) {
 }
 
 MultipleFileAttribute.prototype.uploaded = function(data) {
-	var images = [];
-	this.list.find('img').each(function(index, item) {
-		images.push($(item).attr('src'));
+	this.list.find('.mini-gallery-input').removeAttr('checked');
+
+	var values = [];
+	this.list.find('.mini-gallery-input').each(function(index, item) {
+		values.push($(item).attr('value'));
 	});
 
-	var n, item, items = this.list.find('label.loader');
-	for (var i=0; i<data.length; i++) {
-		n = images.indexOf(data[i]);
+	var n, i = 0, obj, item, items = this.list.find('label.loader');
+	for (obj in data) {
+		n = values.indexOf(obj);
 		if (n != -1) {
-			if (!i) {
-				item = this.list.find('.mini-gallery-list-item:eq(' + (n + 1) + ') input[type="radio"]');
-				item.attr('checked', 'checked');
-				item.trigger('change');
-			}
-
-		} else {
-			item = items.eq(i).closest('.mini-gallery-list-item');
-			item.find('label').removeClass('loader');
-			item.find('img').removeClass('hide').attr('src', data[i]);
-			if (!i) item.find('input[type="radio"]').attr('checked', 'checked');
+			item = this.list.find('.mini-gallery-list-item:eq(' + (n + 1) + ')').remove();
 		}
+
+		item = items.eq(i).closest('.mini-gallery-list-item');
+		item.find('label').removeClass('loader');
+		item.find('img').removeClass('hide').attr('src', data[obj]);
+		item = item.find('.mini-gallery-input');
+		item.val(obj);
+		if (!i) {
+			item.attr('checked', 'checked');
+			item.trigger('change');
+		}
+		i++;
 	}
 
 	this.list.execute(this, function() {
@@ -286,13 +310,13 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 }
 
 MultipleFileAttribute.prototype.change = function(e) {
-	if (!this.preview) {
-		this.preview = $('<img class="wrapper" alt="">');
-		this.element.find('.media-wrapper-content-wrapper-inner').html(this.preview);
-	}
-
-	var str = $(e.currentTarget).closest('.mini-gallery-list-item').find('img').attr('src');
+	var str = this.storageDir + $(e.currentTarget).val();
 	this.preview.attr('src', str);
+
+	if (this.preview.hasClass('hide')) {
+		this.preview.siblings('p').remove();
+		this.preview.removeClass('hide');
+	}
 }
 
 

@@ -99,7 +99,10 @@ class MultipleFileAttribute extends Attribute implements iAttributeInterface
         foreach ($files as $file)
         {
             $file = pathinfo($file);
-            $this->existing[$file['basename']] = $this->relativeStorageDir . $file['basename'];
+            $path = $this->relativeStorageDir . $file['basename'];
+            if (substr($path, 0, 1) == '/' || substr($path, 0, 1) == '\\') $path = substr($path, 1);
+            $this->existing[$file['basename']] = '/' . Image::open($path)->zoomCrop(100, 100)->jpeg();
+
         }
 
         if (!$this->existing) {

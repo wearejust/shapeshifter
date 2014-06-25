@@ -70,7 +70,7 @@ class AjaxController extends Controller
             if ($file->isValid()) {
                 $name = $file->getClientOriginalName();
                 $file->move(public_path() . $storageDir, $name);
-                $files->push($storageDir . $name);
+                $files[$name] = $storageDir . $name;
             }
         }
 
