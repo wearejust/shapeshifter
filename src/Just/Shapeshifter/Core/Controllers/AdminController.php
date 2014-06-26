@@ -17,7 +17,6 @@ use Redirect;
 use Request;
 use Route;
 use Sentry;
-use URL;
 use View;
 
 abstract class AdminController extends Controller {
@@ -238,7 +237,7 @@ abstract class AdminController extends Controller {
 
         Notification::success(__('form.stored'));
 
-        return Redirect::route($this->data['routes']['index'], $this->data['ids']);
+        return $this->redirectAfterStore($this->data['routes']['index'], $this->data['ids'], $this->data['id']);
     }
 
     /**
@@ -258,7 +257,7 @@ abstract class AdminController extends Controller {
         $this->model = $this->repo->findById(last($this->data['ids']));
 
         try {
-            $this->repo->save($this);
+            $this->data['id'] = $this->repo->save($this);
         } catch (ValidationException $e) {
             $errors = array_map('strtolower', $e->getErrors()->all());
             $errors = array_map('ucfirst', $errors);
@@ -270,7 +269,7 @@ abstract class AdminController extends Controller {
 
         Notification::success(__('form.updated'));
 
-        return Redirect::route($this->data['routes']['index'], $this->data['ids']);
+        return $this->redirectAfterUpdate($this->data['routes']['index'], $this->data['ids'], $this->data['id']);
     }
 
     /**
@@ -375,6 +374,16 @@ abstract class AdminController extends Controller {
     protected function userHasAccess()
     {
         return Sentry::getUser()->isSuperUser() || Sentry::getUser()->hasAnyAccess(array(Route::currentRouteName()));
+    }
+
+    protected function redirectAfterUpdate($route, $args, $currentId)
+    {
+        return Redirect::route($route, $args);
+    }
+
+    protected function redirectAfterStore($route, $args, $currentId)
+    {
+        return Redirect::route($route, $args);
     }
 
     /**
@@ -575,7 +584,6 @@ abstract class AdminController extends Controller {
 
         throw new InvalidArgumentException("Key [{$key}] doesnt exist in attributes list");
     }
-
     /**
      * Trigger is fired before an record will be deleted
      *
