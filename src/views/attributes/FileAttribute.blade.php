@@ -5,24 +5,28 @@
     <span class="form-field js-image-container">
         <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
             <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                <span class="media-wrapper" style="margin: 0 3px 0 0;">
+                <span class="media-wrapper" style="margin: 0 9px 0 0;">
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
-                                {{ Form::file($name, array('accept' => '', 'class' => 'form-field-content', 'autocorrect' => 'off')) }}
-                                <!--<span class="form-group-highlight"></span>-->
+                                <span class="media-wrapper-content-wrapper-inner-content">
+                                    {{ Form::file($name, array('accept' => '', 'class' => 'form-field-content', 'autocorrect' => 'off')) }}
+                                    <!--<span class="form-group-highlight"></span>-->
+                                </span>
                             </span>
                         </span>
                     </span>
                 </span>
             </span>
             <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                <span class="media-wrapper" style="margin: 0 0 0 3px;">
+                <span class="media-wrapper" style="margin: 0 0 0 9px;">
                     @if ($value)
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
-                                {{ $value }}
+                                <span class="media-wrapper-content-wrapper-inner-content">
+                                    {{ $value }}
+                                </span>
                             </span>
                         </span>
                     </span>

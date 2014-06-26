@@ -15,7 +15,7 @@ pre, code, kbd, samp, button, datalist, input, select, textarea { font-size: 1em
 pre, code, kbd, samp { font-family: monospace, monospace; }
 strong, b { font-weight: bold; }
 em, i, dfn, span[lang] { font-style: italic; }
-img, video, object, iframe, legend, textarea, label, article, aside, audio, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, marquee, video{ display: block; }
+img, video, object, iframe, legend, textarea, label, article, aside, audio, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, marquee, video { display: block; }
 img, video, object, iframe { max-width: 100%; }
 img, video { height: auto; width: auto; }
 img { vertical-align: middle; }

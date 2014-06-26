@@ -288,7 +288,7 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 MultipleFileAttribute.prototype.change = function(e) {
 	if (!this.preview) {
 		this.preview = $('<img class="wrapper" alt="">');
-		this.element.find('.media-wrapper-content-wrapper-inner').html(this.preview);
+		this.element.find('.js-media').html(this.preview);
 	}
 
 	var str = $(e.currentTarget).closest('.mini-gallery-list-item').find('img').attr('src');
