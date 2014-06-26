@@ -204,6 +204,33 @@ $.fn.accordion = function(settings) {
 // -----------------------------------------------------------
 // FILE ATTRIBUTE
 // -----------------------------------------------------------
+var MultipleFileAttributes = function() {
+	this.items = [];
+}
+MultipleFileAttributes.prototype.add = function(item) {
+	this.items.push(item);
+	return this.items.length;
+}
+MultipleFileAttributes.prototype.loaders = function(storageDir, amount) {
+	var i, item;
+	for (i=0; i<this.items.length; i++) {
+		item = this.items[i];
+		if (item.storageDir == storageDir) {
+			item.loaders(amount);
+		}
+	}
+}
+MultipleFileAttributes.prototype.update = function(storageDir, data) {
+	var i, item;
+	for (i=0; i<this.items.length; i++) {
+		item = this.items[i];
+		if (item.storageDir == storageDir) {
+			item.update(data);
+		}
+	}
+}
+MultipleFileAttributes = new MultipleFileAttributes();
+
 $.fn.multiplefileattribute = function() {
 	return $(this).each(function(index, item) {
 		item = $(item);
@@ -216,17 +243,25 @@ $.fn.multiplefileattribute = function() {
 var MultipleFileAttribute = function(element) {
 	if (!element.length) return;
 	this.element = element;
+	this.id = MultipleFileAttributes.add(this);
 
-	this.input = this.element.find('input[type="file"]');
-	this.input.on('change', this.upload.bind(this));
-	this.storageDir = this.input.attr('data-storage-dir');
-	this.index = parseInt(this.input.attr('data-index'));
-	this.input.wrap('<form action="/admin/ajax/upload" method="POST" style="margin:0;padding:0;" multipart/form-data></form>');
-	this.form = this.input.parent();
+	var input = this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
+	input.closest('.mini-gallery-list-item').addClass('mini-gallery-list-item-input').removeClass('hide');
 
+	this.dragInput = this.element.find('.mini-gallery-add-button').clone();
+	this.dragInput.addClass('js-multiplefileattribute-draginput');
+	this.dragInput.wrap('<div class="js-multiplefileattribute-draginput-wrap fill"></div>');
+	this.dragInputWrap = this.dragInput.parent();
+	this.element.prepend(this.dragInputWrap);
+	this.element.on('dragover dragleave', this.drag.bind(this));
+	this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
+
+	this.preview = this.element.find('.media-wrapper-content-wrapper-inner img');
+	this.storageDir = this.preview.attr('data-storage-dir');
+	
 	this.list = this.element.find('.mini-gallery-list');
 	this.item = this.list.find('.mini-gallery-list-item').last();
-	this.list.find('input[name="files"]').on('change', this.change.bind(this));
+	this.list.find('.mini-gallery-input').on('change', this.change.bind(this));
 
 	if (this.item.hasClass('hide')) {
 		this.item.remove();
@@ -235,48 +270,65 @@ var MultipleFileAttribute = function(element) {
 		this.item = this.item.clone();
 		this.item.find('img').attr('src', '');
 	}
+	this.item.find('.mini-gallery-input').prop('checked', false);
 	this.item.find('label').addClass('loader');
 }
 
-MultipleFileAttribute.prototype.upload = function(e) {
-	if (!this.loading && e.currentTarget.files) {
-		for (var i=0; i<e.currentTarget.files.length; i++) {
-			this.index++;
-			var item = this.item.clone();
-			item.find('input[name="files"]').attr('id', 'option' + this.index).on('change', this.change.bind(this));
-			item.find('label').attr('for', 'option' + this.index);
-			item.find('img').addClass('hide');
-			this.list.append(item);
-		}
-		this.form.ajaxSubmit({
-			'data': { 'storagedir': this.storageDir },
-			'success': this.uploaded.bind(this)
+MultipleFileAttribute.prototype.drag = function(e) {
+	if (e && e.type == 'dragover') {
+		this.dragInputWrap.execute(this, function() {
+			this.dragInputWrap.addClass('active');
+		});
+	} else {
+		this.dragInputWrap.execute(this, 100, function() {
+			this.dragInputWrap.removeClass('active');
 		});
 	}
 }
 
+MultipleFileAttribute.prototype.upload = function(e) {
+	if (!this.loading && e.currentTarget.files) {
+		this.drag();
+		MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files.length)
+		this.input = $(e.currentTarget);
+		this.input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
+		this.input.execute(this, function() {
+			this.input.parent().ajaxSubmit({
+				'data': { 'storagedir': this.storageDir },
+				'success': this.uploaded.bind(this)
+			});
+		});
+	}
+}
+
+MultipleFileAttribute.prototype.loaders = function(amount) {
+	this.list.find('.mini-gallery-input-update').removeClass('mini-gallery-input-update');
+
+	var i, item, input;
+	for (i=0; i<amount; i++) {
+		item = this.item.clone();
+		item.find('label').attr('for', 'multiplefileattribute-' + this.id + '-radio-' + i);
+		item.find('img').addClass('hide');
+		input = item.find('.mini-gallery-input');
+		input.attr('id', 'multiplefileattribute-' + this.id + '-radio-' + i);
+		input.attr('value','');
+		input.on('change', this.change.bind(this));
+		this.list.append(item);
+	}
+}
+
 MultipleFileAttribute.prototype.uploaded = function(data) {
-	var images = [];
-	this.list.find('img').each(function(index, item) {
-		images.push($(item).attr('src'));
-	});
+	this.input.unwrap();
+	this.list.find('.mini-gallery-input').prop('checked', false);
+	this.drag();
 
-	var n, item, items = this.list.find('label.loader');
-	for (var i=0; i<data.length; i++) {
-		n = images.indexOf(data[i]);
-		if (n != -1) {
-			if (!i) {
-				item = this.list.find('.mini-gallery-list-item:eq(' + (n + 1) + ') input[type="radio"]');
-				item.attr('checked', 'checked');
-				item.trigger('change');
-			}
+	MultipleFileAttributes.update(this.storageDir, data);
 
-		} else {
-			item = items.eq(i).closest('.mini-gallery-list-item');
-			item.find('label').removeClass('loader');
-			item.find('img').removeClass('hide').attr('src', data[i]);
-			if (!i) item.find('input[type="radio"]').attr('checked', 'checked');
-		}
+	var item = this.list.find('.mini-gallery-input-update');
+	if (item.length) {
+		item.removeClass('mini-gallery-input-update');
+		item.prop('checked', true);
+		item.trigger('change');
 	}
 
 	this.list.execute(this, function() {
@@ -285,14 +337,28 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 	});
 }
 
-MultipleFileAttribute.prototype.change = function(e) {
-	if (!this.preview) {
-		this.preview = $('<img class="wrapper" alt="">');
-		this.element.find('.js-media').html(this.preview);
+MultipleFileAttribute.prototype.update = function(data) {
+	var i = 0, str, item, items = this.list.find('label.loader');
+	for (str in data) {
+		this.list.find('.mini-gallery-input[value="' + str + '"]').closest('.mini-gallery-list-item').remove();
+		item = items.eq(i).closest('.mini-gallery-list-item');
+		item.find('label').removeClass('loader');
+		item.find('img').removeClass('hide').attr('src', data[str]);
+		item = item.find('.mini-gallery-input');
+		item.val(str);
+		if (!i) item.addClass('mini-gallery-input-update');
+		i++;
 	}
+}
 
-	var str = $(e.currentTarget).closest('.mini-gallery-list-item').find('img').attr('src');
+MultipleFileAttribute.prototype.change = function(e) {
+	var str = this.storageDir + $(e.currentTarget).val();
 	this.preview.attr('src', str);
+
+	if (this.preview.hasClass('hide')) {
+		this.preview.siblings('p').remove();
+		this.preview.removeClass('hide');
+	}
 }
 
 

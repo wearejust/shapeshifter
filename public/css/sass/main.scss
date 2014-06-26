@@ -164,7 +164,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-list { display: block; margin: -1px; }
 .mini-gallery-list-item { display: inline-block; margin: 1px 0; vertical-align: top; width: 20%; }
 .mini-gallery-list-item-content { display: block; margin: 0 1px; }
-.mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; }
+.mini-gallery-list-item-content-inner { display: block; font-weight: bold; padding-bottom: 100%; position: relative; z-index: 0; }
 .mini-gallery-add { background-color: #000; color: #fff; font-size: 34px; font-weight: bold; text-align: center; }
 .mini-gallery-add-button { @include opacity(0); }
 .mini-gallery-add-button::-webkit-file-upload-button { visibility: hidden; }
@@ -248,6 +248,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .js .login { @include transition(compact(none)); }
 
 .js.touch .dataTables_wrapper { overflow: hidden; }
+
+.js-multiplefileattribute-form { margin: 0; padding: 0; }
+.js-multiplefileattribute-draginput-wrap { display: none; background-color: #ccc; }
+.js-multiplefileattribute-draginput-wrap.active { display: block; z-index: 999; }
 
 @include respond-min-width(30em) {
 	.breadcrumbs-link-text { display: inline; }
