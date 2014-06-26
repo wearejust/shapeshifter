@@ -112,6 +112,26 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .form-field-content, .form-single-checkbox { position: relative; z-index: 2; }
 .form-single-checkbox { float: none !important; }
 
+.form-single-checkbox:not(:checked), .form-single-checkbox:checked { /* :checked here acting as a filter for older browsers */ position: absolute; opacity: 0; }
+.form-single-checkbox.switch + .switch {
+	background: #fff;
+	border: 1px solid #dadada;
+	border-radius: 9999em;
+	display: block;
+	font-size: 1.8em; height: 1em;
+	margin: -.25em 0;
+	overflow: hidden;
+	transition-duration: .4s;
+	transition-property: padding, width;
+	width: 1.8em;
+}
+.form-single-checkbox.switch:checked + .switch { background-color: #5BAB50; border-color: #5BAB50; padding-left: .8em; width: 1em; }
+.form-single-checkbox.switch + .switch:before { background: #fff; border: 1px solid #dadada; border-radius: inherit; @include box-shadow(0 0 .5em rgba(0, 0, 0, .125)); content: ""; display: block; height: 1em; margin: -1px; width: 1em; }
+.form-single-checkbox.switch:active + .switch:before { background-color: #aaa; }
+/*.form-single-checkbox.switch:focus + .switch { box-shadow: 0 0 .3em 1px red, 0 1px 1px hsla(0, 0%, 100%, .8); }*/
+
+
+
 label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:focus + .form-option-label, .form-option-field:checked + .form-option-label { background-color: #d4d4d4; }
 /*.form-single-checkbox:checked + .form-group-highlight, */.form-option-field:checked:focus + .form-option-label, .form-option-field:checked:hover + .form-option-label, .form-option-field:checked:active + .form-option-label, .form-option-field:checked + .form-option-label:hover, .form-option-field:checked + .form-option-label:active { background-color: #c1c1c1; }
 
