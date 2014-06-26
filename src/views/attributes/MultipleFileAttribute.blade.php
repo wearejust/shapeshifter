@@ -9,16 +9,18 @@
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
-                                
-                                {{--
-                                <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
-                                --}}
+                                <span class="media-wrapper-content-wrapper-inner-content">
+                                    
+                                    {{--
+                                    <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
+                                    --}}
 
-                                <img class="wrapper{{ !$value ? ' hide' : ''}}" alt="" src="{{ $value ? $relativeStorageDir . $value : '' }}"  data-storage-dir="{{ $relativeStorageDir }}">
+                                    <img class="wrapper{{ !$value ? ' hide' : ''}}" alt="" src="{{ $value ? $relativeStorageDir . $value : '' }}"  data-storage-dir="{{ $relativeStorageDir }}">
 
-                                @if (!$value)
-                                  <p>Kies een eerder geüploade afbeelding of gebruik de "+"-knop om (meer) afbeeldingen te uploaden.</p>
-                                @endif
+                                    @if (!$value)
+                                    <p class="section-start section-end">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om (meer) afbeeldingen te uploaden.</p>
+                                    @endif
+                                </span>
                             </span>
                         </span>
                     </span>
