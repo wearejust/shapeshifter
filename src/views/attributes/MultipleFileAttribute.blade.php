@@ -5,21 +5,20 @@
     <span class="form-field js-image-container">
         <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
             <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                <span class="media-wrapper" style="margin: 0 9px 0 0;">
+                <span class="media-wrapper module-1">
                     <span class="media-wrapper-content">
                         <span class="media-wrapper-content-wrapper">
                             <span class="media-wrapper-content-wrapper-inner">
                                 <span class="media-wrapper-content-wrapper-inner-content">
                                     
-                                    {{--
-                                    <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
-                                    --}}
-
-                                    <img class="wrapper{{ !$value ? ' hide' : ''}}" alt="" src="{{ $value ? $relativeStorageDir . $value : '' }}"  data-storage-dir="{{ $relativeStorageDir }}">
+                                    <img alt="" class="wrapper{{ !$value ? ' hide' : ''}}" src="{{ $value ? $relativeStorageDir . $value : '' }}" data-storage-dir="{{ $relativeStorageDir }}">
 
                                     @if (!$value)
-                                    <p class="section-start section-end">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om (meer) afbeeldingen te uploaden.</p>
+                                    <p class="section-start section-end">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om afbeeldingen te uploaden.</p>
+                                    @else
+                                    <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                                     @endif
+                                    
                                 </span>
                             </span>
                         </span>
@@ -27,7 +26,7 @@
                 </span>
             </span>
             <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                <span class="mini-gallery" style="display: block; margin: 0 0 0 9px;">
+                <span class="mini-gallery module-2">
                     <fieldset>
                         <ul class="mini-gallery-list">
                             <li class="mini-gallery-list-item hide">
@@ -38,7 +37,6 @@
                                     </span>
                                 </span>
                             <!--</li>-->
-
                             @foreach ($existing as $key => $image)
                             <li class="mini-gallery-list-item{{ !$image ? ' hide':'' }}">
                                 <span class="mini-gallery-list-item-content">

@@ -189,6 +189,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .media-wrapper-content-wrapper-inner { display: table; height: 100%; table-layout: fixed; width: 100%; }
 .media-wrapper-content-wrapper-inner-content { display: table-cell; height: 100%; padding: 1em; vertical-align: middle; width: 100%; }
 
+.module-1 { display: block; margin-right: 9px; }
+.module-2 { display: block; margin-left: 9px; }
+
 .video-preview {  }
 .video-preview-loader { background-image: inline-image("public/css/images/ajax-loader.gif"); margin: $paragraph-margin auto; }
 
