@@ -12,7 +12,7 @@
                                 <span class="media-wrapper-content-wrapper-inner">
                                     <span class="media-wrapper-content-wrapper-inner-content">
                                         
-                                        <img alt="" class="wrapper{{ !$value ? ' hide' : ''}}" src="{{ $value ? $relativeStorageDir . $value : '' }}" data-storage-dir="{{ $relativeStorageDir }}">
+                                        <img alt="" class="section-start section-end wrapper{{ !$value ? ' hide' : ''}}" src="{{ $value ? $relativeStorageDir . $value : '' }}" data-storage-dir="{{ $relativeStorageDir }}">
 
                                         @if (!$value)
                                         <p class="section-start section-end">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om afbeeldingen te uploaden.</p>
