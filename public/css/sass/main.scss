@@ -88,7 +88,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .btn-cancel { background-color: transparent; border-color: transparent; text-decoration: underline; }
 .btn-cancel:focus, .btn-cancel:hover, .btn-cancel:active { background-color: $tertiary-color; border-color: $tertiary-color; color: #000; text-decoration: none; }
 .btn-tricon { background-image: inline-image("public/css/images/tricon.png"); background-repeat: no-repeat; background-position: 1.15em center; padding-left: 3.9em; }
-.btn-remove { background-color: #b51919; border: none; color: #fff; }
+.btn-remove { background-color: #b51919; border: none; color: #fff; display: none; }
+.media-preview:hover .btn-remove { display: block; }
 .btn-remove:focus, .btn-remove:hover, .btn-remove:active { background-color: #851212; }
 .btn-preview { @include background-clip(padding-box); background-color: rgba(0, 0, 0, .45); border-color: rgba(0, 0, 0, .45); color: #fff; display: inline-block; vertical-align: top; }
 .btn-preview:focus, .btn-preview:hover, .btn-preview:active { background-color: rgba(0, 0, 0, .55); border-color: rgba(0, 0, 0, .55); }

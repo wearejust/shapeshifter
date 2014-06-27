@@ -10,7 +10,7 @@
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper">
                                 <span class="media-wrapper-content-wrapper-inner">
-                                    <span class="media-wrapper-content-wrapper-inner-content">
+                                    <span class="media-wrapper-content-wrapper-inner-content media-preview">
                                         
                                         <img alt="" class="section-start section-end wrapper{{ !$value ? ' hide' : ''}}" src="{{ $value ? $relativeStorageDir . $value : '' }}" data-storage-dir="{{ $relativeStorageDir }}">
 
