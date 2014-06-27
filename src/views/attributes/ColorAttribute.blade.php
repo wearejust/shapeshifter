@@ -1,12 +1,14 @@
-<label class="form-group">
-    <span class="form-label">
-        {{ $label }}
-    </span>
-    <span class="form-field">
-        <span class="form-control form-field-short">
-            {{ Form::text($name, null, array('class' => 'form-field-content colorpicker', 'autocorrect' => 'off')) }}
-            <span class="form-group-highlight"></span>
+<label class="form-group js-placeholder" for="{{$name}}">
+    <span class="form-group-content">
+        <span class="form-label">
+            {{ $label }}
         </span>
-        @include('shapeshifter::layouts.helptext')
+        <span class="form-field">
+            <span class="form-control form-field-short">
+                {{ Form::text($name, null, array('class' => 'form-field-content colorpicker', 'id' => $name, 'autocorrect' => 'off')) }}
+                <span class="form-group-highlight"></span>
+            </span>
+            @include('shapeshifter::layouts.helptext')
+        </span>
     </span>
 </label>

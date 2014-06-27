@@ -5,6 +5,8 @@ $(function() {
 
 	Menu = new Menu();
 
+    $('label.js-placeholder').placeholderText();
+
 	$('.tab-list').tabbed();
 	$('.js-datatable').sortableTable();
 	$('.acc-container').accordion();
@@ -29,7 +31,6 @@ $(function() {
 		showInitial: true,
 		allowEmpty: true
 	});
-
 
 	$('input.datepicker').datepicker({
 		dateFormat: "dd-mm-yy"
@@ -72,6 +73,61 @@ $(function() {
 	 */
 
 });
+
+// -----------------------------------------------------------
+// PLACEHOLDERTEXT
+// -----------------------------------------------------------
+var PlaceholderText = function() {
+    this.init.apply(this, arguments);
+}
+
+PlaceholderText.prototype.default_settings = {
+    'activeClass': 'active',
+    'focusClass': 'focus'
+}
+
+PlaceholderText.prototype.init = function(node, settings) {
+    this.settings = $.extend({}, this.default_settings, settings);
+    this.label = $(node);
+    this.input = $('#'+this.label.attr('for'));
+    this.activeClass = this.settings.activeClass;
+    this.focusClass = this.settings.focusClass;
+
+    this.input.on('focus', this.focus.bind(this));
+    this.input.on('blur', this.blur.bind(this));
+    this.input.on('keydown', this.keyPress.bind(this));
+
+    this.keyPress();
+}
+
+PlaceholderText.prototype.focus = function() {
+    this.label.addClass(this.focusClass);
+}
+
+PlaceholderText.prototype.blur = function() {
+    if (this.input.val() == '') {
+        this.label.removeClass(this.activeClass);
+    }
+    this.label.removeClass(this.focusClass);
+}
+
+PlaceholderText.prototype.keyPress = function() {
+    if (this.input.val() == '') {
+        this.label.removeClass(this.activeClass);
+    } else {
+        this.label.addClass(this.activeClass);
+    }
+}
+
+$.fn.placeholderText = function(settings) {
+    $(this).each(function(index, item) {
+        $item = $(item);
+        var instance = $item.data('placeholderText');
+        if (!instance) {
+            $item.data('placeholderText', new PlaceholderText(item, settings));
+        }
+    });
+}
 
 
 // -----------------------------------------------------------

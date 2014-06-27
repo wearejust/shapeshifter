@@ -1,5 +1,5 @@
 <div class="form-group">
-    <div class="form-label">
+    <div class="form-label section-end">
         {{ $label }}
     </div>
     <div class="form-field">

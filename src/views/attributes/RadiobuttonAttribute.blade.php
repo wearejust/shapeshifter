@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group form-group-options">
 	<fieldset>
 		<legend class="form-label wrap section-end">
 			<span class="form-label form-legend">{{ $label }}</span>
