@@ -142,7 +142,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .filter-search { float: right; max-width: 12em; }
 .search-control { background-color: lighten($tertiary-color, 5%); }
 
-.table-row { @include transition(compcact(.1s)); }
+.table-row { border-bottom: 1px solid transparent; @include transition(compcact(.1s)); }
 .table-row:nth-child(odd) { background-color: #f2f2f2; }
 .table-row.ui-sortable-helper .table-control-remove-button { display: none; }
 .table-row-editable { cursor: pointer; }
@@ -167,6 +167,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-control-item { margin: 0; display: inline-block; vertical-align: top; margin-right: .15em; }
 .table-control-remove-button { bottom: 0; height: 4.071em; left: 0; margin: 0; position: absolute; top: 0; width: 100%; }
 .table-control-active { @include transform(translate(-4.071em, 0)); }
+
+.sortable-dragging .table-row { border-color: #f2f2f2; }
+.sortable-dragging .table-row:nth-child(odd) { background-color: transparent; }
+.sortable-dragging .ui-sortable-helper, .sortable-dragging .ui-sortable-helper:nth-child(odd) { background-color: #ddd; }
 
 .mini-gallery-list { display: block; margin: -1px; }
 .mini-gallery-list-item { display: inline-block; margin: 1px 0; vertical-align: top; width: 20%; }

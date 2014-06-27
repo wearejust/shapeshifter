@@ -40,10 +40,10 @@
                         <th class="table-header {{ !$currentUser->can('drag') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
                                 @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
-                                        <span class="table-header-sort">
-                                            <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
-                                            <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>
-                                        </span>
+                                    <span class="table-header-sort">
+                                        <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
+                                        <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>
+                                    </span>
                                 @endif
                                 {{ translateAttribute($attr->name) }}
                             </div>

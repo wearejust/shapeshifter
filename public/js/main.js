@@ -695,16 +695,20 @@ var SortableTable = function(options, table) {
 
 		this.tbody.sortable({
 			'axis': 'y',
-			'opacity': 0.7,
+			//'opacity': 0.7,
 			'cancel': 'input,textarea,select,option,button:not(.js-sortable-handle)',
 			'handle': '.js-sortable-handle',
 			'containment':'parent',
-			'placeholder': "ui-state-highlight",
+			//'placeholder': "ui-state-highlight",
 			'cursor': 'move',
 			'update': this.update.bind(this),
             'start': function(e, ui) {
                 ui.placeholder.height(ui.helper.outerHeight());
-            },
+                this.tbody.addClass('sortable-dragging');
+            }.bind(this),
+            'stop': function() {
+                this.tbody.removeClass('sortable-dragging');
+            }.bind(this),
 			'helper': function(e, ui) {
 				if (this.message) this.message.remove();
 				ui.css('width','100%');
