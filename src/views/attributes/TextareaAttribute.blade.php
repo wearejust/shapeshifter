@@ -1,4 +1,4 @@
-<label class="form-group js-placeholder">
+<label class="form-group js-placeholder" for="{{$name}}">
     <span class="form-group-content">
         <span class="form-label">
             {{ $label }}
