@@ -702,6 +702,9 @@ var SortableTable = function(options, table) {
 			'placeholder': "ui-state-highlight",
 			'cursor': 'move',
 			'update': this.update.bind(this),
+            'start': function(e, ui) {
+                ui.placeholder.height(ui.helper.outerHeight());
+            },
 			'helper': function(e, ui) {
 				if (this.message) this.message.remove();
 				ui.css('width','100%');

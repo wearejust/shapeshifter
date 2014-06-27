@@ -116,7 +116,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .form-single-checkbox.switch + .switch { background-color: #fff; border: 1px solid #dadada; border-radius: 9999em; display: block; font-size: 1.8em; height: 1.05em; margin: -.25em 0; overflow: hidden; transition-duration: .4s; transition-property: padding, width; width: 1.8em; }
 .form-single-checkbox.switch:checked + .switch { background-color: #5BAB50; border-color: #5BAB50; padding-left: .8em; width: 1em; }
 .form-single-checkbox.switch + .switch:before { background: #fff; border: 1px solid #dadada; border-radius: inherit; @include box-shadow(0 0 .5em rgba(0, 0, 0, .125)); content: ""; display: block; height: 1.05em; margin: -1px; width: 1em; }
-.form-single-checkbox.switch:active + .switch:before { background-color: #aaa; }
+.form-single-checkbox.switch:active + .switch:before { @include box-shadow(inset 0 0 .25em rgba(0, 0, 0, .2)); }
 /*.form-single-checkbox.switch:focus + .switch { box-shadow: 0 0 .3em 1px red, 0 1px 1px hsla(0, 0%, 100%, .8); }*/
 
 label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:focus + .form-option-label, .form-option-field:checked + .form-option-label { background-color: #d4d4d4; }
@@ -144,7 +144,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .table-row { @include transition(compcact(.1s)); }
 .table-row:nth-child(odd) { background-color: #f2f2f2; }
-.table-row.ui-sortable-helper:hover .table-control-remove-button { display: none; }
+.table-row.ui-sortable-helper .table-control-remove-button { display: none; }
 .table-row-editable { cursor: pointer; }
 .table-row-editable:hover { background-color: #ddd; }
 .table-cell, .table-header { display: none; padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }

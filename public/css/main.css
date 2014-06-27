@@ -1421,7 +1421,9 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 
 /* line 119, sass/main.scss */
 .form-single-checkbox.switch:active + .switch:before {
-  background-color: #aaa;
+  -webkit-box-shadow: inset 0 0 0.25em rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0 0.25em rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 0.25em rgba(0, 0, 0, 0.2);
 }
 
 /*.form-single-checkbox.switch:focus + .switch { box-shadow: 0 0 .3em 1px red, 0 1px 1px hsla(0, 0%, 100%, .8); }*/
@@ -1556,7 +1558,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 }
 
 /* line 147, sass/main.scss */
-.table-row.ui-sortable-helper:hover .table-control-remove-button {
+.table-row.ui-sortable-helper .table-control-remove-button {
   display: none;
 }
 
