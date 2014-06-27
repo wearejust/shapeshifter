@@ -4,19 +4,22 @@ use Controller;
 use Illuminate\Support\Collection;
 use Input;
 use Krucas\Notification\Facades\Notification;
-use Request;
+use McCool\LaravelAutoPresenter\BasePresenter;
 use Response;
 
 class AjaxController extends Controller
 {
-	protected function sortorderChange()
-	{
-		if ( ! $model = ucfirst(Input::get('model')) )
+    protected function sortorderChange()
+    {
+        if ( ! $model = ucfirst(Input::get('model')) )
         {
             return Response::json( array('You have to specify an model') );
         }
 
         $model = new $model;
+
+        if ($model instanceof BasePresenter) $model = $model->getResource();
+
         $orderByColumn = isset($model->orderby[0]) ? $model->orderby[0] : 'sortorder';
         $orderByMode = isset($model->orderby[1]) ? $model->orderby[1] : 'ASC';
 
@@ -39,33 +42,33 @@ class AjaxController extends Controller
             $records = $model::orderBy( $orderByColumn, $orderByMode )->get();
         }
 
-		$sortorder = 1;	
-		foreach (Input::get('order') as $new)
-		{
-			foreach ($records as $rec)
-			{
-				if ($new == $rec->id)
+        $sortorder = 1;
+        foreach (Input::get('order') as $new)
+        {
+            foreach ($records as $rec)
+            {
+                if ($new == $rec->id)
                 {
-					$rec->sortorder = $sortorder;
-					$rec->save();
+                    $rec->sortorder = $sortorder;
+                    $rec->save();
 
-					$sortorder++;
+                    $sortorder++;
 
-					break;
-				}
-			}
-			
-		}
+                    break;
+                }
+            }
 
-		return Response::json( array('message' => (string)Notification::successInstant('De nieuwe volgorde is opgeslagen'), 'status' => 200) );
-	}
+        }
+
+        return Response::json( array('message' => (string)Notification::successInstant('De nieuwe volgorde is opgeslagen'), 'status' => 200) );
+    }
 
     protected function upload()
     {
         $storageDir = Input::get('storagedir');
         $input = Input::file('files');
         $files = new Collection();
-        
+
         foreach ($input as $file) {
             if ($file->isValid()) {
                 $name = $file->getClientOriginalName();
