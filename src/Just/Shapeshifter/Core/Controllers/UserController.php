@@ -28,9 +28,9 @@ class UserController extends AdminController
     {
         $this->add( new Attribute\CheckboxAttribute('activated'));
 
-        $this->add( new Attribute\TextAttribute('email'));
-        $this->add( new Attribute\TextAttribute('first_name', array('hide_list')));
-        $this->add( new Attribute\TextAttribute('last_name', array('hide_list')));
+        $this->add( new Attribute\TextAttribute('email', 'email'));
+        $this->add( new Attribute\TextAttribute('first_name', 'text',array('hide_list')));
+        $this->add( new Attribute\TextAttribute('last_name','text', array('hide_list')));
         $this->add( new Attribute\PasswordAttribute('password', array('hide_list')));
         $this->add( new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
