@@ -105,14 +105,14 @@ PlaceholderText.prototype.focus = function() {
 }
 
 PlaceholderText.prototype.blur = function() {
-    if (this.input.val() == '') {
+    if (!this.input.val() || !this.input.text()) {
         this.label.removeClass(this.activeClass);
     }
     this.label.removeClass(this.focusClass);
 }
 
 PlaceholderText.prototype.keyPress = function() {
-    if (this.input.val() == '') {
+    if (!this.input.val() || !this.input.text()) {
         this.label.removeClass(this.activeClass);
     } else {
         this.label.addClass(this.activeClass);
