@@ -2379,6 +2379,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .js .js-placeholder .form-label {
   border: 1px solid transparent;
   bottom: 0;
+  color: inherit !important;
   cursor: text;
   left: 0;
   margin: 0;

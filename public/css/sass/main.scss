@@ -274,7 +274,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .js-multiplefileattribute-draginput-wrap { display: none; background-color: #ccc; }
 .js-multiplefileattribute-draginput-wrap.active { display: block; z-index: 999; }
 
-.js .js-placeholder .form-label { border: 1px solid transparent; bottom: 0; cursor: text; left: 0; margin: 0; position: absolute; right: 0; top: 0; z-index: 10; }
+.js .js-placeholder .form-label { border: 1px solid transparent; bottom: 0; color: inherit !important; cursor: text; left: 0; margin: 0; position: absolute; right: 0; top: 0; z-index: 10; }
 .js .js-placeholder.focus .form-label { color: #666; }
 .js .js-placeholder.active .form-label { display: none; }
 

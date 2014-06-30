@@ -95,9 +95,9 @@ PlaceholderText.prototype.init = function(node, settings) {
 
     this.input.on('focus', this.focus.bind(this));
     this.input.on('blur', this.blur.bind(this));
-    this.input.on('keydown', this.keyPress.bind(this));
+    this.input.on('keydown keyup', this.keyPress.bind(this));
 
-    this.keyPress();
+    this.firstInit();
 }
 
 PlaceholderText.prototype.focus = function() {
@@ -105,13 +105,21 @@ PlaceholderText.prototype.focus = function() {
 }
 
 PlaceholderText.prototype.blur = function() {
-    if (!this.input.val() || !this.input.text()) {
+    if (!this.input.val()) {
         this.label.removeClass(this.activeClass);
     }
     this.label.removeClass(this.focusClass);
 }
 
 PlaceholderText.prototype.keyPress = function() {
+    if (!this.input.val()) {
+        this.label.removeClass(this.activeClass);
+    } else {
+        this.label.addClass(this.activeClass);
+    }
+}
+
+PlaceholderText.prototype.firstInit = function() {
     if (!this.input.val() || !this.input.text()) {
         this.label.removeClass(this.activeClass);
     } else {
