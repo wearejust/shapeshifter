@@ -2657,6 +2657,7 @@ h1, .onetomany-relation-content h1 {
 /* line 341, sass/main.scss */
 .js .js-datatable {
   display: none;
+  table-layout: auto;
 }
 
 /* line 342, sass/main.scss */

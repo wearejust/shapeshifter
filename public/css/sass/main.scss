@@ -338,7 +338,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.footer { left: 22.5em; }
 }
 
-.js .js-datatable { display: none; }
+.js .js-datatable { display: none; table-layout: auto; }
 .js .js-datatable.dataTable { display: table; }
 .js .ckeditor { height: 244px; visibility: hidden; }
 
