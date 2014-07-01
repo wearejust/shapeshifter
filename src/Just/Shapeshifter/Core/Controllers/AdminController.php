@@ -31,7 +31,7 @@ abstract class AdminController extends Controller {
      *
      * @var
      */
-    public  $mode;
+    public $mode;
 
     /**
      * This data array holds all the data that will be send to the view
@@ -225,7 +225,6 @@ abstract class AdminController extends Controller {
 
         try {
             $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
-            $this->repo->save($this, $this->getParentInfo());
         } catch (ValidationException $e) {
             $errors = array_map('strtolower', $e->getErrors()->all());
             $errors = array_map('ucfirst', $errors);
