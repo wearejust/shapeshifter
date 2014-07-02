@@ -112,6 +112,7 @@ abstract class AdminController extends Controller {
      */
     protected $parent = null;
 
+    protected $preview = false;
 
     /**
      * Function that is needed in the node, this descripbes how the node will
@@ -337,6 +338,7 @@ abstract class AdminController extends Controller {
         $this->data['disableDeleting'] = $this->disableDeleting;
         $this->data['disableEditing'] = $this->disableEditing;
         $this->data['model'] = $this->model;
+        $this->data['preview'] = $this->preview;
 
         $this->data['lastVisibleAttribute'] = $this->getLastVisibleAttribute();
         $this->data['singular'] = $this->singular;
