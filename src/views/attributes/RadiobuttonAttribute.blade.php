@@ -9,7 +9,7 @@
 		        <div class="section form-option">
 			        {{ Form::radio($name, $value, null, array('class' => 'form-option-field', 'id' => 'radio-' . $value)) }}
 			        <label class="form-option-label" for="radio-{{ $value }}">
-			            {{ $value }}
+			            <span class="section">{{ $value }}</span>
 			        </label>
 			    </div>
 				@endforeach
