@@ -120,10 +120,12 @@ PlaceholderText.prototype.keyPress = function() {
 }
 
 PlaceholderText.prototype.firstInit = function() {
-    if (!this.input.val() || !this.input.text()) {
-        this.label.removeClass(this.activeClass);
-    } else {
+    if (this.input.val() || this.input.text()) {
+        console.log(true);
         this.label.addClass(this.activeClass);
+    } else {
+        console.log(false);
+        this.label.removeClass(this.activeClass);        
     }
 }
 

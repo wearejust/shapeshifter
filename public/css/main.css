@@ -1245,12 +1245,14 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   background-color: #b51919;
   border: none;
   color: #fff;
-  display: none;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
 }
 
 /* line 92, sass/main.scss */
 .media-preview:hover .btn-remove {
-  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
 }
 
 /* line 93, sass/main.scss */
@@ -1745,6 +1747,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   height: 4.071em;
   left: 0;
   margin: 0;
+  padding: 0;
   position: absolute;
   top: 0;
   width: 100%;
