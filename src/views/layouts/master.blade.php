@@ -46,7 +46,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </div>
         </div>
     </div>
-    <p class="section-start section-end" style="bottom: 0; margin: 3px .5em; position: fixed; right: 0; z-index: 20;"><a class="btn btn-preview" href="#" target="_blank">Preview</a></p>
+    @if ($mode == 'index')
+    <p class="section-start section-end" style="bottom: 0; margin: 3px .5em; position: fixed; right: 0; z-index: 20;"><a class="btn btn-preview" href="/preview" target="_blank">Preview</a></p>
+    @endif
     <div class="header-bottom">
         <div class="breadcrumbs">
             <ul class="breadcrumbs-list list group">

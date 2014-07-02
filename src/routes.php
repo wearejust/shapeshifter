@@ -29,3 +29,11 @@ Route::group(array('prefix' => 'admin'), function()
         Route::resource('groups', 'Just\Shapeshifter\Core\Controllers\GroupController');
     });
 });
+
+Route::group(array('before' =>'admin-auth'), function()
+{
+    Route::get('preview', function()
+    {
+        return View::make('shapeshifter::preview');
+    });
+});
