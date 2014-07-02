@@ -1180,7 +1180,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 82, sass/main.scss */
-.btn-default:visited {
+.btn-default:visited, .btn-preview:visited {
   color: #fff;
   color: rgba(255, 255, 255, 0.7);
 }
