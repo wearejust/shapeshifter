@@ -11,4 +11,4 @@
 <div>
     <iframe frameborder="0" height="100%" src="{{ Request::root() }}" width="100%"></iframe>
 </div>
-<p>Dit is niet de echte site. Dit is een preview.</p>
+<p><span class="preview-start">Dit is niet de echte site. </span>Dit is een preview.</p>

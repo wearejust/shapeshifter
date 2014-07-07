@@ -51,11 +51,17 @@
                     </div>
                 </fieldset>
                 --}}
-                <div class="offset-control-list paragraph section section-end">
-                    <ul class="control-list list">
-                        <li class="control-item">{{ Form::submit( __('form.save'), array('class' => 'btn')) }}</li>
-                        <li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>
-                    </ul>
+            </div>
+            <div class="footer controls">
+                <div class="controls-content">
+                    <div class="content">
+                        <ul class="control-list list">
+                            <li class="control-item">
+                                <button class="btn btn-save control-item-button" type="submit">{{ __('form.save') }}</button>
+                            </li>
+                            {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
+                        </ul>
+                    </div>
                 </div>
             </div>
         {{ Form::close() }}

@@ -322,7 +322,7 @@ var MultipleFileAttribute = function(element) {
 	this.element.on('dragover dragleave', this.drag.bind(this));
 	this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
 
-	this.preview = this.element.find('.media-wrapper-content-wrapper-inner img');
+	this.preview = this.element.find('.js-multiplefileattribute-preview');
 	this.storageDir = this.preview.attr('data-storage-dir');
 	
 	this.list = this.element.find('.mini-gallery-list');
@@ -419,12 +419,8 @@ MultipleFileAttribute.prototype.update = function(data) {
 
 MultipleFileAttribute.prototype.change = function(e) {
 	var str = this.storageDir + $(e.currentTarget).val();
-	this.preview.attr('src', str);
-
-	if (this.preview.hasClass('hide')) {
-		this.preview.siblings('p').remove();
-		this.preview.removeClass('hide');
-	}
+	this.preview.css('background-image', "url('" + str + "')");
+	this.preview.find('.js-multiplefileattribute-preview-placeholder').remove();
 }
 
 

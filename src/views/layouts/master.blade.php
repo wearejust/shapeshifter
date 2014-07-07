@@ -23,7 +23,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') }}
-<script src="/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js"></script>
 </head>
 <!--[if lte IE 8]><body class="{{ ! $currentUser ? 'login ' : '' }}ie8"><![endif]-->
 <!--[if gte IE 9]><!--> <body class="{{ ! $currentUser ? 'login ' : '' }}"><!--<![endif]-->
@@ -51,10 +50,10 @@ document.documentElement.className=TOUCH?"js touch":"js";
     @endif
     <div class="header-bottom">
         <div class="breadcrumbs">
-            <ul class="breadcrumbs-list list group">
+            <ul class="breadcrumbs-list list">
                 <li class="breadcrumbs-item">
                     <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
-                </li>
+                <!--</li>-->
                 @foreach ($breadcrumbs as $crumb)
                 <li class="breadcrumbs-item">
                     @if ($crumb == end($breadcrumbs))
@@ -62,7 +61,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
                     @else
                         <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}"><span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span></a>
                     @endif
-                </li>
+                <!--</li>-->
                 @endforeach
             </ul>
         </div>
@@ -106,14 +105,10 @@ document.documentElement.className=TOUCH?"js touch":"js";
 <p class="system-name">
     <a href="/admin" class="system-name-button">Content</a>
 </p>
-<div class="footer">
-    @if ( Notification::get('success')->first())
-        {{ Notification::showSuccess() }}
-    @endif
-</div>
 @endif
-{{ HTML::script('/packages/just/shapeshifter/js/jquery-tokeninput/src/jquery.tokeninput.js') }}
-{{ HTML::script('/packages/just/shapeshifter/js/ckeditor/ckeditor.js') }}
+{{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js") }}
+{{ HTML::script("/packages/just/shapeshifter/js/jquery-tokeninput/src/jquery.tokeninput.js") }}
+{{ HTML::script("/packages/just/shapeshifter/js/ckeditor/ckeditor.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-ui.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery.ui.touch-punch.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery.dataTables.min.js") }}

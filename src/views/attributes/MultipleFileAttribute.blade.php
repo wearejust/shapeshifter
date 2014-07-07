@@ -4,24 +4,21 @@
             {{ $label }}
         </span>
         <span class="form-field js-image-container">
-            <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
+            <span class="form-control" style="display: table; overflow: hidden; table-layout: fixed; width: 100%;">
                 <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
                     <span class="media-wrapper module-1">
                         <span class="media-wrapper-content">
-                            <span class="media-wrapper-content-wrapper">
-                                <span class="media-wrapper-content-wrapper-inner">
-                                    <span class="media-wrapper-content-wrapper-inner-content media-preview">
-                                        
-                                        <img alt="" class="section-start section-end wrapper{{ !$value ? ' hide' : ''}}" src="{{ $value ? $relativeStorageDir . $value : '' }}" data-storage-dir="{{ $relativeStorageDir }}">
-
-                                        @if (!$value)
-                                        <p class="section-start section-end">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om afbeeldingen te uploaden.</p>
-                                        @else
-                                        <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
-                                        @endif
-                                        
+                            <span class="media-wrapper-content-wrapper media-preview">
+                                <span class="media-wrapper-content-wrapper-inner js-multiplefileattribute-preview" data-storage-dir="{{ $relativeStorageDir }}" style="background-image: url('{{ $value ? $relativeStorageDir . $value : '' }}');"></span>
+                                @if ($value)
+                                <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
+                                @else
+                                <span class="media-placeholder js-multiplefileattribute-preview-placeholder">
+                                    <span class="media-placeholder-content">
+                                        <p class="section-start section-end js-multiplefileattribute-preview-placeholder">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om afbeeldingen te uploaden.</p>
                                     </span>
                                 </span>
+                                @endif
                             </span>
                         </span>
                     </span>
@@ -48,7 +45,7 @@
                                             </label>
                                         </span>
                                     </span>
-                                    <!--</li>-->
+                                <!--</li>-->
                                 @endforeach
                             </ul>
                         </fieldset>
