@@ -26,5 +26,6 @@ return array(
     'form.stored' => 'Het item is toegevoegd.',
 
     'dialog.remove' => 'Weet je zeker dat je dit item wilt verwijderen?',
-    
+    'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',
+
 );

@@ -40,6 +40,7 @@ $(function() {
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
+	$('.js-image-delete-dialog').removeImageDialog();
 
 	$('.alert-success').addClass('alert-success-active').execute(3800, function(){
 		$(this).removeClass('alert-success-active');
@@ -480,6 +481,7 @@ var RemoveDialog = function(node) {
 
 	this.trigger = $(node);
 	this.container = this.trigger.parents('td');
+
 	this.dialogContainer = this.container.find('.dialog-confirm');
 	this.form = this.container.find('form').first();
 
@@ -487,34 +489,20 @@ var RemoveDialog = function(node) {
 		'resizable': false,
 		'modal': true,
 		'autoOpen': false,
-		'position': 'center',
-		'buttons': [
-			{
-				'class': 'btn btn-default',
-				'text': 'Ja, verwijderen',
-				'click': function () {
-					switch (this.trigger.attr('data-callback')) {
-						case 'removeImage':
-							this.trigger.closest('form').append('<input type="hidden" name="delete-image[]" value="' + this.trigger.attr('data-name') + '">');
-							this.trigger.parents('.media-wrapper').html('');
-
-							this.dialogContainer.dialog('close');
-
-							break;
-						default:
-							this.form.submit();
-							break;
-					}
-				}.bind(this)
-			},
-			{
-				'class': 'btn btn-cancel',
-				'text': 'Nee, toch niet',
-				'click': function () {
-					$(this).dialog('close');
-				}
-			}
-		]
+		'buttons': [{
+            'class': 'btn btn-default',
+            'text': 'Ja, verwijderen',
+            'click': function () {
+                this.form.submit();
+            }.bind(this)
+        },
+        {
+            'class': 'btn btn-cancel',
+            'text': 'Nee, toch niet',
+            'click': function () {
+                $(this).dialog('close');
+            }
+        }]
 	});
 
 	this.trigger.on('click', this.showDialog.bind(this));
@@ -538,10 +526,59 @@ $.fn.removeDialog = function() {
 	})
 }
 
+// -----------------------------------------------------------
+// REMOVE DIALOG IMAGE
+// -----------------------------------------------------------
+var RemoveImageDialog = function(node) {
 
+	this.trigger = $(node);
+	this.container = this.trigger.parents('.media-wrapper');
 
+	this.dialogContainer = this.container.find('.dialog-confirm');
+	this.form = this.container.closest('form');
 
+	this.dialogContainer.dialog({
+		'resizable': false,
+		'modal': true,
+		'autoOpen': false,
+		'buttons': [{
+            'class': 'btn btn-default',
+            'text': 'Ja, verwijderen',
+            'click': function () {
+                this.form.append('<input type="hidden" name="delete-image[]" value="' + this.trigger.attr('data-name') + '">');
+                this.container.remove();
 
+                this.dialogContainer.dialog('close');
+            }.bind(this)
+        },
+        {
+            'class': 'btn btn-cancel',
+            'text': 'Nee, toch niet',
+            'click': function () {
+                $(this).dialog('close');
+            }
+        }]
+	});
+
+	this.trigger.on('click', this.showDialog.bind(this));
+}
+
+RemoveImageDialog.prototype.showDialog = function(e)
+{
+	e.preventDefault();
+
+	this.dialogContainer.dialog("open");
+}
+
+$.fn.removeImageDialog = function() {
+	$(this).each(function(index, el) {
+		el = $(el);
+		var instance = el.data('removeImageDialog');
+		if (!instance) {
+			el.data('removeImageDialog', new RemoveImageDialog(this));
+		}
+	})
+}
 
 // -----------------------------------------------------------
 // TABBED
