@@ -2577,7 +2577,7 @@ h1, .onetomany-relation-content h1 {
 /* line 313, sass/main.scss */
 .js .js-placeholder .form-label {
   border: none;
-  cursor: default;
+  cursor: pointer;
   display: block !important;
   padding: 0;
   position: static;

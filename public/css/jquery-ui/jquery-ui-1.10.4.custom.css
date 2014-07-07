@@ -812,17 +812,17 @@ body .ui-tooltip {
 .ui-widget button {
 	font-family: Verdana,Arial,sans-serif;
 	font-size: 1em;
-}
+}*/
 .ui-widget-content {
 	border: 1px solid #aaaaaa;
 	background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
 	color: #222222;
 }
-.ui-widget-content a {
+/*.ui-widget-content a {
 	color: #222222;
 }
 .ui-widget-header {
-	/*border: 1px solid #aaaaaa;
+	border: 1px solid #aaaaaa;
 	background: #cccccc url("images/ui-bg_highlight-soft_75_cccccc_1x100.png") 50% 50% repeat-x;
 	color: #222222;
 	font-weight: bold;
@@ -834,7 +834,7 @@ body .ui-tooltip {
 
 /* Interaction states
 ----------------------------------*/
-/*.ui-state-default,
+.ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
 	border: 1px solid #d3d3d3;
@@ -859,7 +859,7 @@ body .ui-tooltip {
 	font-weight: normal;
 	color: #212121;
 }
-.ui-state-hover a,
+/*.ui-state-hover a,
 .ui-state-hover a:hover,
 .ui-state-hover a:link,
 .ui-state-hover a:visited,
@@ -1155,7 +1155,7 @@ body .ui-tooltip {
 /* Misc visuals
 ----------------------------------*/
 
-/* Corner radius
+/* Corner radius */
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-left,
@@ -1179,7 +1179,7 @@ body .ui-tooltip {
 .ui-corner-right,
 .ui-corner-br {
 	border-bottom-right-radius: 4px;
-} */
+}
 
 /* Overlays */
 .ui-widget-overlay {
@@ -1194,3 +1194,17 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
 }*/
+
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
