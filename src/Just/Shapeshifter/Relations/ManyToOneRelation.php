@@ -22,33 +22,55 @@ class ManyToOneRelation extends OneToManyRelation
      */
     public function __construct($fromcontroller, $destination, $function, $flags = array())
     {
-        parent::__construct($fromcontroller, $destination, $function, $flags);
-
+        $this->destination = 'admin.' . $destination . '.index';
         $this->destination = $this->setupDestination();
+        $this->fromcontroller = $fromcontroller;
+        $this->model = $fromcontroller->repo->getModel();
+        $this->function = $function;
+        $this->name = $destination;
+        $this->flags = $flags;
         $this->foreign = $this->name = $this->getForeignField();
     }
 
+
+    public function getDisplayValue()
+    {
+        $model = $this->destination->getModel();
+        $model = new $model;
+        $model = $model->find($this->value);
+        if ( $model)
+        {
+            return $model->{$this->destination->getDescriptor()};
+        }
+        else
+        {
+            return '';
+        }
+
+    }
+
+
     /**
      * display
-     * 
+     *
      * @access public
      * @return mixed Value.
      */
-	public function compile()
-	{
+    public function compile()
+    {
         $this->html = View::make('shapeshifter::relations.ManyToOneRelation', array(
             'name' => $this->foreign,
             'label' => $this->getLabel($this->foreign),
             'select' => $this->getValuesForSelect(),
         ))->render();
-	}
+    }
 
     /**
      * @return mixed
      * @throws \Just\Shapeshifter\Exceptions\MethodNotExistException
      */
     public function getForeignField()
-	{
+    {
         $model = $this->fromcontroller->repo->getModel();
 
         if (! method_exists($model, $this->function))
@@ -59,7 +81,7 @@ class ManyToOneRelation extends OneToManyRelation
         }
 
         return $model->{$this->function}()->getForeignKey();
-	}
+    }
 
     /**
      * @return string

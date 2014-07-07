@@ -137,6 +137,7 @@ abstract class AdminController extends Controller {
     protected function initAttributes()
     {
         $this->configureFields();
+        $this->addDependencies();
 
         $this->repo->setAttributes($this->attributes, $this->repo->getRules());
 
@@ -153,17 +154,21 @@ abstract class AdminController extends Controller {
             return $this->setupView('no_access');
         }
 
-        $this->initAttributes();
-        $this->generateTimestampFields();
-
         $this->mode = 'index';
         $this->model = $this->repo->getNew();
+
+        $this->data['records'] = $this->repo->getListRecords($this->orderby, $this->getParentInfo(), $this->filter);
+
+        $this->generateTimestampFields();
+        $this->initAttributes();
 
         $records = $this->repo->getListRecords($this->orderby, $this->getParentInfo(), $this->filter);
 
         $this->data['ids'] = func_get_args();
         $this->data['title'] = $this->plural;
+
         $this->data['records'] = $records;
+
 
         return $this->setupView('index');
     }
@@ -177,11 +182,10 @@ abstract class AdminController extends Controller {
             return $this->setupView('no_access');
         }
 
-        $this->initAttributes();
-
         $this->mode = 'create';
-
         $this->model = $this->repo->getNew();
+
+        $this->initAttributes();
 
         $this->data['title'] = $this->singular . ' ' . strtolower(__('form.create'));
         $this->data['ids'] = func_get_args();
@@ -199,13 +203,13 @@ abstract class AdminController extends Controller {
             return $this->setupView('no_access');
         }
 
-        $this->initAttributes();
-
         $this->mode = 'edit';
 
         $this->data['ids'] = func_get_args();
         $this->model = $this->repo->findById(last($this->data['ids']));
-        $this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' ' . strtolower(__('list.' . $this->mode)) : strip_tags($this->model->{$this->getDescriptor()});
+        $this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
+
+        $this->initAttributes();
 
         return $this->setupView('form');
     }
@@ -219,13 +223,17 @@ abstract class AdminController extends Controller {
             return $this->setupView('no_access');
         }
 
+        $this->mode = 'store';
+        $this->model = $this->repo->getNew();
+
         $this->initAttributes();
 
-        $this->mode = 'store';
         $this->data['ids'] = func_get_args();
 
-        try {
+        try
+        {
             $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
+            $this->repo->save($this, $this->getParentInfo());
         } catch (ValidationException $e) {
             $errors = array_map('strtolower', $e->getErrors()->all());
             $errors = array_map('ucfirst', $errors);
@@ -249,14 +257,16 @@ abstract class AdminController extends Controller {
             return $this->setupView('no_access');
         }
 
-        $this->initAttributes();
-
         $this->mode = 'update';
+
 
         $this->data['ids'] = func_get_args();
         $this->model = $this->repo->findById(last($this->data['ids']));
 
-        try {
+        $this->initAttributes();
+
+        try
+        {
             $this->data['id'] = $this->repo->save($this);
         } catch (ValidationException $e) {
             $errors = array_map('strtolower', $e->getErrors()->all());
@@ -316,11 +326,6 @@ abstract class AdminController extends Controller {
         $attributeService = new AttributeService();
         $breadcrumbService = new BreadcrumbService();
         $menuService = new MenuService();
-
-        if (method_exists($this, 'addDependencies'))
-        {
-            $this->addDependencies();
-        }
 
         $this->addTimestampFields();
 
@@ -488,6 +493,11 @@ abstract class AdminController extends Controller {
         return $last;
     }
 
+    protected function addDependencies()
+    {
+        //
+    }
+
     /**
      *  Dynamically add those timestampfields when allowd
      *
@@ -575,7 +585,6 @@ abstract class AdminController extends Controller {
     {
         return $model;
     }
-
     public function getAttribute($key)
     {
         if (array_key_exists($key, $this->attributes))
@@ -585,6 +594,7 @@ abstract class AdminController extends Controller {
 
         throw new InvalidArgumentException("Key [{$key}] doesnt exist in attributes list");
     }
+
     /**
      * Trigger is fired before an record will be deleted
      *

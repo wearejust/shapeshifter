@@ -27,11 +27,14 @@
                                 <span class="media-wrapper-content-wrapper-inner">
                                     <span class="media-wrapper-content-wrapper-inner-content media-preview">
                                         {{ $value }}
-                                        <button class="btn btn-remove confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
+                                        <button class="btn btn-remove js-image-delete-dialog" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                                     </span>
                                 </span>
                             </span>
                         </span>
+                        <div class="dialog-confirm" style="display: none;">
+                            <p>{{ __('dialog.remove-image') }}</p>
+                        </div>
                         @endif
                     </span>
                 </span>
