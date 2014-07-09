@@ -812,15 +812,15 @@ var SortableTable = function(options, table) {
 
 		this.tbody.sortable({
 			'axis': 'y',
-			//'opacity': 0.7,
 			'cancel': 'input,textarea,select,option,button:not(.js-sortable-handle)',
 			'handle': '.js-sortable-handle',
 			'containment':'parent',
-			//'placeholder': "ui-state-highlight",
+			'tolerance': 'pointer',
 			'cursor': 'move',
+			'zIndex': 1,
 			'update': this.update.bind(this),
             'start': function(e, ui) {
-                ui.placeholder.height(ui.helper.outerHeight());
+				console.log(ui.placeholder);
                 this.tbody.addClass('sortable-dragging');
             }.bind(this),
             'stop': function() {
@@ -830,7 +830,8 @@ var SortableTable = function(options, table) {
 				if (this.message) this.message.remove();
 				ui.css('width','100%');
 				ui.children().each(function() {
-					$(this).width($(this).width());
+					var item = $(this);
+					item.width(item.width());
 				});
 				return ui;
 			}.bind(this)

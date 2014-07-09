@@ -158,6 +158,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-row.ui-sortable-helper .table-control-remove-button { display: none; }
 .table-row-editable { cursor: pointer; }
 .table-row-editable:hover { background-color: #ddd; }
+.table-row.ui-sortable-placeholder td { padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }
 .table-cell, .table-header { display: none; padding-top: $paragraph-margin; padding-bottom: $paragraph-margin; }
 .table-order, .table-control { display: table-cell; }
 .table-cell:nth-child(-n+2), .table-header:nth-child(-n+2) { display: table-cell; }​
