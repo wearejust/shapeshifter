@@ -764,7 +764,12 @@ var SortableTable = function(options, table) {
 
 	this.items = this.tbody.children();
 	this.items.filter('.table-row-editable').find('td:not(.table-order, .table-control)').on('click', function(e) {
-		window.location = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
+		var url = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
+		if (e.button || e.ctrlKey || e.metaKey) {
+			window.open(url);
+		} else {
+			window.location = url;
+		}
 	});
 
 	if (TOUCH) {
