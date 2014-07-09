@@ -42,11 +42,9 @@ $(function() {
 	$('.confirm-delete-dialog').removeDialog();
 	$('.js-image-delete-dialog').removeImageDialog();
 
-	$('.alert-success').addClass('alert-success-active').execute(3800, function(){
-		$(this).removeClass('alert-success-active');
-	});
-
 	$('.js-multiplefileattribute').multiplefileattribute();
+
+	alertShow();
 
 	/*
 	 $('.sortable').nestedSortable({
@@ -74,6 +72,21 @@ $(function() {
 	 */
 
 });
+
+function alertShow(message) {
+	if (message) {
+		$('.footer.controls').prepend(message);
+	} else {
+		message = $('.alert-success');
+	}
+
+	message.execute(function() {
+		message.addClass('alert-success-active');
+		message.execute(3800, function(){
+			$(this).removeClass('alert-success-active');
+		});
+	});
+}
 
 // -----------------------------------------------------------
 // PLACEHOLDERTEXT
@@ -861,7 +874,7 @@ SortableTable.prototype.update = function() {
 		},
 		'success': function(data) {
 			this.message = $(data.message);
-			this.table.before(this.message);
+			alertShow(this.message);
 		}.bind(this),
 		'error': function() {
 			//alert('Error: Neem contact op met Just.');
