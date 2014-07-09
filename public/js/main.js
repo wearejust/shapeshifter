@@ -816,6 +816,7 @@ var SortableTable = function(options, table) {
 			'handle': '.js-sortable-handle',
 			'containment':'parent',
 			'tolerance': 'pointer',
+			'revert': 100,
 			'cursor': 'move',
 			'zIndex': 1,
 			'update': this.update.bind(this),
