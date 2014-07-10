@@ -57,7 +57,7 @@ class MultipleFileAttribute extends Attribute implements iAttributeInterface
         $this->name = $name;
         $this->flags = $flags;
 
-        $this->relativeStorageDir = $this->getRelativePath($storageDir);
+        $this->relativeStorageDir = str_replace('\\', '/', $this->getRelativePath($storageDir));
         $this->absoluteStorageDir = $this->getAbsolutePath();
 
         $this->checkDirectory();
