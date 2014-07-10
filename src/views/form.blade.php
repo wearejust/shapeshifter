@@ -4,6 +4,13 @@
 
 <h1>{{ $title }}</h1>
 
+<dl class="quiet">
+    <dt>Laatst gewijzigd</dt>
+    <dd>vrijdag 27 juni 2014 12:03</dd>
+    <dt>Aangemaakt</dt>
+    <dd>donderdag 16 januari 2014 11:36</dd>
+</dl>
+
 <div class="section">
 
     @if (count($tabs) > 1)
