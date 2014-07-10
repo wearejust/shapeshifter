@@ -4,6 +4,13 @@
 
 <h1>{{ $title }}</h1>
 
+<dl class="quiet">
+    <dt>Laatst gewijzigd</dt>
+    <dd>vrijdag 27 juni 2014 12:03</dd>
+    <dt>Aangemaakt</dt>
+    <dd>donderdag 16 januari 2014 11:36</dd>
+</dl>
+
 <div class="section">
 
     @if (count($tabs) > 1)
@@ -57,8 +64,11 @@
                     <div class="content">
                         <ul class="control-list list">
                             <li class="control-item">
-                                <button class="btn btn-save control-item-button js-required-target" type="submit">{{ __('form.save') }}</button>
-                            </li>
+                                <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
+                            <!--</li>-->
+                            <li class="control-item item-alt">
+                                <button class="control-item-button btn btn-remove" type="button">Verwijderen</button>
+                            <!--</li>-->
                             {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
                     </div>
