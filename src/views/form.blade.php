@@ -57,8 +57,11 @@
                     <div class="content">
                         <ul class="control-list list">
                             <li class="control-item">
-                                <button class="btn btn-save control-item-button" type="submit">{{ __('form.save') }}</button>
-                            </li>
+                                <button class="control-item-button btn btn-save" type="submit">{{ __('form.save') }}</button>
+                            <!--</li>-->
+                            <li class="control-item item-alt">
+                                <button class="control-item-button btn btn-remove" type="button">Verwijderen</button>
+                            <!--</li>-->
                             {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
                     </div>
