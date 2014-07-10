@@ -89,6 +89,46 @@ function alertShow(message) {
 	});
 }
 
+
+
+// -----------------------------------------------------------
+// MENU
+// -----------------------------------------------------------
+var Menu = function() {
+	this.element = $('#menu');
+	if (!this.element.length) return;
+
+	this.overlay = $('<div class="menu-overlay"></div>');
+	$body.append(this.overlay);
+
+	this.subs = this.element.find('.sub-list');
+	this.subs.each(function(index, item) {
+		item = $(item);
+		if (item.hasClass('js-hide')) {
+			item.hide().removeClass('js-hide');
+			item.siblings('.main-nav-link').on('click', this.subToggle.bind(this));
+		}
+	}.bind(this));
+
+	$('.menu-nav-button').on('click', this.menuToggle.bind(this));
+}
+
+Menu.prototype.menuToggle = function(e) {
+	e.preventDefault();
+	$body.toggleClass('menu-active');
+}
+
+Menu.prototype.subToggle = function(e) {
+	e.preventDefault();
+	var sub = $(e.currentTarget).siblings('.sub-list');
+	var boo = sub.hasClass('active');
+	this.subs.filter('.active').removeClass('active').slideUp();
+	if (!boo) sub.addClass('active').slideDown();
+}
+
+
+
+
 // -----------------------------------------------------------
 // PLACEHOLDERTEXT
 // -----------------------------------------------------------
@@ -152,38 +192,6 @@ $.fn.placeholderText = function(settings) {
     });
 }
 
-
-// -----------------------------------------------------------
-// MENU
-// -----------------------------------------------------------
-var Menu = function() {
-	this.element = $('#menu');
-	if (!this.element.length) return;
-
-
-	this.subs = this.element.find('.sub-list');
-	this.subs.each(function(index, item) {
-		item = $(item);
-		if (item.hasClass('js-hide')) {
-			item.hide().removeClass('js-hide');
-			item.siblings('.main-nav-link').on('click', this.subToggle.bind(this));
-		}
-	}.bind(this));
-
-	$('.menu-nav-button').on('click', this.menuToggle.bind(this));
-}
-
-Menu.prototype.menuToggle = function(e) {
-	e.preventDefault();
-	$body.toggleClass('menu-activated');
-}
-Menu.prototype.subToggle = function(e) {
-	e.preventDefault();
-	var sub = $(e.currentTarget).siblings('.sub-list');
-	var boo = sub.hasClass('active');
-	this.subs.filter('.active').removeClass('active').slideUp();
-	if (!boo) sub.addClass('active').slideDown();
-}
 
 
 // -----------------------------------------------------------
