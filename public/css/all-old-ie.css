@@ -370,6 +370,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 
 .btn { border: 1px solid black; display: inline-block; font-weight: bold; line-height: normal; padding: .65em .75em; text-align: center; text-decoration: none; vertical-align: top; }
 
+.btn:disabled, .btn:disabled:hover { background-color: #aaa; color: #eee; border-color: #aaa; }
+
 .btn-default { background-color: black; color: #fff; }
 
 .btn-default:visited, .btn-preview:visited { color: #fff; color: rgba(255, 255, 255, 0.7); }

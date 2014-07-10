@@ -4,6 +4,7 @@
 $(function() {
 
 	Menu = new Menu();
+	Required = new Required();
 
     $('label.js-placeholder').placeholderText();
 
@@ -945,4 +946,54 @@ SortableTable.prototype.itemsShow = function(e) {
 		}.bind(this));
 
 	}
+}
+
+
+
+// -----------------------------------------------------------
+// REQUIRED
+// -----------------------------------------------------------
+var Required = function() {
+	this.items = $('.js-required');
+	if (!this.items.length) return;
+
+	this.targets = $('.js-required-target');
+	this.delayer = $('<div></div>');
+
+	CKEDITOR.on('instanceReady', function(e) {
+		if (this.items.filter('#'+e.editor.name).length) {
+			console.log(e.editor);
+			e.editor.on('blur', this.change.bind(this));
+			this.change(e);
+		}
+	}.bind(this));
+
+	this.items.on('keyup change', this.change.bind(this));
+	this.change();
+}
+
+Required.prototype.change = function(e) {
+	this.delayer.execute(this, e ? 300 : 0, function() {
+		var disabled = false;
+		this.items.each(function(index, item) {
+			item = $(item);
+			if (item.is('input[type="checkbox"], input[type="radio"]')) {
+				if (!item.closest('.form-group').find('input:checked').length) {
+					disabled = true;
+				}
+
+			} else if (item.hasClass('ckeditor')) {
+				var cke = CKEDITOR.instances[item.attr('id')];
+				if (!cke || !cke.getData()) {
+					disabled = true;
+				}
+
+			} else if (!item.val()) {
+				disabled = true;
+			}
+
+			if (disabled) return false;
+		}.bind(this));
+		this.targets.prop('disabled', disabled);
+	});
 }
