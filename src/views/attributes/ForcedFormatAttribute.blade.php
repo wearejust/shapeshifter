@@ -6,7 +6,7 @@
         <span class="form-field">
             <span class="form-control form-field-medium">
                 <span class="module-1">
-                    {{ Form::text($name, null, array('class' => 'form-field-content js-mask', 'data-mask' => $format, 'id' => $name)) }}
+                    {{ Form::text($name, null, array('class' => 'form-field-content js-mask' . ($required?' js-required':''), 'data-mask' => $format, 'id' => $name)) }}
                 </span>
                 <span class="form-group-highlight"></span>
             </span>

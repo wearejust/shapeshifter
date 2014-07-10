@@ -5,7 +5,7 @@
 	    </span>
 	    <span class="form-field">
 	    	<span class="form-control">
-		        {{  Form::textarea($name, null, array('class' => 'input-block-level ckeditor', 'id' => $name)) }}
+		        {{  Form::textarea($name, null, array('class' => 'input-block-level ckeditor' . ($required?' js-required':''), 'id' => $name)) }}
 		    </span>
 		    @include('shapeshifter::layouts.helptext')
 	    </span>

@@ -39,7 +39,7 @@
                                 <li class="mini-gallery-list-item{{ !$image ? ' hide':'' }}">
                                     <span class="mini-gallery-list-item-content">
                                         <span class="mini-gallery-list-item-content-inner">
-                                            {{ Form::radio($name, $key, null, array('class' => 'form-option-field mini-gallery-input accessibility', 'id' => 'radio-' . $name . '-'. $key)) }}
+                                            {{ Form::radio($name, $key, null, array('class' => 'form-option-field mini-gallery-input accessibility' . ($required?' js-required':''), 'id' => 'radio-' . $name . '-'. $key)) }}
                                             <label class="mini-gallery-thumb-button fill" for="radio-{{ $name }}-{{ $key }}">
                                                 <img alt="" class="mini-gallery-thumb fill" src="{{ $image }}">
                                             </label>

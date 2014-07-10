@@ -5,7 +5,7 @@
         </span>
         <span class="form-field">
         	<span class="form-control">
-    	        {{ Form::textarea($name, null, array('class' => 'form-field-content', 'id' => $name)) }}
+    	        {{ Form::textarea($name, null, array('class' => 'form-field-content' . ($required?' js-required':''), 'id' => $name)) }}
     	        <span class="form-group-highlight"></span>
     	    </span>
     	    @include('shapeshifter::layouts.helptext')

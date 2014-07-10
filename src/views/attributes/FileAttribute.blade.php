@@ -11,7 +11,7 @@
                             <span class="media-wrapper-content-wrapper">
                                 <span class="media-wrapper-content-wrapper-inner">
                                     <span class="media-wrapper-content-wrapper-inner-content">
-                                        {{ Form::file($name, array('accept' => '', 'class' => 'form-field-content', 'id' => $name, 'autocorrect' => 'off')) }}
+                                        {{ Form::file($name, array('accept' => '', 'class' => 'form-field-content' . ($required?' js-required':''), 'id' => $name, 'autocorrect' => 'off')) }}
                                         <!--<span class="form-group-highlight"></span>-->
                                     </span>
                                 </span>

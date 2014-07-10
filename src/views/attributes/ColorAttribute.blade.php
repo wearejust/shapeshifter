@@ -5,7 +5,7 @@
         </span>
         <span class="form-field">
             <span class="form-control form-field-short">
-                {{ Form::text($name, null, array('class' => 'form-field-content colorpicker', 'id' => $name, 'autocorrect' => 'off')) }}
+                {{ Form::text($name, null, array('class' => 'form-field-content colorpicker' . ($required?' js-required':''), 'id' => $name, 'autocorrect' => 'off')) }}
                 <span class="form-group-highlight"></span>
             </span>
             @include('shapeshifter::layouts.helptext')

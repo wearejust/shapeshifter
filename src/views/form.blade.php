@@ -57,7 +57,7 @@
                     <div class="content">
                         <ul class="control-list list">
                             <li class="control-item">
-                                <button class="control-item-button btn btn-save" type="submit">{{ __('form.save') }}</button>
+                                <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
                             <!--</li>-->
                             <li class="control-item item-alt">
                                 <button class="control-item-button btn btn-remove" type="button">Verwijderen</button>

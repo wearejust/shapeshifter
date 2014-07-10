@@ -4,6 +4,7 @@
 $(function() {
 
 	Menu = new Menu();
+	Required = new Required();
 
     $('label.js-placeholder').placeholderText();
 
@@ -42,11 +43,9 @@ $(function() {
 	$('.confirm-delete-dialog').removeDialog();
 	$('.js-image-delete-dialog').removeImageDialog();
 
-	$('.alert-success').addClass('alert-success-active').execute(3800, function(){
-		$(this).removeClass('alert-success-active');
-	});
-
 	$('.js-multiplefileattribute').multiplefileattribute();
+
+	alertShow();
 
 	/*
 	 $('.sortable').nestedSortable({
@@ -74,6 +73,21 @@ $(function() {
 	 */
 
 });
+
+function alertShow(message) {
+	if (message) {
+		$('.footer.controls').prepend(message);
+	} else {
+		message = $('.alert-success');
+	}
+
+	message.execute(function() {
+		message.addClass('alert-success-active');
+		message.execute(3800, function(){
+			$(this).removeClass('alert-success-active');
+		});
+	});
+}
 
 // -----------------------------------------------------------
 // PLACEHOLDERTEXT
@@ -122,10 +136,8 @@ PlaceholderText.prototype.keyPress = function() {
 
 PlaceholderText.prototype.firstInit = function() {
     if (this.input.val() || this.input.text()) {
-        console.log(true);
         this.label.addClass(this.activeClass);
     } else {
-        console.log(false);
         this.label.removeClass(this.activeClass);        
     }
 }
@@ -764,7 +776,12 @@ var SortableTable = function(options, table) {
 
 	this.items = this.tbody.children();
 	this.items.filter('.table-row-editable').find('td:not(.table-order, .table-control)').on('click', function(e) {
-		window.location = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
+		var url = $(e.currentTarget).closest('.table-row').attr('data-edit-href');
+		if (e.button || e.ctrlKey || e.metaKey) {
+			window.open(url);
+		} else {
+			window.location = url;
+		}
 	});
 
 	if (TOUCH) {
@@ -794,15 +811,15 @@ var SortableTable = function(options, table) {
 
 		this.tbody.sortable({
 			'axis': 'y',
-			//'opacity': 0.7,
 			'cancel': 'input,textarea,select,option,button:not(.js-sortable-handle)',
 			'handle': '.js-sortable-handle',
 			'containment':'parent',
-			//'placeholder': "ui-state-highlight",
+			'tolerance': 'pointer',
+			'revert': 100,
 			'cursor': 'move',
+			'zIndex': 1,
 			'update': this.update.bind(this),
             'start': function(e, ui) {
-                ui.placeholder.height(ui.helper.outerHeight());
                 this.tbody.addClass('sortable-dragging');
             }.bind(this),
             'stop': function() {
@@ -812,7 +829,8 @@ var SortableTable = function(options, table) {
 				if (this.message) this.message.remove();
 				ui.css('width','100%');
 				ui.children().each(function() {
-					$(this).width($(this).width());
+					var item = $(this);
+					item.width(item.width());
 				});
 				return ui;
 			}.bind(this)
@@ -856,7 +874,7 @@ SortableTable.prototype.update = function() {
 		},
 		'success': function(data) {
 			this.message = $(data.message);
-			this.table.before(this.message);
+			alertShow(this.message);
 		}.bind(this),
 		'error': function() {
 			//alert('Error: Neem contact op met Just.');
@@ -928,4 +946,54 @@ SortableTable.prototype.itemsShow = function(e) {
 		}.bind(this));
 
 	}
+}
+
+
+
+// -----------------------------------------------------------
+// REQUIRED
+// -----------------------------------------------------------
+var Required = function() {
+	this.items = $('.js-required');
+	if (!this.items.length) return;
+
+	this.targets = $('.js-required-target');
+	this.delayer = $('<div></div>');
+
+	CKEDITOR.on('instanceReady', function(e) {
+		if (this.items.filter('#'+e.editor.name).length) {
+			console.log(e.editor);
+			e.editor.on('blur', this.change.bind(this));
+			this.change(e);
+		}
+	}.bind(this));
+
+	this.items.on('keyup change', this.change.bind(this));
+	this.change();
+}
+
+Required.prototype.change = function(e) {
+	this.delayer.execute(this, e ? 300 : 0, function() {
+		var disabled = false;
+		this.items.each(function(index, item) {
+			item = $(item);
+			if (item.is('input[type="checkbox"], input[type="radio"]')) {
+				if (!item.closest('.form-group').find('input:checked').length) {
+					disabled = true;
+				}
+
+			} else if (item.hasClass('ckeditor')) {
+				var cke = CKEDITOR.instances[item.attr('id')];
+				if (!cke || !cke.getData()) {
+					disabled = true;
+				}
+
+			} else if (!item.val()) {
+				disabled = true;
+			}
+
+			if (disabled) return false;
+		}.bind(this));
+		this.targets.prop('disabled', disabled);
+	});
 }
