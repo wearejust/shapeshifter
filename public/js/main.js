@@ -135,10 +135,8 @@ PlaceholderText.prototype.keyPress = function() {
 
 PlaceholderText.prototype.firstInit = function() {
     if (this.input.val() || this.input.text()) {
-        console.log(true);
         this.label.addClass(this.activeClass);
     } else {
-        console.log(false);
         this.label.removeClass(this.activeClass);        
     }
 }
@@ -821,7 +819,6 @@ var SortableTable = function(options, table) {
 			'zIndex': 1,
 			'update': this.update.bind(this),
             'start': function(e, ui) {
-				console.log(ui.placeholder);
                 this.tbody.addClass('sortable-dragging');
             }.bind(this),
             'stop': function() {
