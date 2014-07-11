@@ -47,7 +47,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .loader { display: block; position: relative; }
 .loader:after { background-repeat: no-repeat; background-position: center; @include background-size(100%); content: ""; display: block; height: 16px; left: 50%; margin: -8px 0 0 -8px; position: absolute; top: 50%; width: 16px; }
 
-.menu-nav { margin: 0; opacity: 1; position: absolute; right: 0; top: 0; z-index: 11; }
+.menu-nav { margin: 0; opacity: 1; position: absolute; right: 0; top: 0; z-index: 102; }
 .js .menu-nav { position: fixed; }
 .menu-nav-button { display: inline-block; overflow: hidden; padding: 1.143em; text-decoration: none; vertical-align: top; }
 .menu-nav-button:focus, .menu-nav-button:hover, .menu-nav-button:active, .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:focus, .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:hover, .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:active { background-color: rgba(255, 255, 255, .25); color: #fff; }
@@ -229,13 +229,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .header-top { background-color: $secondary-color; bottom: 0; left: 0; margin: 0; overflow: hidden; padding-bottom: 1em; padding-top: 1em; position: fixed; }
 .header-middle { background-color: $tertiary-color; left: 22.5em; margin: 0; padding: 0; position: fixed; right: 0; top: 0; }
 .header-middle .identity { background-image: inline-image("public/css/images/just.png"); background-repeat: no-repeat; background-position: right bottom; padding: 2.15em 0; }
-<<<<<<< HEAD
-.header-bottom { left: 0; position: fixed; top: 0; z-index: 11; }
-.system-name { color: #fff; font-weight: bold; left: 0; margin: 0; position: fixed; top: 0; white-space: nowrap; width: 100%; z-index: 10; }
-=======
-.header-bottom { background-color: #f2f2f2; border-bottom: 1px solid $tertiary-color; display: table-caption; padding-top: 3.357em; width: 100%; }
+.header-bottom { left: 0; position: fixed; top: 0; z-index: 101; }
 .system-name { color: #fff; font-weight: bold; left: 0; margin: 0; position: fixed; top: 0; white-space: nowrap; width: 100%; z-index: 101; }
->>>>>>> ef4ba210d94cb6c71140f8019a772e5e09dfce2a
 .system-name-button { background-color: #000; border-bottom: 1px solid #000; color: inherit; display: block; font-size: 1.5em; height: 3.357rem; line-height: 3.357rem; padding: 0 1.5rem; text-align: center; text-decoration: none; text-transform: uppercase; }
 .system-name-button:visited { color: #fff; color: rgba(255, 255, 255, .8); }
 .system-name-button:focus, .system-name-button:hover, .system-name-button:active { background-color: #1a1a1a; }
