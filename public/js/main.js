@@ -134,7 +134,7 @@ Menu.prototype.subToggle = function(e) {
 
 Menu.prototype.dragStart = function(e) {
 	var touch = e.originalEvent.touches[0];
-	if (!$(e.target).hasClass('menu-nav-button') && (touch.pageX < 50 || $(e.target).hasClass('menu-overlay'))) {
+	if (!$(e.target).hasClass('menu-nav-button') && (touch.pageX > ($window.width() - 50) || $(e.target).hasClass('menu-overlay'))) {
 		this.dragData = {
 			'x': touch.pageX,
 			'y': touch.pageY
@@ -153,10 +153,10 @@ Menu.prototype.dragMoveCheck = function(e) {
 		this.overlay.css('opacity', this.overlay.css('opacity'));
 		this.overlay.addClass('no-transition').execute(this, function() {
 			this.overlay.addClass('active');
-			this.dragData.direction = $body.hasClass('menu-active') ? -1 : 1;
+			this.dragData.direction = $body.hasClass('menu-active') ? 1 : -1;
 			this.dragData.width = this.element.width();
-			this.dragData.left = parseFloat(this.element.css('left'));
-			this.dragData.leftPrevious = this.dragData.left;
+			this.dragData.right = parseFloat(this.element.css('right'));
+			this.dragData.leftPrevious = this.dragData.right;
 
 			$window.off('touchmove', this.dragMoveCheckBound);
 			$window.on('touchmove', this.dragMoveBound);
@@ -172,16 +172,15 @@ Menu.prototype.dragMoveCheck = function(e) {
 Menu.prototype.dragMove = function(e) {
 	e.preventDefault();
 	var touch = e.originalEvent.touches[0];
-	var left = Math.min(0, this.dragData.left + (touch.pageX - this.dragData.x));
-	this.element.css('left', left);
-	this.overlay.css('opacity', Math.min(0.7, (1 + (left / this.dragData.width)) * 1.4));
+	var right = Math.min(0, this.dragData.right - (touch.pageX - this.dragData.x));
+	this.element.css('right', right);
+	this.overlay.css('opacity', Math.min(0.7, (1 + (right / this.dragData.width)) * 1.4));
 
-
-	var n = left - this.dragData.leftPrevious;
-	this.dragData.leftPrevious = left;
+	var n = right - this.dragData.rightPrevious;
+	this.dragData.rightPrevious = right;
 
 	if (Math.abs(n) > 3) {
-		this.dragData.direction = (n > 0) ? 1 : -1;
+		this.dragData.direction = (n > 0) ? -1 : 1;
 	}
 }
 
@@ -193,8 +192,8 @@ Menu.prototype.dragStop = function(e) {
 	this.element.removeClass('no-transition');
 	this.overlay.removeClass('active no-transition').execute(this, function() {
 		this.overlay.css('opacity', '');
-		this.element.css('left', '');
-		$body.toggleClass('menu-active', this.dragData.direction == 1);
+		this.element.css('right', '');
+		$body.toggleClass('menu-active', this.dragData.direction == -1);
 	});
 }
 
