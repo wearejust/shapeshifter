@@ -116,7 +116,6 @@ var Menu = function() {
 
 	if (TRANSFORM3D) {
 		$window.on('touchstart', this.dragStart.bind(this));
-		this.overlay.on('touchstart', this.dragStart.bind(this));
 
 		this.dragMoveCheckBound = this.dragMoveCheck.bind(this);
 		this.dragMoveBound = this.dragMove.bind(this);
@@ -175,7 +174,7 @@ Menu.prototype.dragMoveCheck = function(e) {
 		$window.off('touchmove', this.dragMoveCheckBound);
 		$window.on('touchmove', this.dragMoveBound);
 
-	} else {
+	} else if (Math.abs(touch.pageY - this.dragData.y) >= 3) {
 		this.dragStop();
 	}
 
