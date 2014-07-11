@@ -2098,7 +2098,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   left: 0;
   position: fixed;
   top: 0;
-  z-index: 101;
+  z-index: 102;
 }
 
 /* line 233, sass/main.scss */
