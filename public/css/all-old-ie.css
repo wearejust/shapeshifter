@@ -334,6 +334,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 
 .content-body, .form-group, .alert, .system-account, .table-header:first-child, .table-cell:first-child { padding-left: 1.5em; }
 
+.data-wrapper { overflow: hidden; }
+
 .controls { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; bottom: 0; height: 3.357em; left: 0; overflow: hidden; position: fixed; right: 0; }
 
 .control-list { margin: 0; }
@@ -537,6 +539,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-control-remove-button { bottom: 0; height: 4.071em; left: 0; margin: 0; padding: 0; position: absolute; top: 0; width: 100%; }
 
 .table-control-active { -webkit-transform: translate(-4.071em, 0); -moz-transform: translate(-4.071em, 0); -ms-transform: translate(-4.071em, 0); -o-transform: translate(-4.071em, 0); transform: translate(-4.071em, 0); }
+
+.sortable-dragging .table-control-content { display: none; }
 
 .sortable-dragging .table-row { border-color: #f2f2f2; }
 
