@@ -275,10 +275,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .controls-content { padding: 1em 1.5em; }
 
 
-.js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; right: -17.5em; @include transition(right 0.3s ease-in); }
-.js .menu-active .header, .js .menu-active .header-top { right: 0; @include transition(right 0.3s ease-out); }
-.js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 100%; right: 0; z-index: 100; @include opacity(0); @include transition(opacity 0.3s ease-in, left 0s ease-in 0.3s); }
-.js .menu-active .menu-overlay, .js .menu-overlay.active { left: 0; @include opacity(0.7); @include transition(opacity 0.3s ease-out); }
+.js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: 100%; @include transform(translate3d(0, 0, 0)); @include backface-visibility(hidden); @include transition(transform 0.3s ease-in); }
+.js .menu-active .header, .js .menu-active .header-top { @include transform(translate3d(-100%, 0, 0)); @include backface-visibility(hidden); @include transition(transform 0.3s ease-out); }
+.js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 100%; right: 0; z-index: 100; @include opacity(0); @include transform(translate3d(0, 0, 0)); @include backface-visibility(hidden); @include transition(opacity 0.3s ease-in, left 0s ease-in 0.3s); }
+.js .menu-active .menu-overlay, .js .menu-overlay.active { left: 0; @include opacity(0.7); @include backface-visibility(hidden); @include transition(opacity 0.3s ease-out); }
 
 
 // .js body, .js .header, .js .header-top, .system-name, .main-content, .header-bottom, .footer, .controls { @include transition(bottom, height, left, opacity, padding-left, padding-top, right, width, .5s); }

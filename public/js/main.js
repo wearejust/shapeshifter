@@ -98,6 +98,9 @@ var Menu = function() {
 	this.element = $('.header, .header-top');
 	if (!this.element.length) return;
 
+	this.overlay = $('<div class="menu-overlay"></div>');
+	$body.append(this.overlay);
+
 	this.subs = this.element.find('.sub-list');
 	this.subs.each(function(index, item) {
 		item = $(item);
@@ -109,14 +112,14 @@ var Menu = function() {
 
 	$('.menu-nav-button').on('click', this.menuToggle.bind(this));
 
-	this.overlay = $('<div class="menu-overlay"></div>');
-	$body.append(this.overlay);
-	this.overlay.on('touchstart', this.dragStart.bind(this));
+	if (TRANSFORM3D) {
+		$window.on('touchstart', this.dragStart.bind(this));
+		this.overlay.on('touchstart', this.dragStart.bind(this));
 
-	$window.on('touchstart', this.dragStart.bind(this));
-	this.dragMoveCheckBound = this.dragMoveCheck.bind(this);
-	this.dragMoveBound = this.dragMove.bind(this);
-	this.dragStopBound = this.dragStop.bind(this);
+		this.dragMoveCheckBound = this.dragMoveCheck.bind(this);
+		this.dragMoveBound = this.dragMove.bind(this);
+		this.dragStopBound = this.dragStop.bind(this);
+	}
 }
 
 Menu.prototype.menuToggle = function(e) {
@@ -155,8 +158,9 @@ Menu.prototype.dragMoveCheck = function(e) {
 			this.overlay.addClass('active');
 			this.dragData.direction = $body.hasClass('menu-active') ? 1 : -1;
 			this.dragData.width = this.element.width();
-			this.dragData.right = parseFloat(this.element.css('right'));
-			this.dragData.leftPrevious = this.dragData.right;
+			var right = this.element.transformed().x;
+			this.dragData.right = right;
+			this.dragData.rightPrevious = right;
 
 			$window.off('touchmove', this.dragMoveCheckBound);
 			$window.on('touchmove', this.dragMoveBound);
@@ -172,15 +176,16 @@ Menu.prototype.dragMoveCheck = function(e) {
 Menu.prototype.dragMove = function(e) {
 	e.preventDefault();
 	var touch = e.originalEvent.touches[0];
-	var right = Math.min(0, this.dragData.right - (touch.pageX - this.dragData.x));
-	this.element.css('right', right);
-	this.overlay.css('opacity', (1 + (right / this.dragData.width)) * 0.7);
+	var right = Math.min(0, this.dragData.right + (touch.pageX - this.dragData.x));
+	var n = Math.min(1, Math.abs(right / this.dragData.width));
+	this.element.translate((n * -100) + '%');
+	this.overlay.css('opacity', n * 0.7);
 
-	var n = right - this.dragData.rightPrevious;
+	n = right - this.dragData.rightPrevious;
 	this.dragData.rightPrevious = right;
 
-	if (Math.abs(n) > 3) {
-		this.dragData.direction = (n > 0) ? -1 : 1;
+	if (Math.abs(n) > 1) {
+		this.dragData.direction = (n > 0) ? 1 : -1;
 	}
 }
 
@@ -192,7 +197,7 @@ Menu.prototype.dragStop = function(e) {
 	this.element.removeClass('no-transition');
 	this.overlay.removeClass('active no-transition').execute(this, function() {
 		this.overlay.css('opacity', '');
-		this.element.css('right', '');
+		this.element.translate();
 		$body.toggleClass('menu-active', this.dragData.direction == -1);
 	});
 }
