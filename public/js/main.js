@@ -95,11 +95,8 @@ function alertShow(message) {
 // MENU
 // -----------------------------------------------------------
 var Menu = function() {
-	this.element = $('#menu');
+	this.element = $('.header, .header-top');
 	if (!this.element.length) return;
-
-	this.overlay = $('<div class="menu-overlay"></div>');
-	$body.append(this.overlay);
 
 	this.subs = this.element.find('.sub-list');
 	this.subs.each(function(index, item) {
@@ -111,6 +108,15 @@ var Menu = function() {
 	}.bind(this));
 
 	$('.menu-nav-button').on('click', this.menuToggle.bind(this));
+
+	this.overlay = $('<div class="menu-overlay"></div>');
+	$body.append(this.overlay);
+	this.overlay.on('touchstart', this.dragStart.bind(this));
+
+	$window.on('touchstart', this.dragStart.bind(this));
+	this.dragMoveCheckBound = this.dragMoveCheck.bind(this);
+	this.dragMoveBound = this.dragMove.bind(this);
+	this.dragStopBound = this.dragStop.bind(this);
 }
 
 Menu.prototype.menuToggle = function(e) {
@@ -126,7 +132,56 @@ Menu.prototype.subToggle = function(e) {
 	if (!boo) sub.addClass('active').slideDown();
 }
 
+Menu.prototype.dragStart = function(e) {
+	var touch = e.originalEvent.touches[0];
+	if (!$(e.target).hasClass('menu-nav-button') && (touch.pageX < 50 || $(e.target).hasClass('menu-overlay'))) {
+		this.dragPosition = {
+			'x': touch.pageX,
+			'y': touch.pageY
+		};
+		$window.on('touchmove', this.dragMoveCheckBound);
+		$window.on('touchend', this.dragStopBound);
+	}
+}
 
+Menu.prototype.dragMoveCheck = function(e) {
+	var touch = e.originalEvent.touches[0];
+	if (Math.abs(touch.pageX - this.dragPosition.x) > 3) {
+		e.preventDefault();
+
+		this.element.addClass('no-transition');
+		this.overlay.addClass('active');
+		this.dragPosition.left = parseFloat(this.element.css('left'));
+
+		$window.off('touchmove', this.dragMoveCheckBound);
+		$window.on('touchmove', this.dragMoveBound);
+
+	} else if (Math.abs(touch.pageY - this.dragPosition.y) > 3) {
+		$window.off('touchmove', this.dragMoveCheckBound);
+		$window.off('touchend', this.dragStopBound);
+	}
+
+}
+
+Menu.prototype.dragMove = function(e) {
+	e.preventDefault();
+	var touch = e.originalEvent.touches[0];
+	var left = Math.min(0, this.dragPosition.left + (touch.pageX - this.dragPosition.x));
+	this.element.css('left', left);
+}
+
+Menu.prototype.dragStop = function(e) {
+	$window.off('touchmove', this.dragMoveCheckBound);
+	$window.off('touchmove', this.dragMoveBound);
+	$window.off('touchend', this.dragStopBound);
+
+	this.element.removeClass('no-transition').last().execute(this, function() {
+		this.overlay.removeClass('active');
+		this.element.css('left', '');
+		var boo = (parseFloat(this.element.css('left')) - this.dragPosition.left) > 0;
+		$body.toggleClass('menu-active', boo);
+	});
+}
 
 
 // -----------------------------------------------------------

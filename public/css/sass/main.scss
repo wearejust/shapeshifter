@@ -277,7 +277,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: -17.5em; @include transition(left 0.5s); }
 .js .menu-active .header, .js .menu-active .header-top { left: 0; }
 .js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 0; right: 100%; z-index: 100; @include opacity(0); @include transition(opacity 0.5s, right 0s 0.5s); }
-.js .menu-active .menu-overlay { right: 0; @include opacity(0.7); @include transition(opacity 0.5s); }
+.js .menu-active .menu-overlay, .js .menu-overlay.active { right: 0; @include opacity(0.7); @include transition(opacity 0.5s); }
 
 
 // .js body, .js .header, .js .header-top, .system-name, .main-content, .header-bottom, .footer, .controls { @include transition(bottom, height, left, opacity, padding-left, padding-top, right, width, .5s); }
