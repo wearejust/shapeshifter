@@ -710,13 +710,13 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .controls-content { padding: 1em 1.5em; }
 
-.js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: -17.5em; -webkit-transition: left 0.5s; -moz-transition: left 0.5s; -o-transition: left 0.5s; transition: left 0.5s; }
+.js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: -17.5em; -webkit-transition: left 0.3s ease-in; -moz-transition: left 0.3s ease-in; -o-transition: left 0.3s ease-in; transition: left 0.3s ease-in; }
 
-.js .menu-active .header, .js .menu-active .header-top { left: 0; }
+.js .menu-active .header, .js .menu-active .header-top { left: 0; -webkit-transition: left 0.3s ease-out; -moz-transition: left 0.3s ease-out; -o-transition: left 0.3s ease-out; transition: left 0.3s ease-out; }
 
-.js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 0; right: 100%; z-index: 100; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -webkit-transition: opacity 0.5s, right 0s; -webkit-transition-delay: 0s, 0.5s; -moz-transition: opacity 0.5s, right 0s 0.5s; -o-transition: opacity 0.5s, right 0s 0.5s; transition: opacity 0.5s, right 0s 0.5s; }
+.js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 0; right: 100%; z-index: 100; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); opacity: 0; -webkit-transition: opacity 0.3s ease-in, right 0s ease-in; -webkit-transition-delay: 0s, 0.3s; -moz-transition: opacity 0.3s ease-in, right 0s ease-in 0.3s; -o-transition: opacity 0.3s ease-in, right 0s ease-in 0.3s; transition: opacity 0.3s ease-in, right 0s ease-in 0.3s; }
 
-.js .menu-active .menu-overlay, .js .menu-overlay.active { right: 0; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70); opacity: 0.7; -webkit-transition: opacity 0.5s; -moz-transition: opacity 0.5s; -o-transition: opacity 0.5s; transition: opacity 0.5s; }
+.js .menu-active .menu-overlay, .js .menu-overlay.active { right: 0; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70); opacity: 0.7; -webkit-transition: opacity 0.3s ease-out; -moz-transition: opacity 0.3s ease-out; -o-transition: opacity 0.3s ease-out; transition: opacity 0.3s ease-out; }
 
 .js .login { -webkit-transition: none; -moz-transition: none; -o-transition: none; transition: none; }
 
