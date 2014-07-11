@@ -174,7 +174,7 @@ Menu.prototype.dragMove = function(e) {
 	var touch = e.originalEvent.touches[0];
 	var right = Math.min(0, this.dragData.right - (touch.pageX - this.dragData.x));
 	this.element.css('right', right);
-	this.overlay.css('opacity', Math.min(0.7, (1 + (right / this.dragData.width)) * 1.4));
+	this.overlay.css('opacity', (1 + (right / this.dragData.width)) * 0.7);
 
 	var n = right - this.dragData.rightPrevious;
 	this.dragData.rightPrevious = right;
