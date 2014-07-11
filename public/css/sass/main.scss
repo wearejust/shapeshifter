@@ -231,7 +231,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .header-middle .identity { background-image: inline-image("public/css/images/just.png"); background-repeat: no-repeat; background-position: right bottom; padding: 2.15em 0; }
 .header-bottom { left: 0; position: fixed; top: 0; z-index: 102; }
 .system-name { color: #fff; font-weight: bold; left: 0; margin: 0; position: fixed; top: 0; white-space: nowrap; width: 100%; z-index: 101; }
-.system-name-button { background-color: #000; border-bottom: 1px solid #000; color: inherit; display: block; font-size: 1.5em; height: 3.357rem; line-height: 3.357rem; padding: 0 1.5rem; text-align: center; text-decoration: none; text-transform: uppercase; }
+.system-name-button { background-color: #000; color: inherit; display: block; font-size: 1.25em; height: 3.357rem; line-height: 3.357rem; padding: 0 1.5rem; text-align: center; text-decoration: none; text-transform: uppercase; }
 .system-name-button:visited { color: #fff; color: rgba(255, 255, 255, .8); }
 .system-name-button:focus, .system-name-button:hover, .system-name-button:active { background-color: #1a1a1a; }
 .system-user { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -251,7 +251,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .breadcrumbs-item:last-child .breadcrumbs-link:after { background-image: none; display: none; }
 .breadcrumbs-item:nth-last-child(2) { display: inline-block; font-weight: bold; }
 .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link { color: #fff; display: block; padding: 1em; text-align: left; }
-.breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:before { content: "❮"; margin-right: .75em; }
+.breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:before { content: "❮"; margin-right: .5em; }
 .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:after { display: none; }
 .breadcrumbs-link { display: inline-block; text-decoration: none; vertical-align: top; }
 .breadcrumbs-link:after { content: ""; background-image: inline-image("public/css/images/bc-arrow.png"); background-repeat: no-repeat; background-position: center center; width: 8px; height: 48px; position: absolute; top: 0; right: 0; }
@@ -351,7 +351,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.header-top { right: auto; }
 	.header, .js .header, .header-top, .js .header-top, .system-name { display: block; width: 17.5em; left: 0; @include transition(none); }
 	.js .menu-overlay { display: none; }
-	.system-name-button { text-align: left; }
+	.system-name-button { border-bottom: 1px solid #000; text-align: left; }
 	.controls { left: 17.5em; }
 }
 

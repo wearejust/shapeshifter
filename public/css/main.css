@@ -2117,10 +2117,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* line 234, sass/main.scss */
 .system-name-button {
   background-color: #000;
-  border-bottom: 1px solid #000;
   color: inherit;
   display: block;
-  font-size: 1.5em;
+  font-size: 1.25em;
   height: 3.357rem;
   line-height: 3.357rem;
   padding: 0 1.5rem;
@@ -2264,7 +2263,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* line 254, sass/main.scss */
 .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:before {
   content: "❮";
-  margin-right: .75em;
+  margin-right: .5em;
 }
 
 /* line 255, sass/main.scss */
@@ -2789,6 +2788,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
   /* line 354, sass/main.scss */
   .system-name-button {
+    border-bottom: 1px solid #000;
     text-align: left;
   }
 
