@@ -224,13 +224,18 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .video-preview-loader { background-image: inline-image("public/css/images/ajax-loader.gif"); margin: $paragraph-margin auto; }
 
 .header, .header-top, .system-name { color: #fff; }
-.header, .header-top { width: 0; }
+.header, .header-top { display: none; }
 .header { background-color: #222; bottom: 3.357em; left: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: fixed; top: 3.357em; }
 .header-top { background-color: $secondary-color; bottom: 0; left: 0; margin: 0; overflow: hidden; padding-bottom: 1em; padding-top: 1em; position: fixed; }
 .header-middle { background-color: $tertiary-color; left: 22.5em; margin: 0; padding: 0; position: fixed; right: 0; top: 0; }
 .header-middle .identity { background-image: inline-image("public/css/images/just.png"); background-repeat: no-repeat; background-position: right bottom; padding: 2.15em 0; }
+<<<<<<< HEAD
 .header-bottom { left: 0; position: fixed; top: 0; z-index: 11; }
 .system-name { color: #fff; font-weight: bold; left: 0; margin: 0; position: fixed; top: 0; white-space: nowrap; width: 100%; z-index: 10; }
+=======
+.header-bottom { background-color: #f2f2f2; border-bottom: 1px solid $tertiary-color; display: table-caption; padding-top: 3.357em; width: 100%; }
+.system-name { color: #fff; font-weight: bold; left: 0; margin: 0; position: fixed; top: 0; white-space: nowrap; width: 100%; z-index: 101; }
+>>>>>>> ef4ba210d94cb6c71140f8019a772e5e09dfce2a
 .system-name-button { background-color: #000; border-bottom: 1px solid #000; color: inherit; display: block; font-size: 1.5em; height: 3.357rem; line-height: 3.357rem; padding: 0 1.5rem; text-align: center; text-decoration: none; text-transform: uppercase; }
 .system-name-button:visited { color: #fff; color: rgba(255, 255, 255, .8); }
 .system-name-button:focus, .system-name-button:hover, .system-name-button:active { background-color: #1a1a1a; }
@@ -274,9 +279,15 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .controls { z-index: 11; }
 .controls-content { padding: 1em 1.5em; }
 
-.js body, .js .header, .js .header-top, .system-name, .main-content, .header-bottom, .footer, .controls { @include transition(bottom, height, left, opacity, padding-left, padding-top, right, width, .5s); }
-.js .menu-activated, .js .menu-activated .controls { left: 17.5em; }
-.js .menu-activated .header, .js .menu-activated .header-top { width: 17.5em; }
+
+.js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: -17.5em; @include transition(left 0.5s); }
+.js .menu-active .header, .js .menu-active .header-top { left: 0; }
+.js .menu-overlay { background-color: #000; position: fixed; top: 0; bottom: 0; left: 0; right: 100%; z-index: 100; @include opacity(0); @include transition(opacity 0.5s, right 0s 0.5s); }
+.js .menu-active .menu-overlay, .js .menu-overlay.active { right: 0; @include opacity(0.7); @include transition(opacity 0.5s); }
+
+
+// .js body, .js .header, .js .header-top, .system-name, .main-content, .header-bottom, .footer, .controls { @include transition(bottom, height, left, opacity, padding-left, padding-top, right, width, .5s); }
+
 .js .login { @include transition(compact(none)); }
 
 .js.touch .dataTables_wrapper { overflow: hidden; }
@@ -343,16 +354,16 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.main-content { display: block; padding-top: 3.357em; padding-left: 17.5em; width: auto; }
 	.header-bottom { left: 17.5em; padding: 0; position: fixed; right: 0; top: 0; width: auto; z-index: 10; }
 	.header-top { right: auto; }
-	.header, .header-top, .system-name { width: 17.5em; }
+	.header, .js .header, .header-top, .js .header-top, .system-name { display: block; width: 17.5em; left: 0; @include transition(none); }
+	.js .menu-overlay { display: none; }
 	.system-name-button { text-align: left; }
 	.controls { left: 17.5em; }
-	.js .menu-activated { left: auto; }
 }
 
 @include respond-min-width(67.5em) {
 	.main-content { padding-left: 22.5em; }
 	.header-bottom { left: 22.5em; }
-	.header, .header-top, .system-name { width: 22.5em; }
+	.header, .js .header, .header-top, .js .header-top, .system-name { width: 22.5em; }
 	.controls { left: 22.5em; }
 }
 
