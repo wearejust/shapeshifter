@@ -98,6 +98,8 @@ var Menu = function() {
 	this.element = $('.header, .header-top');
 	if (!this.element.length) return;
 
+	this.content = this.element.siblings('.content-wrapper');
+
 	this.overlay = $('<div class="menu-overlay"></div>');
 	$body.append(this.overlay);
 
@@ -137,38 +139,44 @@ Menu.prototype.subToggle = function(e) {
 
 Menu.prototype.dragStart = function(e) {
 	var touch = e.originalEvent.touches[0];
-	if (!$(e.target).hasClass('menu-nav-button') && (touch.pageX > ($window.width() - 50) || $(e.target).hasClass('menu-overlay'))) {
+	if (!$(e.target).is('a, button, input') && (touch.pageX > ($window.width() - 50) || $(e.target).hasClass('menu-overlay'))) {
 		this.dragData = {
+			'scrollTop': $window.scrollTop() || -parseFloat(this.content.css('top')),
+			'direction': $body.hasClass('menu-active') ? 1 : -1,
 			'x': touch.pageX,
 			'y': touch.pageY
 		};
-		$window.on('touchmove', this.dragMoveCheckBound);
-		$window.on('touchend', this.dragStopBound);
+
+		this.element.addClass('no-transition');
+		this.overlay.addClass('no-transition').execute(this, function() {
+			this.overlay.css('opacity', this.overlay.css('opacity'));
+			this.overlay.addClass('active');
+			$window.on('touchmove', this.dragMoveCheckBound);
+			$window.on('touchend', this.dragStopBound);
+		});
 	}
 }
 
 Menu.prototype.dragMoveCheck = function(e) {
 	var touch = e.originalEvent.touches[0];
-	if (Math.abs(touch.pageX - this.dragData.x) > 3) {
+	if (Math.abs(touch.pageX - this.dragData.x) >= 3) {
 		e.preventDefault();
 
-		this.element.addClass('no-transition');
-		this.overlay.css('opacity', this.overlay.css('opacity'));
-		this.overlay.addClass('no-transition').execute(this, function() {
-			this.overlay.addClass('active');
-			this.dragData.direction = $body.hasClass('menu-active') ? 1 : -1;
-			this.dragData.width = this.element.width();
-			var right = this.element.transformed().x;
-			this.dragData.right = right;
-			this.dragData.rightPrevious = right;
-
-			$window.off('touchmove', this.dragMoveCheckBound);
-			$window.on('touchmove', this.dragMoveBound);
+		this.content.css({
+			'position': 'fixed',
+			'top': -this.dragData.scrollTop + 'px'
 		});
 
-	} else if (Math.abs(touch.pageY - this.dragData.y) > 3) {
+		this.dragData.width = this.element.width();
+		var right = this.element.transformed().x;
+		this.dragData.right = right;
+		this.dragData.rightPrevious = right;
+
 		$window.off('touchmove', this.dragMoveCheckBound);
-		$window.off('touchend', this.dragStopBound);
+		$window.on('touchmove', this.dragMoveBound);
+
+	} else {
+		this.dragStop();
 	}
 
 }
@@ -185,7 +193,7 @@ Menu.prototype.dragMove = function(e) {
 	this.dragData.rightPrevious = right;
 
 	if (Math.abs(n) > 1) {
-		this.dragData.direction = (n > 0) ? 1 : -1;
+		this.dragData.direction = (n > 0) ? -1 : 1;
 	}
 }
 
@@ -196,9 +204,19 @@ Menu.prototype.dragStop = function(e) {
 
 	this.element.removeClass('no-transition');
 	this.overlay.removeClass('active no-transition').execute(this, function() {
+
 		this.overlay.css('opacity', '');
 		this.element.translate();
-		$body.toggleClass('menu-active', this.dragData.direction == -1);
+		var boo = this.dragData.direction == 1;
+		$body.toggleClass('menu-active', boo);
+
+		if (!boo) {
+			this.content.css({
+				'position': '',
+				'top': ''
+			});
+			$window.scrollTop(this.dragData.scrollTop);
+		}
 	});
 }
 
