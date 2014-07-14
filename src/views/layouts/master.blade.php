@@ -20,8 +20,8 @@ document.documentElement.className=TOUCH?"js touch":"js";
 <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
 <!--[if (lte IE 8)&(!IEMobile)]><link href="/packages/just/shapeshifter/css/all-old-ie.css" rel="stylesheet"><![endif]-->
 <!--[if gte IE 9]><!--><link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet"><!--<![endif]-->
-{{ HTML::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') }}
+{{ HTML::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') }}
 </head>
 <!--[if lte IE 8]><body class="{{ ! $currentUser ? 'login ' : '' }}ie8"><![endif]-->
@@ -45,8 +45,8 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </div>
         </div>
     </div>
-    @if ($mode == 'index' && $preview)
-    <p class="section-start section-end" style="bottom: 0; margin: 3px .5em; position: fixed; right: 0; z-index: 20;"><a class="btn btn-preview" href="/preview" target="_blank">Preview</a></p>
+    @if ($mode == 'index'/* && $preview*/)
+    <p class="section-start section-end" style="bottom: 0; margin: 3px .5em; position: fixed; right: 0; z-index: 20;"><a class="btn btn-preview" href="/preview/" target="_blank">Preview</a></p>
     @endif
     <div class="header-bottom">
         <div class="breadcrumbs">

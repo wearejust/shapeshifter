@@ -6,7 +6,7 @@
         <span class="form-field js-image-container">
             <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
                 <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                    <span class="media-wrapper" style="margin: 0 9px 0 0;">
+                    <span class="media-wrapper module-1">
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper">
                                 <span class="media-wrapper-content-wrapper-inner">
@@ -20,7 +20,7 @@
                     </span>
                 </span>
                 <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
-                    <span class="media-wrapper" style="margin: 0 0 0 9px;">
+                    <span class="media-wrapper module-2">
                         @if ($value)
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper">

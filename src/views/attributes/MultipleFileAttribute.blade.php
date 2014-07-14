@@ -4,7 +4,7 @@
             {{ $label }}
         </span>
         <span class="form-field js-image-container">
-            <span class="form-control" style="display: table; overflow: hidden; table-layout: fixed; width: 100%;">
+            <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
                 <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
                     <span class="media-wrapper module-1">
                         <span class="media-wrapper-content">
