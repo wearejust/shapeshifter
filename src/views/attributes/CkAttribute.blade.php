@@ -1,4 +1,4 @@
-<label class="form-group js-placeholder" for="{{$name}}">
+<label class="form-group form-group-ckeditor js-placeholder" for="{{$name}}">
     <span class="form-group-content">
 	    <span class="form-label">
 	        {{ Form::label($name, $label) }}

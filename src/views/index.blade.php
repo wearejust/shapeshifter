@@ -4,6 +4,7 @@
 <div class="content-body-inner">
     <h1>{{ $title }}</h1>
     
+    <!-- Hier nog iets omheen if'en -->
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">

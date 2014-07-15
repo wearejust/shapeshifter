@@ -60,7 +60,7 @@ class AjaxController extends Controller
 
         }
 
-        return Response::json( array('message' => (string)Notification::successInstant('De nieuwe volgorde is opgeslagen'), 'status' => 200) );
+        return Response::json( array('message' => (string)Notification::successInstant('De volgorde is opgeslagen.'), 'status' => 200) );
     }
 
     protected function upload()

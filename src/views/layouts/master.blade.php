@@ -22,7 +22,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 <!--[if gte IE 9]><!--><link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet"><!--<![endif]-->
 {{ HTML::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') }}
 {{ HTML::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') }}
-{{ HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') }}
+{{-- HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') --}}
 </head>
 <!--[if lte IE 8]><body class="{{ ! $currentUser ? 'login ' : '' }}ie8"><![endif]-->
 <!--[if gte IE 9]><!--> <body class="{{ ! $currentUser ? 'login ' : '' }}"><!--<![endif]-->
@@ -92,14 +92,12 @@ document.documentElement.className=TOUCH?"js touch":"js";
         </ul>
     </div>
 </div>
-<div class="header-top">
-    <div class="system-account">
-        <div class="container">
-            <p class="system-user">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</p>
-            <p class="system-log">
-                <a href="{{ route('admin-logout') }}" class="system-log-button"><span class="accessibility">{{ __('user.logout') }}</span></a>
-            </p>
-        </div>
+<div class="header-top system-account">
+    <div class="container">
+        <p class="system-user">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</p>
+        <p class="system-log">
+            <a href="{{ route('admin-logout') }}" class="system-log-button"><span class="accessibility">{{ __('user.logout') }}</span></a>
+        </p>
     </div>
 </div>
 <p class="system-name">
