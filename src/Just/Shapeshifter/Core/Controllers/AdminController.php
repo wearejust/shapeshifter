@@ -12,6 +12,7 @@ use Just\Shapeshifter\Repository;
 use Just\Shapeshifter\Services\AttributeService;
 use Just\Shapeshifter\Services\BreadcrumbService;
 use Just\Shapeshifter\Services\MenuService;
+use App;
 use Notification;
 use Redirect;
 use Request;
@@ -458,20 +459,30 @@ abstract class AdminController extends Controller {
     }
 
     /**
+     * @throws \Exception
      * @throws \Just\Shapeshifter\Exceptions\ClassNotExistException
      * @throws \Just\Shapeshifter\Exceptions\PropertyNotExistException
      */
     private function checkRequirements()
     {
-        if ( ! isset($this->singular) || ! isset($this->plural) || ! isset($this->model) ) {
+        if ( ! array_key_exists('Just\Shapeshifter\ShapeshifterServiceProvider', App::getLoadedProviders()) )
+        {
+            throw new \Exception("Did you forgot to load the ShapeShifter service provider in [config/app.php]?");
+        }
+        elseif ( ! isset($this->singular) || ! isset($this->plural) || ! isset($this->model) )
+        {
             throw new PropertyNotExistException("Property [singular] or [plural] or [model] does not exist");
         }
-        else {
-            if ( ! class_exists($this->model) ) {
+        else
+        {
+            if ( ! class_exists($this->model) )
+            {
                 throw new ClassNotExistException("Class [{$this->model}] doest not exist");
             }
-            else {
-                if ( (count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc') ) {
+            else
+            {
+                if ( (count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc') )
+                {
                     throw new PropertyNotExistException("Second property [orderby] must be `asc` or `desc`");
                 }
             }
