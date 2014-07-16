@@ -1077,7 +1077,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   bottom: 0;
-  min-height: 3.357em;
+  min-height: 3.571em;
   left: 0;
   overflow: hidden;
   position: fixed;
@@ -1278,16 +1278,15 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 }
 
 /* line 96, sass/main.scss */
-.form {
-  border-top: 1px solid #e6e6e6;
+.form-group, .alert, .header-top {
+  padding-bottom: 1.1em;
+  padding-top: 1.1em;
 }
 
 /* line 97, sass/main.scss */
 .form-group, .alert {
   margin-left: -1.5em;
   margin-right: -1.5em;
-  padding-bottom: 1.1em;
-  padding-top: 1.1em;
 }
 
 /* line 98, sass/main.scss */
@@ -2071,7 +2070,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 /* line 235, sass/main.scss */
 .js .controls .alert-success {
-  top: 3.357em;
+  top: 3.571em;
 }
 
 /* line 236, sass/main.scss */
@@ -2122,8 +2121,6 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   right: 0;
   margin: 0;
   overflow: hidden;
-  padding-bottom: 1em;
-  padding-top: 1em;
   position: fixed;
 }
 
@@ -2734,6 +2731,11 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   }
 
   /* line 340, sass/main.scss */
+  .form-label, .js .js-placeholder .form-label {
+    padding-right: 2em;
+  }
+
+  /* line 341, sass/main.scss */
   .js .js-placeholder .form-label {
     border: none;
     color: inherit !important;
@@ -2743,58 +2745,57 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     position: static;
   }
 
-  /* line 341, sass/main.scss */
+  /* line 342, sass/main.scss */
   .form-group, .alert, .content-alt, .form-options {
     margin-right: -2.75rem;
   }
 
-  /* line 342, sass/main.scss */
+  /* line 343, sass/main.scss */
   .form-group, .alert, .content-alt {
     margin-left: -2.75rem;
   }
 
-  /* line 343, sass/main.scss */
+  /* line 344, sass/main.scss */
   .form-group, .alert {
     padding-bottom: 1.1em;
     padding-top: 1.1em;
   }
 
-  /* line 344, sass/main.scss */
+  /* line 345, sass/main.scss */
   .form-group {
     background-color: #f2f2f2;
     margin-bottom: 1px;
     margin-top: 1px;
   }
 
-  /* line 345, sass/main.scss */
+  /* line 346, sass/main.scss */
   .form-legend {
     font-weight: normal;
   }
 
-  /* line 346, sass/main.scss */
+  /* line 347, sass/main.scss */
   .form-label {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
     margin-bottom: 0;
-    padding-right: 2em;
     width: 33.333%;
   }
 
-  /* line 347, sass/main.scss */
+  /* line 348, sass/main.scss */
   .form-field {
     float: right;
     width: 66.667%;
   }
 
-  /* line 348, sass/main.scss */
+  /* line 349, sass/main.scss */
   .form-field-short {
     min-width: 0;
     width: 25%;
   }
 
-  /* line 349, sass/main.scss */
+  /* line 350, sass/main.scss */
   .form-options {
     margin-bottom: -1.1em;
     margin-left: 0;
@@ -2803,66 +2804,66 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     padding-right: 0;
   }
 
-  /* line 350, sass/main.scss */
+  /* line 351, sass/main.scss */
   .form-option-control {
     padding-left: 1em;
     padding-right: 1em;
   }
 
-  /* line 351, sass/main.scss */
+  /* line 352, sass/main.scss */
   .form-option-label {
     padding: 1.1em 2.75em 1.1em 2.5em;
   }
 
-  /* line 352, sass/main.scss */
+  /* line 353, sass/main.scss */
   .form-option-field {
     left: 1em;
   }
 
-  /* line 353, sass/main.scss */
+  /* line 354, sass/main.scss */
   .form-control:only-child {
     margin-bottom: -0.825em;
   }
 
-  /* line 354, sass/main.scss */
+  /* line 355, sass/main.scss */
   .alert-success {
     margin: 0;
     padding-left: 1.5em;
     padding-right: 1.5em;
   }
 
-  /* line 355, sass/main.scss */
+  /* line 356, sass/main.scss */
   .sortable-handle {
     padding-right: 2.75em;
   }
 
-  /* line 356, sass/main.scss */
+  /* line 357, sass/main.scss */
   .add-item-button {
     margin: 0 -1.25em;
   }
 
-  /* line 357, sass/main.scss */
+  /* line 358, sass/main.scss */
   .filter-search {
     margin-top: 5px;
   }
 
-  /* line 358, sass/main.scss */
+  /* line 359, sass/main.scss */
   .btn {
     padding: .8em 1.1em;
   }
 
-  /* line 359, sass/main.scss */
+  /* line 360, sass/main.scss */
   .control-item-button {
     margin: -0.8em 0;
   }
 }
 @media screen and (min-width: 60em) {
-  /* line 362, sass/main.scss */
+  /* line 363, sass/main.scss */
   .menu-nav {
     opacity: 0;
   }
 
-  /* line 363, sass/main.scss */
+  /* line 364, sass/main.scss */
   .main-content {
     display: block;
     padding-top: 3.357em;
@@ -2870,12 +2871,12 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     width: auto;
   }
 
-  /* line 364, sass/main.scss */
+  /* line 365, sass/main.scss */
   .header-bottom, .controls {
     left: 17.5em;
   }
 
-  /* line 365, sass/main.scss */
+  /* line 366, sass/main.scss */
   .header-bottom {
     left: 17.5em;
     padding: 0;
@@ -2886,12 +2887,12 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     z-index: 10;
   }
 
-  /* line 366, sass/main.scss */
+  /* line 367, sass/main.scss */
   .header-top {
     right: auto;
   }
 
-  /* line 367, sass/main.scss */
+  /* line 368, sass/main.scss */
   .header, .js .header, .header-top, .js .header-top, .system-name {
     display: block;
     width: 17.5em;
@@ -2902,17 +2903,17 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     transition: none;
   }
 
-  /* line 368, sass/main.scss */
+  /* line 369, sass/main.scss */
   .js .menu-overlay {
     display: none;
   }
 
-  /* line 369, sass/main.scss */
+  /* line 370, sass/main.scss */
   .system-name {
     text-align: left;
   }
 
-  /* line 370, sass/main.scss */
+  /* line 371, sass/main.scss */
   .system-name-button {
     border-bottom: 1px solid #000;
     display: block;
@@ -2920,46 +2921,46 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   }
 }
 @media screen and (min-width: 67.5em) {
-  /* line 373, sass/main.scss */
+  /* line 374, sass/main.scss */
   .main-content {
     padding-left: 22.5em;
   }
 
-  /* line 374, sass/main.scss */
+  /* line 375, sass/main.scss */
   .header-bottom, .controls {
     left: 22.5em;
   }
 
-  /* line 375, sass/main.scss */
+  /* line 376, sass/main.scss */
   .header, .js .header, .header-top, .js .header-top, .system-name {
     width: 22.5em;
   }
 }
-/* line 378, sass/main.scss */
+/* line 379, sass/main.scss */
 .js .js-datatable {
   display: none;
   table-layout: auto;
 }
 
-/* line 379, sass/main.scss */
+/* line 380, sass/main.scss */
 .js .js-datatable.dataTable {
   display: table;
 }
 
-/* line 380, sass/main.scss */
+/* line 381, sass/main.scss */
 .js .ckeditor {
   height: 244px;
   visibility: hidden;
 }
 
-/* line 382, sass/main.scss */
+/* line 383, sass/main.scss */
 .login-area-form .alert {
   margin-left: 0;
   margin-right: 0;
   padding: .65em .75em;
 }
 
-/* line 384, sass/main.scss */
+/* line 385, sass/main.scss */
 .lightbox {
   bottom: 0;
   left: 0;
@@ -2970,7 +2971,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   z-index: 9999;
 }
 
-/* line 385, sass/main.scss */
+/* line 386, sass/main.scss */
 .lightbox-overlay {
   background-color: #000;
   height: 100%;
@@ -2983,47 +2984,47 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   z-index: 9999;
 }
 
-/* line 387, sass/main.scss */
+/* line 388, sass/main.scss */
 .section-main {
   margin-bottom: 8.25em;
   margin-top: 8.25em;
 }
 
-/* line 388, sass/main.scss */
+/* line 389, sass/main.scss */
 .section-sub {
   margin-bottom: 2.75em;
   margin-top: 2.75em;
 }
 
-/* line 389, sass/main.scss */
+/* line 390, sass/main.scss */
 .section-row {
   margin-bottom: 1px;
   margin-top: 1px;
 }
 
-/* line 390, sass/main.scss */
+/* line 391, sass/main.scss */
 .section-start {
   margin-top: 0;
 }
 
-/* line 391, sass/main.scss */
+/* line 392, sass/main.scss */
 .section-end {
   margin-bottom: 0;
 }
 
-/* line 393, sass/main.scss */
+/* line 394, sass/main.scss */
 .js .js-hide, .js .js-remove, .hide {
   display: none;
 }
 
 /*.js textarea { overflow-y: hidden; }*/
 /*.js textarea, */
-/* line 395, sass/main.scss */
+/* line 396, sass/main.scss */
 .js .js-cover {
   visibility: hidden;
 }
 
-/* line 396, sass/main.scss */
+/* line 397, sass/main.scss */
 .js .js-transparent {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -3031,7 +3032,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 /* print */
 @media print {
-  /* line 402, sass/main.scss */
+  /* line 403, sass/main.scss */
   * {
     background: transparent !important;
     box-shadow: none !important;
@@ -3039,48 +3040,48 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     text-shadow: none !important;
   }
 
-  /* line 403, sass/main.scss */
+  /* line 404, sass/main.scss */
   aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu {
     display: none;
   }
 
-  /* line 404, sass/main.scss */
+  /* line 405, sass/main.scss */
   a[href]:after {
     content: " (" attr(href) ") ";
     font-size: 90%;
   }
 
-  /* line 405, sass/main.scss */
+  /* line 406, sass/main.scss */
   a[href^="/"]:after {
     content: " (http://" attr(href) ") ";
   }
 
-  /* line 406, sass/main.scss */
+  /* line 407, sass/main.scss */
   abbr:after {
     content: " (" attr(title) ")";
   }
 
-  /* line 407, sass/main.scss */
+  /* line 408, sass/main.scss */
   thead {
     display: table-header-group;
   }
 
-  /* line 408, sass/main.scss */
+  /* line 409, sass/main.scss */
   tr, img, pre, blockquote {
     page-break-inside: avoid;
   }
 
-  /* line 409, sass/main.scss */
+  /* line 410, sass/main.scss */
   img {
     max-width: 100% !important;
   }
 
-  /* line 410, sass/main.scss */
+  /* line 411, sass/main.scss */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
 
-  /* line 411, sass/main.scss */
+  /* line 412, sass/main.scss */
   h2, h3, p {
     orphans: 3;
     widows: 3;

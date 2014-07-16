@@ -23,13 +23,9 @@
                     <span class="media-wrapper module-2">
                         @if ($value)
                         <span class="media-wrapper-content">
-                            <span class="media-wrapper-content-wrapper">
-                                <span class="media-wrapper-content-wrapper-inner">
-                                    <span class="media-wrapper-content-wrapper-inner-content media-preview">
-                                        {{ $value }}
-                                        <button class="btn btn-remove btn-remove-alt js-image-delete-dialog" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
-                                    </span>
-                                </span>
+                            <span class="media-wrapper-content-wrapper media-preview">
+                                <span class="media-wrapper-content-wrapper-inner" style="background-image: url('{{ $value ? $relativeStorageDir . $value : '' }}');"></span>
+                                <button class="btn btn-remove btn-remove-alt js-image-delete-dialog" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                             </span>
                         </span>
                         <div class="dialog-confirm" style="display: none;">
