@@ -53,7 +53,7 @@
                                 </th>
                                 @endif
                                 @endforeach
-                                @if ($currentUser->can('drag'))
+                                @if ($currentUser->can('drag') && count($records) > 1)
                                 <th class="table-header table-order js-disable-sort table-header-last"></th>
                                 @endif
                                 @if ($currentUser->can('delete'))
@@ -68,7 +68,7 @@
                                     <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
                                     @endif
                                     @endforeach
-                                    @if ($currentUser->can('drag'))
+                                    @if ($currentUser->can('drag') && count($records) > 1)
                                     <td class="table-cell table-order table-cell-last">
                                         <button class="js-sortable-handle tricon link-alt item-alt" type="button"><span class="accessibility">Verplaatsen</span></button>
                                     </td>
