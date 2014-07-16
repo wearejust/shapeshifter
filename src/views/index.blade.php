@@ -40,7 +40,7 @@
                             <thead>
                                 @foreach ($attributes as $attr)
                                 @if ( ! $attr->hasFlag('hide_list'))
-                                <th class="table-header {{ ! $currentUser->can('drag') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
+                                <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                                     <div class="container">
                                         @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
                                             <span class="table-header-sort">
