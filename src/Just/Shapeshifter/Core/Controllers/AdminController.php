@@ -8,6 +8,7 @@ use Just\Shapeshifter\Exceptions\PropertyNotExistException;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Notification;
 use Sentry;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AdminController extends Controller {
 
@@ -359,7 +360,15 @@ abstract class AdminController extends Controller {
             $attribute->compile();
         }, $this->data['attributes']);
 
-        return $this->app['view']->make("shapeshifter::{$template}", $this->data);
+        $view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
+
+        $headers = array(
+            'Expires' => 'Tue, 1 Jan 1980 00:00:00 GMT',
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+            'Pragma' => 'no-cache',
+        );
+
+        return $this->app->make('Illuminate\Http\Response', array($view, 200, $headers));
     }
 
     /**
