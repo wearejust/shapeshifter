@@ -38,7 +38,7 @@
             <div class="data-wrapper">
                 <form action="" method="">
                     <fieldset>
-                        <table class="section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
+                        <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
                             <thead>
                                 @foreach ($attributes as $attr)
                                 @if ( ! $attr->hasFlag('hide_list'))
