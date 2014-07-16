@@ -2,14 +2,14 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<title>Beheer &mdash; {{ Config::get('shapeshifter::config.customer') }}</title>
-<meta content="" name="description">
-<meta content="wearejust.com" name="author">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"> <!-- remove when not responsive -->
+<title>Beheer — {{ Config::get('shapeshifter::config.customer') }}</title>
+<meta name="description" content="">
+<meta name="author" content="wearejust.com">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-title" content="Content">
 <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
 <meta name="msapplication-TileImage" content="/apple-touch-icon-precomposed.png">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="apple-mobile-web-app-title" content="Content">
 <script>
 var model = '{{ addslashes(get_class($model)) }}';
 window.TOUCH=(function(){try{document.createEvent('TouchEvent');return true;}catch(e){return false;}})();
