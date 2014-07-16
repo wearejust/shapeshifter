@@ -40,13 +40,6 @@ abstract class AdminController extends Controller {
     protected $attributes = array();
 
     /**
-     * Allow timestamp fields (created_at, updated_at) in the node
-     *
-     * @var bool
-     */
-    protected $allowTimestamps = true;
-
-    /**
      * Disable some actions in the node (drag, sort, create, delete)
      *
      * @var array
@@ -338,9 +331,7 @@ abstract class AdminController extends Controller {
         $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
         $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
         $menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
-
-        $this->addTimestampFields();
-
+        
         $user = Sentry::getUser();
         $user->setDisabledActions($this->disabledActions);
 
@@ -519,17 +510,6 @@ abstract class AdminController extends Controller {
         }
 
         return $last;
-    }
-    /**
-     *  Dynamically add those timestampfields when allowd
-     *
-     */
-    private function addTimestampFields()
-    {
-        if ($this->allowTimestamps ) {
-            $this->add(new Attribute\ReadonlyAttribute('updated_at', array('hide_add', 'hide_list')));
-            $this->add(new Attribute\ReadonlyAttribute('created_at', array('hide_add', 'hide_list')));
-        }
     }
 
     // Hooks

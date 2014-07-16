@@ -25,6 +25,7 @@ return array(
     'form.updated' => 'Het item is opgeslagen.',
     'form.stored' => 'Het item is toegevoegd.',
     'form.removed' => 'Het item is verwijderd.',
+    'form.updated_at' => 'Laatst gewijzigd',
 
     'dialog.remove' => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',

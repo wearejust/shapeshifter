@@ -4,14 +4,16 @@
 
 <h1>{{ $title }}</h1>
 
-{{--
+@if ($mode == 'edit' && $model->updated_at)
 <div class="section section-start section-sub" style="position: absolute; right: 2.75rem; top: 71px;">
     <dl class="quiet" style="font-size: 11px;">
-        <dt style="float: left; margin-right: 2em;">Laatst gewijzigd</dt>
-        <dd style="display: block; overflow: hidden;">27 juni 2014 12:03</dd>
+        <dt style="float: left; margin-right: 2em;">{{ __('form.updated_at') }}</dt>
+        <dd style="display: block; overflow: hidden;">{{ $model->updated_at->formatLocalized('%d %B %Y %H:%M') }}
+        </dd>
     </dl>
 </div>
---}}
+@endif
+
 <div class="section">
 
     @if (count($tabs) > 1)
