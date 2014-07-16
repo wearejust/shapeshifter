@@ -5,6 +5,7 @@
     <h1>{{ $title }}</h1>
     
     <!-- Hier nog iets omheen if'en -->
+    @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">
@@ -23,6 +24,7 @@
         </div>
         @endif
     </div>
+    @endif
 
     <div class="paragraph section-end" id="datatable">
         @if (!count($records))

@@ -9,6 +9,7 @@ use Just\Shapeshifter\Exceptions\ValidationException;
 use Notification;
 use Sentry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AdminController extends Controller {
 
@@ -172,6 +173,11 @@ abstract class AdminController extends Controller {
         $this->generateTimestampFields();
 
         $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
+
+        if ($this->app['request']->ajax() && ! count($records) && in_array('create', $this->disabledActions))
+        {
+            throw new NotFoundHttpException('No records, No ability to create and Ajax request');
+        }
 
         $this->data['title'] = $this->plural;
         $this->data['records'] = $records;
