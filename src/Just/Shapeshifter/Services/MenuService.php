@@ -1,23 +1,38 @@
 <?php namespace Just\Shapeshifter\Services;
 
-use Config;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use Request;
 
-class MenuService {
+class MenuService
+{
+    /**
+     * @var Application
+     */
+    private $app;
+
+    /**
+     * @var Collection
+     */
+    private $collection;
+
+    public function __construct(Application $app, Collection $collection)
+    {
+        $this->app = $app;
+        $this->collection = $collection;
+    }
 
     public function generateMenu()
     {
-        $config = Collection::make(Config::get('shapeshifter::config.menu'));
+        $config = $this->collection->make($this->app['config']->get('shapeshifter::config.menu'));
 
         $config->transform(function($config)
         {
-            $config['active'] = Request::segment(2) === $config['url'];
+            $config['active'] = $this->app['request']->segment(2) === $config['url'];
 
-            $config['children'] = Collection::make($config['children']);
+            $config['children'] = $this->collection->make($config['children']);
             $config['children']->transform(function($child) use (&$config)
             {
-                $child['active'] = Request::segment(2) === $child['url'];
+                $child['active'] = $this->app['request']->segment(2) === $child['url'];
                 if ($child['active']) {
                     $config['active'] = true;
                 }

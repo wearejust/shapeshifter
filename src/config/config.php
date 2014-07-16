@@ -11,7 +11,6 @@ return array(
 	|
 	*/
 	'customer' => 'Just',
-	'customer-image' => 'http://wearejust.com/apple-touch-icon-precomposed.png',
 
 	/*
 	|--------------------------------------------------------------------------

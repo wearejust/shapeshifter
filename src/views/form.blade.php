@@ -26,7 +26,13 @@
 
     @if ( Notification::get('error')->first())
     <div class="messages">
-        {{ Notification::showError() }}
+        <div class=" alert alert-error">
+            <ul style="margin:-1.375em 0;">
+                @foreach (Notification::get('error') as $error)
+                    <li>{{ $error->getMessage() }}</li>
+                @endforeach
+            </ul>
+        </div>
     </div>
     @endif
 

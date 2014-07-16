@@ -7,19 +7,27 @@ use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
-use Input;
+use Illuminate\Foundation\Application;
 use Just\Shapeshifter\Core\Models\User;
 use Notification;
-use Redirect;
 use Sentry;
-use Validator;
-use View;
+
 
 class AuthController extends \Controller
 {
+    /**
+     * @var Application
+     */
+    private $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public function getLogin()
     {
-        return View::make('shapeshifter::login', array(
+        return $this->app['view']->make('shapeshifter::login', array(
             'model' => new User(),
             'currentUser' => null
         ));
@@ -27,13 +35,13 @@ class AuthController extends \Controller
 
     public function postLogin()
     {
-        $credentials = Input::only(array('email','password'));
+        $credentials = $this->app['request']->only(array('email','password'));
 
         try
         {
             Sentry::authenticate($credentials);
 
-            return Redirect::route('admin-home');
+            return $this->app['redirect']->route('admin-home');
         }
         catch (LoginRequiredException $e)
         {
@@ -64,13 +72,13 @@ class AuthController extends \Controller
             Notification::error( __('login.failure') );
         }
 
-        return Redirect::route('admin-login')->withInput();
+        return $this->app['redirect']->route('admin-login')->withInput();
     }
 
     public function getLogout()
     {
         Sentry::logout();
 
-        return Redirect::route('admin-login');
+        return $this->app['redirect']->route('admin-login');
     }
 } 

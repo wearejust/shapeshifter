@@ -93,5 +93,5 @@ return array(
     |
     */
 
-    'attributes' => array_map('ucfirst', Lang::get('shapeshifter::attributes')),
+    'attributes' => Lang::get('shapeshifter::attributes'),
 );

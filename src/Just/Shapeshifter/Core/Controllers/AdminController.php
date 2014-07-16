@@ -1,24 +1,13 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
 use Controller;
-use HTML;
+use Illuminate\Foundation\Application;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Exceptions\ClassNotExistException;
-use Just\Shapeshifter\Exceptions\InvalidArgumentException;
 use Just\Shapeshifter\Exceptions\PropertyNotExistException;
 use Just\Shapeshifter\Exceptions\ValidationException;
-use Just\Shapeshifter\Helpers\TimestampHelper;
-use Just\Shapeshifter\Repository;
-use Just\Shapeshifter\Services\AttributeService;
-use Just\Shapeshifter\Services\BreadcrumbService;
-use Just\Shapeshifter\Services\MenuService;
-use App;
 use Notification;
-use Redirect;
-use Request;
-use Route;
 use Sentry;
-use View;
 
 abstract class AdminController extends Controller {
 
@@ -113,7 +102,17 @@ abstract class AdminController extends Controller {
      */
     protected $parent = null;
 
+    /**
+     * Enable preview mode button
+     *
+     * @var bool
+     */
     protected $preview = false;
+
+    /**
+     * @var Application
+     */
+    protected $app;
 
     /**
      * Function that is needed in the node, this descripbes how the node will
@@ -123,11 +122,16 @@ abstract class AdminController extends Controller {
      */
     abstract protected function configureFields();
 
-    public function __construct()
+    public function __construct(Application $app)
     {
+        $this->app = $app;
+
         $this->checkRequirements();
 
-        $this->repo = new Repository(new $this->model);
+        $this->repo = $this->app->make(
+            'Just\Shapeshifter\Repository', array(new $this->model, $this->app)
+        );
+
         $this->repo->setRules($this->rules);
         $this->repo->setOrderby($this->orderby);
     }
@@ -135,10 +139,11 @@ abstract class AdminController extends Controller {
     /**
      *  This method is always fired, this is the base of whole shapeshifter
      */
-    protected function initAttributes()
+    private function initAttributes()
     {
+        $this->beforeInit();
         $this->configureFields();
-        $this->addDependencies();
+        $this->afterInit();
 
         $this->repo->setAttributes($this->attributes, $this->repo->getRules());
 
@@ -149,27 +154,24 @@ abstract class AdminController extends Controller {
      * @return mixed
      * @throws \Just\ShapeShifter\ShapeShifterException
      */
-    public function index()
+    final public function index()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
 
+        $this->data['ids'] = func_get_args();
+
         $this->mode = 'index';
         $this->model = $this->repo->getNew();
 
-        $this->data['records'] = $this->repo->getListRecords($this->orderby, $this->getParentInfo(), $this->filter);
-
-        $this->generateTimestampFields();
         $this->initAttributes();
+        $this->generateTimestampFields();
 
-        $records = $this->repo->getListRecords($this->orderby, $this->getParentInfo(), $this->filter);
+        $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
 
-        $this->data['ids'] = func_get_args();
         $this->data['title'] = $this->plural;
-
         $this->data['records'] = $records;
-
 
         return $this->setupView('index');
     }
@@ -177,11 +179,13 @@ abstract class AdminController extends Controller {
     /**
      * @return mixed
      */
-    public function create()
+    final public function create()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
+
+        $this->data['ids'] = func_get_args();
 
         $this->mode = 'create';
         $this->model = $this->repo->getNew();
@@ -189,7 +193,6 @@ abstract class AdminController extends Controller {
         $this->initAttributes();
 
         $this->data['title'] = $this->singular . ' ' . strtolower(__('form.create'));
-        $this->data['ids'] = func_get_args();
         $this->data['parent'] = $this->getParentInfo();
 
         return $this->setupView('form');
@@ -198,16 +201,17 @@ abstract class AdminController extends Controller {
     /**
      * @return mixed
      */
-    public function edit()
+    final public function edit()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
 
-        $this->mode = 'edit';
-
         $this->data['ids'] = func_get_args();
-        $this->model = $this->repo->findById(last($this->data['ids']));
+
+        $this->mode = 'edit';
+        $this->model = $this->repo->findById($this->getCurrentId());
+
         $this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
 
         $this->initAttributes();
@@ -218,28 +222,28 @@ abstract class AdminController extends Controller {
     /**
      * @return mixed
      */
-    public function store()
+    final public function store()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
+
+        $this->data['ids'] = func_get_args();
 
         $this->mode = 'store';
         $this->model = $this->repo->getNew();
 
         $this->initAttributes();
 
-        $this->data['ids'] = func_get_args();
-
         try
         {
             $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
-            $this->repo->save($this, $this->getParentInfo());
-        } catch (ValidationException $e) {
-            $errors = array_map('strtolower', $e->getErrors()->all());
-            $errors = array_map('ucfirst', $errors);
 
-            Notification::error(HTML::ul($errors, array('style' => 'margin:-1.375em 0;')));
+            $this->repo->save($this, $this->getParentInfo());
+        }
+        catch (ValidationException $e)
+        {
+            Notification::error($e->getErrors()->all());
 
             return Redirect::back()->withInput();
         }
@@ -252,30 +256,28 @@ abstract class AdminController extends Controller {
     /**
      * @return mixed
      */
-    public function update()
+    final public function update()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
 
-        $this->mode = 'update';
-
-
         $this->data['ids'] = func_get_args();
-        $this->model = $this->repo->findById(last($this->data['ids']));
+
+        $this->mode = 'update';
+        $this->model = $this->repo->findById($this->getCurrentId());
 
         $this->initAttributes();
 
         try
         {
             $this->data['id'] = $this->repo->save($this);
-        } catch (ValidationException $e) {
-            $errors = array_map('strtolower', $e->getErrors()->all());
-            $errors = array_map('ucfirst', $errors);
 
-            Notification::error(HTML::ul($errors, array('style' => 'margin:-1.375em 0;')));
+        } catch (ValidationException $e)
+        {
+            Notification::error($e->getErrors()->all());
 
-            return Redirect::back()->withInput();
+            return $this->app['redirect']->back()->withInput();
         }
 
         Notification::success(__('form.updated'));
@@ -286,24 +288,24 @@ abstract class AdminController extends Controller {
     /**
      * @return mixed
      */
-    public function destroy()
+    final public function destroy()
     {
         if ( ! $this->userHasAccess() ) {
             return $this->setupView('no_access');
         }
 
+        $this->data['ids'] = func_get_args();
+
         $this->mode = 'destroy';
+        $this->model = $this->repo->findById($this->getCurrentId());
 
-        $id = last(func_get_args());
-
-        $this->model = $this->repo->findById($id);
         $this->model = $this->beforeDestroy($this->model);
 
         if ( $this->repo->delete() ) {
-            Notification::success('Het item is verwijderd.');
+            Notification::success(__('form.removed'));
         }
 
-        return Redirect::back();
+        return $this->app['redirect']->back();
     }
 
     /**
@@ -324,9 +326,9 @@ abstract class AdminController extends Controller {
      */
     protected function setupView($template)
     {
-        $attributeService = new AttributeService();
-        $breadcrumbService = new BreadcrumbService();
-        $menuService = new MenuService();
+        $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
+        $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
+        $menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
 
         $this->addTimestampFields();
 
@@ -357,13 +359,13 @@ abstract class AdminController extends Controller {
             $attribute->compile();
         }, $this->data['attributes']);
 
-        return View::make("shapeshifter::{$template}", $this->data);
+        return $this->app['view']->make("shapeshifter::{$template}", $this->data);
     }
 
     /**
      * @return array
      */
-    protected function getCurrentRouteNames()
+    private function getCurrentRouteNames()
     {
         $verbs = array('update', 'edit', 'index', 'destroy', 'create', 'store');
         $current = $this->getCurrentRouteName();
@@ -380,17 +382,15 @@ abstract class AdminController extends Controller {
      */
     protected function userHasAccess()
     {
-        return Sentry::getUser()->isSuperUser() || Sentry::getUser()->hasAnyAccess(array(Route::currentRouteName()));
+        return Sentry::getUser()->isSuperUser() || Sentry::getUser()->hasAnyAccess(array($this->app['router']->currentRouteName()));
     }
 
-    protected function redirectAfterUpdate($route, $args, $currentId)
+    /**
+     * @return mixed
+     */
+    protected function getCurrentId()
     {
-        return Redirect::route($route, $args);
-    }
-
-    protected function redirectAfterStore($route, $args, $currentId)
-    {
-        return Redirect::route($route, $args);
+        return last($this->data['ids']);
     }
 
     /**
@@ -400,7 +400,7 @@ abstract class AdminController extends Controller {
     {
         if ( $this->parent ) {
             //lame
-            $segs = array_reverse(Request::segments());
+            $segs = array_reverse($this->app['request']->segments());
 
             foreach ($segs as $seg) {
                 if ( is_numeric($seg) ) return array($this->parent, (int)$seg);
@@ -439,7 +439,7 @@ abstract class AdminController extends Controller {
      */
     private function getCurrentRouteName()
     {
-        $current = Route::currentRouteName();
+        $current = $this->app['router']->currentRouteName();
         $current = explode('.', $current);
 
         array_pop($current);
@@ -454,8 +454,8 @@ abstract class AdminController extends Controller {
      */
     private function generateTimestampFields()
     {
-        $ts = new TimestampHelper();
-        $ts->createTimestampFields($this->repo->getModel()->getTable());
+        $this->app->make('Just\Shapeshifter\Helpers\TimestampHelper', array($this->repo->getTable()))
+            ->createFields();
     }
 
     /**
@@ -465,7 +465,7 @@ abstract class AdminController extends Controller {
      */
     private function checkRequirements()
     {
-        if ( ! array_key_exists('Just\Shapeshifter\ShapeshifterServiceProvider', App::getLoadedProviders()) )
+        if ( ! array_key_exists('Just\Shapeshifter\ShapeshifterServiceProvider', $this->app->getLoadedProviders()) )
         {
             throw new \Exception("Did you forgot to load the ShapeShifter service provider in [config/app.php]?");
         }
@@ -503,22 +503,37 @@ abstract class AdminController extends Controller {
 
         return $last;
     }
-
-    protected function addDependencies()
-    {
-        //
-    }
-
     /**
      *  Dynamically add those timestampfields when allowd
      *
      */
     private function addTimestampFields()
     {
-        if ( $this->allowTimestamps ) {
+        if ($this->allowTimestamps ) {
             $this->add(new Attribute\ReadonlyAttribute('updated_at', array('hide_add', 'hide_list')));
             $this->add(new Attribute\ReadonlyAttribute('created_at', array('hide_add', 'hide_list')));
         }
+    }
+
+    // Hooks
+    protected function redirectAfterUpdate($route, $args, $currentId)
+    {
+        return $this->app['redirect']->route($route, $args);
+    }
+
+    protected function redirectAfterStore($route, $args, $currentId)
+    {
+        return $this->app['redirect']->route($route, $args);
+    }
+
+    protected function beforeInit()
+    {
+        //
+    }
+
+    protected function afterInit()
+    {
+        //
     }
 
     /**
@@ -595,15 +610,6 @@ abstract class AdminController extends Controller {
     public function afterUpdate($model)
     {
         return $model;
-    }
-    public function getAttribute($key)
-    {
-        if (array_key_exists($key, $this->attributes))
-        {
-            return $this->attributes[$key];
-        }
-
-        throw new InvalidArgumentException("Key [{$key}] doesnt exist in attributes list");
     }
 
     /**

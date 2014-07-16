@@ -39,14 +39,9 @@ class UserController extends AdminController
         $this->add( new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
     }
 
-    public function update()
+    protected function afterInit()
     {
-        $id = last(func_get_args());
-        $this->rules['email'] = 'required|email|unique:cms_users,email,' . $id;
-
-        $this->repo->setRules($this->rules);
-
-        return call_user_func_array("parent::update", func_get_args());
+        $this->rules['email'] = 'required|email|unique:cms_users,email,' . $this->getCurrentId();
     }
 }
 

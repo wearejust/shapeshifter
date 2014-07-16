@@ -144,7 +144,7 @@ class OneToManyRelation extends Relation
         $action = $contr->getActionName();
         $action = head(explode('@', $action));
 
-        return new $action;
+        return \App::make($action);
     }
 
     /**
