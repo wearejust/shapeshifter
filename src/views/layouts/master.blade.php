@@ -94,7 +94,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 </div>
 <div class="header-top system-account">
     <div class="container">
-        <p class="system-user">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</p>
+        <p class="system-user">{{ $currentUser->name }}</p>
         <p class="system-log">
             <a href="{{ route('admin-logout') }}" class="system-log-button"><span class="accessibility">{{ __('user.logout') }}</span></a>
         </p>

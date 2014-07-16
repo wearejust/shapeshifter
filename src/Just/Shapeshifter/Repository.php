@@ -114,7 +114,7 @@ class Repository
         }
 
         //Set sortorder for add
-        if (!$this->model->id && $this->app['db']->hasColumn($this->model->getTable(), 'sortorder'))
+        if (!$this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder'))
         {
             $query = $this->app['db']->table($this->model->getTable());
 

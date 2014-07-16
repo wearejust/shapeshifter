@@ -144,8 +144,10 @@ abstract class AdminController extends Controller {
     {
         $this->beforeInit();
         $this->configureFields();
+
         $this->afterInit();
 
+        $this->repo->setRules($this->rules);
         $this->repo->setAttributes($this->attributes, $this->repo->getRules());
 
         $this->data['routes'] = $this->getCurrentRouteNames();
@@ -246,7 +248,7 @@ abstract class AdminController extends Controller {
         {
             Notification::error($e->getErrors()->all());
 
-            return Redirect::back()->withInput();
+            return $this->app['redirect']->back()->withInput();
         }
 
         Notification::success(__('form.stored'));
