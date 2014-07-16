@@ -60,7 +60,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 
 .data-wrapper { overflow: hidden; }
 
-.controls { @include box-sizing(border-box); bottom: 0; min-height: 3.357em; left: 0; overflow: hidden; position: fixed; right: 0; }
+.controls { @include box-sizing(border-box); bottom: 0; min-height: 3.571em; left: 0; overflow: hidden; position: fixed; right: 0; }
 .control-list { margin: 0; }
 .control-item { display: inline-block; vertical-align: top; margin: 0 .5em 0 0; }
 .control-item:last-child { margin-right: 0; }
@@ -93,8 +93,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .btn-preview { @include background-clip(padding-box); background-color: rgba(0, 0, 0, .45); border-color: rgba(0, 0, 0, .45); color: #fff; }
 .btn-preview:focus, .btn-preview:hover, .btn-preview:active { background-color: rgba(0, 0, 0, .55); border-color: rgba(0, 0, 0, .55); }
 
-.form { border-top: 1px solid $tertiary-color; }
-.form-group, .alert { margin-left: -1.5em; margin-right: -1.5em; padding-bottom: 1.1em; padding-top: 1.1em; }
+.form-group, .alert, .header-top { padding-bottom: 1.1em; padding-top: 1.1em; }
+.form-group, .alert { margin-left: -1.5em; margin-right: -1.5em; }
 .form-group { background-color: #f2f2f2; display: block; margin-bottom: 1px; margin-top: 1px; position: relative; }
 .form-group-options { background-color: transparent; padding-bottom: 0; padding-top: 0; margin-bottom: $paragraph-margin*2; margin-top: $paragraph-margin*2; }
 .form-group-highlight { bottom: 0; left: 0; position: absolute; right: 0; top: 0; z-index: 1; }
@@ -232,7 +232,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .alert { font-weight: bold; margin: 1px 0; }
 .alert-info { background-color: #ccc; color: #000; }
 .alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; @include transition(compact(top, .5s)); }
-.js .controls .alert-success { top: 3.357em; }
+.js .controls .alert-success { top: 3.571em; }
 .js .controls .alert-success-active { top: 0; }
 .alert-warning { background-color: #d76e19; color: #fff; }
 .alert-error { background-color: #a31616; color: #fff; }
@@ -240,7 +240,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .header, .header-top, .system-name { color: #fff; }
 .header, .header-top { display: none; }
 .header { background-color: #222; bottom: 3.357em; right: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: fixed; top: 3.357em; }
-.header-top { background-color: $secondary-color; bottom: 0; @include box-sizing(border-box); right: 0; margin: 0; overflow: hidden; padding-bottom: 1em; padding-top: 1em; position: fixed; }
+.header-top { background-color: $secondary-color; bottom: 0; @include box-sizing(border-box); right: 0; margin: 0; overflow: hidden; position: fixed; }
 .header-middle { background-color: $tertiary-color; left: 22.5em; margin: 0; padding: 0; position: fixed; right: 0; top: 0; }
 .header-middle .identity { background-image: inline-image("public/css/images/just.png"); background-repeat: no-repeat; background-position: right bottom; padding: 2.15em 0; }
 .header-bottom { left: 0; position: fixed; top: 0; z-index: 102; }
