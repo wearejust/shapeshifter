@@ -1,9 +1,7 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
-use Input;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Relations as Relation;
-use Just\Shapeshifter\Services\AttributeService;
 
 class GroupController extends AdminController
 {
@@ -30,21 +28,8 @@ class GroupController extends AdminController
         }
     }
 
-    //override the edit method because we have custom permission fields
-    public function edit()
+    public function beforeInit()
     {
-        if ( ! $this->userHasAccess()) {
-            return $this->setupView('no_access');
-        }
-
-        $this->initAttributes();
-
-        $this->mode = 'edit';
-
-        $this->data['ids'] = func_get_args();
-        $this->model = $this->repo->findById(last($this->data['ids']));
-
-        // Custom //
         $count = 1;
         foreach ($perms = $this->model->permissions as $k=>$p) {
             $perms[$k] = $count;
@@ -52,12 +37,8 @@ class GroupController extends AdminController
         }
 
         foreach (array_flip($perms) as $k=>$p) $perms[$k] = 'perms[' . $p . ']';
-        Input::merge(array_flip($perms));
-        // End Custom //
 
-        $this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' ' . strtolower(__('list.' . $this->mode)) : strip_tags($this->model->{$this->getDescriptor()});
-
-        return $this->setupView('form');
+        $this->app['request']->merge(array_flip($perms));
     }
 
     public function beforeAdd($model)
@@ -74,14 +55,12 @@ class GroupController extends AdminController
 
         $model->permissions = $mixed;
 
-
         return $model;
     }
 
     protected function getAllPermissionRoutes()
     {
-        $all = new AttributeService();
-        return $all->getAllPermissions();
+        return $this->app->make('Just\Shapeshifter\Services\AttributeService')->getAllPermissions();
     }
 }
 

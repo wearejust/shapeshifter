@@ -1,6 +1,5 @@
 <?php namespace Just\Shapeshifter;
 
-use Config;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -54,11 +53,11 @@ class ShapeshifterServiceProvider extends ServiceProvider {
      */
     protected function overridePackageDefaults()
     {
-        Config::set('cartalyst/sentry::throttling.enabled', ($this->app->environment() !== 'local'));
-        Config::set('cartalyst/sentry::users.model', 'Just\Shapeshifter\Core\Models\User');
-        Config::set('cartalyst/sentry::groups.model', 'Just\Shapeshifter\Core\Models\Group');
-        Config::set('cartalyst/sentry::throttling.model', 'Just\Shapeshifter\Core\Models\Throttle');
-        Config::set('cartalyst/sentry::user_groups_pivot_table', 'cms_users_groups');
+        $this->app['config']->set('cartalyst/sentry::throttling.enabled', ($this->app->environment() !== 'local'));
+        $this->app['config']->set('cartalyst/sentry::users.model', 'Just\Shapeshifter\Core\Models\User');
+        $this->app['config']->set('cartalyst/sentry::groups.model', 'Just\Shapeshifter\Core\Models\Group');
+        $this->app['config']->set('cartalyst/sentry::throttling.model', 'Just\Shapeshifter\Core\Models\Throttle');
+        $this->app['config']->set('cartalyst/sentry::user_groups_pivot_table', 'cms_users_groups');
     }
 
     /**

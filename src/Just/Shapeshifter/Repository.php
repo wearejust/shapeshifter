@@ -1,19 +1,13 @@
 <?php namespace Just\Shapeshifter;
 
-use DB;
-use Input;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Application;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Services\AttributeService;
-use Lang;
 use Notification;
-use Request;
-use Schema;
-use Session;
-use Validator;
 
 class Repository
 {
-
     /**
      * @var
      */
@@ -35,35 +29,34 @@ class Repository
     protected $orderby;
 
     /**
+     * @var Application
+     */
+    private $app;
+
+    /**
      * @param $model
      */
-    public function __construct($model)
+    public function __construct(Model $model, Application $app)
     {
         $this->model = $model;
+        $this->app = $app;
     }
 
     /**
      * @param $orderBy
-     * @param $parentField
+     * @param array $filters
+     * @param array $parent
      * @return mixed
      */
-    public function getListRecords($orderBy, $parentField = array(), $filter = array())
+    public function all($orderBy, $filters = array(), $parent = array())
     {
-        $service = new AttributeService();
-        $query = $this->model;
+        $records = $this->getRecords($orderBy, $filters, $parent);
 
-        if (count($parentField) == 2)
-        {
-            $query = $query->where($parentField[0], $parentField[1]);
-        }
-
-        foreach ($filter as $fil)
-        {
-            $query = $query->whereRaw($fil);
-        }
-
-        $records = $query->orderBy($orderBy[0], $orderBy[1])->get();
-        $records = $service->mutateList($records, $this->attributes);
+        $service = $this->app->make(
+            'Just\Shapeshifter\Services\AttributeService',
+            array($this->attributes)
+        );
+        $records = $service->mutateRecords($records);
 
         return $records;
     }
@@ -90,14 +83,6 @@ class Repository
     }
 
     /**
-     * @return mixed
-     */
-    public function all()
-    {
-        return $this->model->all();
-    }
-
-    /**
      * @param $ref
      * @param array $parent
      * @return mixed
@@ -106,9 +91,9 @@ class Repository
     public function save($ref, $parent = array())
     {
         // perform validation
-        $messages = Lang::get('shapeshifter::validation');
+        $messages = $this->app['translator']->get('shapeshifter::validation');
 
-        $validator = Validator::make(Input::all(), $this->rules, $messages);
+        $validator = $this->app['validator']->make($this->app['request']->all(), $this->rules, $messages);
         $validator->setAttributeNames($messages['attributes']);
 
         if ($validator->fails())
@@ -120,7 +105,7 @@ class Repository
         {
             if (in_array('no_save', $attr->flags)) continue;
 
-            $attr->setAttributeValue(Input::get($attr->name), $this->model->{$attr->name});
+            $attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
             $value = $attr->getSaveValue();
 
             if (!is_null($value)) {
@@ -129,9 +114,9 @@ class Repository
         }
 
         //Set sortorder for add
-        if (!$this->model->id && Schema::hasColumn($this->model->getTable(), 'sortorder'))
+        if (!$this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder'))
         {
-            $query = DB::table($this->model->getTable());
+            $query = $this->app['db']->table($this->model->getTable());
 
             if ($this->hasParent($parent))
             {
@@ -168,7 +153,7 @@ class Repository
      */
     public function hasParent($parent)
     {
-        return count($parent) == 2;
+        return count($parent) === 2;
     }
 
     /**
@@ -216,10 +201,11 @@ class Repository
      */
     public function setAttributes($attributes, $rules)
     {
-        foreach ($attributes as $key => $attribute) {
+        foreach ($attributes as $key => $attribute)
+        {
             if  (AttributeService::ignoreAttributes($attribute)) unset($attributes[$key]);
 
-            if (isset($rules[$attribute->name]) && array_search('required', $rules[$attribute->name]) !== false) {
+            if (isset($rules[$attribute->name]) && preg_grep('/required/', $rules[$attribute->name]) !== false) {
                 $attributes[$attribute->name]->setRequired(true);
             }
         }
@@ -257,5 +243,33 @@ class Repository
     public function getOrderby()
     {
         return $this->orderby;
+    }
+
+    /**
+     * @param $orderBy
+     * @param $filters
+     * @param $parent
+     * @return mixed
+     */
+    private function getRecords($orderBy, $filters, $parent)
+    {
+        $query = $this->model;
+
+        if ( $this->hasParent($parent) ) {
+            $query = $query->where($parent[0], $parent[1]);
+        }
+
+        foreach ($filters as $filter) {
+            $query = $query->whereRaw($filter);
+        }
+
+        $records = $query->orderBy($orderBy[0], $orderBy[1])->get();
+
+        return $records;
+    }
+
+    public function getTable()
+    {
+        return $this->model->getTable();
     }
 }

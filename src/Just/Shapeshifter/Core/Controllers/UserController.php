@@ -12,16 +12,12 @@ class UserController extends AdminController
     protected $descriptor = "last_name";
     protected $orderby = array('email','asc');
     protected $disabledActions = array(
-        'create',
         'delete',
         'drag'
     );
 
     protected $rules = array(
-        'email' => 'required|email|unique:cms_users,email',
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'password' => 'confirmed',
+        'name' => 'required',
     );
 
     protected function configureFields()
@@ -29,8 +25,7 @@ class UserController extends AdminController
         $this->add( new Attribute\CheckboxAttribute('activated'));
 
         $this->add( new Attribute\TextAttribute('email', 'email'));
-        $this->add( new Attribute\TextAttribute('first_name', 'text',array('hide_list')));
-        $this->add( new Attribute\TextAttribute('last_name','text', array('hide_list')));
+        $this->add( new Attribute\TextAttribute('name', 'text',array('hide_list')));
         $this->add( new Attribute\PasswordAttribute('password', array('hide_list')));
         $this->add( new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
@@ -39,14 +34,17 @@ class UserController extends AdminController
         $this->add( new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
     }
 
-    public function update()
+    protected function afterInit()
     {
-        $id = last(func_get_args());
-        $this->rules['email'] = 'required|email|unique:cms_users,email,' . $id;
-
-        $this->repo->setRules($this->rules);
-
-        return call_user_func_array("parent::update", func_get_args());
+        if ($this->mode == 'store')
+        {
+            $this->rules['password'] = 'required|confirmed';
+            $this->rules['email'] = 'required|email|unique:cms_users,email';
+        }
+        else if ($this->mode == 'update')
+        {
+            $this->rules['email'] = 'required|email|unique:cms_users,email,' . $this->getCurrentId();
+        }
     }
 }
 

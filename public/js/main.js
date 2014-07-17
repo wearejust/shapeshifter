@@ -1061,7 +1061,6 @@ var Required = function() {
 
 	CKEDITOR.on('instanceReady', function(e) {
 		if (this.items.filter('#'+e.editor.name).length) {
-			console.log(e.editor);
 			e.editor.on('blur', this.change.bind(this));
 			this.change(e);
 		}

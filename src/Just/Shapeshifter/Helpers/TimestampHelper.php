@@ -5,13 +5,31 @@ use Schema;
 
 class TimestampHelper
 {
-    public function createTimestampFields($table)
+    /**
+     * @var string
+     */
+    private $table;
+
+    /**
+     * @param $table
+     */
+    public function __construct($table)
     {
-        if( ! Schema::hasColumn($table, 'updated_at')  ) {
-            DB::statement('ALTER TABLE '.$table.' ADD updated_at datetime' );
-        }
-        if( ! Schema::hasColumn($table, 'created_at')  ) {
-            DB::statement('ALTER TABLE '.$table.' ADD created_at datetime' );
+        $this->table = $table;
+    }
+
+    /**
+     * Create updated_at and created_at fields if they don't exist
+     */
+    public function createFields()
+    {
+        $fields = array('updated_at', 'created_at');
+        foreach($fields as $field)
+        {
+            if ( ! Schema::hasColumn($this->table, $field))
+            {
+                DB::statement("ALTER TABLE {$this->table} ADD {$field} datetime");
+            }
         }
     }
 }

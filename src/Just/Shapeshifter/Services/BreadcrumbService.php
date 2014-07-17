@@ -1,13 +1,23 @@
 <?php namespace Just\Shapeshifter\Services;
 
-use Request;
-use Route;
+use Illuminate\Foundation\Application;
 
 class BreadcrumbService {
 
+    /**
+     * @var Application
+     */
+    private $app;
+
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public function breadcrumbs()
     {
-        $segments = Request::segments();
+        $segments = $this->app['request']->segments();
+
         $path = '';
         $breadcrumbs = array();
 
@@ -48,13 +58,13 @@ class BreadcrumbService {
 
         $name = implode('.', array_slice($new, 0, ($k + 1))) . '.index';
 
-        $routes = Route::getRoutes();
+        $routes = $this->app['router']->getRoutes();
         $route = $routes->getByName($name);
 
         $action = $route->getActionName();
         $controller = $this->getFullControllerPath($action);
 
-        return new $controller();
+        return $this->app->make($controller);
     }
 
     /**

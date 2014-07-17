@@ -1,9 +1,20 @@
 <?php namespace Just\Shapeshifter\Services;
 
+use Illuminate\Database\Eloquent\Collection;
 use Route;
 
 class AttributeService
 {
+    /**
+     * @var array
+     */
+    private $collection;
+
+    public function __construct(array $collection = array())
+    {
+        $this->collection = $collection;
+    }
+
     public function getAllPermissions()
     {
         $routes = Route::getRoutes();
@@ -21,7 +32,7 @@ class AttributeService
         return $permissions;
     }
 
-    public function mutateList( $records, $attributes )
+    public function mutateRecords($records)
     {
         $_ignored = array('id', 'sortorder', 'updated_at','created_at');
 
@@ -29,12 +40,12 @@ class AttributeService
         {
             foreach ($rec->toArray() as $k=>$r)
             {
-                if ( in_array($k, $_ignored) || ! isset($attributes[$k])  ) {
+                if ( in_array($k, $_ignored) || ! isset($this->attributes[$k])  ) {
                     continue;
                 }
 
-                $attributes[$k]->setAttributeValue($r);
-                $rec->setAttribute($k, $attributes[$k]->getDisplayValue() );
+                $this->attributes[$k]->setAttributeValue($r);
+                $rec->setAttribute($k, $this->attributes[$k]->getDisplayValue() );
             }
         }
 

@@ -5,6 +5,7 @@
     <h1>{{ $title }}</h1>
     
     <!-- Hier nog iets omheen if'en -->
+    @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">
@@ -23,6 +24,7 @@
         </div>
         @endif
     </div>
+    @endif
 
     <div class="paragraph section-end" id="datatable">
         @if (!count($records))
@@ -40,7 +42,7 @@
                             <thead>
                                 @foreach ($attributes as $attr)
                                 @if ( ! $attr->hasFlag('hide_list'))
-                                <th class="table-header {{ !$currentUser->can('drag') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
+                                <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
                                     <div class="container">
                                         @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
                                             <span class="table-header-sort">
@@ -53,7 +55,7 @@
                                 </th>
                                 @endif
                                 @endforeach
-                                @if ($currentUser->can('drag'))
+                                @if ($currentUser->can('drag') && count($records) > 1)
                                 <th class="table-header table-order js-disable-sort table-header-last"></th>
                                 @endif
                                 @if ($currentUser->can('delete'))
@@ -68,7 +70,7 @@
                                     <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
                                     @endif
                                     @endforeach
-                                    @if ($currentUser->can('drag'))
+                                    @if ($currentUser->can('drag') && count($records) > 1)
                                     <td class="table-cell table-order table-cell-last">
                                         <button class="js-sortable-handle tricon link-alt item-alt" type="button"><span class="accessibility">Verplaatsen</span></button>
                                     </td>
