@@ -301,13 +301,15 @@ abstract class AdminController extends Controller {
         $this->mode = 'destroy';
         $this->model = $this->repo->findById($this->getCurrentId());
 
+        $this->initAttributes();
+
         $this->model = $this->beforeDestroy($this->model);
 
         if ( $this->repo->delete() ) {
             Notification::success(__('form.removed'));
         }
 
-        return $this->app['redirect']->back();
+        return $this->redirectAfterDestroy($this->data['routes']['index'], $this->data['ids']);
     }
 
     /**
@@ -331,7 +333,7 @@ abstract class AdminController extends Controller {
         $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
         $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
         $menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
-        
+
         $user = Sentry::getUser();
         $user->setDisabledActions($this->disabledActions);
 
@@ -519,6 +521,11 @@ abstract class AdminController extends Controller {
     }
 
     protected function redirectAfterStore($route, $args, $currentId)
+    {
+        return $this->app['redirect']->route($route, $args);
+    }
+
+    protected function redirectAfterDestroy($route, $args)
     {
         return $this->app['redirect']->route($route, $args);
     }

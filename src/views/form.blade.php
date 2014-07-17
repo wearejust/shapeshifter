@@ -70,13 +70,10 @@
             </div>
             <div class="footer controls">
                 <div class="controls-content">
-                    <div class="content">
+                    <div class="content container">
                         <ul class="control-list list">
-                            <li class="control-item">
+                            <li class="control-item" style="position: absolute; left: 0;">
                                 <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
-                            <!--</li>-->
-                            <li class="control-item item-alt">
-                                <button class="control-item-button btn btn-remove" type="button">Verwijderen</button>
                             <!--</li>-->
                             {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
@@ -84,6 +81,23 @@
                 </div>
             </div>
         {{ Form::close() }}
+        @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
+        <div class="footer controls" style="min-height: 0; z-index: 1000; background-color: transparent; overflow: visible;">
+            <div class="controls-content" style="padding: 0;">
+                <div class="content container">
+                    <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
+                        {{ Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids))) }}
+<!--                        <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">Verwijderen</button>-->
+                        {{ Form::submit(__('form.remove'), array('class' => 'control-item-button btn btn-remove confirm-delete-dialog')) }}
+                        {{ Form::close() }}
+                        <div class="dialog-confirm" style="display: none;">
+                            <p>{{ __('dialog.remove') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
     @foreach ($tab as $attr)

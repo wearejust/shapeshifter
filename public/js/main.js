@@ -587,10 +587,10 @@ $.fn.oneToManyLoader = function() {
 var RemoveDialog = function(node) {
 
 	this.trigger = $(node);
-	this.container = this.trigger.parents('td');
+	this.container = this.trigger.closest('.js-remove-wrapper');
 
 	this.dialogContainer = this.container.find('.dialog-confirm');
-	this.form = this.container.find('form').first();
+	this.form = this.container.find('form');
 
 	this.dialogContainer.dialog({
 		'resizable': false,
