@@ -55,8 +55,8 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .content-wrapper { display: table; position: relative; table-layout: fixed; width: 100%; }
 .main-content { display: table; padding-bottom: 6em; padding-top: 3.429em; table-layout: fixed; width: 100%; }
 .content-body { position: relative; }
-.content-body, .form-group, .alert, .system-account, .table-header, .table-cell { padding-right: 1.5em; }
-.content-body, .form-group, .alert, .system-account, .table-header:first-child, .table-cell:first-child { padding-left: 1.5em; }
+.content-body, .form-group, .alert, .system-account, .controls-content, .table-header, .table-cell { padding-right: 1.5em; }
+.content-body, .form-group, .alert, .system-account, .controls-content, .table-header:first-child, .table-cell:first-child { padding-left: 1.5em; }
 
 .data-wrapper { overflow: hidden; }
 
@@ -93,7 +93,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 .btn-preview { @include background-clip(padding-box); background-color: rgba(0, 0, 0, .45); border-color: rgba(0, 0, 0, .45); color: #fff; }
 .btn-preview:focus, .btn-preview:hover, .btn-preview:active { background-color: rgba(0, 0, 0, .55); border-color: rgba(0, 0, 0, .55); }
 
-.form-group, .alert, .header-top { padding-bottom: 1.1em; padding-top: 1.1em; }
+.form-group, .alert, .header-top, .controls-content{ padding-bottom: 1.1em; padding-top: 1.1em; }
 .form-group, .alert { margin-left: -1.5em; margin-right: -1.5em; }
 .form-group { background-color: #f2f2f2; display: block; margin-bottom: 1px; margin-top: 1px; position: relative; }
 .form-group-options { background-color: transparent; padding-bottom: 0; padding-top: 0; margin-bottom: $paragraph-margin*2; margin-top: $paragraph-margin*2; }
@@ -285,7 +285,6 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .footer { background-color: #dbdbdb; z-index: 10; }
 .controls { z-index: 11; }
-.controls-content { padding: 1em 1.5em; }
 
 
 .js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: 100%; @include transform(translate3d(0, 0, 0)); @include backface-visibility(hidden); @include transition(transform 0.3s ease-in); }

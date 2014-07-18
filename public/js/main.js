@@ -45,6 +45,24 @@ $(function() {
 
 	$('.js-multiplefileattribute').multiplefileattribute();
 
+
+	$('.form-group-ckeditor').on('click', function(e) {
+		e.preventDefault();
+		var id = $(e.currentTarget).find('.cke').attr('id').replace('cke_', '');
+		CKEDITOR.instances[id].focus();
+	});
+
+	
+	CKEDITOR.on('instanceReady', function(e) {
+		e.editor.on('focus', function(e) {
+			$(e.editor.container.$).closest('.form-group').addClass('highlight');
+		});
+		e.editor.on('blur', function(e) {
+			$(e.editor.container.$).closest('.form-group').removeClass('highlight');
+		});
+	}.bind(this));
+
+
 	alertShow();
 
 	/*
