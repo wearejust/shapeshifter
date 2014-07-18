@@ -6,6 +6,10 @@ use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Exceptions\ClassNotExistException;
 use Just\Shapeshifter\Exceptions\PropertyNotExistException;
 use Just\Shapeshifter\Exceptions\ValidationException;
+use Just\Shapeshifter\Form\AttributeCollection;
+use Just\Shapeshifter\Form\Form;
+use Just\Shapeshifter\Form\Section;
+use Just\Shapeshifter\Form\Tab;
 use Notification;
 use Sentry;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,13 +35,6 @@ abstract class AdminController extends Controller {
      * @var array
      */
     protected $data = array();
-
-    /**
-     * All the attributes
-     *
-     * @var array
-     */
-    protected $attributes = array();
 
     /**
      * Disable some actions in the node (drag, sort, create, delete)
@@ -110,12 +107,17 @@ abstract class AdminController extends Controller {
     protected $app;
 
     /**
+     * @var Form
+     */
+    protected $formModifier;
+
+    /**
      * Function that is needed in the node, this descripbes how the node will
      * looks like, what it can/cannot do.
      *
      * @return mixed
      */
-    abstract protected function configureFields();
+    abstract protected function configureFields($modifier);
 
     public function __construct(Application $app)
     {
@@ -136,13 +138,15 @@ abstract class AdminController extends Controller {
      */
     private function initAttributes()
     {
+        $this->formModifier = $this->app->make('Just\Shapeshifter\Form\Form');
+
         $this->beforeInit();
-        $this->configureFields();
+        $this->configureFields($this->formModifier);
 
         $this->afterInit();
 
         $this->repo->setRules($this->rules);
-        $this->repo->setAttributes($this->attributes, $this->repo->getRules());
+        $this->repo->setAttributes($this->formModifier->getAllAttributes(), $this->repo->getRules());
 
         $this->data['routes'] = $this->getCurrentRouteNames();
     }
@@ -313,35 +317,26 @@ abstract class AdminController extends Controller {
     }
 
     /**
-     * @param $object
-     * @param array $options
-     */
-    protected function add($object, $options = array())
-    {
-        $object->setTab(isset($options['tab']) ? $options['tab'] : false);
-        $object->setHelpText(isset($options['help']) ? $options['help'] : false);
-
-        $this->attributes[$object->name] = $object;
-    }
-
-    /**
      * @param $template
      * @return mixed
      */
     protected function setupView($template)
     {
-        $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
+//        $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
         $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
         $menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
 
         $user = Sentry::getUser();
         $user->setDisabledActions($this->disabledActions);
 
+        $this->formModifier->render();
+
+        $this->data['form'] = $this->formModifier;
+        $this->data['attributes'] = $this->formModifier->getAllAttributes();
         $this->data['currentUser'] = $user;
         $this->data['orderBy'] = $this->orderby;
         $this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
         $this->data['menu'] = $menuService->generateMenu();
-        $this->data['tabs'] = $attributeService->attributesToTabs($this->mode, $this->attributes, $this->model);
         $this->data['descriptor'] = $this->getDescriptor();
         $this->data['cancel'] = $this->generateCancelLink();
         $this->data['disabledActions'] = $this->disabledActions;
@@ -355,11 +350,7 @@ abstract class AdminController extends Controller {
         $this->data['mode'] = $this->mode;
         $this->data['controller'] = get_class($this);
         $this->data['parent'] = $this->parent;
-        $this->data['attributes'] = $this->attributes;
 
-        array_map(function($attribute) {
-            $attribute->compile();
-        }, $this->data['attributes']);
 
         $view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
 
@@ -505,7 +496,7 @@ abstract class AdminController extends Controller {
     private function getLastVisibleAttribute()
     {
         $last = null;
-        foreach ($this->attributes as $attribute) {
+        foreach ($this->formModifier->getAllAttributes() as $attribute) {
             if ( ! $attribute->hasFlag('hide_list') ) {
                 $last = $attribute;
             }
@@ -513,8 +504,8 @@ abstract class AdminController extends Controller {
 
         return $last;
     }
-
     // Hooks
+
     protected function redirectAfterUpdate($route, $args, $currentId)
     {
         return $this->app['redirect']->route($route, $args);
@@ -627,5 +618,4 @@ abstract class AdminController extends Controller {
         return $model;
     }
 }
-
 ?>

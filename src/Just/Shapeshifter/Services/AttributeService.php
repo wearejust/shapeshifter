@@ -1,16 +1,16 @@
 <?php namespace Just\Shapeshifter\Services;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Route;
 
 class AttributeService
 {
     /**
-     * @var array
+     * @var Collection
      */
     private $collection;
 
-    public function __construct(array $collection = array())
+    public function __construct(Collection $collection)
     {
         $this->collection = $collection;
     }
@@ -50,31 +50,6 @@ class AttributeService
         }
 
         return $records;
-    }
-
-
-    public function attributesToTabs($mode, $attributes, $model)
-    {
-        $tabs = array();
-        foreach ($attributes as $key => $attr)
-        {
-            if ($mode == 'create' && $attr->hasFlag('hide_add')) continue;
-
-            if ($mode === 'edit')
-            {
-                if ($attr->hasFlag('hide_edit')) continue;
-
-                $attr->setAttributeValue( $model->{$attr->name} );
-                $model->{$attr->name} = $attr->getEditValue($attr->value);
-            }
-
-            if ( ! in_array($attr->tab, $tabs))
-            {
-                $tabs[$attr->tab][] = $attr;
-            }
-        }
-
-        return $tabs;
     }
 
     public static function ignoreAttributes($attribute)

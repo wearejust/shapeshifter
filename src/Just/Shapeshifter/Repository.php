@@ -206,7 +206,7 @@ class Repository
             if  (AttributeService::ignoreAttributes($attribute)) unset($attributes[$key]);
 
             if (isset($rules[$attribute->name]) && preg_grep('/required/', $rules[$attribute->name]) !== false) {
-                $attributes[$attribute->name]->setRequired(true);
+                $attribute->setRequired(true);
             }
         }
 

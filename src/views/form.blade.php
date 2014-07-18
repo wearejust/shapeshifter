@@ -16,11 +16,11 @@
 
 <div class="section">
 
-    @if (count($tabs) > 1)
+    @if ($form->getTabs()->count())
     <ul class="section section-sub section-end tab-list content-alt group">
-        @foreach ($tabs as $k=>$tab)
+        @foreach ($form->getTabs() as $tab)
         <li class="tab-list-item">
-            <a class="tab-list-item-button" href="#{{ Str::slug($k) }}">{{ $k == '_default' ? 'Algemeen' : $k }}</a>
+            <a class="tab-list-item-button" href="#{{ $tab->getSlug() }}">{{ $tab->getName() }}</a>
         </li>
         @endforeach
     </ul>
@@ -44,29 +44,22 @@
                 <fieldset class="section section-sub">
                     <legend class="accessibility">{{ $title }}</legend>
                     <div class="section">
-                        @foreach ($tabs as $k=>$tab)
-                            <div class="tab-pane" id="{{ Str::slug($k) }}">
-                                @foreach ($tab as $attr)
-                                    @if ( ! Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
-                                        {{ $attr }}
-                                    @endif
+                        @foreach ($form->getTabs() as  $tab)
+                            <div class="tab-pane" id="{{ $tab->getSlug() }}">
+                                @foreach ($tab->getSections() as $section)
+                                    @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
                                 @endforeach
+                                @include('shapeshifter::attribute', array('attributes' => $tab->getAttributes()))
                             </div>
                         @endforeach
-                    </div>
-                </fieldset>
-                {{--
-                <fieldset class="section section-sub">
-                    <legend class="accent"><span class="" style="display: block; margin-bottom: 1.375rem;">Subkop</span></legend>
-                    <div class="section">
-                        @foreach ($tab as $attr)
-                            @if (!Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr))
-                                {{ $attr }}
-                            @endif
+
+                        @foreach($form->getSections() as $section)
+                            @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
                         @endforeach
+
+                        @include('shapeshifter::attribute', array('attributes' => $form->getAttributes()))
                     </div>
                 </fieldset>
-                --}}
             </div>
             <div class="footer controls">
                 <div class="controls-content">
@@ -81,14 +74,14 @@
                 </div>
             </div>
         {{ Form::close() }}
+
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; z-index: 1000; background-color: transparent; overflow: visible;">
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
                     <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
                         {{ Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids))) }}
-<!--                        <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">Verwijderen</button>-->
-                        {{ Form::submit(__('form.remove'), array('class' => 'control-item-button btn btn-remove confirm-delete-dialog')) }}
+                            {{ Form::submit(__('form.remove'), array('class' => 'control-item-button btn btn-remove confirm-delete-dialog')) }}
                         {{ Form::close() }}
                         <div class="dialog-confirm" style="display: none;">
                             <p>{{ __('dialog.remove') }}</p>
@@ -100,11 +93,13 @@
         @endif
     </div>
 
-    @foreach ($tab as $attr)
-        @if (Just\Shapeshifter\Services\AttributeService::ignoreAttributes($attr) && !$attr->hasFlag('hide'))
-            {{ $attr }}
-        @endif
+    @foreach ($form->getTabs() as  $tab)
+        <div id="{{ $tab->getSlug() }}-extra">
+            @include('shapeshifter::relation', array('attributes' => $tab->getAttributes()))
+        </div>
     @endforeach
+
+    @include('shapeshifter::relation', array('attributes' => $form->getAttributes()))
 
     @stop
 </div>
