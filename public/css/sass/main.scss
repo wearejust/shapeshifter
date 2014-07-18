@@ -30,8 +30,8 @@ datalist, input, select, textarea, .input, .js .js-placeholder .form-label { pad
 /*datalist:focus, input:focus, select:focus, textarea:focus, ul.token-input-list-facebook.token-input-focused-facebook:focus { border-color: #bbb; }*/
 input[type="file"] { border-width: 0; }
 select { height: 37px; }
-button[type="submit"], input[type="button"], input[type="reset"], input[type="submit"] { background-color: $primary-color; color: #fff; font-weight: bold; }
-button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:active, input[type="button"]:focus, input[type="button"]:hover, input[type="button"]:active, input[type="reset"]:focus, input[type="reset"]:hover, input[type="reset"]:active, input[type="submit"]:focus, input[type="submit"]:hover, input[type="submit"]:active { background-color: lighten($primary-color, 25%); }
+button { background-color: $primary-color; color: #fff; font-weight: bold; }
+button:focus, button:hover, button:active { background-color: lighten($primary-color, 25%); }
 /*::-moz-selection { background-color: rgba(, , , .7); color: #fff; text-shadow: none; }
 ::selection { background-color: rgba(, , , .7); color: #fff; text-shadow: none; }*/
 /*::selection:window-inactive { background-color: ; }*/
@@ -139,7 +139,7 @@ button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:
 label.form-group:hover, .form-field-content:focus + .form-group-highlight, .single-checkbox:focus + .form-group-highlight, .form-single-checkbox:checked + .form-group-highlight, .form-option-label:focus, .form-option-label:hover, .form-option-label:active, .form-option-field:hover + .form-option-label, .form-option-field:focus + .form-option-label, .form-option-field:checked + .form-option-label { background-color: #d5d5d5; }
 /*.form-single-checkbox:checked + .form-group-highlight, */.form-option-field:checked:focus + .form-option-label, .form-option-field:checked:hover + .form-option-label, .form-option-field:checked:active + .form-option-label, .form-option-field:checked + .form-option-label:hover, .form-option-field:checked + .form-option-label:active { background-color: #c4c4c4; }
 
-.tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; }
+.tab-list { border-bottom: 1px solid #f2f2f2; list-style: none; margin-top: $paragraph-margin*2; }
 .tab-list-item { float: left; font-weight: bold; margin: 0; }
 .tab-list-item-button { border-color: #f2f2f2; border-width: 0 1px 0 0; display: block; padding: 1em 1.5rem; text-decoration: none; }
 .tab-list-item-button:focus, .tab-list-item-button:hover, .tab-list-item-button:active { background-color: #ddd; color: #000; }
@@ -229,7 +229,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .video-preview-loader { background-image: inline-image("public/css/images/ajax-loader.gif"); margin: $paragraph-margin auto; }
 
 .messages {  }
-.alert { font-weight: bold; margin: 1px 0; }
+.alert { font-weight: bold; margin-bottom: 1px; margin-top: 1px; }
 .alert-info { background-color: #ccc; color: #000; }
 .alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; @include transition(compact(top, .5s)); }
 .js .controls .alert-success { top: 3.571em; }
@@ -358,6 +358,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.btn { padding: .8em 1.1em; }
 	.control-item-button { margin: -.8em 0; }
 }
+@include respond-min-width(50em) {
+	.record-title { padding-right: 15rem; }
+	.record-updated { position: absolute; right: 2.75rem; top: 71px; }
+}
 @include respond-min-width(60em) {
 	.menu-nav { opacity: 0; }
 	.main-content { display: block; padding-top: 3.357em; padding-left: 17.5em; width: auto; }
@@ -385,7 +389,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .lightbox-overlay { background-color: #000; height: 100%; left: 0; @include opacity(.9); position: fixed; top: 0; width: 100%; z-index: 9999; }
 
 .section-main { margin-bottom: $paragraph-margin*6; margin-top: $paragraph-margin*6; }
-.section-sub { margin-bottom: $paragraph-margin*2; margin-top: $paragraph-margin*2; }
+.section-sub { margin-bottom: $paragraph-margin*3; }
+.section-sub, .tab-pane > .section-sub:first-child { margin-top: $paragraph-margin*3; }
 .section-row { margin-bottom: 1px; margin-top: 1px; }
 .section-start { margin-top: 0; }
 .section-end { margin-bottom: 0; }
@@ -394,6 +399,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /*.js textarea { overflow-y: hidden; }*/
 /*.js textarea, */.js .js-cover { visibility: hidden; }
 .js .js-transparent { @include opacity(0); }
+
 
 
 /* print */

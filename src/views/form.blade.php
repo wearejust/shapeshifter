@@ -2,19 +2,27 @@
 
 @section('content')
 
-<h1>{{ $title }}</h1>
+<h1 class="record-title">{{ $title }}</h1>
 
 @if ($mode == 'edit' && $model->updated_at)
-<div class="section section-start section-sub" style="position: absolute; right: 2.75rem; top: 71px;">
-    <dl class="quiet" style="font-size: 11px;">
-        <dt style="float: left; margin-right: 2em;">{{ __('form.updated_at') }}</dt>
-        <dd style="display: block; overflow: hidden;">{{ $model->updated_at->formatLocalized('%d %B %Y %H:%M') }}
-        </dd>
-    </dl>
+<div class="section section-start paragraph record-updated">
+    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%d %B %Y, %H:%M') }}</p>
 </div>
 @endif
 
 <div class="section">
+
+    @if ( Notification::get('error')->first())
+    <div class="messages">
+        <div class="alert alert-error">
+            <ul class="section-start section-end">
+                @foreach (Notification::get('error') as $error)
+                <li class="section">{{ $error->getMessage() }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+    @endif
 
     @if ($form->getTabs()->count())
     <ul class="section section-sub section-end tab-list content-alt group">
@@ -24,18 +32,6 @@
         </li>
         @endforeach
     </ul>
-    @endif
-
-    @if ( Notification::get('error')->first())
-    <div class="messages">
-        <div class=" alert alert-error">
-            <ul style="margin:-1.375em 0;">
-                @foreach (Notification::get('error') as $error)
-                    <li>{{ $error->getMessage() }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
     @endif
 
     <div class="section section-start section-main">
@@ -79,9 +75,9 @@
         <div class="footer controls" style="min-height: 0; z-index: 1000; background-color: transparent; overflow: visible;">
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
-                    <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
+                    <div class="js-remove-wrapper" style="bottom: 0; margin: 4px 0; position: absolute; right: 0; z-index: 1000;">
                         {{ Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids))) }}
-                            {{ Form::submit(__('form.remove'), array('class' => 'control-item-button btn btn-remove confirm-delete-dialog')) }}
+                            <button class="btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
                         {{ Form::close() }}
                         <div class="dialog-confirm" style="display: none;">
                             <p>{{ __('dialog.remove') }}</p>

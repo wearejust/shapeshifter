@@ -57,9 +57,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
                 @foreach ($breadcrumbs as $crumb)
                 <li class="breadcrumbs-item">
                     @if ($crumb == end($breadcrumbs))
-                        <span class="breadcrumbs-link">{{ $crumb['title'] }}</span>
+                    <span class="breadcrumbs-link">{{ $crumb['title'] }}</span>
                     @else
-                        <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}"><span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span></a>
+                    <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}"><span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span></a>
                     @endif
                 <!--</li>-->
                 @endforeach

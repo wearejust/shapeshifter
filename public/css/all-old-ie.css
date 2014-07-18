@@ -734,14 +734,14 @@ select {
 }
 
 /* line 33, sass/main.scss */
-button[type="submit"], input[type="button"], input[type="reset"], input[type="submit"] {
+button {
   background-color: black;
   color: #fff;
   font-weight: bold;
 }
 
 /* line 34, sass/main.scss */
-button[type="submit"]:focus, button[type="submit"]:hover, button[type="submit"]:active, input[type="button"]:focus, input[type="button"]:hover, input[type="button"]:active, input[type="reset"]:focus, input[type="reset"]:hover, input[type="reset"]:active, input[type="submit"]:focus, input[type="submit"]:hover, input[type="submit"]:active {
+button:focus, button:hover, button:active {
   background-color: #404040;
 }
 
@@ -1520,6 +1520,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .tab-list {
   border-bottom: 1px solid #f2f2f2;
   list-style: none;
+  margin-top: 2.75em;
 }
 
 /* line 143, sass/main.scss */
@@ -2037,7 +2038,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 /* line 232, sass/main.scss */
 .alert {
   font-weight: bold;
-  margin: 1px 0;
+  margin-bottom: 1px;
+  margin-top: 1px;
 }
 
 /* line 233, sass/main.scss */
@@ -2842,11 +2844,23 @@ h1, .onetomany-relation-content h1 {
 }
 
 /* line 362, sass/main.scss */
+.record-title {
+  padding-right: 15rem;
+}
+
+/* line 363, sass/main.scss */
+.record-updated {
+  position: absolute;
+  right: 2.75rem;
+  top: 71px;
+}
+
+/* line 366, sass/main.scss */
 .menu-nav {
   opacity: 0;
 }
 
-/* line 363, sass/main.scss */
+/* line 367, sass/main.scss */
 .main-content {
   display: block;
   padding-top: 3.357em;
@@ -2854,12 +2868,12 @@ h1, .onetomany-relation-content h1 {
   width: auto;
 }
 
-/* line 364, sass/main.scss */
+/* line 368, sass/main.scss */
 .header-bottom, .controls {
   left: 17.5em;
 }
 
-/* line 365, sass/main.scss */
+/* line 369, sass/main.scss */
 .header-bottom {
   left: 17.5em;
   padding: 0;
@@ -2870,12 +2884,12 @@ h1, .onetomany-relation-content h1 {
   z-index: 10;
 }
 
-/* line 366, sass/main.scss */
+/* line 370, sass/main.scss */
 .header-top {
   right: auto;
 }
 
-/* line 367, sass/main.scss */
+/* line 371, sass/main.scss */
 .header, .js .header, .header-top, .js .header-top, .system-name {
   display: block;
   width: 17.5em;
@@ -2886,48 +2900,48 @@ h1, .onetomany-relation-content h1 {
   transition: none;
 }
 
-/* line 368, sass/main.scss */
+/* line 372, sass/main.scss */
 .js .menu-overlay {
   display: none;
 }
 
-/* line 369, sass/main.scss */
+/* line 373, sass/main.scss */
 .system-name {
   text-align: left;
 }
 
-/* line 370, sass/main.scss */
+/* line 374, sass/main.scss */
 .system-name-button {
   border-bottom: 1px solid #000;
   display: block;
   font-size: 1.35rem;
 }
 
-/* line 378, sass/main.scss */
+/* line 382, sass/main.scss */
 .js .js-datatable {
   display: none;
   table-layout: auto;
 }
 
-/* line 379, sass/main.scss */
+/* line 383, sass/main.scss */
 .js .js-datatable.dataTable {
   display: table;
 }
 
-/* line 380, sass/main.scss */
+/* line 384, sass/main.scss */
 .js .ckeditor {
   height: 244px;
   visibility: hidden;
 }
 
-/* line 382, sass/main.scss */
+/* line 386, sass/main.scss */
 .login-area-form .alert {
   margin-left: 0;
   margin-right: 0;
   padding: .65em .75em;
 }
 
-/* line 384, sass/main.scss */
+/* line 388, sass/main.scss */
 .lightbox {
   bottom: 0;
   left: 0;
@@ -2938,7 +2952,7 @@ h1, .onetomany-relation-content h1 {
   z-index: 9999;
 }
 
-/* line 385, sass/main.scss */
+/* line 389, sass/main.scss */
 .lightbox-overlay {
   background-color: #000;
   height: 100%;
@@ -2951,47 +2965,51 @@ h1, .onetomany-relation-content h1 {
   z-index: 9999;
 }
 
-/* line 387, sass/main.scss */
+/* line 391, sass/main.scss */
 .section-main {
   margin-bottom: 8.25em;
   margin-top: 8.25em;
 }
 
-/* line 388, sass/main.scss */
+/* line 392, sass/main.scss */
 .section-sub {
-  margin-bottom: 2.75em;
-  margin-top: 2.75em;
+  margin-bottom: 4.125em;
 }
 
-/* line 389, sass/main.scss */
+/* line 393, sass/main.scss */
+.section-sub, .tab-pane > .section-sub:first-child {
+  margin-top: 4.125em;
+}
+
+/* line 394, sass/main.scss */
 .section-row {
   margin-bottom: 1px;
   margin-top: 1px;
 }
 
-/* line 390, sass/main.scss */
+/* line 395, sass/main.scss */
 .section-start {
   margin-top: 0;
 }
 
-/* line 391, sass/main.scss */
+/* line 396, sass/main.scss */
 .section-end {
   margin-bottom: 0;
 }
 
-/* line 393, sass/main.scss */
+/* line 398, sass/main.scss */
 .js .js-hide, .js .js-remove, .hide {
   display: none;
 }
 
 /*.js textarea { overflow-y: hidden; }*/
 /*.js textarea, */
-/* line 395, sass/main.scss */
+/* line 400, sass/main.scss */
 .js .js-cover {
   visibility: hidden;
 }
 
-/* line 396, sass/main.scss */
+/* line 401, sass/main.scss */
 .js .js-transparent {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -2999,7 +3017,7 @@ h1, .onetomany-relation-content h1 {
 
 /* print */
 @media print {
-  /* line 402, sass/main.scss */
+  /* line 408, sass/main.scss */
   * {
     background: transparent !important;
     box-shadow: none !important;
@@ -3007,48 +3025,48 @@ h1, .onetomany-relation-content h1 {
     text-shadow: none !important;
   }
 
-  /* line 403, sass/main.scss */
+  /* line 409, sass/main.scss */
   aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu {
     display: none;
   }
 
-  /* line 404, sass/main.scss */
+  /* line 410, sass/main.scss */
   a[href]:after {
     content: " (" attr(href) ") ";
     font-size: 90%;
   }
 
-  /* line 405, sass/main.scss */
+  /* line 411, sass/main.scss */
   a[href^="/"]:after {
     content: " (http://" attr(href) ") ";
   }
 
-  /* line 406, sass/main.scss */
+  /* line 412, sass/main.scss */
   abbr:after {
     content: " (" attr(title) ")";
   }
 
-  /* line 407, sass/main.scss */
+  /* line 413, sass/main.scss */
   thead {
     display: table-header-group;
   }
 
-  /* line 408, sass/main.scss */
+  /* line 414, sass/main.scss */
   tr, img, pre, blockquote {
     page-break-inside: avoid;
   }
 
-  /* line 409, sass/main.scss */
+  /* line 415, sass/main.scss */
   img {
     max-width: 100% !important;
   }
 
-  /* line 410, sass/main.scss */
+  /* line 416, sass/main.scss */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
 
-  /* line 411, sass/main.scss */
+  /* line 417, sass/main.scss */
   h2, h3, p {
     orphans: 3;
     widows: 3;
