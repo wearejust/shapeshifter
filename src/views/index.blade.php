@@ -102,9 +102,9 @@
         @endif
     </div>
 </div>
-@stop
 <div class="footer controls">
     @if ( Notification::get('success')->first())
         {{ Notification::showSuccess() }}
     @endif
 </div>
+@stop
