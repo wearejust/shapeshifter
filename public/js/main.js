@@ -45,6 +45,15 @@ $(function() {
 
 	$('.js-multiplefileattribute').multiplefileattribute();
 
+
+	$('.form-group-ckeditor').on('click', function(e) {
+		e.preventDefault();
+		var id = $(e.currentTarget).find('.cke').attr('id').replace('cke_', '');
+		CKEDITOR.instances[id].focus();
+	});
+
+
+
 	alertShow();
 
 	/*
