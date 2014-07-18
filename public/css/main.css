@@ -2865,7 +2865,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   .record-updated {
     position: absolute;
     right: 2.75rem;
-    top: 71px;
+    top: 70px;
   }
 }
 @media screen and (min-width: 60em) {
@@ -2947,31 +2947,38 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     width: 22.5em;
   }
 }
-/* line 382, sass/main.scss */
+@media screen and (min-width: 79.375em) {
+  /* line 382, sass/main.scss */
+  .controls-content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+/* line 385, sass/main.scss */
 .js .js-datatable {
   display: none;
   table-layout: auto;
 }
 
-/* line 383, sass/main.scss */
+/* line 386, sass/main.scss */
 .js .js-datatable.dataTable {
   display: table;
 }
 
-/* line 384, sass/main.scss */
+/* line 387, sass/main.scss */
 .js .ckeditor {
   height: 244px;
   visibility: hidden;
 }
 
-/* line 386, sass/main.scss */
+/* line 389, sass/main.scss */
 .login-area-form .alert {
   margin-left: 0;
   margin-right: 0;
   padding: .65em .75em;
 }
 
-/* line 388, sass/main.scss */
+/* line 391, sass/main.scss */
 .lightbox {
   bottom: 0;
   left: 0;
@@ -2982,7 +2989,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   z-index: 9999;
 }
 
-/* line 389, sass/main.scss */
+/* line 392, sass/main.scss */
 .lightbox-overlay {
   background-color: #000;
   height: 100%;
@@ -2995,51 +3002,51 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   z-index: 9999;
 }
 
-/* line 391, sass/main.scss */
+/* line 394, sass/main.scss */
 .section-main {
   margin-bottom: 8.25em;
   margin-top: 8.25em;
 }
 
-/* line 392, sass/main.scss */
+/* line 395, sass/main.scss */
 .section-sub {
   margin-bottom: 4.125em;
 }
 
-/* line 393, sass/main.scss */
+/* line 396, sass/main.scss */
 .section-sub, .tab-pane > .section-sub:first-child {
   margin-top: 4.125em;
 }
 
-/* line 394, sass/main.scss */
+/* line 397, sass/main.scss */
 .section-row {
   margin-bottom: 1px;
   margin-top: 1px;
 }
 
-/* line 395, sass/main.scss */
+/* line 398, sass/main.scss */
 .section-start {
   margin-top: 0;
 }
 
-/* line 396, sass/main.scss */
+/* line 399, sass/main.scss */
 .section-end {
   margin-bottom: 0;
 }
 
-/* line 398, sass/main.scss */
+/* line 401, sass/main.scss */
 .js .js-hide, .js .js-remove, .hide {
   display: none;
 }
 
 /*.js textarea { overflow-y: hidden; }*/
 /*.js textarea, */
-/* line 400, sass/main.scss */
+/* line 403, sass/main.scss */
 .js .js-cover {
   visibility: hidden;
 }
 
-/* line 401, sass/main.scss */
+/* line 404, sass/main.scss */
 .js .js-transparent {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -3047,7 +3054,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 /* print */
 @media print {
-  /* line 408, sass/main.scss */
+  /* line 411, sass/main.scss */
   * {
     background: transparent !important;
     box-shadow: none !important;
@@ -3055,48 +3062,48 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
     text-shadow: none !important;
   }
 
-  /* line 409, sass/main.scss */
+  /* line 412, sass/main.scss */
   aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu {
     display: none;
   }
 
-  /* line 410, sass/main.scss */
+  /* line 413, sass/main.scss */
   a[href]:after {
     content: " (" attr(href) ") ";
     font-size: 90%;
   }
 
-  /* line 411, sass/main.scss */
+  /* line 414, sass/main.scss */
   a[href^="/"]:after {
     content: " (http://" attr(href) ") ";
   }
 
-  /* line 412, sass/main.scss */
+  /* line 415, sass/main.scss */
   abbr:after {
     content: " (" attr(title) ")";
   }
 
-  /* line 413, sass/main.scss */
+  /* line 416, sass/main.scss */
   thead {
     display: table-header-group;
   }
 
-  /* line 414, sass/main.scss */
+  /* line 417, sass/main.scss */
   tr, img, pre, blockquote {
     page-break-inside: avoid;
   }
 
-  /* line 415, sass/main.scss */
+  /* line 418, sass/main.scss */
   img {
     max-width: 100% !important;
   }
 
-  /* line 416, sass/main.scss */
+  /* line 419, sass/main.scss */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
 
-  /* line 417, sass/main.scss */
+  /* line 420, sass/main.scss */
   h2, h3, p {
     orphans: 3;
     widows: 3;

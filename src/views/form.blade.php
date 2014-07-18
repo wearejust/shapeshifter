@@ -72,12 +72,14 @@
         {{ Form::close() }}
 
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
-        <div class="footer controls" style="min-height: 0; z-index: 1000; background-color: transparent; overflow: visible;">
+        <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
-                    <div class="js-remove-wrapper" style="bottom: 0; margin: 4px 0; position: absolute; right: 0; z-index: 1000;">
+                    <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
                         {{ Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids))) }}
-                            <button class="btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
+                            <div class="controls-content">
+                                <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
+                            </div>
                         {{ Form::close() }}
                         <div class="dialog-confirm" style="display: none;">
                             <p>{{ __('dialog.remove') }}</p>
