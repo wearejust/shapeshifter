@@ -66,7 +66,7 @@ button:focus, button:hover, button:active { background-color: lighten($primary-c
 .control-item:last-child { margin-right: 0; }
 .control-item-button { margin: -.65em 0; }
 
-.tricon { @include border-radius(4px); cursor: move; display: inline-block; margin: -7px; padding: 7px; vertical-align: top; }
+.tricon { background-color: transparent; @include border-radius(4px); cursor: move; display: inline-block; margin: -7px; padding: 7px; vertical-align: top; }
 .tricon:focus, .tricon:hover, .tricon:active { background-color: rgba(0, 0, 0, .125); }
 .tricon:before { background-image: inline-image("public/css/images/tricon.png"); content: ""; display: inline-block; height: 18px; @include opacity(.25); vertical-align: top; width: 22px; }
 

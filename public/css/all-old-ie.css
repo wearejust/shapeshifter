@@ -1108,6 +1108,7 @@ button:focus, button:hover, button:active {
 
 /* line 69, sass/main.scss */
 .tricon {
+  background-color: transparent;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
