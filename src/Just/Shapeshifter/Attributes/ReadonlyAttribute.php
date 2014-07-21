@@ -12,10 +12,6 @@
 */
 class ReadonlyAttribute extends Attribute implements iAttributeInterface{
 
-    public function getSaveValue()
-    {
-        return null;
-    }
 }
 
 ?>

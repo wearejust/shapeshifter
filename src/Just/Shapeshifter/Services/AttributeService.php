@@ -8,11 +8,11 @@ class AttributeService
     /**
      * @var Collection
      */
-    private $collection;
+    private $attributes;
 
-    public function __construct(Collection $collection)
+    public function __construct(Collection $attributes)
     {
-        $this->collection = $collection;
+        $this->attributes = $attributes;
     }
 
     public function getAllPermissions()
@@ -44,10 +44,12 @@ class AttributeService
                     continue;
                 }
 
+
                 $this->attributes[$k]->setAttributeValue($r);
                 $rec->setAttribute($k, $this->attributes[$k]->getDisplayValue() );
             }
         }
+
 
         return $records;
     }

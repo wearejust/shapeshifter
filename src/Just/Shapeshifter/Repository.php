@@ -213,6 +213,24 @@ class Repository
         $this->attributes = $attributes;
     }
 
+    public function setAttributeValues($mode, $attributes, $model)
+    {
+        foreach ($attributes as $key => $attr)
+        {
+            if ($mode == 'create' && $attr->hasFlag('hide_add')) $attributes->forget($key);
+
+            if ($mode === 'edit')
+            {
+                if ($attr->hasFlag('hide_edit')) $attributes->forget($key);
+
+                $attr->setAttributeValue( $model->{$attr->name} );
+                $model->{$attr->name} = $attr->getEditValue($attr->value);
+            }
+        }
+
+        return $attributes;
+    }
+
     /**
      * @return mixed
      */

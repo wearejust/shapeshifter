@@ -25,6 +25,11 @@ class Form
     protected $sections;
 
     /**
+     * @var
+     */
+    protected $mode;
+
+    /**
      *
      */
     public function __construct()
@@ -39,6 +44,10 @@ class Form
      */
     public function add(Attribute $attribute)
     {
+        if ($this->mode === 'create' && $attribute->hasFlag('hide_add')) {
+            return;
+        }
+
         $this->attributes->push($attribute);
     }
 
@@ -128,27 +137,30 @@ class Form
         }
     }
 
+    /**
+     * @return Collection
+     */
     public function getAllAttributes()
     {
         $all = new Collection();
 
         foreach($this->attributes as $attr) {
-            $all->push($attr);
+            $all->put($attr->name, $attr);
         }
 
         foreach($this->sections->all() as $section) {
             foreach($section->getAttributes() as $attr) {
-                $all->push($attr);
+                $all->put($attr->name, $attr);
             }
         }
 
         foreach($this->tabs->all() as $tab) {
             foreach($tab->getAttributes() as $attr){
-                $all->push($attr);
+                $all->put($attr->name, $attr);
             }
             foreach($tab->getSections() as $section){
                 foreach($section as $attr){
-                    $all->push($attr);
+                    $all->put($attr->name, $attr);
                 }
             }
         }
@@ -156,4 +168,11 @@ class Form
         return $all;
     }
 
+    /**
+     * @param $mode
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+    }
 } 

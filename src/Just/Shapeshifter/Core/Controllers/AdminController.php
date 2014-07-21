@@ -12,7 +12,6 @@ use Just\Shapeshifter\Form\Section;
 use Just\Shapeshifter\Form\Tab;
 use Notification;
 use Sentry;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AdminController extends Controller {
@@ -129,7 +128,6 @@ abstract class AdminController extends Controller {
             'Just\Shapeshifter\Repository', array(new $this->model, $this->app)
         );
 
-        $this->repo->setRules($this->rules);
         $this->repo->setOrderby($this->orderby);
     }
 
@@ -139,10 +137,10 @@ abstract class AdminController extends Controller {
     private function initAttributes()
     {
         $this->formModifier = $this->app->make('Just\Shapeshifter\Form\Form');
+        $this->formModifier->setMode($this->mode);
 
         $this->beforeInit();
         $this->configureFields($this->formModifier);
-
         $this->afterInit();
 
         $this->repo->setRules($this->rules);
@@ -322,7 +320,6 @@ abstract class AdminController extends Controller {
      */
     protected function setupView($template)
     {
-//        $attributeService = $this->app->make('Just\Shapeshifter\Services\AttributeService', array($this->attributes));
         $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
         $menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
 
@@ -332,7 +329,7 @@ abstract class AdminController extends Controller {
         $this->formModifier->render();
 
         $this->data['form'] = $this->formModifier;
-        $this->data['attributes'] = $this->formModifier->getAllAttributes();
+        $this->data['attributes'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
         $this->data['currentUser'] = $user;
         $this->data['orderBy'] = $this->orderby;
         $this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
