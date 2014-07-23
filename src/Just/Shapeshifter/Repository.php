@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
+use Just\Shapeshifter\Attributes\ReadonlyAttribute;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Services\AttributeService;
-use Notification;
 
 class Repository
 {
     /**
-     * @var
+     * @var Model
      */
     protected $model;
 
@@ -90,31 +90,12 @@ class Repository
      */
     public function save($ref, $parent = array())
     {
-        // perform validation
-        $messages = $this->app['translator']->get('shapeshifter::validation');
+        $this->validate();
 
-        $validator = $this->app['validator']->make($this->app['request']->all(), $this->rules, $messages);
-        $validator->setAttributeNames($messages['attributes']);
-
-        if ($validator->fails())
-        {
-            throw new ValidationException($validator->errors());
-        }
-
-        foreach ($this->attributes as $attr)
-        {
-            if (in_array('no_save', $attr->flags)) continue;
-
-            $attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
-            $value = $attr->getSaveValue();
-
-            if (!is_null($value)) {
-                $this->model->{$attr->name} = $value;
-            }
-        }
+        $this->mutateAttributes();
 
         //Set sortorder for add
-        if (!$this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder'))
+        if ( ! $this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder'))
         {
             $query = $this->app['db']->table($this->model->getTable());
 
@@ -213,6 +194,12 @@ class Repository
         $this->attributes = $attributes;
     }
 
+    /**
+     * @param $mode
+     * @param $attributes
+     * @param $model
+     * @return mixed
+     */
     public function setAttributeValues($mode, $attributes, $model)
     {
         foreach ($attributes as $key => $attr)
@@ -264,6 +251,14 @@ class Repository
     }
 
     /**
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->model->getTable();
+    }
+
+    /**
      * @param $orderBy
      * @param $filters
      * @param $parent
@@ -286,8 +281,36 @@ class Repository
         return $records;
     }
 
-    public function getTable()
+    /**
+     * @throws Exceptions\ValidationException
+     */
+    private function validate()
     {
-        return $this->model->getTable();
+        $messages = $this->app['translator']->get('shapeshifter::validation');
+
+        $validator = $this->app['validator']->make($this->app['request']->all(), $this->rules, $messages);
+        $validator->setAttributeNames($messages['attributes']);
+
+        if ( $validator->fails() ) {
+            throw new ValidationException($validator->errors());
+        }
+    }
+
+    /**
+     *
+     */
+    private function mutateAttributes()
+    {
+        foreach ($this->attributes as $attr)
+        {
+            if ( in_array('no_save', $attr->flags) || $attr instanceof ReadonlyAttribute) continue;
+
+            $attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
+            $value = $attr->getSaveValue();
+
+            if ( ! is_null($value) ) {
+                $this->model->{$attr->name} = $value;
+            }
+        }
     }
 }

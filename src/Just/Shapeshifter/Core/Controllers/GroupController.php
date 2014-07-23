@@ -1,6 +1,7 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
 use Just\Shapeshifter\Attributes as Attribute;
+use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Relations as Relation;
 
 class GroupController extends AdminController
@@ -17,18 +18,18 @@ class GroupController extends AdminController
         'name' => 'required',
     );
 
-    protected function configureFields()
+    protected function configureFields(Form $modifier)
     {
-        $this->add( new Attribute\TextAttribute('name'));
-        $this->add( new Relation\ManyToManyFacebookRelation($this, 'users', 'users'));
+        $modifier->add( new Attribute\TextAttribute('name'));
+        $modifier->add( new Relation\ManyToManyFacebookRelation($this, 'users', 'users'));
 
         foreach ($this->getAllPermissionRoutes() as $p)
         {
-            $this->add( new Attribute\CheckboxAttribute("perms[{$p}]", array('no_save', 'hide_list')));
+            $modifier->add( new Attribute\CheckboxAttribute("perms[{$p}]", array('no_save', 'hide_list')));
         }
     }
 
-    public function beforeInit()
+    public function beforeInit(Form $modifier)
     {
         $count = 1;
         foreach ($perms = $this->model->permissions as $k=>$p) {

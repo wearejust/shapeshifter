@@ -116,7 +116,7 @@ abstract class AdminController extends Controller {
      *
      * @return mixed
      */
-    abstract protected function configureFields($modifier);
+    abstract protected function configureFields(Form $modifier);
 
     public function __construct(Application $app)
     {
@@ -139,9 +139,9 @@ abstract class AdminController extends Controller {
         $this->formModifier = $this->app->make('Just\Shapeshifter\Form\Form');
         $this->formModifier->setMode($this->mode);
 
-        $this->beforeInit();
+        $this->beforeInit($this->formModifier);
         $this->configureFields($this->formModifier);
-        $this->afterInit();
+        $this->afterInit($this->formModifier);
 
         $this->repo->setRules($this->rules);
         $this->repo->setAttributes($this->formModifier->getAllAttributes(), $this->repo->getRules());
@@ -348,16 +348,13 @@ abstract class AdminController extends Controller {
         $this->data['controller'] = get_class($this);
         $this->data['parent'] = $this->parent;
 
-
         $view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
 
-        $headers = array(
+        return $this->app->make('Illuminate\Http\Response', array($view, 200, array(
             'Expires' => 'Tue, 1 Jan 1980 00:00:00 GMT',
             'Cache-Control' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
             'Pragma' => 'no-cache',
-        );
-
-        return $this->app->make('Illuminate\Http\Response', array($view, 200, $headers));
+        )));
     }
 
     /**
@@ -501,7 +498,7 @@ abstract class AdminController extends Controller {
 
         return $last;
     }
-    // Hooks
+
 
     protected function redirectAfterUpdate($route, $args, $currentId)
     {
@@ -518,12 +515,12 @@ abstract class AdminController extends Controller {
         return $this->app['redirect']->route($route, $args);
     }
 
-    protected function beforeInit()
+    protected function beforeInit(Form $modifier)
     {
         //
     }
 
-    protected function afterInit()
+    protected function afterInit(Form $modifier)
     {
         //
     }

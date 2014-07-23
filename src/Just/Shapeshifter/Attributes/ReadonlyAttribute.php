@@ -12,6 +12,7 @@
 */
 class ReadonlyAttribute extends Attribute implements iAttributeInterface{
 
+
 }
 
 ?>
