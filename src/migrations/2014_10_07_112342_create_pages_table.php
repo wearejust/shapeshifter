@@ -30,7 +30,6 @@ class CreatePagesTable extends Migration {
 			$table->string('color')->nullable();
 			$table->string('forced')->nullable();
 			$table->text('ckeditor')->nullable();
-			$table->text('sortorder')->nullable();
 			$table->integer('sortorder')->nullable();
 			$table->timestamps();
 		});
