@@ -35,13 +35,7 @@
                     </span>
                 </span>
             </span>
-            {{--
-            <span class="group paragraph section-end">
-                <span style="display: block; width: 50%;">
-                    {{ Form::select($name . '_existing', $relatives) }}
-                </span>
-            </span>
-            --}}
+
             @include('shapeshifter::layouts.helptext')
         </span>
     </span>

@@ -20,7 +20,7 @@ class AddUsers extends Migration {
 		                           ));
 
 		// Find the group using the group id
-		$adminGroup = Sentry::findGroupByName('Administrators');
+		$adminGroup = Sentry::findGroupByName('Just Werknemer');
 
 		// Assign the group to the user
 		$user->addGroup($adminGroup);

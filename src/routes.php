@@ -27,6 +27,7 @@ Route::group(array('prefix' => 'admin'), function()
 
         Route::resource('users', 'Just\Shapeshifter\Core\Controllers\UserController');
         Route::resource('groups', 'Just\Shapeshifter\Core\Controllers\GroupController');
+        Route::resource('settings', 'Just\Shapeshifter\Core\Controllers\SettingsController');
     });
 });
 

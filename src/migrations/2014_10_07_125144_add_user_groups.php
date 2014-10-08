@@ -13,10 +13,16 @@ class AddUserGroups extends Migration {
 	public function up()
 	{
 		Sentry::createGroup(array(
+			                    'name'        => 'Just Werknemer',
+			                    'permissions' => array(
+				                    'superuser' => 1
+			                    ),
+		                    ));
+
+		Sentry::createGroup(array(
 			                    'name'        => 'Administrators',
 			                    'permissions' => array(
-				                    'superuser' => 1,
-				                    'admin.users.index' => 1,
+				                    'admin.users.index' => 1
 			                    ),
 		                    ));
 

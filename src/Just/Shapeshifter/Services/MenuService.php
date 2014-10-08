@@ -23,23 +23,29 @@ class MenuService
 
     public function generateMenu()
     {
-        $config = $this->collection->make($this->app['config']->get('shapeshifter::config.menu'));
+	    $menuConfig = $this->app['config']->get('shapeshifter::config.menu');
+		$activeUser = \Sentry::getUser();
+	    if($activeUser->isSuperUser()) {
+		    $menuConfig = array_merge($menuConfig, $this->app['config']->get('shapeshifter::config.super-admin-menu'));
+	    }
+
+        $config = $this->collection->make($menuConfig);
 
         $config->transform(function($config)
         {
             $config['active'] = $this->app['request']->segment(2) === $config['url'];
+			if(isset($config['children']) && $config['children'] > 0) {
+				$config['children'] = $this->collection->make($config['children']);
+				$config['children']->transform(function($child) use (&$config)
+				{
+					$child['active'] = $this->app['request']->segment(2) === $child['url'];
+					if ($child['active']) {
+						$config['active'] = true;
+					}
 
-            $config['children'] = $this->collection->make($config['children']);
-            $config['children']->transform(function($child) use (&$config)
-            {
-                $child['active'] = $this->app['request']->segment(2) === $child['url'];
-                if ($child['active']) {
-                    $config['active'] = true;
-                }
-
-                return $child;
-            });
-
+					return $child;
+				});
+			}
             return $config;
         });
 

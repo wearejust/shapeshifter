@@ -28,19 +28,25 @@ return array(
 
             )
         ),
-        array(
-            'title' => 'CMS-gebruikers',
-            'url' => '#',
-            'children' => array(
-                array(
-                    'title' => 'Gebruikers',
-                    'url' => 'users',
-                ),
-                array(
-                    'title' => 'Groepen',
-                    'url' => 'groups',
-                ),
-            ),
+		array(
+			'title' => 'CMS-gebruikers',
+			'url' => '#',
+			'children' => array(
+				array(
+					'title' => 'Gebruikers',
+					'url' => 'users',
+				),
+				array(
+					'title' => 'Groepen',
+					'url' => 'groups',
+				),
+			),
+		),
+	),
+	'super-admin-menu' => array(
+		array(
+			'title' => 'Settings',
+			'url' => 'settings'
 		),
 	)
 );

@@ -78,7 +78,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
             @foreach ($menu as $item)
             <li class="main-nav-item{{ $item['active'] ? ' main-nav-item-active' : '' }}">
                 <a class="main-nav-link" href="/admin/{{ $item['url'] }}">{{ $item['title'] }}</a>
-                @if (count($item['children']))
+                @if (isset($item['children']) && count($item['children']))
                 <ul class="sub-list list {{ ! $item['active'] ? 'js-hide' : ''}}">
                     @foreach ($item['children'] as $child)
                     <li class="sub-item">
