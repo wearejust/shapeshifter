@@ -43,10 +43,5 @@ return array(
 			),
 		),
 	),
-	'super-admin-menu' => array(
-		array(
-			'title' => 'Settings',
-			'url' => 'settings'
-		),
-	)
+	'super-admin-menu' => array()
 );
