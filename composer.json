@@ -1,16 +1,10 @@
 {
     "name": "just/shapeshifter",
-    "description": "",
+    "description": "The Just CMS package, The back-end of things.",
     "authors": [
         {
             "name": "Cees van Egmond",
             "email": "cees.vanegmond@wearejust.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git01@git.justnotfinished.com:just/shapesearch.git"
         }
     ],
     "require": {
@@ -18,8 +12,7 @@
         "edvinaskrucas/notification": "2.*",
         "cartalyst/sentry": "2.*",
         "barryvdh/laravel-elfinder": "v0.1.1",
-        "gregwar/image": "v2.0.17",
-        "just/shapesearch": "1.0.*"
+        "gregwar/image": "v2.0.17"
     },
     "require-dev" : {
         "phpspec/phpspec": "~2.0"
