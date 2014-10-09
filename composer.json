@@ -19,7 +19,7 @@
         "cartalyst/sentry": "2.*",
         "barryvdh/laravel-elfinder": "v0.1.1",
         "gregwar/image": "v2.0.17",
-        "just/shapesearch": "~1.0"
+        "just/shapesearch": "1.0.*"
     },
     "require-dev" : {
         "phpspec/phpspec": "~2.0"
