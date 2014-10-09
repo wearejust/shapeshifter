@@ -7,12 +7,19 @@
             "email": "cees.vanegmond@wearejust.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git01@git.justnotfinished.com:just/shapesearch.git"
+        }
+    ],
     "require": {
         "php": ">=5.3.2",
         "edvinaskrucas/notification": "2.*",
         "cartalyst/sentry": "2.*",
         "barryvdh/laravel-elfinder": "v0.1.1",
-        "gregwar/image": "v2.0.17"
+        "gregwar/image": "v2.0.17",
+        "just/shapesearch": "~1.0"
     },
     "require-dev" : {
         "phpspec/phpspec": "~2.0"
