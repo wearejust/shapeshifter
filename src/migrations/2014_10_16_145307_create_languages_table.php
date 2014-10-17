@@ -18,7 +18,7 @@ class CreateLanguagesTable extends Migration {
 			$table->boolean('active');
 			$table->string('short_code')->unique();
 			$table->string('name');
-			$table->boolean('default');
+			$table->integer('sortorder');
 			$table->timestamps();
 		});
 	}

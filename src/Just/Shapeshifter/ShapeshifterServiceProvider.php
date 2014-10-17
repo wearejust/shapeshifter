@@ -1,5 +1,6 @@
 <?php namespace Just\Shapeshifter;
 
+use File;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,6 +13,12 @@ class ShapeshifterServiceProvider extends ServiceProvider
 	 * @var bool
 	 */
 	protected $defer = false;
+
+	/**
+	 * Location of the Providers folder from the current __DIR__
+	 */
+	protected $providersPath = '/Providers';
+
 
 	/**
 	 * Bootstrap the application events.
@@ -93,7 +100,20 @@ class ShapeshifterServiceProvider extends ServiceProvider
 		$this->app->register('Cartalyst\Sentry\SentryServiceProvider');
 		$this->app->register('Krucas\Notification\NotificationServiceProvider');
 		$this->app->register('Barryvdh\Elfinder\ElfinderServiceProvider');
+
+		/**
+		 * Shapeshifter Providers
+		 */
+
+		$this->loadShapeshifterProviders();
 	}
+
+	/**
+	 * Load the files inside the provided Providers folder.
+	 */
+	private function loadShapeshifterProviders ()
+	{
+		$this->app->register('Just\Shapeshifter\Providers\LanguageServiceProvider');
+	}
+
 }
-
-

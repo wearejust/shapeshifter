@@ -114,6 +114,13 @@ class Repository
             $this->model->{$parent[0]} = $parent[1];
         }
 
+	    // If the schema has a language id.
+	    if(\Schema::hasColumn($this->model->getTable(), 'language_id'))
+	    {
+		    $active_lang_id = Session::get('active_lang')->id;
+		    $this->model->{'language_id'} = $active_lang_id;
+	    }
+
         $this->model = !$this->model->id ? $ref->beforeAdd($this->model) : $ref->beforeUpdate($this->model) ;
 
         if ( $this->model->save() )
