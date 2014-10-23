@@ -276,6 +276,9 @@ abstract class Attribute
     protected function getLabel($name)
     {
         $label = translateAttribute($name);
+
+        $label = str_replace("_", " ", $label);
+
         if ( $this->required ) {
             $label .= ' *';
         }
