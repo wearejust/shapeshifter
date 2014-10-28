@@ -30,15 +30,19 @@ class LanguageServiceProvider extends ServiceProvider
 
 	public function  boot ()
 	{
-		$this->validateDependencies();
-		if(!Session::has('active_lang')) {
-			$default_lang = $this->lang->where('short_code', '=', $this->app['config']->get('app.locale'))->first();
-			Session::put('active_lang', $default_lang);
+		if(\Schema::hasTable('languages'))
+		{
+			$this->validateDependencies();
+			if(!Session::has('active_lang')) {
+				$default_lang = $this->lang->where('short_code', '=', $this->app['config']->get('app.locale'))->first();
+				Session::put('active_lang', $default_lang);
+			}
 		}
 	}
 
 	private function validateDependencies ()
 	{
+
 		/**
 		 * Check if there is an language available in the database.
 		 */
