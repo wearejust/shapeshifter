@@ -21,24 +21,22 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
     */   
 	protected $values;
 
-    /**
-     * __construct
-     * 
-     * @param string $name   Description.
-     * @param array  $values Description.
-     * @param array  $flags  Description.
-     *
-     * @access public
-     * @return mixed Value.
-     */
-    public function __construct($name = '', $values = array(), $labels = array(), $flags = array())
+	/**
+	 * __construct
+	 *
+	 * @param string $name  Description.
+	 * @param array  $lists
+	 * @param array  $flags Description.
+	 *
+	 * @internal param array $values Description.
+	 * @access   public
+	 * @return mixed Value.
+	 */
+    public function __construct($name = '', $lists, $flags = array())
     {
 		$this->name = $name;
 		$this->flags = $flags;
-
-        if ( ! $labels) $labels = $values;
-
-        $this->values = array_combine($labels, $values);
+        $this->values = $lists;
 	}
 
     /**
@@ -70,5 +68,3 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
         return 'Geen';
     }
 }
-
-?>
