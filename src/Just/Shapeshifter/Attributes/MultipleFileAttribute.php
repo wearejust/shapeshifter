@@ -114,7 +114,7 @@ class MultipleFileAttribute extends Attribute implements iAttributeInterface
      * @param $storageDir
      * @return string
      */
-    private function getRelativePath($storageDir)
+    protected function getRelativePath($storageDir)
     {
         return DIRECTORY_SEPARATOR . trim($storageDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }

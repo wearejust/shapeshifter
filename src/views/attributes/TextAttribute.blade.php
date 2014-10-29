@@ -5,7 +5,7 @@
         </span>
         <span class="form-field">
         	<span class="form-control">
-    	        {{ Form::input($type, $name, null, array('class' => 'form-field-content' . ($required ?' js-required':''), 'id' => $name)) }}
+    	        {{ Form::input($type, $name, $translation_value, array('class' => 'form-field-content' . ($required ?' js-required':''), 'id' => $name)) }}
     	        <span class="form-group-highlight"></span>
     	    </span>
     	    @include('shapeshifter::layouts.helptext')

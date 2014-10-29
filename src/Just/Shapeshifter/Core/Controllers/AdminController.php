@@ -125,7 +125,7 @@ abstract class AdminController extends Controller
 
 
 	/**
-	 * Function that is needed in the node, this descripbes how the node will
+	 * Function that is needed in the node, this describes how the node will
 	 * looks like, what it can/cannot do.
 	 *
 	 * @return mixed
@@ -142,7 +142,7 @@ abstract class AdminController extends Controller
 			'Just\Shapeshifter\Repository', array(new $this->model, $this->app)
 		);
 
-		$this->setLanguageAttributes();
+		$this->languages = new Language;
 
 		$this->repo->setOrderby($this->orderby);
 	}
@@ -162,6 +162,7 @@ abstract class AdminController extends Controller
 		$this->repo->setRules($this->rules);
 		$this->repo->setAttributes($this->formModifier->getAllAttributes(), $this->repo->getRules());
 
+		$this->initTranslations($this->formModifier);
 		$this->data['routes'] = $this->getCurrentRouteNames();
 	}
 
@@ -352,6 +353,7 @@ abstract class AdminController extends Controller
 
 		$this->data['form']            = $this->formModifier;
 		$this->data['attributes']      = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
+		$this->data['attributes_translations']      = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
 		$this->data['currentUser']     = $user;
 		$this->data['orderBy']         = $this->orderby;
 		$this->data['breadcrumbs']     = $breadcrumbService->breadcrumbs();
@@ -642,10 +644,37 @@ abstract class AdminController extends Controller
 		return $model;
 	}
 
-	private function setLanguageAttributes ()
+	private function initTranslations ($form)
 	{
-		$this->languages   = Language::where('active', '=', 1)->remember(20)->orderBy('sortorder')->get();
-		$this->active_lang = Session::get('active_lang');
+		if($this->languages->count() > 0 && count($form->translation_attributes) > 0)
+		{
+			foreach($this->languages->all() as $lang)
+			{
+				$form->tab($lang->name, function($mod) use ($form, $lang) {
+					foreach($form->translation_attributes as $attribute)
+					{
+						$value = $this->getModel()->translations()
+						              ->where('language_id', '=', $lang->id)
+						              ->where('attribute', '=', $attribute->name)
+						              ->first();
+
+						$object = new $attribute($attribute->name, $attribute->value, $attribute->flags);
+						$object->name = preg_replace( '/\[+(.*?)\]/', '', $object->name);
+						$object->name = 'translations[' . $lang->short_code . ']['. $object->name . ']';
+						if($value) {
+							$object->translation_value = $value->value;
+						} else {
+							$object->translation_value = '';
+						}
+
+						$mod->add($object);
+					}
+				});
+			}
+
+		}
+
+
 	}
 }
 

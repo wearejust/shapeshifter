@@ -189,6 +189,10 @@ abstract class Attribute
      */
     public function getDisplayValue()
     {
+	    if($this->hasFlag('image_list'))
+	    {
+		    return '<img style="margin:0; max-width: 100px; max-height: 100px;" src="'. asset( $this->relativeStorageDir . $this->value) .'">';
+	    }
         return $this->value;
     }
 
@@ -275,8 +279,9 @@ abstract class Attribute
      */
     protected function getLabel($name)
     {
-        $label = translateAttribute($name);
+	    $name = $this->removeTranslationBrackets($name);
 
+	    $label = translateAttribute($name);
         $label = str_replace("_", " ", $label);
 
         if ( $this->required ) {
@@ -303,6 +308,23 @@ abstract class Attribute
             unset($this->flags[$key]);
         }
     }
+
+	/**
+	 * @param $name
+	 *
+	 * @internal param $matches
+	 *
+	 * @return mixed
+	 */
+	protected function removeTranslationBrackets ($name)
+	{
+		if (preg_match_all('/\[+(.*?)\]/', $name, $matches))
+		{
+			$name = $matches[1][1];
+			return $name;
+		}
+		return $name;
+	}
 
 }
 
