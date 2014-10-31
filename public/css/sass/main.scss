@@ -129,7 +129,7 @@ button:focus, button:hover, button:active { background-color: lighten($primary-c
 .form-option-content { margin: 0 .5px; }
 .form-option-label { background-color: #e3e3e3; float: none !important; padding: 1.1em 1.5em 1.1em 3em; }
 .form-option-field { float: none; left: 1.5em; margin: 0 !important; position: absolute; top: 1.15em; }
-.form-control { display: block;/* margin: -.825em 0;*/ }
+.form-control { display: block; margin: -.825em 0; }
 .form-field-short, .form-field-medium { min-width: 11em; width: 50%; }
 .form-field-content, .form-single-checkbox { position: relative; z-index: 2; }
 .form-single-checkbox { float: none !important; }

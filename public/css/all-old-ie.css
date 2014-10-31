@@ -1436,7 +1436,7 @@ button:focus, button:hover, button:active {
 /* line 132, sass/main.scss */
 .form-control {
   display: block;
-  /* margin: -.825em 0;*/
+  margin: -0.825em 0;
 }
 
 /* line 133, sass/main.scss */
