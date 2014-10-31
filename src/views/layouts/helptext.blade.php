@@ -1,3 +1,3 @@
 @if (isset($helptext) && $helptext)
-    <p class="note">{{ $helptext }}</p>
+<p class="note">{{ $helptext }}</p>
 @endif

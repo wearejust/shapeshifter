@@ -1357,8 +1357,12 @@ button:focus, button:hover, button:active {
 
 /* line 112, sass/main.scss */
 .form-option {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   display: inline-block;
   margin: 1px 0;
+  padding: 0 .5px;
   position: relative;
   vertical-align: top;
   width: 100%;
@@ -1421,11 +1425,6 @@ button:focus, button:hover, button:active {
     width: 33.333%;
   }
 }
-/* line 129, sass/main.scss */
-.form-option-content {
-  margin: 0 .5px;
-}
-
 /* line 130, sass/main.scss */
 .form-option-label {
   background-color: #e3e3e3;

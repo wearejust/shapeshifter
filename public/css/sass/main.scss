@@ -109,7 +109,7 @@ button:focus, button:hover, button:active { background-color: lighten($primary-c
 .form-legend { font-weight: bold; margin-bottom: 1.1em; }
 .form-options { margin-left: -1.5em; margin-right: -1.5em; }
 .form-options-content { margin: -1px -.5px; }
-.form-option { display: inline-block; margin: 1px 0; position: relative; vertical-align: top; width: 100%; }
+.form-option { @include box-sizing(border-box); display: inline-block; margin: 1px 0; padding: 0 .5px; position: relative; vertical-align: top; width: 100%; }
 .form-option-dependency { position: relative; }
 .form-option-dependency .form-option-field { display: none; }
 .form-option-dependency .form-option-label { padding-left: 1em; }
@@ -126,7 +126,7 @@ button:focus, button:hover, button:active { background-color: lighten($primary-c
 @include respond-min-width(75em) {
 	.form-option-grid-3 { width: 33.333%; }
 }
-.form-option-content { margin: 0 .5px; }
+//.form-option-content { margin: 0 .5px; }
 .form-option-label { background-color: #e3e3e3; float: none !important; padding: 1.1em 1.5em 1.1em 3em; }
 .form-option-field { float: none; left: 1.5em; margin: 0 !important; position: absolute; top: 1.15em; }
 .form-control { display: block; margin: -.825em 0; }
