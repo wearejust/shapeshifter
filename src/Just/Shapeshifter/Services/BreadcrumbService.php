@@ -1,6 +1,9 @@
 <?php namespace Just\Shapeshifter\Services;
 
 use Illuminate\Foundation\Application;
+use Just\Shapeshifter\Core\Models\Language;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Database\DatabaseManager as DB;
 
 class BreadcrumbService {
 
@@ -9,9 +12,22 @@ class BreadcrumbService {
      */
     private $app;
 
-    public function __construct(Application $app)
+	protected $languages;
+	/**
+	 * @var Config
+	 */
+	private $config;
+	/**
+	 * @var DB
+	 */
+	private $db;
+
+	public function __construct(Application $app, Config $config, Language $languages, DB $db)
     {
         $this->app = $app;
+	    $this->config = $config;
+	    $this->languages = $languages;
+	    $this->db = $db;
     }
 
     public function breadcrumbs()
@@ -93,7 +109,28 @@ class BreadcrumbService {
             $record = $controller->repo->findById($segment);
             if ( is_object($record) ) {
                 $mode = $record->{$controller->getDescriptor()};
+	            $usesTranslation = preg_match('/translate./', $controller->getDescriptor());
+	            if($usesTranslation)
+	            {
+		            $parts = explode('.', $controller->getDescriptor());
+		            $regularDecriptor = array_last($parts,  function($key, $value)
+		            {
+			            return $value;
+		            });
 
+		            $defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
+		            $table_name = $controller->repo->getTable();
+		            $result     = $this->db->table($table_name . '_translations')
+		                                   ->where('parent_id', '=', $record->id)
+		                                   ->where('language_id', '=', $defaultLanguage->id)
+		                                   ->where('attribute', '=', $regularDecriptor)
+		                                   ->first();
+
+		            if($result)
+		            {
+			            $mode = $result->value;
+		            }
+	            }
                 return array($edit, $mode);
             }
         }

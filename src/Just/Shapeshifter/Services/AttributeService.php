@@ -44,7 +44,6 @@ class AttributeService
                     continue;
                 }
 
-
                 $this->attributes[$k]->setAttributeValue($r);
                 $rec->setAttribute($k, $this->attributes[$k]->getDisplayValue() );
             }
