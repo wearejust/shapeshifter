@@ -53,12 +53,12 @@ CKEDITOR.editorConfig = function (config) {
     // The toolbar groups arrangement, optimized for two toolbar rows.
 
     config.toolbar = [
-        [ 'Format'],
+        [ 'Format' ],
         [ 'PasteFromWord' ],
         [ 'Bold', 'Italic' ],
-        [ 'Subscript', 'Superscript' ],
         [ 'NumberedList', 'BulletedList' ],
         [ 'Link', 'Unlink' ],
+        [ 'Subscript', 'Superscript' ],
         [ 'SpecialChar' ]
     ];
 
@@ -74,7 +74,7 @@ CKEDITOR.editorConfig = function (config) {
 
     config.forcePasteAsPlainText = true; // Webkit double paste bug
 
-    config.skin ='just';
+    config.skin = 'just';
 };
 
 

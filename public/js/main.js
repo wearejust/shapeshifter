@@ -843,7 +843,7 @@ var SortableTable = function(options, table) {
 
 	this.element.find('.search-control').on('keyup blur', this.search.bind(this));
 
-	this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more</span><span class="toggle-button-less" style="display: none;">less</span></button>');
+	this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
 	this.element.append(this.toggleButton);
 	this.toggleButton.on('click', this.itemsToggle.bind(this));
 	this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
