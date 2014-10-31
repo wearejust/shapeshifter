@@ -6,7 +6,7 @@
 
 @if ($mode == 'edit' && $model->updated_at)
 <div class="section section-start paragraph record-updated">
-    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%d %B %Y, %H:%M') }}</p>
+    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%e %B %Y, %H:%M') }}</p>
 </div>
 @endif
 

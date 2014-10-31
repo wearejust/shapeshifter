@@ -4,7 +4,6 @@
 <div class="content-body-inner">
     <h1>{{ $title }}</h1>
     
-    <!-- Hier nog iets omheen if'en -->
     @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
     <div class="group">
         @if ($currentUser->can('create'))
@@ -26,9 +25,9 @@
     </div>
     @endif
 
-    <div class="paragraph section-end" id="datatable">
+    <div class="section paragraph" id="datatable">
         @if (!count($records))
-        <div class="paragraph section-end">
+        <div class="section paragraph">
             <div class="form-group">
                 <p>{{ __('form.no-records') }}</p>
             </div>

@@ -3,6 +3,9 @@
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
+// Native context menu fix
+CKEDITOR.dom.element.prototype.disableContextMenu = function(){};
+
 CKEDITOR.editorConfig = function (config) {
 
     config.filebrowserBrowseUrl = '/admin/elfinder';
@@ -22,18 +25,22 @@ CKEDITOR.editorConfig = function (config) {
     config.uiColor = '#eceae7';
     config.undoStackSize = 250;
 
-    config.format_tags = 'p;h2';
-
     config.resize_enabled = false;
 
     config.disableNativeSpellChecker = false;
 
     config.entities = false;
 
-    config.extraPlugins = 'autogrow';
+    config.allowedContent = 'a[href]; img[!src,alt,!width,!height]{float};' + // Note no {width,height}
+    'h2 h3 p strong b em i sub sup ul ol li'
+
+    config.extraPlugins = 'divarea';
     config.removePlugins = 'elementspath, contextmenu, resize, tabletools, forms, font, document, div, underline, magicline, flash, iframe';
 
+    config.height = 'auto';
+
     config.autoGrow_onStartup = true;
+    config.autoGrow_minHeight = 100;
     config.autoGrow_maxHeight = 500;
 
     config.startupOutlineBlocks = true;
