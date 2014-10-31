@@ -15,37 +15,43 @@ class MenuService
 	 */
 	public $collection;
 
-	public function __construct(Application $app, Collection $collection)
+	public function __construct (Application $app, Collection $collection)
 	{
-		$this->app = $app;
+		$this->app        = $app;
 		$this->collection = $collection;
 	}
 
-	public function generateMenu()
+	public function generateMenu ()
 	{
 		$config = $this->collection->make($this->app['config']->get('shapeshifter::config.menu'));
 
 		$reference = $this;
-		$config->transform(function($config) use ($reference)
+		$config->transform(function ($config) use ($reference)
 		{
 			$config['active'] = $reference->app['request']->segment(2) === $config['url'];
-
-			$config['children'] = $reference->collection->make($config['children']);
-			$config['children']->transform(function($child) use (&$config, $reference)
+			if (isset($config['children']) && count($config['children']) > 0)
 			{
+				$config['children'] = $reference->collection->make($config['children']);
+				$config['children']->transform(function ($child) use (&$config, $reference)
+				{
 
-				$child['active'] = ($reference->app['request']->segment(2) === $child['url']);
-				if ($child['active']) {
-					$config['active'] = true;
-				}else {
-					$child['active'] = \Session::get('category') == last(explode('=', last(explode('?', $child['url']))));
-					if ($child['active']){
+					$child['active'] = ($reference->app['request']->segment(2) === $child['url']);
+					if ($child['active'])
+					{
 						$config['active'] = true;
+					} else
+					{
+						$child['active'] = \Session::get('category') == last(explode('=', last(explode('?', $child['url']))));
+						if ($child['active'])
+						{
+							$config['active'] = true;
+						}
 					}
-				}
 
-				return $child;
-			});
+					return $child;
+				});
+			}
+
 
 			return $config;
 		});
