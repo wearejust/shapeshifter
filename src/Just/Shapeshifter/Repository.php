@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use Input;
 use Just\Shapeshifter\Attributes\ReadonlyAttribute;
 use Just\Shapeshifter\Core\Models\Language;
 use Just\Shapeshifter\Exceptions\ValidationException;
@@ -108,7 +109,6 @@ class Repository
 
 		$relations = new Collection;
 
-		$translatableSaveItems = $this->prepareTranslations($relations);
 
 		$this->validate();
 
@@ -123,6 +123,7 @@ class Repository
 
 		if ($this->model->save())
 		{
+			$translatableSaveItems = $this->prepareTranslations($relations, $parent);
 			$this->saveTranslations($translatableSaveItems);
 
 			$this->model = !$this->model->id ? $ref->afterAdd($this->model) : $ref->afterUpdate($this->model);
@@ -339,7 +340,7 @@ class Repository
 	/**
 	 * @return bool
 	 */
-	private function modelHasTranslations ()
+	public function modelHasTranslations ()
 	{
 		$relation = $this->model->getTable() . '_translations';
 		$check    = \Schema::hasTable($relation);
@@ -382,18 +383,30 @@ class Repository
 	/**
 	 * @param $relations
 	 */
-	private function convertTranslationInputToModels ($relations)
+	private function convertTranslationInputToModels ($relations, $parent)
 	{
-		foreach (\Input::get('translations') as $key => $attribute)
+		$i=1;
+		foreach (Input::get('translations') as $key => $lang_attributes)
 		{
-			$lang = $this->languages->where('short_code', '=', $key)->get(array('id'))->first();
+			foreach($lang_attributes as $type => $value)
+			{
+				$lang = $this->languages->where('short_code', '=', $key)->get(array('id'))->first();
+				if (isset($parent[1]) && !empty($parent))
+				{
+					$parentId = $parent[1];
+				} else
+				{
+					$parentId = $this->model->id;
+				}
+				$relations->put($i, array(
+					'parent_id'   => $parentId,
+					'language_id' => $lang->id,
+					'attribute'   => $type,
+					'value'       => $value
+				));
+				$i++;
+			}
 
-			$relations->put($key, array(
-				'parent_id'   => $this->model->id,
-				'language_id' => $lang->id,
-				'attribute'   => key($attribute),
-				'value'       => $attribute[key($attribute)]
-			));
 		}
 	}
 
@@ -444,11 +457,11 @@ class Repository
 	 *
 	 * @return array
 	 */
-	private function prepareTranslations ($relations)
+	private function prepareTranslations ($relations, $parent)
 	{
 		if (\Input::has('translations'))
 		{
-			$this->convertTranslationInputToModels($relations);
+			$this->convertTranslationInputToModels($relations, $parent);
 		}
 
 		if ($this->modelHasTranslations())
@@ -458,4 +471,5 @@ class Repository
 		}
 		return $translatableSaveItems;
 	}
+	
 }

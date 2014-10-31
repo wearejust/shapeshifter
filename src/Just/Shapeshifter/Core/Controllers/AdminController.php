@@ -1,6 +1,9 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
 use Controller;
+use Illuminate\Config\Repository as Config;
+use Illuminate\Database\DatabaseManager as DB;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Core\Models\Language;
@@ -123,16 +126,21 @@ abstract class AdminController extends Controller
 	 */
 	protected $active_lang;
 
+	/**
+	 * @var
+	 */
+	public $addBlocks;
 
 	/**
-	 * Function that is needed in the node, this describes how the node will
-	 * looks like, what it can/cannot do.
-	 *
-	 * @return mixed
+	 * @var Config
 	 */
-	abstract protected function configureFields (Form $modifier);
+	private $config;
+	/**
+	 * @var DB
+	 */
+	private $db;
 
-	public function __construct (Application $app)
+	public function __construct (Application $app, Config $config, DB $db)
 	{
 		$this->app = $app;
 
@@ -143,9 +151,19 @@ abstract class AdminController extends Controller
 		);
 
 		$this->languages = new Language;
-
 		$this->repo->setOrderby($this->orderby);
+		$this->data['addBlocks'] = $this->addBlocks;
+		$this->config            = $config;
+		$this->db                = $db;
 	}
+
+	/**
+	 * Function that is needed in the node, this describes how the node will
+	 * looks like, what it can/cannot do.
+	 *
+	 * @return mixed
+	 */
+	abstract protected function configureFields (Form $modifier);
 
 	/**
 	 *  This method is always fired, this is the base of whole shapeshifter
@@ -164,6 +182,8 @@ abstract class AdminController extends Controller
 
 		$this->initTranslations($this->formModifier);
 		$this->data['routes'] = $this->getCurrentRouteNames();
+
+		return $this->formModifier;
 	}
 
 	/**
@@ -182,10 +202,12 @@ abstract class AdminController extends Controller
 		$this->mode  = 'index';
 		$this->model = $this->repo->getNew();
 
-		$this->initAttributes();
+		$form = $this->initAttributes();
 		$this->generateTimestampFields();
 
 		$records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
+		$this->getParentInfo();
+
 
 		if ($this->app['request']->ajax() && !count($records) && in_array('create', $this->disabledActions))
 		{
@@ -194,6 +216,37 @@ abstract class AdminController extends Controller
 
 		$this->data['title']   = $this->plural;
 		$this->data['records'] = $records;
+
+		if ($this->repo->modelHasTranslations())
+		{
+			$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
+			foreach ($records as $rec)
+			{
+				foreach ($form->translation_attributes as $attribute)
+				{
+
+					$table_name = $this->getModel()->getTable();
+					$result     = $this->db->table($table_name . '_translations')
+					                       ->where('parent_id', '=', $rec->id)
+					                       ->where('language_id', '=', $defaultLanguage->id)
+					                       ->where('attribute', '=', $attribute->name)
+					                       ->first();
+
+
+					if ($result)
+					{
+						$attribute->setAttributeValue($result->value);
+						$rec->translation_value = $result->value;
+
+						$form->tab('translations', function ($mod) use ($attribute)
+						{
+							$mod->add($attribute);
+						});
+					}
+				}
+			}
+
+		}
 
 		return $this->setupView('index');
 	}
@@ -237,6 +290,30 @@ abstract class AdminController extends Controller
 		$this->model = $this->repo->findById($this->getCurrentId());
 
 		$this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
+
+		if($this->repo->modelHasTranslations())
+		{
+			$usesTranslation = preg_match('/translate./', $this->getDescriptor());
+			if($usesTranslation)
+			{
+				$parts = explode('.', $this->getDescriptor());
+				$regularDecriptor = array_last($parts,  function($key, $value)
+				{
+					return $value;
+				});
+
+				$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
+				$table_name = $this->repo->getTable();
+				$result     = $this->db->table($table_name . '_translations')
+				                       ->where('parent_id', '=', $this->model->id)
+				                       ->where('language_id', '=', $defaultLanguage->id)
+				                       ->where('attribute', '=', $regularDecriptor)
+				                       ->first();
+
+
+				if($result) $this->data['title'] = $regularDecriptor == 'id' ? $this->singular . ' bewerken' : $result->value;
+			}
+		}
 
 		$this->initAttributes();
 
@@ -351,26 +428,29 @@ abstract class AdminController extends Controller
 
 		$this->formModifier->render();
 
-		$this->data['form']            = $this->formModifier;
-		$this->data['attributes']      = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
-		$this->data['attributes_translations']      = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
-		$this->data['currentUser']     = $user;
-		$this->data['orderBy']         = $this->orderby;
-		$this->data['breadcrumbs']     = $breadcrumbService->breadcrumbs();
-		$this->data['menu']            = $menuService->generateMenu();
-		$this->data['descriptor']      = $this->getDescriptor();
-		$this->data['cancel']          = $this->generateCancelLink();
-		$this->data['disabledActions'] = $this->disabledActions;
-		$this->data['disableDeleting'] = $this->disableDeleting;
-		$this->data['disableEditing']  = $this->disableEditing;
-		$this->data['model']           = $this->model;
-		$this->data['preview']         = $this->preview;
+		$this->data['form']                    = $this->formModifier;
+		$this->data['attributes']              = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
+		$this->data['attributes_translations'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
+		$this->data['currentUser']             = $user;
+		$this->data['orderBy']                 = $this->orderby;
+		$this->data['breadcrumbs']             = $breadcrumbService->breadcrumbs();
+		$this->data['menu']                    = $menuService->generateMenu();
+		$this->data['descriptor']              = $this->getDescriptor();
+		$this->data['cancel']                  = $this->generateCancelLink();
+		$this->data['disabledActions']         = $this->disabledActions;
+		$this->data['disableDeleting']         = $this->disableDeleting;
+		$this->data['disableEditing']          = $this->disableEditing;
+		$this->data['model']                   = $this->model;
+		$this->data['preview']                 = $this->preview;
 
 		$this->data['lastVisibleAttribute'] = $this->getLastVisibleAttribute();
 		$this->data['singular']             = $this->singular;
 		$this->data['mode']                 = $this->mode;
 		$this->data['controller']           = get_class($this);
 		$this->data['parent']               = $this->parent;
+
+		$node = $this;
+		$this->beforeRender($node);
 
 		$view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
 
@@ -646,35 +726,49 @@ abstract class AdminController extends Controller
 
 	private function initTranslations ($form)
 	{
-		if($this->languages->count() > 0 && count($form->translation_attributes) > 0)
+		if ($this->mode == 'edit' || $this->mode == 'create')
 		{
-			foreach($this->languages->all() as $lang)
+			if ($this->languages->count() > 0 && count($form->translation_attributes) > 0)
 			{
-				$form->tab($lang->name, function($mod) use ($form, $lang) {
-					foreach($form->translation_attributes as $attribute)
-					{
-						$value = $this->getModel()->translations()
-						              ->where('language_id', '=', $lang->id)
-						              ->where('attribute', '=', $attribute->name)
-						              ->first();
-
-						$object = new $attribute($attribute->name, $attribute->value, $attribute->flags);
-						$object->name = preg_replace( '/\[+(.*?)\]/', '', $object->name);
-						$object->name = 'translations[' . $lang->short_code . ']['. $object->name . ']';
-						if($value) {
-							$object->translation_value = $value->value;
-						} else {
-							$object->translation_value = '';
-						}
-
-						$mod->add($object);
-					}
-				});
+				$this->createTabForEachLanguage($form);
 			}
 
 		}
+	}
 
+	public function beforeRender ($node) { }
 
+	/**
+	 * @param $form
+	 */
+	private function createTabForEachLanguage ($form)
+	{
+		foreach ($this->languages->all() as $lang)
+		{
+			$form->tab($lang->name, function ($mod) use ($form, $lang)
+			{
+				foreach ($form->translation_attributes as $attribute)
+				{
+					$value = $this->getModel()->translations()
+					              ->where('language_id', '=', $lang->id)
+					              ->where('attribute', '=', $attribute->name)
+					              ->first();
+
+					$object       = new $attribute($attribute->name, $attribute->value, $attribute->flags);
+					$object->name = preg_replace('/\[+(.*?)\]/', '', $object->name);
+					$object->name = 'translations[' . $lang->short_code . '][' . $object->name . ']';
+					if ($value)
+					{
+						$object->translation_value = $value->value;
+					} else
+					{
+						$object->translation_value = '';
+					}
+
+					$mod->add($object);
+				}
+			});
+		}
 	}
 }
 
