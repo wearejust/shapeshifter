@@ -463,7 +463,7 @@ class Repository
 		{
 			$this->convertTranslationInputToModels($relations, $parent);
 		}
-
+		$translatableSaveItems = array();
 		if ($this->modelHasTranslations())
 		{
 			$translatableSaveItems = $this->getSaveabletranslations($relations);

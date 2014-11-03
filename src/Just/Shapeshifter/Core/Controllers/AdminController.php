@@ -190,7 +190,7 @@ abstract class AdminController extends Controller
 	 * @throws NotFoundHttpException
 	 * @return mixed
 	 */
-	final public function index ()
+	public function index ()
 	{
 		if (!$this->userHasAccess())
 		{
@@ -756,6 +756,7 @@ abstract class AdminController extends Controller
 
 					$object       = new $attribute($attribute->name, $attribute->value, $attribute->flags);
 					$object->name = preg_replace('/\[+(.*?)\]/', '', $object->name);
+					$object->translation_name = $object->name;
 					$object->name = 'translations[' . $lang->short_code . '][' . $object->name . ']';
 					if ($value)
 					{
