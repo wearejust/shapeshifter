@@ -35,7 +35,6 @@
                     </span>
                 </span>
             </span>
-
             @include('shapeshifter::layouts.helptext')
         </span>
     </span>
