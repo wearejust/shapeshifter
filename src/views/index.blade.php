@@ -36,7 +36,7 @@
         @if (!count($records))
         <div class="section paragraph">
             <div class="form-group">
-                <p>{{ __('form.no-records') }}</p>
+                <p class="form-group-content">{{ __('form.no-records') }}</p>
             </div>
         </div>
         @else

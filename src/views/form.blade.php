@@ -35,7 +35,7 @@
     @endif
 
     <div class="section section-start section-main">
-        {{ Form::model($model, array('class' => 'section-start', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) }}
+        {{ Form::model($model, array('class' => 'section section-start', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) }}
             <div class="section">
                 <fieldset class="section section-sub">
                     <legend class="accessibility">{{ $title }}</legend>
@@ -92,7 +92,7 @@
     </div>
 
     @foreach ($form->getTabs() as  $tab)
-        <div id="{{ $tab->getSlug() }}-extra">
+        <div class="" id="{{ $tab->getSlug() }}-extra">
             @include('shapeshifter::relation', array('attributes' => $tab->getAttributes()))
         </div>
     @endforeach
