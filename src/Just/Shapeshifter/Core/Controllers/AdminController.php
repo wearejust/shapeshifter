@@ -644,8 +644,11 @@ abstract class AdminController extends Controller
 
 	private function setLanguageAttributes ()
 	{
-		$this->languages   = Language::where('active', '=', 1)->remember(20)->orderBy('sortorder')->get();
-		$this->active_lang = Session::get('active_lang');
+		if(\Schema::hasTable('languages'))
+		{
+			$this->languages   = Language::where('active', '=', 1)->remember(20)->orderBy('sortorder')->get();
+			$this->active_lang = Session::get('active_lang');
+		}
 	}
 }
 
