@@ -8,5 +8,5 @@ class Language extends \Eloquent {
      * @var string
      */
     protected $table = 'languages';
-	public $fillable = ['short_code', 'active', 'name', 'default'];
+	public $fillable = array('short_code', 'active', 'name', 'default');
 }
