@@ -18,7 +18,7 @@ class UserController extends AdminController
     );
 
     protected $rules = array(
-        'name' => 'required',
+        'email' => 'required',
     );
 
     protected function configureFields(Form $modifier)
