@@ -772,5 +772,3 @@ abstract class AdminController extends Controller
 		}
 	}
 }
-
-?>

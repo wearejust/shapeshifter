@@ -18,7 +18,7 @@ Route::group(array('prefix' => 'admin'), function()
 
     Route::group(array('before' =>'admin-auth'), function()
     {
-        Route::get('elfinder', 'Barryvdh\Elfinder\ElfinderController@showTinyMCE4');
+        Route::get('elfinder', 'Barryvdh\Elfinder\ElfinderController@showCKeditor4');
         Route::any('elfinder/connector', 'Barryvdh\Elfinder\ElfinderController@showConnector');
 
         Route::get('logout', array('as' => 'admin-logout', 'uses' => 'Just\Shapeshifter\Core\Controllers\AuthController@getLogout'));

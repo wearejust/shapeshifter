@@ -11,7 +11,7 @@
         "php": ">=5.3.2",
         "edvinaskrucas/notification": "3.*",
         "cartalyst/sentry": "2.*",
-        "barryvdh/laravel-elfinder": "v0.1.1",
+        "barryvdh/laravel-elfinder": "0.1.x",
         "gregwar/image": "v2.0.17"
     },
     "require-dev" : {
