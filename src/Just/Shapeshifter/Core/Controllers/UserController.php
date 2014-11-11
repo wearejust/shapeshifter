@@ -26,7 +26,8 @@ class UserController extends AdminController
         $modifier->add( new Attribute\CheckboxAttribute('activated'));
 
         $modifier->add( new Attribute\TextAttribute('email', 'email'));
-        $modifier->add( new Attribute\TextAttribute('name', 'text',array('hide_list')));
+        $modifier->add( new Attribute\TextAttribute('first_name', 'text',array('hide_list')));
+        $modifier->add( new Attribute\TextAttribute('last_name', 'text',array('hide_list')));
         $modifier->add( new Attribute\PasswordAttribute('password', array('hide_list')));
         $modifier->add( new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
