@@ -149,6 +149,8 @@ class BreadcrumbService {
             }
         }
 
+	    if(!isset($mode)) $mode = '';
+
         return array($edit, $mode);
     }
 
