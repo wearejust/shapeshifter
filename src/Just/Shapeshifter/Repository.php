@@ -77,10 +77,10 @@ class Repository
 	{
 		if ($this->modelHasTranslations())
 		{
-			$this->model = $this->model->with('translations')->findOrFail($id);
+			$this->model = $this->model->with('translations')->find($id);
 		} else
 		{
-			$this->model = $this->model->findOrFail($id);
+			$this->model = $this->model->find($id);
 		}
 
 		return $this->model;
