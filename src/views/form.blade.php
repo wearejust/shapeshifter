@@ -73,6 +73,11 @@
 
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
+
+            @if ( Session::has('saved-item') )
+                <div class="alert alert-success" style="z-index: 2000;">{{ Session::get('saved-item')  }}</div>
+            @endif
+
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
                     <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
