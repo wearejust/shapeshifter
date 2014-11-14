@@ -20,6 +20,8 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::style('/packages/just/shapeshifter/css/main.css') }}
 {{ HTML::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') }}
 {{ HTML::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') }}
+{{ HTML::style('/packages/just/shapeshifter/js/sweetalert/sweet-alert.css') }}
+
 {{-- HTML::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') --}}
 <style>
 .cke_contents { height: auto !important; }
@@ -109,6 +111,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/jquery-tokeninput/src/jquery.tokeninput.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/ckeditor/ckeditor.js") }}
+{{ HTML::script("/packages/just/shapeshifter/js/sweetalert/sweet-alert.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-ui.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery.ui.touch-punch.min.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery.dataTables.min.js") }}

@@ -6,7 +6,7 @@
 
 @if ($mode == 'edit' && $model->updated_at)
 <div class="section section-start paragraph record-updated">
-    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%e %B %Y, %H:%M') }}</p>
+    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ strtolower($model->updated_at->formatLocalized('%e %B %Y, %H:%M')) }}</p>
 </div>
 @endif
 
@@ -74,9 +74,7 @@
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
 
-            @if ( Session::has('saved-item') )
-                <div class="alert alert-success" style="z-index: 2000;">{{ Session::get('saved-item')  }}</div>
-            @endif
+
 
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
@@ -92,6 +90,11 @@
                     </div>
                 </div>
             </div>
+
+               @if ( Session::has('saved-item') )
+                    <div class="alert alert-success" style="z-index: 2000;">{{ Session::get('saved-item')  }}</div>
+               @endif
+
         </div>
         @endif
     </div>

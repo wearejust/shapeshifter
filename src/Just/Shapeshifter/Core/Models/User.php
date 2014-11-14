@@ -18,7 +18,6 @@ class User extends SentryUser
         $this->disabledActions = $disabledActions;
     }
 
-
     public function getPersistCode()
     {
         if (App::environment() !== 'local')

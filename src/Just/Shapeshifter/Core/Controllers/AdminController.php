@@ -289,7 +289,7 @@ abstract class AdminController extends Controller
 		$this->mode  = 'edit';
 		$this->model = $this->repo->findById($this->getCurrentId());
 
-		$this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
+		$this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
 
 		if($this->repo->modelHasTranslations())
 		{
@@ -311,7 +311,7 @@ abstract class AdminController extends Controller
 				                       ->first();
 
 
-				if($result) $this->data['title'] = $regularDecriptor == 'id' ? $this->singular . ' bewerken' : $result->value;
+				if($result) $this->data['title'] = $regularDecriptor == 'id' ? $this->singular : $result->value;
 			}
 		}
 

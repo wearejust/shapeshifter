@@ -70,7 +70,7 @@
                     </thead>
                     <tbody>
                         @foreach ($records as $rec)
-                        <tr class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
+                        <tr id="itemRow_{{ $rec->id }}" class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                             @foreach ($attributes as $attr)
                             @if ( $attr->hasFlag('translate'))
                                 @if ( ! $attr->hasFlag('hide_list'))
@@ -90,8 +90,8 @@
                                 <div class="container">
                                     @if ( ! in_array($rec->id, $disableDeleting) )
                                     <div class="table-control-content media-wrapper js-remove-wrapper">
-                                        <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button">X</button>
-                                        {{ Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id))))) }}
+                                        <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" data-id="{{ $rec->id }}" type="button">X</button>
+                                        {{ Form::model($rec, array('class' => 'accessibility', 'id' => 'deleteItem_'.$rec->id, 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id))))) }}
                                         {{ Form::close() }}
                                         <div class="dialog-confirm" style="display: none;">
                                             <p>{{ __('dialog.remove') }}</p>

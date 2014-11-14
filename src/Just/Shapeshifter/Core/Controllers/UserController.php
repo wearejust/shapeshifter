@@ -6,48 +6,52 @@ use Just\Shapeshifter\Relations as Relation;
 
 class UserController extends AdminController
 {
-    protected $singular = "Gebruiker";
-    protected $plural = "Gebruikers";
+	protected $singular = "Gebruiker";
+	protected $plural   = "Gebruikers";
 
-    protected $model = 'Just\Shapeshifter\Core\Models\User';
-    protected $descriptor = "name";
-    protected $orderby = array('email','asc');
-    protected $disabledActions = array(
-        'delete',
-        'drag'
-    );
+	protected $model           = 'Just\Shapeshifter\Core\Models\User';
+	protected $descriptor      = "name";
+	protected $orderby         = array('email', 'asc');
+	protected $disabledActions = array(
+		'drag'
+	);
 
-    protected $rules = array(
-        'email' => 'required',
-    );
+	protected $rules = array(
+		'first_name' => 'required',
+		'last_name'  => 'required'
+	);
 
-    protected function configureFields(Form $modifier)
-    {
-        $modifier->add( new Attribute\CheckboxAttribute('activated'));
+	protected function configureFields (Form $modifier)
+	{
+		$modifier->add(new Attribute\CheckboxAttribute('activated'));
 
-        $modifier->add( new Attribute\TextAttribute('email', 'email'));
-        $modifier->add( new Attribute\TextAttribute('first_name', 'text',array('hide_list')));
-        $modifier->add( new Attribute\TextAttribute('last_name', 'text',array('hide_list')));
-        $modifier->add( new Attribute\PasswordAttribute('password', array('hide_list')));
-        $modifier->add( new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
+		$modifier->add(new Attribute\TextAttribute('email', 'email'));
+		$modifier->add(new Attribute\TextAttribute('first_name', 'text', array('hide_list')));
+		$modifier->add(new Attribute\TextAttribute('last_name', 'text', array('hide_list')));
+		$modifier->add(new Attribute\PasswordAttribute('password', array('hide_list')));
+		$modifier->add(new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
-        $modifier->add( new Relation\ManyToManyFacebookRelation($this, 'groups', 'groups'));
+		$modifier->add(new Relation\ManyToManyFacebookRelation($this, 'groups', 'groups'));
 
-        $modifier->add( new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
-    }
+		$modifier->add(new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
+	}
 
-    protected function afterInit(Form $modifier)
-    {
-        if ($this->mode == 'store')
-        {
-            $this->rules['password'] = 'required|confirmed';
-            $this->rules['email'] = 'required|email|unique:cms_users,email';
-        }
-        else if ($this->mode == 'update')
-        {
-            $this->rules['email'] = 'required|email|unique:cms_users,email,' . $this->getCurrentId();
-        }
-    }
+	protected function beforeInit (Form $modifier)
+	{
+		if ($this->mode == 'store')
+		{
+			$this->rules['password']   = 'required|confiremd';
+			$this->rules['email']      = 'required|email|unique:cms_users,email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+		else if ($this->mode == 'update')
+		{
+			$this->rules['email']      = 'required|email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+	}
 }
 
 ?>
