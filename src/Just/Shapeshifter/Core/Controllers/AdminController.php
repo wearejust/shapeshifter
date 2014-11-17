@@ -771,4 +771,12 @@ abstract class AdminController extends Controller
 			});
 		}
 	}
+
+	/**
+	 * @return null
+	 */
+	public function getParent ()
+	{
+		return $this->parent;
+	}
 }
