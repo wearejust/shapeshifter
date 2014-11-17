@@ -450,6 +450,9 @@ abstract class AdminController extends Controller
 		$this->data['parent']               = $this->parent;
 
 		$node = $this;
+
+		$this->renderAdditionalMenuHtml($node);
+
 		$this->beforeRender($node);
 
 		$view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
@@ -736,7 +739,28 @@ abstract class AdminController extends Controller
 		}
 	}
 
+	/**
+	 * @param $node
+	 */
 	public function beforeRender ($node) { }
+
+	/**
+	 * @param $node
+	 *
+	 * @return string
+	 */
+	public function beforeMenu ($node) {
+		return '';
+	}
+
+	/**
+	 * @param $node
+	 *
+	 * @return string
+	 */
+	public function afterMenu ($node) {
+		return '';
+	}
 
 	/**
 	 * @param $form
@@ -778,5 +802,14 @@ abstract class AdminController extends Controller
 	public function getParent ()
 	{
 		return $this->parent;
+	}
+
+	/**
+	 * @param $node
+	 */
+	protected function renderAdditionalMenuHtml ($node)
+	{
+		$this->data['beforeMenu'] = $this->beforeMenu($node);
+		$this->data['afterMenu']  = $this->afterMenu($node);
 	}
 }

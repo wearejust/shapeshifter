@@ -78,6 +78,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
         </div>
     </div>
     <div class="main-nav toggleLeft" id="menu">
+        {{ $beforeMenu }}
         <ul class="main-nav-list list group">
             @foreach ($menu as $item)
             <li class="main-nav-item{{ $item['active'] ? ' main-nav-item-active' : '' }}">
@@ -94,6 +95,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </li>
             @endforeach
         </ul>
+        {{ $afterMenu }}
     </div>
 </div>
 <div class="header-top system-account">
