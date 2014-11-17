@@ -118,8 +118,7 @@ class Repository
 
 		$this->checkForParent($parent);
 
-		$this->model = !$this->model->id ? $ref->beforeAdd($this->model) : $ref->beforeUpdate($this->model);
-
+		$this->checkEventActions($ref);
 
 		if ($this->model->save())
 		{
@@ -471,5 +470,24 @@ class Repository
 		}
 		return $translatableSaveItems;
 	}
-	
+
+	/**
+	 * @param $ref
+	 */
+	protected function checkEventActions ($ref)
+	{
+		$parentIsActive = $ref->getParent();
+
+		if (is_null($parentIsActive))
+		{
+			$this->model = !$this->model->id ? $ref->beforeAdd($this->model) : $ref->beforeUpdate($this->model);
+		}
+		else
+		{
+			($ref->mode == 'store')
+				? $ref->beforeAdd($this->model)
+				: $ref->beforeUpdate($this->model);
+		}
+	}
+
 }
