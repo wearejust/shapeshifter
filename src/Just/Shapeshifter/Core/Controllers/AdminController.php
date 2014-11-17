@@ -729,13 +729,16 @@ abstract class AdminController extends Controller
 
 	private function initTranslations ($form)
 	{
-		if ($this->mode == 'edit' || $this->mode == 'create')
+		if(\Schema::hasTable('languages'))
 		{
-			if ($this->languages->count() > 0 && count($form->translation_attributes) > 0)
+			if ($this->mode == 'edit' || $this->mode == 'create')
 			{
-				$this->createTabForEachLanguage($form);
-			}
+				if ($this->languages->count() > 0 && count($form->translation_attributes) > 0)
+				{
+					$this->createTabForEachLanguage($form);
+				}
 
+			}
 		}
 	}
 
