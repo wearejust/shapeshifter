@@ -45,7 +45,8 @@ class Repository
 	{
 		$this->model     = $model;
 		$this->app       = $app;
-		$this->languages = new Language;
+
+		$this->languagesInit();
 	}
 
 	/**
@@ -458,7 +459,7 @@ class Repository
 	 */
 	private function prepareTranslations ($relations, $parent)
 	{
-		if (\Input::has('translations'))
+		if (\Input::has('translations') && $this->langIsEnabled())
 		{
 			$this->convertTranslationInputToModels($relations, $parent);
 		}
@@ -488,6 +489,18 @@ class Repository
 				? $ref->beforeAdd($this->model)
 				: $ref->beforeUpdate($this->model);
 		}
+	}
+
+	protected function languagesInit ()
+	{
+		$this->languages = ($this->langIsEnabled()) ? new Language : '';
+	}
+
+	/**
+	 *
+	 */
+	private function langIsEnabled () {
+		return \Schema::hasTable('languages');
 	}
 
 }

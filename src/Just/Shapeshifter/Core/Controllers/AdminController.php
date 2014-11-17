@@ -150,7 +150,8 @@ abstract class AdminController extends Controller
 			'Just\Shapeshifter\Repository', array(new $this->model, $this->app)
 		);
 
-		$this->languages = new Language;
+		$this->checkLanguageInit();
+
 		$this->repo->setOrderby($this->orderby);
 		$this->data['addBlocks'] = $this->addBlocks;
 		$this->config            = $config;
@@ -217,7 +218,7 @@ abstract class AdminController extends Controller
 		$this->data['title']   = $this->plural;
 		$this->data['records'] = $records;
 
-		if ($this->repo->modelHasTranslations())
+		if ($this->repo->modelHasTranslations() && $this->langIsEnabled())
 		{
 			$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
 			foreach ($records as $rec)
@@ -814,5 +815,21 @@ abstract class AdminController extends Controller
 	{
 		$this->data['beforeMenu'] = $this->beforeMenu($node);
 		$this->data['afterMenu']  = $this->afterMenu($node);
+	}
+
+	/**
+	 * Checks and sets the language model.
+	 */
+	protected function checkLanguageInit ()
+	{
+		if ($this->langIsEnabled()) $this->languages = new Language;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	protected function langIsEnabled()
+	{
+		return \Schema::hasTable('languages');
 	}
 }
