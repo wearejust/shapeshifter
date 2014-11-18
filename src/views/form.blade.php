@@ -79,7 +79,7 @@
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
                     <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
-                        {{ Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], 'class' => 'section-start section-end', $ids))) }}
+                        {{ Form::model($model, array('method' => 'DELETE', 'class' => 'section-start section-end', 'url' => route($routes['destroy'], $ids))) }}
                             <div class="controls-content">
                                 <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
                             </div>
