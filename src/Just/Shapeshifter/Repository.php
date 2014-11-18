@@ -110,7 +110,6 @@ class Repository
 
 		$relations = new Collection;
 
-
 		$this->validate();
 
 		$this->mutateAttributes();
@@ -120,6 +119,13 @@ class Repository
 		$this->checkForParent($parent);
 
 		$this->checkEventActions($ref);
+
+		foreach ($this->attributes as $k=>$a)
+        {
+            if (get_class($a) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
+                unset($this->model[$k]);
+            }
+        }
 
 		if ($this->model->save())
 		{
@@ -229,7 +235,13 @@ class Repository
 				if ($attr->hasFlag('hide_edit')) $attributes->forget($key);
 
 				$attr->setAttributeValue($model->{$attr->name});
-				$model->{$attr->name} = $attr->getEditValue($attr->value);
+
+				if (get_class($attr) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
+					$val = $attr->getEditValue($model);
+				} else {
+					$val = $attr->getEditValue($attr->value);
+				}
+				$model->{$attr->name} = $val;
 			}
 		}
 
@@ -328,7 +340,12 @@ class Repository
 			if (in_array('no_save', $attr->flags) || $attr instanceof ReadonlyAttribute) continue;
 
 			$attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
-			$value = $attr->getSaveValue();
+
+			if (get_class($attr) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
+				$value = $attr->getSaveValue($this->model, $attr->value);
+			} else {
+				$value = $attr->getSaveValue();
+			}
 
 			if (!is_null($value))
 			{
