@@ -454,6 +454,8 @@ abstract class AdminController extends Controller
 
 		$this->renderAdditionalMenuHtml($node);
 
+		$this->data['afterJS'] = $this->afterJS($node);
+
 		$this->beforeRender($node);
 
 		$view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
@@ -763,6 +765,15 @@ abstract class AdminController extends Controller
 	 * @return string
 	 */
 	public function afterMenu ($node) {
+		return '';
+	}
+
+	/**
+	 * @param $node
+	 *
+	 * @return string
+	 */
+	public function afterJS ($node) {
 		return '';
 	}
 
