@@ -1,6 +1,7 @@
 <?php namespace Just\Shapeshifter\Attributes;
 
 use App;
+use Just\Shapeshifter\Exceptions\AttributeErrorException;
 use View;
 
 /**
@@ -128,9 +129,12 @@ abstract class Attribute
 
     public function __toString()
     {
-        $this->compile();
-
-        return $this->html;
+	    try {
+		    $this->compile();
+		    return $this->html;
+	    } catch (\Exception $exception) {
+		    throw new AttributeErrorException($exception);
+	    }
     }
 
     protected function readonly()
