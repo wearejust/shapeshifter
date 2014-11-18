@@ -91,10 +91,6 @@
                 </div>
             </div>
 
-               @if ( Session::has('saved-item') )
-                    <div class="alert alert-success" style="z-index: 2000;">{{ Session::get('saved-item')  }}</div>
-               @endif
-
         </div>
         @endif
     </div>
