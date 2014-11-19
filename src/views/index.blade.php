@@ -65,7 +65,15 @@
                         <tr class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                             @foreach ($attributes as $attr)
                             @if ( ! $attr->hasFlag('hide_list'))
-                            <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
+                            
+
+                            @if($attr instanceof Just\Shapeshifter\Attributes\FileAttribute)
+                                 <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}"><img style='width:150px;' src='{{ $rec->{$attr->name} }}'></td>
+                            @else
+                                <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
+                            @endif
+                            
+
                             @endif
                             @endforeach
                             @if ($currentUser->can('drag') && count($records) > 1)
