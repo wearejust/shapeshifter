@@ -354,7 +354,7 @@ abstract class AdminController extends Controller
 		$this->data['attributes']      = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
 		$this->data['currentUser']     = $user;
 		$this->data['orderBy']         = $this->orderby;
-		$this->data['breadcrumbs']     = $breadcrumbService->breadcrumbs();
+		$this->data['breadcrumbs']     = (Config::get('shapeshifter::config.breadcrumbs')) ? $breadcrumbService->breadcrumbs() : array();
 		$this->data['menu']            = $menuService->generateMenu();
 		$this->data['descriptor']      = $this->getDescriptor();
 		$this->data['cancel']          = $this->generateCancelLink();
