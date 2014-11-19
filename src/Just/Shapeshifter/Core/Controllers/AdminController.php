@@ -132,6 +132,11 @@ abstract class AdminController extends Controller
 	public $addBlocks;
 
 	/**
+	 * @var
+	 */
+	public $additionalJS;
+
+	/**
 	 * @var Config
 	 */
 	private $config;
@@ -151,6 +156,8 @@ abstract class AdminController extends Controller
 		);
 
 		$this->checkLanguageInit();
+
+		$this->additionalJS = new Collection();
 
 		$this->repo->setOrderby($this->orderby);
 		$this->data['addBlocks'] = $this->addBlocks;
@@ -443,6 +450,7 @@ abstract class AdminController extends Controller
 		$this->data['disableEditing']          = $this->disableEditing;
 		$this->data['model']                   = $this->model;
 		$this->data['preview']                 = $this->preview;
+		$this->data['additionalJS']            = $this->additionalJS;
 
 		$this->data['lastVisibleAttribute'] = $this->getLastVisibleAttribute();
 		$this->data['singular']             = $this->singular;
@@ -453,8 +461,6 @@ abstract class AdminController extends Controller
 		$node = $this;
 
 		$this->renderAdditionalMenuHtml($node);
-
-		$this->data['afterJS'] = $this->afterJS($node);
 
 		$this->beforeRender($node);
 
@@ -765,15 +771,6 @@ abstract class AdminController extends Controller
 	 * @return string
 	 */
 	public function afterMenu ($node) {
-		return '';
-	}
-
-	/**
-	 * @param $node
-	 *
-	 * @return string
-	 */
-	public function afterJS ($node) {
 		return '';
 	}
 

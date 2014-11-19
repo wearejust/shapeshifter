@@ -125,4 +125,8 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {{ HTML::script("/packages/just/shapeshifter/js/includes.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/transforms.js") }}
 {{ HTML::script("/packages/just/shapeshifter/js/main.js") }}
-<script>{{ $afterJS }}</script>
+@if (isset($additionalJS))
+    @foreach($additionalJS as $js)
+        {{ HTML::script($js) }}
+    @endforeach
+@endif
