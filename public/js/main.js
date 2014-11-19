@@ -745,9 +745,9 @@ $.fn.removeImageDialog = function () {
 // -----------------------------------------------------------
 // TABBED
 // -----------------------------------------------------------
-$.fn.tabbed = function (options) {
+$.fn.tabbed = function(options) {
     var items = $(this);
-    items.each(function (index, item) {
+    items.each(function(index, item) {
         item = $(item);
         if (!item.data('tabbed')) {
             item.data('tabbed', new Tabbed(options, item));
@@ -756,34 +756,39 @@ $.fn.tabbed = function (options) {
     return items;
 }
 
-var Tabbed = function (options, element) {
+var Tabbed = function(options, element) {
     this.element = $(element);
     this.tabs = this.element.find('a');
 
+    var str;
     this.pages = $([]);
-    this.tabs.each(function (index, item) {
-        item = $($(item).attr('href'));
-        item.attr('id', 'js-' + item.attr('id'));
-        this.pages = this.pages.add(item);
+    this.tabs.each(function(index, item) {
+        str = $(item).attr('href');
+        $(str +',' + str + '-extra').each(function(index, item) {
+            item = $(item);
+            item.removeClass('js-hide');
+            item.attr('id', 'js-' + item.attr('id'));
+            this.pages = this.pages.add(item);
+        }.bind(this));
     }.bind(this));
 
     $window.hashchange(this.change.bind(this));
     this.change();
 }
 
-Tabbed.prototype.change = function (e) {
-    var hash = window.location.hash.replace('#', '');
-    var tab = this.tabs.filter('[href="#' + hash + '"]');
+Tabbed.prototype.change = function(e) {
+    var hash = window.location.hash.replace('#','');
+    var tab = this.tabs.filter('[href="#'+hash+'"]');
     if (!e && !tab.length) {
         tab = this.tabs.eq(0);
-        hash = tab.attr('href').replace('#', '');
+        hash = tab.attr('href').replace('#','');
     }
 
     this.tabs.removeClass('tab-list-item-button-active');
     tab.addClass('tab-list-item-button-active');
 
     this.pages.hide();
-    this.pages.filter('#js-' + hash).show();
+    this.pages.filter('#js-' + hash + ', #js-' + hash + '-extra').show();
 }
 
 
