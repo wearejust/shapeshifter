@@ -12,6 +12,8 @@ use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Form\Section;
 use Just\Shapeshifter\Form\Tab;
 use Notification;
+use Config;
+
 use Sentry;
 use Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
