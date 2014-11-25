@@ -68,9 +68,11 @@ class BreadcrumbService {
     {
         $verbs = array('create', 'edit');
 
-        $new = array_filter($url, function ($item) use ($verbs) {
-            return ! is_numeric($item) && ! in_array($item, $verbs);
+        $new = array_filter(array_flip($url), function ($key) use ($url, $verbs, $k) {
+            $item = $url[$key];
+            return $key <= $k && ! is_numeric($item) && ! in_array($item, $verbs);
         });
+        $new = array_flip($new);
 
         $name = implode('.', array_slice($new, 0, ($k + 1))) . '.index';
 
