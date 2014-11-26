@@ -5,8 +5,15 @@
         </span>
         <span class="form-field js-image-container">
             <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
+
+                @if(isset($value) && !empty($value))
+                <span class="" style="display: table-cell; vertical-align: middle; width: 100%;">
+                  <strong>Huidig:</strong> {{ $value }}
+                </span>
+                @endif
+
                 <span class="" style="display: table-cell; vertical-align: top; width: 100%;">
-                  {{ Form::file($name)}}
+                  {{ Form::file($name) }}
                 </span>
             </span>
 
