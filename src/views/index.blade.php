@@ -9,7 +9,13 @@
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">
-            <a class="btn btn-default add-item-button" href="{{ route($routes['create'], $ids) }}" id="add-item">{{ __('form.create') }}</a>
+            @if ( isset($addItems) )
+               @foreach ($addItems as $item)
+                   <a href="{{ route($routes['create'], $ids) }}{{ $item['url'] }}" class="btn btn-default add-item-button" style="margin:0;">{{ $item['title'] }}</a>
+               @endforeach
+            @else
+              <a class="btn btn-default add-item-button" href="{{ route($routes['create'], $ids) }}" id="add-item">{{ __('form.create') }}</a>
+            @endif
         </div>
         @endif
         @if (count($records) && $currentUser->can('sort'))

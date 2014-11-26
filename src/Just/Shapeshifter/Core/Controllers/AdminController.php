@@ -125,6 +125,11 @@ abstract class AdminController extends Controller
 	 */
 	protected $active_lang;
 
+	/**
+	 * @var
+	 */
+	public $addBlocks;
+
 
 	/**
 	 * Function that is needed in the node, this descripbes how the node will
@@ -145,6 +150,8 @@ abstract class AdminController extends Controller
 		);
 
 		$this->setLanguageAttributes();
+
+		$this->data['addBlocks'] = $this->addBlocks;
 
 		$this->repo->setOrderby($this->orderby);
 	}
