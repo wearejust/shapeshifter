@@ -379,6 +379,10 @@ abstract class AdminController extends Controller
 		$this->data['controller']           = get_class($this);
 		$this->data['parent']               = $this->parent;
 
+		$node = $this;
+
+		$this->beforeRender($node);
+
 		$view = $this->app['view']->make("shapeshifter::{$template}", $this->data);
 
 		return $this->app->make('Illuminate\Http\Response', array($view, 200, array(
@@ -558,6 +562,11 @@ abstract class AdminController extends Controller
 	{
 		//
 	}
+
+	/**
+	 * @param $node
+	 */
+	public function beforeRender ($node) { }
 
 	/**
 	 * @return string
