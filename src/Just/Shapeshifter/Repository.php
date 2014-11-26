@@ -67,9 +67,9 @@ class Repository
      */
     public function findById($id)
     {
-	    $this->model = $this->model->find($id);
-	    if(!$this->model) $this->model = $this->model->first();
-	    return $this->model;
+	    $newModel = $this->model->find($id);
+	    if(!$newModel) $newModel = $this->model->first();
+	    return $newModel;
     }
 
     /**
