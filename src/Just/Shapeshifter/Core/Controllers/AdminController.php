@@ -240,7 +240,6 @@ abstract class AdminController extends Controller
 					                       ->where('attribute', '=', $attribute->name)
 					                       ->first();
 
-
 					if ($result)
 					{
 						$attribute->setAttributeValue($result->value);
@@ -250,7 +249,9 @@ abstract class AdminController extends Controller
 						{
 							$mod->add($attribute);
 						});
+						break;
 					}
+					break;
 				}
 			}
 
