@@ -32,7 +32,7 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
 	 * @access   public
 	 * @return mixed Value.
 	 */
-    public function __construct($name = '', $lists, $flags = array())
+    public function __construct($name = '', $lists = array(), $flags = array())
     {
 		$this->name = $name;
 		$this->flags = $flags;
