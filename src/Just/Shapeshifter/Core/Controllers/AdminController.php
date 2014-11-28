@@ -660,6 +660,14 @@ abstract class AdminController extends Controller
 		return $model;
 	}
 
+	/**
+	 * @return null
+	 */
+	public function getParent ()
+	{
+		return $this->parent;
+	}
+
 	private function setLanguageAttributes ()
 	{
 		if(\Schema::hasTable('languages'))
