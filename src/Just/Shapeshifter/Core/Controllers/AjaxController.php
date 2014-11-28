@@ -63,22 +63,22 @@ class AjaxController extends Controller
         return Response::json( array('message' => (string)Notification::successInstant('De volgorde is opgeslagen.'), 'status' => 200) );
     }
 
-    protected function upload()
-    {
-        $storageDir = Input::get('storagedir');
-        $input = Input::file('files');
-        $files = new Collection();
+	protected function upload()
+	{
+		$storageDir = Input::get('storagedir');
+		$input = Input::file('files');
+		$files = new Collection();
 
-        foreach ($input as $file) {
-            if ($file->isValid()) {
-                $name = $file->getClientOriginalName();
-                $file->move(public_path() . $storageDir, $name);
-                $files[$name] = $storageDir . $name;
-            }
-        }
+		foreach ($input as $file) {
+			if ($file->isValid()) {
+				$name = \Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+				$extension = $file->getClientOriginalExtension();
+				$file_name = $name . '.' . $extension;
+				$file->move(public_path() . $storageDir, $file_name);
+				$files[$file_name] = $storageDir . $file_name;
+			}
+		}
 
-        return $files;
-    }
+		return $files;
+	}
 }
-
-?>
