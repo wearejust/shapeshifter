@@ -329,7 +329,6 @@ class Repository
 		foreach ($this->attributes as $attr)
 		{
 			if (in_array('no_save', $attr->flags) || $attr instanceof ReadonlyAttribute) continue;
-			dd($this->app['request']->get($attr->name));
 			$attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
 
 			if (get_class($attr) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
