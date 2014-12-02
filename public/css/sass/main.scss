@@ -191,7 +191,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .table-control-list { display: none; margin: 0; /*position: absolute; top: .25em; bottom: 0; left: -25%; right: 0;*/ }
 .table-control-item { margin: 0; display: inline-block; vertical-align: top; margin-right: .15em; }
 .table-control-remove-button { bottom: 0; height: 4.071em; left: 0; margin: 0; overflow: hidden; padding: 0 !important; position: absolute; text-indent: 100%; top: 0; white-space: nowrap; width: 100%; }
-.table-control-remove-button:before { content: "⨯"; display: block; font-weight: normal; font-size: 40px; left: 50%; line-height: 1; position: absolute; text-indent: 0; top: 50%; @include transform(translate(-50%, -65%)); }
+.table-control-remove-button:before { content: "\00D7"; display: block; font-weight: normal; font-size: 30px; left: 50%; line-height: 1; position: absolute; text-indent: 0; top: 50%; @include transform(translate(-50%, -57%)); }
 .table-control-active { @include transform(translate(-4.071em, 0)); }
 
 .sortable-dragging { table-layout: fixed; }
