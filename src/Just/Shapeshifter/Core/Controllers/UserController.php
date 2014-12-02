@@ -18,7 +18,8 @@ class UserController extends AdminController
 
 	protected $rules = array(
 		'first_name' => 'required',
-		'last_name'  => 'required'
+		'last_name'  => 'required',
+		'email'      => 'required|email'
 	);
 
 	protected function configureFields (Form $modifier)
@@ -41,13 +42,11 @@ class UserController extends AdminController
 		if ($this->mode == 'store')
 		{
 			$this->rules['password']   = 'required|confirmed';
-			$this->rules['email']      = 'required|email|unique:cms_users,email';
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
 		}
 		else if ($this->mode == 'update')
 		{
-			$this->rules['email']      = 'required|email';
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
 		}
