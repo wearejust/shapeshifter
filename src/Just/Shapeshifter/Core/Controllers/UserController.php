@@ -40,7 +40,7 @@ class UserController extends AdminController
 	{
 		if ($this->mode == 'store')
 		{
-			$this->rules['password']   = 'required|confiremd';
+			$this->rules['password']   = 'required|confirmed';
 			$this->rules['email']      = 'required|email|unique:cms_users,email';
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
