@@ -6,6 +6,7 @@ use Str;
 use Input;
 use Just\Shapeshifter\Exceptions\DirDoesNotExistException;
 use Just\Shapeshifter\Exceptions\DirNotWritableException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
 * FileAttribute
@@ -195,9 +196,9 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
             $filename = Input::file($this->name)->getClientOriginalName();
             $filename = Str::slug(str_replace($extension, '', $filename));
 
-            Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
+	        $this->moveFileToDestination($filename, $extension);
 
-            $this->value = $filename . $extension;
+	        $this->value = $filename . $extension;
         }
 
         return '';
@@ -236,6 +237,16 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
     {
         return public_path() . DIRECTORY_SEPARATOR . $this->relativeStorageDir;
     }
+
+	/**
+	 * @param $filename
+	 * @param $extension
+	 */
+	private function moveFileToDestination ($filename, $extension)
+	{
+		try { Input::file($this->name)->move($this->absoluteStorageDir, $filename . $extension); }
+		catch (FileException $exception) { }
+	}
 
 }
 
