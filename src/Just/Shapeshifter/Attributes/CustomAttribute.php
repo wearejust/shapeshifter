@@ -14,21 +14,41 @@
 class CustomAttribute extends Attribute
 {
     public $attribute;
-    public $attributeName;
     public $getValue;
     public $setValue;
 
-    public function __construct($name = '', $attributeName = null, $getValue = null, $setValue = null, $flags = array())
+    public function __construct($attribute = null, $params = null, $getValue = null, $setValue = null)
     {
-        $this->name = $name;
-        $this->attributeName = $attributeName ?: 'ReadonlyAttribute';
         $this->getValue = $getValue;
         $this->setValue = $setValue;
-        $this->flags = $flags;
 
-        $this->attribute = \App::make('Just\Shapeshifter\Attributes\\'.$this->attributeName);
-        $this->attribute->name = $name;
-        $this->attribute->flags = $flags;
+        if (is_string($params)) {
+            $params = array($params);
+        }
+
+        if (!isset($params[1])) {
+            if ($attribute == 'TextAttribute') {
+                $params[1] = 'text';
+                $flags = 2;
+            } else if ($attribute == 'DropdownAttribute') {
+                $params[1] = array();
+                $flags = 2;
+            }
+        }
+
+        $flags = 1;
+        if (in_array($attribute, array('TextAttribute', 'DropdownAttribute'))) {
+            $flags = 2;
+        }
+
+        if (!isset($params[$flags])) {
+            $params[$flags] = array();
+        }
+
+        $this->name = $params[0];
+        $this->flags = $params[$flags];
+
+        $this->attribute = \App::make('Just\Shapeshifter\Attributes\\' . ($attribute ?: 'ReadonlyAttribute'), $params);
     }
 
     public function getDisplayValue($rec = null)
