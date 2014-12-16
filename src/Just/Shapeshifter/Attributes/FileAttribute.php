@@ -123,12 +123,6 @@ class FileAttribute extends Attribute implements iAttributeInterface
     {
         if ( ! $this->value ) return null;
 
-
-        // if a file is a base64 encoded image, return
-        if(substr($this->value, 0, 10) == "data:image") {
-            return $this->value;
-        }
-
         if (!file_exists($this->absoluteStorageDir . '/' . $this->value))
         {
             return __('form.file.doesntexist');

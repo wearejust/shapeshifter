@@ -19,7 +19,7 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
     *
     * @access protected
     */   
-	protected $values;
+    protected $values;
 
     /**
      * __construct
@@ -33,13 +33,13 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
      */
     public function __construct($name = '', $values = array(), $labels = array(), $flags = array())
     {
-		$this->name = $name;
-		$this->flags = $flags;
+        $this->name = $name;
+        $this->flags = $flags;
 
         if ( ! $labels) $labels = $values;
 
         $this->values = array_combine($labels, $values);
-	}
+    }
 
     /**
      * Returns the value of the attribute
