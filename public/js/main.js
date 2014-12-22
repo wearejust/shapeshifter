@@ -773,7 +773,7 @@ var Tabbed = function(options, element) {
     }.bind(this));
 
     $window.hashchange(this.change.bind(this));
-    this.change();
+    setTimeout(this.change.bind(this), 100);
 }
 
 Tabbed.prototype.change = function(e) {
