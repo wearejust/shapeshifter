@@ -82,6 +82,9 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      */
     public function setAttributeValue($val, $oldValue = null)
     {
+        if(is_array($val)) {
+            $val = $val[0];
+        }
         $this->value = $val ? explode(',', $val) : array();
     }
 

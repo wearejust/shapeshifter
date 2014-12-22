@@ -42,6 +42,7 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
      */
     public $relatives = array();
 
+
     /**
      * __construct
      *
