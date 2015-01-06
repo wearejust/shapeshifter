@@ -14,6 +14,7 @@ use Just\Shapeshifter\Form\AttributeCollection;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Form\Section;
 use Just\Shapeshifter\Form\Tab;
+use Input;
 use Notification;
 use Sentry;
 use Session;
@@ -129,6 +130,11 @@ abstract class AdminController extends Controller
 	/**
 	 * @var
 	 */
+	protected $paginate = false;
+
+	/**
+	 * @var
+	 */
 	public $addBlocks;
 
 	/**
@@ -213,7 +219,7 @@ abstract class AdminController extends Controller
 		$form = $this->initAttributes();
 		$this->generateTimestampFields();
 
-		$records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
+		$records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 		$this->getParentInfo();
 
 
@@ -224,6 +230,19 @@ abstract class AdminController extends Controller
 
 		$this->data['title']   = $this->plural;
 		$this->data['records'] = $records;
+
+		$counts = array(25, 50, 100);
+		if (is_int($this->paginate)) {
+			array_push($counts, $this->paginate);
+			$counts = array_unique($counts);
+			sort($counts);
+		}
+		$counts[] = 'All';
+
+		$this->data['paginate']         = $this->paginate;
+		$this->data['paginate_count']   = $this->paginate ? Input::get('count', $records->getPerPage()) : 0;
+		$this->data['paginate_counts']  = $counts;
+		$this->data['sort_offset']      = $this->paginate ? ($records->getPerPage() * ($records->getCurrentPage() - 1)) : 0;
 
 		if ($this->repo->modelHasTranslations() && $this->langIsEnabled())
 		{

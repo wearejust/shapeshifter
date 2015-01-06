@@ -879,16 +879,23 @@ var SortableTable = function (options, table) {
     this.options.sortable = this.table.hasClass('js-datatable-order');
     this.defaultOrderIndex = this.table.find('[data-header-title="' + this.table.attr('data-sort-column') + '"]').index();
     this.defaultOrder = this.table.attr('data-sort-order');
+    this.sortOffset = this.table.attr('data-sort-offset');
 
     this.element.find('.search-control').on('keyup blur', this.search.bind(this));
 
-    this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
-    this.element.append(this.toggleButton);
-    this.toggleButton.on('click', this.itemsToggle.bind(this));
-    this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
-    this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
-    this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
+    this.pagination = this.element.find('.pagination-count');
+    this.pagination.on('change', function() {
+        window.location = window.location.pathname + '?count=' + $(this).val();
+    });
 
+    if (!this.pagination.length) {
+        this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
+        this.element.append(this.toggleButton);
+        this.toggleButton.on('click', this.itemsToggle.bind(this));
+        this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
+        this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
+        this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
+    }
 
     $.fn.dataTableExt.oStdClasses.sRowEmpty = "table-cell";
     $.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
@@ -995,7 +1002,7 @@ var SortableTable = function (options, table) {
         });
     }
 
-    this.itemsHide();
+    if (this.toggleButton) this.itemsHide();
 
     this.element.execute(this, function () {
         this.wrap = this.element.find('.dataTables_wrapper');
@@ -1026,6 +1033,7 @@ SortableTable.prototype.update = function () {
         'dataType': 'json',
         'data': {
             'order': this.tbody.sortable('toArray', {'attribute': 'data-record-id'}),
+            'offset': this.sortOffset,
             'model': model,
             'url': window.location.pathname,
             'relation': this.tbody.closest('.onetomany-relation-content').attr('data-relation')
@@ -1034,8 +1042,9 @@ SortableTable.prototype.update = function () {
             this.message = $(data.message);
             alertShow(this.message);
         }.bind(this),
-        'error': function () {
+        'error': function (e) {
             //alert('Error: Neem contact op met Just.');
+            console.log(e);
         }.bind(this)
     });
 }
