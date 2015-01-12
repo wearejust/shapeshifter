@@ -121,11 +121,14 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     public function getDisplayValue()
     {
+
+        //die($this->absoluteStorageDir .  strip_tags($this->value));
+
         if ( ! $this->value ) return null;
 
-        if (!file_exists($this->absoluteStorageDir . '/' . $this->value))
+        if (!file_exists($this->absoluteStorageDir . strip_tags($this->value)))
         {
-            return __('form.file.doesntexist');
+            //return __('form.file.doesntexist');
         }
         else if ($this->isImage())
         {
@@ -136,8 +139,11 @@ class FileAttribute extends Attribute implements iAttributeInterface
         {
             return $this->value;
         }
+        return $this->value;
 
-        return HTML::link($this->relativeStorageDir . $this->value, $this->value, array('target' => '_blank'));
+
+
+        //return HTML::link($this->relativeStorageDir . $this->value, $this->value, array('target' => '_blank'));
     }
 
     /**
@@ -246,7 +252,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function isImage()
     {
-        return (bool) getimagesize($this->absoluteStorageDir . $this->value);
+        return (bool) @getimagesize($this->absoluteStorageDir . $this->value);
     }
 }
 
