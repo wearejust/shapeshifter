@@ -107,6 +107,7 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
      */
     public function getEditValue()
     {
+        //return "dree";
         $this->value = $this->getDisplayValue();
 
         return $this->value;
@@ -123,17 +124,21 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
     {
         if ( ! $this->value ) return null;
 
-        if (!file_exists($this->absoluteStorageDir . '/' . $this->value))
+        //die( public_path() ."/media/uploads/". $this->value );
+
+        if (!file_exists(public_path() ."/media/uploads/". $this->value) )
         {
-            return __('form.file.doesntexist');
+            //return __('form.file.doesntexist' . " : " .$this->value);
         }
 
         if ($this->hasFlag('force'))
         {
             return $this->value;
         }
+        return "<a target='_blank' href='".$this->relativeStorageDir.strip_tags($this->value)."'>" . strip_tags($this->value). "</a>";
 
-        return HTML::link($this->relativeStorageDir . $this->value, $this->value, array('target' => '_blank'));
+        //return '<a href="'.$this->relativeStorageDir.$this->value.'">'.$this->value.'</a>';
+        //return HTML::link($this->relativeStorageDir . $this->value, $this->value, array('target' => '_blank'));
     }
 
     /**
