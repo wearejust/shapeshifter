@@ -6,7 +6,7 @@
         <span class="form-field js-image-container">
             <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
                 <span class="" style="display: table-cell; vertical-align: top; width: 100%;">
-                  {{ Form::file($name)}}
+                  {{ Form::file($name)}} {{$value}}
                 </span>
             </span>
 
