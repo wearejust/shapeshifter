@@ -42,7 +42,7 @@ class AjaxController extends Controller
             $records = $model::orderBy( $orderByColumn, $orderByMode )->get();
         }
 
-        $sortorder = 1;
+        $sortorder = (int)Input::get('offset', 0) + 1;
         foreach (Input::get('order') as $new)
         {
             foreach ($records as $rec)

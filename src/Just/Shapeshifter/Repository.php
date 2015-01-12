@@ -56,9 +56,9 @@ class Repository
 	 *
 	 * @return mixed
 	 */
-	public function all ($orderBy, $filters = array(), $parent = array())
+	public function all ($orderBy, $filters = array(), $parent = array(), $paginate = false)
 	{
-		$records = $this->getRecords($orderBy, $filters, $parent);
+		$records = $this->getRecords($orderBy, $filters, $parent, $paginate);
 
 		$service = $this->app->make(
 			'Just\Shapeshifter\Services\AttributeService',
@@ -295,7 +295,7 @@ class Repository
 	 *
 	 * @return mixed
 	 */
-	private function getRecords ($orderBy, $filters, $parent)
+	private function getRecords ($orderBy, $filters, $parent, $paginate)
 	{
 		$query = $this->model;
 
@@ -309,9 +309,15 @@ class Repository
 			$query = $query->whereRaw($filter);
 		}
 
-		$records = $query->orderBy($orderBy[0], $orderBy[1])->get();
+		$records = $query->orderBy($orderBy[0], $orderBy[1]);
 
-		return $records;
+        $count = Input::get('count', is_int($paginate) ? $paginate : 25);
+
+		if (!$paginate) {
+            return $records->get();
+		} else {
+            return $records->paginate(($count == 'all') ? PHP_INT_MAX : $count);
+		}
 	}
 
 	/**

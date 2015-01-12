@@ -724,6 +724,18 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .controls { z-index: 11; }
 
+.pagination-wrap { margin: 1em 0; }
+
+.pagination { list-style-type: none; margin: 0; margin-top: 0.75em; }
+
+.pagination li { display: inline-block; margin: 0; }
+
+.pagination li span, .pagination li a { padding: 0.3em 0.5em; }
+
+.pagination li.active span { background-color: #000; color: #fff; }
+
+.pagination-count { width: auto; float: right; }
+
 .js .header, .js .header-top { display: block; width: 17.5em; z-index: 101; left: 100%; -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -ms-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility: hidden; -o-backface-visibility: hidden; backface-visibility: hidden; -webkit-transition: -webkit-transform 0.3s ease-in; -moz-transition: -moz-transform 0.3s ease-in; -o-transition: -o-transform 0.3s ease-in; transition: transform 0.3s ease-in; }
 
 .js .menu-active .header, .js .menu-active .header-top { -webkit-transform: translate3d(-100%, 0, 0); -moz-transform: translate3d(-100%, 0, 0); -ms-transform: translate3d(-100%, 0, 0); -o-transform: translate3d(-100%, 0, 0); transform: translate3d(-100%, 0, 0); -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility: hidden; -o-backface-visibility: hidden; backface-visibility: hidden; -webkit-transition: -webkit-transform 0.3s ease-out; -moz-transition: -moz-transform 0.3s ease-out; -o-transition: -o-transform 0.3s ease-out; transition: transform 0.3s ease-out; }

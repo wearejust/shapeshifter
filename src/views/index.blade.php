@@ -18,7 +18,7 @@
             @endif
         </div>
         @endif
-        @if (count($records) && $currentUser->can('sort'))
+        @if (count($records) && $currentUser->can('sort') && !$paginate)
             @if(!in_array('search', $disabledActions))
                 <div class="filter-search">
                     <form action="" class="section-start section-end" method="get">
@@ -44,7 +44,7 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
+                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}" data-sort-offset="{{ $sort_offset }}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
@@ -107,6 +107,18 @@
                 </table>
             </div>
         </div>
+        @if($paginate)
+        <div class="pagination-wrap group">
+            <select class="pagination-count">
+                @foreach ($paginate_counts as $count)
+                  <option value="{{ strtolower($count) }}"{{ $paginate_count==strtolower($count)?' selected':''}}>{{ $count }}</option>
+                @endforeach
+            </select>
+            @if ($paginate)
+                {{ $records->appends(array('count'=>$records->getPerPage()))->links() }}
+            @endif
+        </div>
+        @endif
         @endif
     </div>
 </div>
