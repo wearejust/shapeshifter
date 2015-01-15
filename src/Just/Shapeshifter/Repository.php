@@ -122,9 +122,11 @@ class Repository
 
 		foreach ($this->attributes as $k=>$a)
         {
+
             if (get_class($a) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
                 unset($this->model[$k]);
             }
+			//die();
         }
 
 		if ($this->model->save())
@@ -408,8 +410,18 @@ class Repository
 	 */
 	private function convertTranslationInputToModels ($relations, $parent)
 	{
+		$inputs = Input::all();
+		$translations = $inputs['translations'];
+
+		//print_r(Input::all() );
+		//print_r(Input::get('translations') );
+
+
+
+
+
 		$i=1;
-		foreach (Input::get('translations') as $key => $lang_attributes)
+		foreach ($translations as $key => $lang_attributes)
 		{
 			foreach($lang_attributes as $type => $value)
 			{
@@ -421,6 +433,9 @@ class Repository
 				{
 					$parentId = $this->model->id;
 				}
+
+				//echo $type;
+
 				$relations->put($i, array(
 					'parent_id'   => $parentId,
 					'language_id' => $lang->id,
@@ -431,6 +446,7 @@ class Repository
 			}
 
 		}
+		//die();
 	}
 
 	/**
@@ -438,6 +454,7 @@ class Repository
 	 */
 	private function saveTranslations ($translatableSaveItems)
 	{
+		//dd($translatableSaveItems);
 		if ($this->modelHasTranslations())
 		{
 			$this->model->translations()->saveMany($translatableSaveItems);
@@ -482,6 +499,9 @@ class Repository
 	 */
 	private function prepareTranslations ($relations, $parent)
 	{
+
+		//dd(\Input::all());
+
 		if (\Input::has('translations') && $this->langIsEnabled())
 		{
 			$this->convertTranslationInputToModels($relations, $parent);

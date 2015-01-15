@@ -59,7 +59,11 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
         $this->flags = $flags;
 
         $this->relativeStorageDir = $this->getRelativePath($storageDir);
-        $this->absoluteStorageDir = $this->getAbsolutePath();
+
+//        $this->absoluteStorageDir = $this->getAbsolutePath();
+        $this->absoluteStorageDir = $_SERVER['DOCUMENT_ROOT']."/" . $storageDir."/";
+
+        //die($this->absoluteStorageDir);
 
         $this->checkDirectory();
         $this->getFilesSameDirectory();
@@ -169,6 +173,9 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
      */
     private function checkDirectory()
     {
+
+
+
         if ( ! is_dir($this->absoluteStorageDir))
         {
             throw new DirDoesNotExistException("Directory '{$this->absoluteStorageDir}' doesnt exists");
@@ -176,9 +183,10 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
 
         if ( ! is_writable($this->absoluteStorageDir))
         {
+            //die($this->absoluteStorageDir);
             if ( ! @chmod($this->absoluteStorageDir, 0777) )
             {
-                throw new DirNotWritableException("Directory '{$this->absoluteStorageDir}' is not writable");
+                //throw new DirNotWritableException("Directory '{$this->absoluteStorageDir}' is not writable");
             }
         }
     }
