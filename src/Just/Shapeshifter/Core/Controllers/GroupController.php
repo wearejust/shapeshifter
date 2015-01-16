@@ -49,7 +49,7 @@ class GroupController extends AdminController
 
     public function beforeUpdate($model)
     {
-        foreach ($perms = Input::get('perms', array()) as $k=>$p) $perms[$k] = intval($p);
+        foreach ($perms = \Input::get('perms', array()) as $k=>$p) $perms[$k] = intval($p);
 
         $all = array_fill_keys(array_keys(array_flip($this->getAllPermissionRoutes())), 0);
         $mixed = array_merge($all, $perms);

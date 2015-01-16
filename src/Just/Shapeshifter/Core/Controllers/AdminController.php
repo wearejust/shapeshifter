@@ -454,6 +454,8 @@ abstract class AdminController extends Controller
 		$user = Sentry::getUser();
 		$user->setDisabledActions($this->disabledActions);
 
+
+
 		$this->formModifier->render();
 
 		$this->data['form']                    = $this->formModifier;

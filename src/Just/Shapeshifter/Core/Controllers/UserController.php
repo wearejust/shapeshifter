@@ -10,7 +10,7 @@ class UserController extends AdminController
 	protected $plural   = "Gebruikers";
 
 	protected $model           = 'Just\Shapeshifter\Core\Models\User';
-	protected $descriptor      = "name";
+	protected $descriptor      = "last_name";
 	protected $orderby         = array('email', 'asc');
 	protected $disabledActions = array(
 		'drag'
@@ -36,8 +36,14 @@ class UserController extends AdminController
 		$modifier->add(new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
 	}
 
-	protected function beforeInit (Form $modifier)
+	protected function _beforeInit (Form $modifier)
 	{
+
+	}
+
+	public function beforeAdd ($model)
+	{
+
 		if ($this->mode == 'store')
 		{
 			$this->rules['password']   = 'required|confirmed';
@@ -51,7 +57,33 @@ class UserController extends AdminController
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
 		}
+		//die('hier');
+		return $model;
 	}
+
+	public function beforeUpdate ($model)
+	{
+
+		if ($this->mode == 'store')
+		{
+			$this->rules['password']   = 'required|confirmed';
+			$this->rules['email']      = 'required|email|unique:cms_users,email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+		else if ($this->mode == 'update')
+		{
+			$this->rules['email']      = 'required|email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+		//die('hier');
+		return $model;
+	}
+
+
+
+
 }
 
 ?>
