@@ -8,6 +8,7 @@ use Just\Shapeshifter\Attributes\ReadonlyAttribute;
 use Just\Shapeshifter\Core\Models\Language;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Services\AttributeService;
+use Schema;
 
 class Repository
 {
@@ -312,6 +313,17 @@ class Repository
 		}
 
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);
+
+		if ($search = Input::get('search')) {
+			$records = $records->where(function($q) use ($search) {
+				$table = $this->model->getTable();
+				foreach ($this->attributes as $attribute) {
+					if (Schema::hasColumn($table, $attribute->name) && !in_array('hide_list', $attribute->flags)) {
+						$q->orWhere($attribute->name, 'LIKE', "%{$search}%");
+					}
+				}
+			});
+		}
 
         $count = Input::get('count', is_int($paginate) ? $paginate : 25);
 

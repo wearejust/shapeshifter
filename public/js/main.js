@@ -881,14 +881,28 @@ var SortableTable = function (options, table) {
     this.defaultOrder = this.table.attr('data-sort-order');
     this.sortOffset = this.table.attr('data-sort-offset');
 
-    this.element.find('.search-control').on('keyup blur', this.search.bind(this));
-
     this.pagination = this.element.find('.pagination-count');
     this.pagination.on('change', function() {
-        window.location = window.location.pathname + '?count=' + $(this).val();
+        var val = $(this).val();
+        var search = window.location.search.substring(1).split('&');
+        var i, pair, vars = [];
+        for (i=0; i<search.length; i++) {
+            pair = search[i].split('=');
+            if (pair[1] && pair[0] != 'page') {
+                if (pair[0] == 'count') {
+                    pair[1] = val;
+                    val = null;
+                }
+                vars.push(pair.join('='));
+            }
+        }
+        if (val) vars.push('count=' + val);
+        window.location = window.location.pathname + '?' + vars.join('&');
     });
 
     if (!this.pagination.length) {
+        this.element.find('.search-control').on('keyup blur', this.search.bind(this));
+
         this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
         this.element.append(this.toggleButton);
         this.toggleButton.on('click', this.itemsToggle.bind(this));

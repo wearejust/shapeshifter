@@ -493,9 +493,17 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .add-item-button { margin: 0 -0.75em; }
 
-.filter-search { float: right; max-width: 12em; }
+.filter-search { float: right; max-width: 12em; position: relative; }
 
 .search-control { background-color: #f3f3f3; }
+
+.search-pagination .search-control { position: relative; right: 3em; }
+
+.search-button { display: none; height: 2.75em; width: 2.75em; position: absolute; top: 0; right: 0; margin: 0; overflow: hidden; text-indent: 100%; white-space: nowrap; background-color: transparent; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAS9JREFUeNq0VQENwyAQXJcJQMIcrA7GHCChEioBB5WAhNXBMgV0Ciqhc8CehCafD/2HLiW5tIHn7+H/niaEcDpyNJX2BnAHtGhuArwh0PGfQDRgBgQGcV3HG8EoGZ3gmKKrITAbkQ4Am74zR8INBVjIxp4aJSc9sYv7rhKBpVHljFCk9LROIsBHf20Zkft2+BQSAY7GFBJosq/lyhIbqhKCRIL36XOhDtQRKt9zRTTRV47A70jyE+tFSnIvaYCUKVW8lQhcRqFDJh8qo5koNMUROKbXLOkqbPouGRvDtQpX2dyqmt2Wc58SzTmO6y3VxYU4z/Wb+KA8AN9UdrEUb+k/zn0AIzibahO6Rs6KjEace3D0XuelBLka9qXtoZQAk/ia3lNDsPaSqsYmEfwEGAAt9reNtCHswQAAAABJRU5ErkJggg=='); background-repeat: no-repeat; background-position: center; }
+
+.search-pagination .search-button { display: block; }
+
+.search-button:hover, .search-button:focus, .search-button:active { background-color: transparent; }
 
 .table-row { border-bottom: 1px solid transparent; -webkit-transition: compcact(0.1s); -moz-transition: compcact(0.1s); -o-transition: compcact(0.1s); transition: compcact(0.1s); }
 
