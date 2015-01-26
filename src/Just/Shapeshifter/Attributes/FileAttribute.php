@@ -205,7 +205,8 @@ class FileAttribute extends Attribute implements iAttributeInterface
             $filename = Input::file($this->name)->getClientOriginalName();
             $filename = Str::slug(str_replace($extension, '', $filename));
 
-            Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
+            //Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
+            move_uploaded_file(Input::file($this->name),$this->absoluteStorageDir ."/".$filename . $extension );
 
             $this->value = $filename . $extension;
         }
