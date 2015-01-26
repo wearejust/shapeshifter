@@ -17,8 +17,8 @@ class UserController extends AdminController
 	);
 
 	protected $rules = array(
-		'first_name' => 'required',
-		'last_name'  => 'required'
+		'name' => 'required',
+		'email'  => 'required'
 	);
 
 	protected function configureFields (Form $modifier)
@@ -26,12 +26,11 @@ class UserController extends AdminController
 		$modifier->add(new Attribute\CheckboxAttribute('activated'));
 
 		$modifier->add(new Attribute\TextAttribute('email', 'email'));
-		$modifier->add(new Attribute\TextAttribute('first_name', 'text', array('hide_list')));
-		$modifier->add(new Attribute\TextAttribute('last_name', 'text', array('hide_list')));
+		$modifier->add(new Attribute\TextAttribute('name', 'text', array('hide_list')));
 		$modifier->add(new Attribute\PasswordAttribute('password', array('hide_list')));
 		$modifier->add(new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
-		$modifier->add(new Relation\ManyToManyFacebookRelation($this, 'groups', 'groups'));
+		$modifier->add(new Relation\ManyToManyCheckboxRelation($this, 'groups', 'groups'));
 
 		$modifier->add(new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
 	}
