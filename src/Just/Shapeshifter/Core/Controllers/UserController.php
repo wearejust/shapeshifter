@@ -3,6 +3,7 @@
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Relations as Relation;
+use Sentry;
 
 class UserController extends AdminController
 {
@@ -38,6 +39,19 @@ class UserController extends AdminController
 	protected function _beforeInit (Form $modifier)
 	{
 
+	}
+
+	protected function beforeInit (Form $modifier)
+	{
+		if (!Sentry::getUser()->isSuperuser()) {
+			$ids = array();
+			$users = Sentry::findAllUsersWithAccess(array('superuser'));
+			foreach ($users as $user) {
+				$ids[] = $user->id;
+			}
+
+			$this->filter[] = 'id NOT IN (' . implode(',', $ids) . ')';
+		}
 	}
 
 	public function beforeAdd ($model)
