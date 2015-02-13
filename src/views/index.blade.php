@@ -18,7 +18,7 @@
             @endif
         </div>
         @endif
-        @if (count($records) && $currentUser->can('sort'))
+        @if ((count($records) || $paginate) && $currentUser->can('sort'))
             @if(!in_array('search', $disabledActions))
                 <div class="filter-search">
                     <form action="" class="section-start section-end{{ $paginate ? ' search-pagination' : '' }}" method="get">
