@@ -554,8 +554,8 @@ class Repository
 	/**
 	 *
 	 */
-	private function langIsEnabled () {
-		return \Schema::hasTable('languages');
+	public function langIsEnabled () {
+		return \Config::get('shapeshifter::config.translation') && \Schema::hasTable('languages');
 	}
 
 }

@@ -30,7 +30,7 @@ class LanguageServiceProvider extends ServiceProvider
 
 	public function  boot ()
 	{
-		if(\Schema::hasTable('languages'))
+		if(\Config::get('shapeshifter::config.translation') && \Schema::hasTable('languages'))
 		{
 			$this->validateDependencies();
 			if(!Session::has('active_lang')) {

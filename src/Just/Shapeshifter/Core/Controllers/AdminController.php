@@ -244,7 +244,7 @@ abstract class AdminController extends Controller
 		$this->data['paginate_counts']  = $counts;
 		$this->data['sort_offset']      = $this->paginate ? ($records->getPerPage() * ($records->getCurrentPage() - 1)) : 0;
 
-		if ($this->repo->modelHasTranslations() && $this->langIsEnabled())
+		if ($this->repo->langIsEnabled() && $this->repo->modelHasTranslations())
 		{
 			$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
 			foreach ($records as $rec)
@@ -760,7 +760,7 @@ abstract class AdminController extends Controller
 
 	private function initTranslations ($form)
 	{
-		if(\Schema::hasTable('languages'))
+		if($this->repo->langIsEnabled())
 		{
 			if ($this->mode == 'edit' || $this->mode == 'create')
 			{
@@ -852,14 +852,6 @@ abstract class AdminController extends Controller
 	 */
 	protected function checkLanguageInit ()
 	{
-		if ($this->langIsEnabled()) $this->languages = new Language;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	protected function langIsEnabled()
-	{
-		return \Schema::hasTable('languages');
+		if ($this->repo->langIsEnabled()) $this->languages = new Language;
 	}
 }
