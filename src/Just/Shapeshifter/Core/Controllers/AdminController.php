@@ -20,8 +20,7 @@ use Sentry;
 use Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-abstract class AdminController extends Controller
-{
+abstract class AdminController extends Controller {
 
 	/**
 	 * @var \Just\Shapeshifter\Repository
@@ -151,7 +150,7 @@ abstract class AdminController extends Controller
 	 */
 	private $db;
 
-	public function __construct (Application $app, Config $config, DB $db)
+	public function __construct(Application $app, Config $config, DB $db, Language $language)
 	{
 		$this->app = $app;
 
@@ -167,8 +166,9 @@ abstract class AdminController extends Controller
 
 		$this->repo->setOrderby($this->orderby);
 		$this->data['addBlocks'] = $this->addBlocks;
-		$this->config            = $config;
-		$this->db                = $db;
+		$this->config = $config;
+		$this->db = $db;
+		$this->languages = $language;
 	}
 
 	/**
@@ -177,12 +177,12 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	abstract protected function configureFields (Form $modifier);
+	abstract protected function configureFields(Form $modifier);
 
 	/**
 	 *  This method is always fired, this is the base of whole shapeshifter
 	 */
-	private function initAttributes ()
+	private function initAttributes()
 	{
 		$this->formModifier = $this->app->make('Just\Shapeshifter\Form\Form');
 		$this->formModifier->setMode($this->mode);
@@ -204,16 +204,15 @@ abstract class AdminController extends Controller
 	 * @throws NotFoundHttpException
 	 * @return mixed
 	 */
-	public function index ()
+	public function index()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'index';
+		$this->mode = 'index';
 		$this->model = $this->repo->getNew();
 
 		$form = $this->initAttributes();
@@ -223,12 +222,11 @@ abstract class AdminController extends Controller
 		$this->getParentInfo();
 
 
-		if ($this->app['request']->ajax() && !count($records) && in_array('create', $this->disabledActions))
-		{
+		if ($this->app['request']->ajax() && !count($records) && in_array('create', $this->disabledActions)) {
 			throw new NotFoundHttpException('No records, No ability to create and Ajax request');
 		}
 
-		$this->data['title']   = $this->plural;
+		$this->data['title'] = $this->plural;
 		$this->data['records'] = $records;
 
 		$counts = array(25, 50, 100);
@@ -239,33 +237,28 @@ abstract class AdminController extends Controller
 		}
 		$counts[] = 'All';
 
-		$this->data['paginate']         = $this->paginate;
-		$this->data['paginate_count']   = $this->paginate ? Input::get('count', $records->getPerPage()) : 0;
-		$this->data['paginate_counts']  = $counts;
-		$this->data['sort_offset']      = $this->paginate ? ($records->getPerPage() * ($records->getCurrentPage() - 1)) : 0;
+		$this->data['paginate'] = $this->paginate;
+		$this->data['paginate_count'] = $this->paginate ? Input::get('count', $records->getPerPage()) : 0;
+		$this->data['paginate_counts'] = $counts;
+		$this->data['sort_offset'] = $this->paginate ? ($records->getPerPage() * ($records->getCurrentPage() - 1)) : 0;
 
-		if ($this->repo->langIsEnabled() && $this->repo->modelHasTranslations())
-		{
+		if ($this->repo->langIsEnabled() && $this->repo->modelHasTranslations()) {
 			$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
-			foreach ($records as $rec)
-			{
-				foreach ($form->translation_attributes as $attribute)
-				{
+			foreach ($records as $rec) {
+				foreach ($form->translation_attributes as $attribute) {
 
 					$table_name = $this->getModel()->getTable();
-					$result     = $this->db->table($table_name . '_translations')
-					                       ->where('parent_id', '=', $rec->id)
-					                       ->where('language_id', '=', $defaultLanguage->id)
-					                       ->where('attribute', '=', $attribute->name)
-					                       ->first();
+					$result = $this->db->table($table_name . '_translations')
+					                   ->where('parent_id', '=', $rec->id)
+					                   ->where('language_id', '=', $defaultLanguage->id)
+					                   ->where('attribute', '=', $attribute->name)
+					                   ->first();
 
-					if ($result)
-					{
+					if ($result) {
 						$attribute->setAttributeValue($result->value);
 						$rec->translation_value = $result->value;
 
-						$form->tab('translations', function ($mod) use ($attribute)
-						{
+						$form->tab('translations', function ($mod) use ($attribute) {
 							$mod->add($attribute);
 						});
 						break;
@@ -282,21 +275,20 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	final public function create ()
+	final public function create()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'create';
+		$this->mode = 'create';
 		$this->model = $this->repo->getNew();
 
 		$this->initAttributes();
 
-		$this->data['title']  = $this->singular . ' ' . strtolower(__('form.create'));
+		$this->data['title'] = $this->singular . ' ' . strtolower(__('form.create'));
 		$this->data['parent'] = $this->getParentInfo();
 
 		return $this->setupView('form');
@@ -305,41 +297,37 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	final public function edit ()
+	final public function edit()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'edit';
+		$this->mode = 'edit';
 		$this->model = $this->repo->findById($this->getCurrentId());
 
 		$this->data['title'] = $this->getDescriptor() == 'id' ? $this->singular : strip_tags(translateAttribute($this->model->{$this->getDescriptor()}));
 
-		if($this->repo->modelHasTranslations())
-		{
+		if ($this->repo->modelHasTranslations()) {
 			$usesTranslation = preg_match('/translate./', $this->getDescriptor());
-			if($usesTranslation)
-			{
+			if ($usesTranslation) {
 				$parts = explode('.', $this->getDescriptor());
-				$regularDecriptor = array_last($parts,  function($key, $value)
-				{
+				$regularDecriptor = array_last($parts, function ($key, $value) {
 					return $value;
 				});
 
 				$defaultLanguage = $this->languages->remember(600)->where('short_code', '=', $this->config->get('app.locale'))->first(array('id'));
 				$table_name = $this->repo->getTable();
-				$result     = $this->db->table($table_name . '_translations')
-				                       ->where('parent_id', '=', $this->model->id)
-				                       ->where('language_id', '=', $defaultLanguage->id)
-				                       ->where('attribute', '=', $regularDecriptor)
-				                       ->first();
+				$result = $this->db->table($table_name . '_translations')
+				                   ->where('parent_id', '=', $this->model->id)
+				                   ->where('language_id', '=', $defaultLanguage->id)
+				                   ->where('attribute', '=', $regularDecriptor)
+				                   ->first();
 
 
-				if($result) $this->data['title'] = $regularDecriptor == 'id' ? $this->singular : $result->value;
+				if ($result) $this->data['title'] = $regularDecriptor == 'id' ? $this->singular : $result->value;
 			}
 		}
 
@@ -351,26 +339,23 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	final public function store ()
+	final public function store()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'store';
+		$this->mode = 'store';
 		$this->model = $this->repo->getNew();
 
 		$this->initAttributes();
 
-		try
-		{
+		try {
 			$this->data['id'] = $this->repo->save($this, $this->getParentInfo());
 			$this->repo->save($this, $this->getParentInfo());
-		} catch (ValidationException $e)
-		{
+		} catch (ValidationException $e) {
 			Notification::error($e->getErrors()->all());
 
 			return $this->app['redirect']->back()->withInput();
@@ -384,26 +369,23 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	final public function update ()
+	final public function update()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'update';
+		$this->mode = 'update';
 		$this->model = $this->repo->findById($this->getCurrentId());
 
 		$this->initAttributes();
 
-		try
-		{
+		try {
 			$this->data['id'] = $this->repo->save($this);
 
-		} catch (ValidationException $e)
-		{
+		} catch (ValidationException $e) {
 			Notification::error($e->getErrors()->all());
 
 			return $this->app['redirect']->back()->withInput();
@@ -417,24 +399,22 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	final public function destroy ()
+	final public function destroy()
 	{
-		if (!$this->userHasAccess())
-		{
+		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
 		}
 
 		$this->data['ids'] = func_get_args();
 
-		$this->mode  = 'destroy';
+		$this->mode = 'destroy';
 		$this->model = $this->repo->findById($this->getCurrentId());
 
 		$this->initAttributes();
 
 		$this->model = $this->beforeDestroy($this->model);
 
-		if ($this->repo->delete())
-		{
+		if ($this->repo->delete()) {
 			Notification::success(__('form.removed'));
 		}
 
@@ -446,39 +426,38 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	protected function setupView ($template)
+	protected function setupView($template)
 	{
 		$breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
-		$menuService       = $this->app->make('Just\Shapeshifter\Services\MenuService');
+		$menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
 
 		$user = Sentry::getUser();
 		$user->setDisabledActions($this->disabledActions);
 
 
-
 		$this->formModifier->render();
 
-		$this->data['form']                    = $this->formModifier;
-		$this->data['attributes']              = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
+		$this->data['form'] = $this->formModifier;
+		$this->data['attributes'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
 		$this->data['attributes_translations'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
-		$this->data['currentUser']             = $user;
-		$this->data['orderBy']                 = $this->orderby;
-		$this->data['breadcrumbs']             = $breadcrumbService->breadcrumbs();
-		$this->data['menu']                    = $menuService->generateMenu();
-		$this->data['descriptor']              = $this->getDescriptor();
-		$this->data['cancel']                  = $this->generateCancelLink();
-		$this->data['disabledActions']         = $this->disabledActions;
-		$this->data['disableDeleting']         = $this->disableDeleting;
-		$this->data['disableEditing']          = $this->disableEditing;
-		$this->data['model']                   = $this->model;
-		$this->data['preview']                 = $this->preview;
-		$this->data['additionalJS']            = $this->additionalJS;
+		$this->data['currentUser'] = $user;
+		$this->data['orderBy'] = $this->orderby;
+		$this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
+		$this->data['menu'] = $menuService->generateMenu();
+		$this->data['descriptor'] = $this->getDescriptor();
+		$this->data['cancel'] = $this->generateCancelLink();
+		$this->data['disabledActions'] = $this->disabledActions;
+		$this->data['disableDeleting'] = $this->disableDeleting;
+		$this->data['disableEditing'] = $this->disableEditing;
+		$this->data['model'] = $this->model;
+		$this->data['preview'] = $this->preview;
+		$this->data['additionalJS'] = $this->additionalJS;
 
 		$this->data['lastVisibleAttribute'] = $this->getLastVisibleAttribute();
-		$this->data['singular']             = $this->singular;
-		$this->data['mode']                 = $this->mode;
-		$this->data['controller']           = get_class($this);
-		$this->data['parent']               = $this->parent;
+		$this->data['singular'] = $this->singular;
+		$this->data['mode'] = $this->mode;
+		$this->data['controller'] = get_class($this);
+		$this->data['parent'] = $this->parent;
 
 		$node = $this;
 
@@ -498,13 +477,12 @@ abstract class AdminController extends Controller
 	/**
 	 * @return array
 	 */
-	private function getCurrentRouteNames ()
+	private function getCurrentRouteNames()
 	{
-		$verbs   = array('update', 'edit', 'index', 'destroy', 'create', 'store');
+		$verbs = array('update', 'edit', 'index', 'destroy', 'create', 'store');
 		$current = $this->getCurrentRouteName();
 
-		foreach ($verbs as $verb)
-		{
+		foreach ($verbs as $verb) {
 			$destinations[$verb] = $current . '.' . $verb;
 		}
 
@@ -514,7 +492,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return bool
 	 */
-	protected function userHasAccess ()
+	protected function userHasAccess()
 	{
 		return Sentry::getUser()->isSuperUser() || Sentry::getUser()->hasAnyAccess(array($this->app['router']->currentRouteName()));
 	}
@@ -522,7 +500,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return mixed
 	 */
-	protected function getCurrentId ()
+	protected function getCurrentId()
 	{
 		return last($this->data['ids']);
 	}
@@ -530,15 +508,13 @@ abstract class AdminController extends Controller
 	/**
 	 * @return array
 	 */
-	private function getParentInfo ()
+	private function getParentInfo()
 	{
-		if ($this->parent)
-		{
+		if ($this->parent) {
 			//lame
 			$segs = array_reverse($this->app['request']->segments());
 
-			foreach ($segs as $seg)
-			{
+			foreach ($segs as $seg) {
 				if (is_numeric($seg)) return array($this->parent, (int)$seg);
 			}
 		}
@@ -549,19 +525,17 @@ abstract class AdminController extends Controller
 	/**
 	 * @return string
 	 */
-	private function generateCancelLink ()
+	private function generateCancelLink()
 	{
 		if (!isset($this->data['ids'])) return array();
 
 		$parameters = $this->data['ids'];
 
-		if ($this->repo->hasParent($this->getParentInfo()))
-		{
+		if ($this->repo->hasParent($this->getParentInfo())) {
 			$edit = explode('.', $this->data['routes']['edit']);
 			unset($edit[count($edit) - 2]);
 
-			if ($this->mode == 'edit')
-			{
+			if ($this->mode == 'edit') {
 				array_pop($parameters);
 			}
 
@@ -574,7 +548,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return string
 	 */
-	private function getCurrentRouteName ()
+	private function getCurrentRouteName()
 	{
 		$current = $this->app['router']->currentRouteName();
 		$current = explode('.', $current);
@@ -589,7 +563,7 @@ abstract class AdminController extends Controller
 	 *  doen't exist in the table of the model
 	 *
 	 */
-	private function generateTimestampFields ()
+	private function generateTimestampFields()
 	{
 		$this->app->make('Just\Shapeshifter\Helpers\TimestampHelper', array($this->repo->getTable()))
 		          ->createFields();
@@ -600,23 +574,17 @@ abstract class AdminController extends Controller
 	 * @throws \Just\Shapeshifter\Exceptions\ClassNotExistException
 	 * @throws \Just\Shapeshifter\Exceptions\PropertyNotExistException
 	 */
-	private function checkRequirements ()
+	private function checkRequirements()
 	{
-		if (!array_key_exists('Just\Shapeshifter\ShapeshifterServiceProvider', $this->app->getLoadedProviders()))
-		{
+		if (!array_key_exists('Just\Shapeshifter\ShapeshifterServiceProvider', $this->app->getLoadedProviders())) {
 			throw new \Exception("Did you forgot to load the ShapeShifter service provider in [config/app.php]?");
-		} elseif (!isset($this->singular) || !isset($this->plural) || !isset($this->model))
-		{
+		} elseif (!isset($this->singular) || !isset($this->plural) || !isset($this->model)) {
 			throw new PropertyNotExistException("Property [singular] or [plural] or [model] does not exist");
-		} else
-		{
-			if (!class_exists($this->model))
-			{
+		} else {
+			if (!class_exists($this->model)) {
 				throw new ClassNotExistException("Class [{$this->model}] doest not exist");
-			} else
-			{
-				if ((count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc'))
-				{
+			} else {
+				if ((count($this->orderby) !== 2) || ($this->orderby[1] !== 'desc' && $this->orderby[1] !== 'asc')) {
 					throw new PropertyNotExistException("Second property [orderby] must be `asc` or `desc`");
 				}
 			}
@@ -626,13 +594,11 @@ abstract class AdminController extends Controller
 	/**
 	 * @return null
 	 */
-	private function getLastVisibleAttribute ()
+	private function getLastVisibleAttribute()
 	{
 		$last = null;
-		foreach ($this->formModifier->getAllAttributes() as $attribute)
-		{
-			if (!$attribute->hasFlag('hide_list'))
-			{
+		foreach ($this->formModifier->getAllAttributes() as $attribute) {
+			if (!$attribute->hasFlag('hide_list')) {
 				$last = $attribute;
 			}
 		}
@@ -641,27 +607,27 @@ abstract class AdminController extends Controller
 	}
 
 
-	protected function redirectAfterUpdate ($route, $args, $currentId)
+	protected function redirectAfterUpdate($route, $args, $currentId)
 	{
 		return $this->app['redirect']->route($route, $args);
 	}
 
-	protected function redirectAfterStore ($route, $args, $currentId)
+	protected function redirectAfterStore($route, $args, $currentId)
 	{
 		return $this->app['redirect']->route($route, $args);
 	}
 
-	protected function redirectAfterDestroy ($route, $args)
+	protected function redirectAfterDestroy($route, $args)
 	{
 		return $this->app['redirect']->route($route, $args);
 	}
 
-	protected function beforeInit (Form $modifier)
+	protected function beforeInit(Form $modifier)
 	{
 		//
 	}
 
-	protected function afterInit (Form $modifier)
+	protected function afterInit(Form $modifier)
 	{
 		//
 	}
@@ -669,7 +635,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return string
 	 */
-	public function getModel ()
+	public function getModel()
 	{
 		return $this->model;
 	}
@@ -677,7 +643,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return string
 	 */
-	public function getTitle ()
+	public function getTitle()
 	{
 		return $this->plural;
 	}
@@ -685,7 +651,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return string
 	 */
-	public function getDescriptor ()
+	public function getDescriptor()
 	{
 		return $this->descriptor;
 	}
@@ -693,7 +659,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return array
 	 */
-	public function getOrderBy ()
+	public function getOrderBy()
 	{
 		return $this->orderby;
 	}
@@ -705,7 +671,7 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function beforeAdd ($model)
+	public function beforeAdd($model)
 	{
 		return $model;
 	}
@@ -717,7 +683,7 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function afterAdd ($model)
+	public function afterAdd($model)
 	{
 		return $model;
 	}
@@ -729,7 +695,7 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function beforeUpdate ($model)
+	public function beforeUpdate($model)
 	{
 		return $model;
 	}
@@ -741,7 +707,7 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function afterUpdate ($model)
+	public function afterUpdate($model)
 	{
 		return $model;
 	}
@@ -753,19 +719,16 @@ abstract class AdminController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function beforeDestroy ($model)
+	public function beforeDestroy($model)
 	{
 		return $model;
 	}
 
-	private function initTranslations ($form)
+	private function initTranslations($form)
 	{
-		if($this->repo->langIsEnabled())
-		{
-			if ($this->mode == 'edit' || $this->mode == 'create')
-			{
-				if ($this->languages->count() > 0 && count($form->translation_attributes) > 0)
-				{
+		if ($this->repo->langIsEnabled()) {
+			if ($this->mode == 'edit' || $this->mode == 'create') {
+				if ($this->languages->count() > 0 && count($form->translation_attributes) > 0) {
 					$this->createTabForEachLanguage($form);
 				}
 
@@ -776,14 +739,15 @@ abstract class AdminController extends Controller
 	/**
 	 * @param $node
 	 */
-	public function beforeRender ($node) { }
+	public function beforeRender($node) { }
 
 	/**
 	 * @param $node
 	 *
 	 * @return string
 	 */
-	public function beforeMenu ($node) {
+	public function beforeMenu($node)
+	{
 		return '';
 	}
 
@@ -792,35 +756,31 @@ abstract class AdminController extends Controller
 	 *
 	 * @return string
 	 */
-	public function afterMenu ($node) {
+	public function afterMenu($node)
+	{
 		return '';
 	}
 
 	/**
 	 * @param $form
 	 */
-	private function createTabForEachLanguage ($form)
+	private function createTabForEachLanguage($form)
 	{
-		foreach ($this->languages->all() as $lang)
-		{
-			$form->tab($lang->name, function ($mod) use ($form, $lang)
-			{
-				foreach ($form->translation_attributes as $attribute)
-				{
+		foreach ($this->languages->all() as $lang) {
+			$form->tab($lang->name, function ($mod) use ($form, $lang) {
+				foreach ($form->translation_attributes as $attribute) {
 					$value = $this->getModel()->translations()
 					              ->where('language_id', '=', $lang->id)
 					              ->where('attribute', '=', $attribute->name)
 					              ->first();
 
-					$object       = new $attribute($attribute->name, $attribute->value, $attribute->flags);
+					$object = new $attribute($attribute->name, $attribute->value, $attribute->flags);
 					$object->name = preg_replace('/\[+(.*?)\]/', '', $object->name);
 					$object->translation_name = $object->name;
 					$object->name = 'translations[' . $lang->short_code . '][' . $object->name . ']';
-					if ($value)
-					{
+					if ($value) {
 						$object->translation_value = $value->value;
-					} else
-					{
+					} else {
 						$object->translation_value = '';
 					}
 
@@ -833,7 +793,7 @@ abstract class AdminController extends Controller
 	/**
 	 * @return null
 	 */
-	public function getParent ()
+	public function getParent()
 	{
 		return $this->parent;
 	}
@@ -841,16 +801,16 @@ abstract class AdminController extends Controller
 	/**
 	 * @param $node
 	 */
-	protected function renderAdditionalMenuHtml ($node)
+	protected function renderAdditionalMenuHtml($node)
 	{
 		$this->data['beforeMenu'] = $this->beforeMenu($node);
-		$this->data['afterMenu']  = $this->afterMenu($node);
+		$this->data['afterMenu'] = $this->afterMenu($node);
 	}
 
 	/**
 	 * Checks and sets the language model.
 	 */
-	protected function checkLanguageInit ()
+	protected function checkLanguageInit()
 	{
 		if ($this->repo->langIsEnabled()) $this->languages = new Language;
 	}
