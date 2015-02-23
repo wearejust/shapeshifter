@@ -204,6 +204,29 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
             $extension = '.' . $file->getClientOriginalExtension();
 
             $filename = Input::file($this->name)->getClientOriginalName();
+
+
+            if(file_exists($this->absoluteStorageDir.$filename)){
+                $new_name = "";
+                $teller = 1;
+                $base_name = str_replace($extension, "", $filename);
+                while($new_name == "") {
+
+                    if(file_exists($this->absoluteStorageDir.$base_name."-".$teller.$extension)){
+                        
+                        //echo("bestond al".$base_name);   
+                        $teller ++;
+
+                    }
+                    else {
+                       $new_name =  $base_name."_".$teller.$extension;
+                    }
+                }
+            }
+
+            //die($this->absoluteStorageDir.$new_name);
+            $filename = $new_name;
+
             $filename = Str::slug(str_replace($extension, '', $filename));
 
             Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
