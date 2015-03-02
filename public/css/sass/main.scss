@@ -163,8 +163,12 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .add-item { float: left; }
 .add-item-button { margin: 0 -.75em; }
-.filter-search { float: right; max-width: 12em; }
+.filter-search { float: right; max-width: 12em; position: relative; }
 .search-control { background-color: lighten($tertiary-color, 5%); }
+.search-pagination .search-control { position: relative; right: 3em; }
+.search-button { display: none; height: 2.75em; width: 2.75em; position: absolute; top: 0; right: 0; margin: 0; overflow: hidden; text-indent: 100%; white-space: nowrap; background-color: transparent; background-image: inline-image("public/css/images/search.png"); background-repeat: no-repeat; background-position: center; }
+.search-pagination .search-button { display: block; }
+.search-button:hover, .search-button:focus, .search-button:active { background-color: transparent; }
 
 .table-row { border-bottom: 1px solid transparent; @include transition(compcact(.1s)); }
 .table-row:nth-child(odd) { background-color: #f2f2f2; }

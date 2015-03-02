@@ -3,6 +3,7 @@
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Relations as Relation;
+use Sentry;
 
 class UserController extends AdminController
 {
@@ -10,15 +11,15 @@ class UserController extends AdminController
 	protected $plural   = "Gebruikers";
 
 	protected $model           = 'Just\Shapeshifter\Core\Models\User';
-	protected $descriptor      = "name";
+	protected $descriptor      = "last_name";
 	protected $orderby         = array('email', 'asc');
 	protected $disabledActions = array(
 		'drag'
 	);
 
 	protected $rules = array(
-		'first_name' => 'required',
-		'last_name'  => 'required'
+		'name' => 'required',
+		'email'  => 'required'
 	);
 
 	protected function configureFields (Form $modifier)
@@ -26,21 +27,39 @@ class UserController extends AdminController
 		$modifier->add(new Attribute\CheckboxAttribute('activated'));
 
 		$modifier->add(new Attribute\TextAttribute('email', 'email'));
-		$modifier->add(new Attribute\TextAttribute('first_name', 'text', array('hide_list')));
-		$modifier->add(new Attribute\TextAttribute('last_name', 'text', array('hide_list')));
+		$modifier->add(new Attribute\TextAttribute('name', 'text', array('hide_list')));
 		$modifier->add(new Attribute\PasswordAttribute('password', array('hide_list')));
 		$modifier->add(new Attribute\PasswordAttribute('password_confirmation', array('hide_list', 'no_save')));
 
-		$modifier->add(new Relation\ManyToManyFacebookRelation($this, 'groups', 'groups'));
+		$modifier->add(new Relation\ManyToManyCheckboxRelation($this, 'groups', 'groups'));
 
 		$modifier->add(new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
 	}
 
+	protected function _beforeInit (Form $modifier)
+	{
+
+	}
+
 	protected function beforeInit (Form $modifier)
 	{
+		if (!Sentry::getUser()->isSuperuser()) {
+			$ids = array();
+			$users = Sentry::findAllUsersWithAccess(array('superuser'));
+			foreach ($users as $user) {
+				$ids[] = $user->id;
+			}
+
+			$this->filter[] = 'id NOT IN (' . implode(',', $ids) . ')';
+		}
+	}
+
+	public function beforeAdd ($model)
+	{
+
 		if ($this->mode == 'store')
 		{
-			$this->rules['password']   = 'required|confiremd';
+			$this->rules['password']   = 'required|confirmed';
 			$this->rules['email']      = 'required|email|unique:cms_users,email';
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
@@ -51,7 +70,33 @@ class UserController extends AdminController
 			$this->rules['first_name'] = 'required';
 			$this->rules['last_name']  = 'required';
 		}
+		//die('hier');
+		return $model;
 	}
+
+	public function beforeUpdate ($model)
+	{
+
+		if ($this->mode == 'store')
+		{
+			$this->rules['password']   = 'required|confirmed';
+			$this->rules['email']      = 'required|email|unique:cms_users,email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+		else if ($this->mode == 'update')
+		{
+			$this->rules['email']      = 'required|email';
+			$this->rules['first_name'] = 'required';
+			$this->rules['last_name']  = 'required';
+		}
+		//die('hier');
+		return $model;
+	}
+
+
+
+
 }
 
 ?>

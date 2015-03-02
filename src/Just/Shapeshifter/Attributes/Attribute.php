@@ -324,7 +324,9 @@ abstract class Attribute
 	{
 		if (preg_match_all('/\[+(.*?)\]/', $name, $matches))
 		{
-			$name = $matches[1][1];
+            if(isset($matches[1][1])) {
+                $name = $matches[1][1];
+            }
 			return $name;
 		}
 		return $name;

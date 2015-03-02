@@ -18,14 +18,15 @@
             @endif
         </div>
         @endif
-        @if (count($records) && $currentUser->can('sort') && !$paginate)
+        @if ((count($records) || $paginate) && $currentUser->can('sort'))
             @if(!in_array('search', $disabledActions))
                 <div class="filter-search">
-                    <form action="" class="section-start section-end" method="get">
+                    <form action="" class="section-start section-end{{ $paginate ? ' search-pagination' : '' }}" method="get">
                         <fieldset>
                             <label class="accessibility" for="search">{{ __('form.search') }}</label>
-                            <input class="search-control" id="search" placeholder="{{ __('form.search') }}…" type="search">
-                            <button class="js-hide" type="submit">{{ __('form.search') }}</button>
+                            <input class="search-control" name="search" id="search" placeholder="{{ __('form.search') }}…" type="search" value="{{ Input::get('search') }}">
+                             <input name="count" type="hidden" value="{{ $paginate_count }}">
+                            <button class="search-button" type="submit">{{ __('form.search') }}</button>
                         </fieldset>
                     </form>
                 </div>
@@ -115,7 +116,7 @@
                 @endforeach
             </select>
             @if ($paginate)
-                {{ $records->appends(array('count'=>$records->getPerPage()))->links() }}
+                {{ $records->appends(array('search' => Input::get('search'), 'count'=>$paginate_count))->links() }}
             @endif
         </div>
         @endif
