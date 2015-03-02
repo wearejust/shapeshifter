@@ -57,24 +57,20 @@ class TimeAttribute extends Attribute implements iAttributeInterface
     {
 
         //dd($this->value);
-        $delen = explode(":", $this->value);
+        $parts = explode(":", $this->value);
 
 
 
 
-        $this->value = $delen[0];
-        if(isset($delen[1])) {
-            $this->value2 = $delen[1];
+        $this->value = $parts[0];
+        if(isset($parts[1])) {
+            $this->value2 = $parts[1];
         }
 
         //dd($delen);
         //
         return $this->value;
 
-        if ( ! $this->value ) return null;
-
-
-        return array($delen[0], $delen[1]);
     }
 
     /**
@@ -87,9 +83,9 @@ class TimeAttribute extends Attribute implements iAttributeInterface
     {
         //dd($this->value);
         return $this->value;
-        $delen = explode(":", $this->value);
-        $this->value = $delen[0];
-        $this->value2 = $delen[1];
+        $parts = explode(":", $this->value);
+        $this->value = $parts[0];
+        $this->value2 = $parts[1];
 
 
 
