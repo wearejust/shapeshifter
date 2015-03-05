@@ -5,7 +5,7 @@ return array(
     'login.email' => 'E-mailadres',
     'login.password' => 'Wachtwoord',
     'login.signin' => 'Inloggen',
-    'login.failure' => 'Nee.',
+    'login.failure' => 'Onbekende login.',
     'login.suspended' => 'Te vaak nee, wacht 15 minuten.',
 
     'user.loggedInAs' => 'Ingelogd als',
