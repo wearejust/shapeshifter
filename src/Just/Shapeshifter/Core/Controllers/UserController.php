@@ -11,7 +11,7 @@ class UserController extends AdminController
 	protected $plural   = "Gebruikers";
 
 	protected $model           = 'Just\Shapeshifter\Core\Models\User';
-	protected $descriptor      = "last_name";
+	protected $descriptor      = "name";
 	protected $orderby         = array('email', 'asc');
 	protected $disabledActions = array(
 		'drag'
