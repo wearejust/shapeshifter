@@ -610,7 +610,7 @@ var OneToManyLoader = function (node) {
 OneToManyLoader.prototype.ajax = function () {
     $.ajax({
         type: "GET",
-        url: this.url,
+        url: this.url + window.location.search,
         success: function (data) {
             data = $(data);
             container = data.find('.content-body-inner');
