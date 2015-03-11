@@ -311,7 +311,7 @@ class Repository
 		{
 			if (strpos($filter, '.') !== false) {
 				$rel = explode('.', $filter);
-				$query = $query->whereHas($rel[0], function($q) use ($filter) {
+				$query = $query->with($rel[0])->whereHas($rel[0], function($q) use ($filter) {
 					$q->whereRaw($filter);
 				});
 			} else {
