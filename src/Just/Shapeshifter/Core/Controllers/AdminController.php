@@ -182,7 +182,7 @@ abstract class AdminController extends Controller {
 	/**
 	 *  This method is always fired, this is the base of whole shapeshifter
 	 */
-	private function initAttributes()
+	public function initAttributes()
 	{
 		$this->formModifier = $this->app->make('Just\Shapeshifter\Form\Form');
 		$this->formModifier->setMode($this->mode);
@@ -477,7 +477,7 @@ abstract class AdminController extends Controller {
 	/**
 	 * @return array
 	 */
-	private function getCurrentRouteNames()
+	public function getCurrentRouteNames()
 	{
 		$verbs = array('update', 'edit', 'index', 'destroy', 'create', 'store');
 		$current = $this->getCurrentRouteName();
