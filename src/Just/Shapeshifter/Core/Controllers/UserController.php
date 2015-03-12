@@ -5,24 +5,23 @@ use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Relations as Relation;
 use Sentry;
 
-class UserController extends AdminController
-{
+class UserController extends AdminController {
 	protected $singular = "Gebruiker";
-	protected $plural   = "Gebruikers";
+	protected $plural = "Gebruikers";
 
-	protected $model           = 'Just\Shapeshifter\Core\Models\User';
-	protected $descriptor      = "name";
-	protected $orderby         = array('email', 'asc');
+	protected $model = 'Just\Shapeshifter\Core\Models\User';
+	protected $descriptor = "name";
+	protected $orderby = array('email', 'asc');
 	protected $disabledActions = array(
 		'drag'
 	);
 
 	protected $rules = array(
-		'name' => 'required',
-		'email'  => 'required'
+		'name'  => 'required',
+		'email' => 'required'
 	);
 
-	protected function configureFields (Form $modifier)
+	protected function configureFields(Form $modifier)
 	{
 		$modifier->add(new Attribute\CheckboxAttribute('activated'));
 
@@ -36,12 +35,7 @@ class UserController extends AdminController
 		$modifier->add(new Attribute\ReadonlyAttribute('last_login', array('hide_add')));
 	}
 
-	protected function _beforeInit (Form $modifier)
-	{
-
-	}
-
-	protected function beforeInit (Form $modifier)
+	protected function beforeInit(Form $modifier)
 	{
 		if (!Sentry::getUser()->isSuperuser()) {
 			$ids = array();
@@ -54,49 +48,30 @@ class UserController extends AdminController
 		}
 	}
 
-	public function beforeAdd ($model)
+	public function beforeAdd($model)
 	{
-
-		if ($this->mode == 'store')
-		{
-			$this->rules['password']   = 'required|confirmed';
-			$this->rules['email']      = 'required|email|unique:cms_users,email';
-			$this->rules['first_name'] = 'required';
-			$this->rules['last_name']  = 'required';
+		if ($this->mode == 'store') {
+			$this->rules['password'] = 'required|confirmed';
+			$this->rules['email'] = 'required|email|unique:cms_users,email';
+			$this->rules['name'] = 'required';
+		} else if ($this->mode == 'update') {
+			$this->rules['email'] = 'required|email';
+			$this->rules['name'] = 'required';
 		}
-		else if ($this->mode == 'update')
-		{
-			$this->rules['email']      = 'required|email';
-			$this->rules['first_name'] = 'required';
-			$this->rules['last_name']  = 'required';
-		}
-		//die('hier');
 		return $model;
 	}
 
-	public function beforeUpdate ($model)
+	public function beforeUpdate($model)
 	{
-
-		if ($this->mode == 'store')
-		{
-			$this->rules['password']   = 'required|confirmed';
-			$this->rules['email']      = 'required|email|unique:cms_users,email';
-			$this->rules['first_name'] = 'required';
-			$this->rules['last_name']  = 'required';
+		if ($this->mode == 'store') {
+			$this->rules['password'] = 'required|confirmed';
+			$this->rules['email'] = 'required|email|unique:cms_users,email';
+			$this->rules['name'] = 'required';
+		} else if ($this->mode == 'update') {
+			$this->rules['email'] = 'required|email';
+			$this->rules['name'] = 'required';
 		}
-		else if ($this->mode == 'update')
-		{
-			$this->rules['email']      = 'required|email';
-			$this->rules['first_name'] = 'required';
-			$this->rules['last_name']  = 'required';
-		}
-		//die('hier');
 		return $model;
 	}
-
-
-
 
 }
-
-?>
