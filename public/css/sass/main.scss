@@ -429,9 +429,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 @media print {
 	* { background: transparent !important; box-shadow: none !important; color: #000 !important; text-shadow: none !important; }
-	aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu { display: none; }
-	a[href]:after { content: " (" attr(href) ") "; font-size: 90%; }
-	a[href^="/"]:after { content: " (http://" attr(href) ") "; }
+	aside, audio, button, canvas, embed, footer, /* form, */ header, menu, nav, object, video, .no-print, #menu { display: none; }
+	// a[href]:after { content: " (" attr(href) ") "; font-size: 90%; }
+	// a[href^="/"]:after { content: " (http://" attr(href) ") "; }
 	abbr:after { content: " (" attr(title) ")"; }
 	thead { display: table-header-group; }
 	tr, img, pre, blockquote { page-break-inside: avoid; }

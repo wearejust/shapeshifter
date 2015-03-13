@@ -309,7 +309,14 @@ class Repository
 
 		foreach ($filters as $filter)
 		{
-			$query = $query->whereRaw($filter);
+			if (strpos($filter, '.') !== false) {
+				$rel = explode('.', $filter);
+				$query = $query->with($rel[0])->whereHas($rel[0], function($q) use ($filter) {
+					$q->whereRaw($filter);
+				});
+			} else {
+				$query = $query->whereRaw($filter);
+			}
 		}
 
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);

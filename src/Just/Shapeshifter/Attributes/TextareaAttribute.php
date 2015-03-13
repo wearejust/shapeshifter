@@ -49,18 +49,6 @@ class TextareaAttribute extends Attribute implements iAttributeInterface
 		$this->rows = isset($dimensions['rows']) ? $dimensions['rows'] : 7;
 		$this->cols = isset($dimensions['cols']) ? $dimensions['cols'] : 15;
 	}
-	
-	/**
-	 * This function is fired when an record is saved. It means each attribute can
-	 * have it's own function to specifiy what is saved in the Database.
-	 *
-	 * @access public
-	 * @return mixed Value.
-	 */
-	public function getSaveValue()
-	{
-		return nl2br($this->value);
-	}
 }
 
 ?>
