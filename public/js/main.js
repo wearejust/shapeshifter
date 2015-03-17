@@ -901,15 +901,17 @@ var SortableTable = function (options, table) {
     });
 
     if (!this.pagination.length) {
-        this.element.find('.search-control').on('keyup blur', this.search.bind(this));
+        var search = this.element.find('.search-control');
+        search.on('keyup blur', this.search.bind(this));
+        search.closest('form').on('submit', function(e) { e.preventDefault(); });
 
-        this.toggleButton = $('<button class="btn add-item-button" type="button" style="display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
+        this.toggleButton = $('<button class="btn add-item-button" type="button" style="margin-top: 1em; display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
         this.element.append(this.toggleButton);
         this.toggleButton.on('click', this.itemsToggle.bind(this));
         this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
         this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
         this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
-        
+
         $.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
         $.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
     }
@@ -1017,27 +1019,16 @@ var SortableTable = function (options, table) {
         });
     }
 
-    if (this.toggleButton) this.itemsHide();
 
     this.element.execute(this, function () {
         this.wrap = this.element.find('.dataTables_wrapper');
         this.wrap.css('position', 'relative');
+        if (this.toggleButton) {
+            this.wrap.css('overflow', 'hidden');
+            this.toggleButtonAmount.text(this.tbody.children().length - this.options.itemsMax);
+            this.itemsHide();
+        }
     });
-}
-
-SortableTable.prototype.wrapLock = function (release) {
-    if (release) {
-        this.wrap.css({
-            'height': '',
-            'overflow': ''
-        });
-
-    } else {
-        this.wrap.css({
-            'height': (this.wrap.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px',
-            'overflow': 'hidden'
-        });
-    }
 }
 
 
@@ -1058,77 +1049,64 @@ SortableTable.prototype.update = function () {
             alertShow(this.message);
         }.bind(this),
         'error': function (e) {
-            //alert('Error: Neem contact op met Just.');
             console.log(e);
         }.bind(this)
     });
 }
 
 SortableTable.prototype.search = function (e) {
-    var value = $(e.currentTarget).val();
-    this.wrapLock();
-    this.tbody.children().show().execute(this, function () {
+    this.wrap.execute(this, 500, function() {
+        var value = $(e.currentTarget).val();
         this.table.fnFilter(value);
-        this.toggleButton.hide();
-        this.toggleButtonMore.hide();
-        this.toggleButtonLess.hide();
 
-        if (this.tbody.children().length > this.options.itemsMaxRanged) {
-            this.itemsHide();
-        }
-        this.wrapLock(true);
-        if (this.options.sortable) {
-            this.sortHandles.toggle(!value.length);
-        }
+        this.wrap.execute(this, function() {
+            if (this.itemsVisible) {
+                this.itemsShow();
+            } else {
+                this.itemsHide();
+            }
+
+            var n = this.tbody.children().length - this.options.itemsMax;
+            this.toggleButtonAmount.text(n);
+            this.toggleButton.toggle(n > this.options.itemsMaxRanged);
+
+            if (this.options.sortable) {
+                this.sortHandles.toggle(!value.length);
+            }
+        });
     });
 }
 
 SortableTable.prototype.itemsToggle = function (e) {
-    if (this.toggleButtonMore.is(':visible')) {
-        this.itemsShow(e);
-    } else {
+    if (this.itemsVisible) {
         this.itemsHide(e);
+    } else {
+        this.itemsShow(e);
     }
 }
 
 SortableTable.prototype.itemsHide = function (e) {
-    var items = this.tbody.children();
-    if (items.length > this.options.itemsMaxRanged) {
-        this.toggleButton.show();
-        this.toggleButtonMore.show();
-        this.toggleButtonLess.hide();
+    this.itemsVisible = false;
+    this.toggleButton.show();
+    this.toggleButtonMore.show();
+    this.toggleButtonLess.hide();
 
-        if (!e) {
-            this.toggleButtonAmount.text(items.length - this.options.itemsMax);
-            items.slice(this.options.itemsMax).hide();
-        } else {
-            var item = items.eq(this.options.itemsMax - 1);
-            this.wrap.css('overflow', 'hidden').animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px'}, function () {
-                items.slice(this.options.itemsMax).hide();
-                this.wrapLock(true);
-            }.bind(this));
-        }
-    }
+    var items = this.tbody.children();
+    var item = items.eq(Math.min(items.length - 1, this.options.itemsMax));
+    this.wrap.stop(true).animate({'height': (item.position().top + item.outerHeight()) + 'px'}, e ? 'default' : 0);
 }
 
 SortableTable.prototype.itemsShow = function (e) {
-    var items = this.tbody.children();
-    if (items.length > this.options.itemsMaxRanged) {
-        this.wrapLock();
+    this.itemsVisible = true;
+    this.toggleButtonMore.hide();
+    this.toggleButtonLess.show();
 
-        items.slice(this.options.itemsMax).show();
-
-        this.toggleButton.show();
-        this.toggleButtonMore.hide();
-        this.toggleButtonLess.show();
-
-        var item = items.last();
-        this.wrap.animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px'}, function () {
-            this.wrapLock(true);
-        }.bind(this));
-
-    }
+    var item = this.tbody.children().last();
+    this.wrap.stop(true).animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px'}, e ? 'default' : 0, function () {
+        this.wrap.css('height', '');
+    }.bind(this));
 }
+
 
 
 // -----------------------------------------------------------
