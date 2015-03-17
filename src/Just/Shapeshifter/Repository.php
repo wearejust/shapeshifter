@@ -300,6 +300,7 @@ class Repository
 	 */
 	private function getRecords ($orderBy, $filters, $parent, $paginate)
 	{
+		$table = $this->model->getTable();
 		$query = $this->model;
 
 		if ($this->hasParent($parent))
@@ -319,11 +320,16 @@ class Repository
 			}
 		}
 
+		if ($paginate) {
+			$sort = Input::get('sort');
+			if ($sort && Schema::hasColumn($table, $sort)) {
+				$orderBy = array($sort, Input::get('sortdir'));
+			}
+		}
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);
 
 		if ($search = Input::get('search')) {
-			$records = $records->where(function($q) use ($search) {
-				$table = $this->model->getTable();
+			$records = $records->where(function($q) use ($table, $search) {
 				foreach ($this->attributes as $attribute) {
 					if (Schema::hasColumn($table, $attribute->name) && !in_array('hide_list', $attribute->flags)) {
 						$q->orWhere($attribute->name, 'LIKE', "%{$search}%");

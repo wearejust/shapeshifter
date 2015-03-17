@@ -909,11 +909,12 @@ var SortableTable = function (options, table) {
         this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
         this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
         this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
+        
+        $.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
+        $.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
     }
 
     $.fn.dataTableExt.oStdClasses.sRowEmpty = "table-cell";
-    $.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
-    $.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
 
     if (this.defaultOrderIndex >= 0 && this.table.hasClass('js-datatable-sortable')) {
         var sorting = [[this.defaultOrderIndex, this.defaultOrder]];
@@ -929,7 +930,7 @@ var SortableTable = function (options, table) {
             'aTargets': ['js-disable-sort']
         }],
         'bPaginate': false,
-        'bSort': !this.options.sortable,
+        'bSort': (!this.options.sortable && !this.pagination.length),
         "oLanguage": {
             "sProcessing": "Laden…",
             "sLengthMenu": "_MENU_ resultaten weergeven",

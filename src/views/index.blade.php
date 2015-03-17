@@ -49,12 +49,12 @@
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
-                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}" data-header-title="{{ $attr->name }}">
+                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}{{ (Input::get('sort') == $attr->name) ? (' table-header-sort-item-active-' . Input::get('sortdir')) : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
                                 @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
                                     <span class="table-header-sort">
-                                        <span class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></span>
-                                        <span class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></span>
+                                        <a {{ $paginate ? ('href="?'.(Input::has('search') ? ('search='.Input::get('search').'&') : '').'sort='.$attr->name.'&sortdir=asc"') : '' }} class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></a>
+                                        <a {{ $paginate ? ('href="?'.(Input::has('search') ? ('search='.Input::get('search').'&') : '').'sort='.$attr->name.'&sortdir=desc"') : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
                                     </span>
                                 @endif
                                 {{ translateAttribute($attr->name) }}
@@ -116,7 +116,7 @@
                 @endforeach
             </select>
             @if ($paginate)
-                {{ $records->appends(array('search' => Input::get('search'), 'count'=>$paginate_count))->links() }}
+                {{ $records->appends(array('search' => Input::get('search'), 'sort' => Input::get('sort'), 'sortdir' => Input::get('sortdir'), 'count'=>$paginate_count))->links() }}
             @endif
         </div>
         @endif
