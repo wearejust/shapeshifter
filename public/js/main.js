@@ -905,12 +905,14 @@ var SortableTable = function (options, table) {
         search.on('keyup blur', this.search.bind(this));
         search.closest('form').on('submit', function(e) { e.preventDefault(); });
 
-        this.toggleButton = $('<button class="btn add-item-button" type="button" style="margin-top: 1em; display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
-        this.element.append(this.toggleButton);
-        this.toggleButton.on('click', this.itemsToggle.bind(this));
-        this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
-        this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
-        this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
+        if (this.tbody.children().length > this.options.itemsMax) {
+            this.toggleButton = $('<button class="btn add-item-button" type="button" style="margin-top: 1em; display: none;">Show <span class="toggle-button-amount"></span> <span class="toggle-button-more">more…</span><span class="toggle-button-less" style="display: none;">less</span></button>');
+            this.element.append(this.toggleButton);
+            this.toggleButton.on('click', this.itemsToggle.bind(this));
+            this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
+            this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
+            this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
+        }
 
         $.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
         $.fn.dataTableExt.oStdClasses.sSortAsc = 'table-header-sort-item-active-desc';
