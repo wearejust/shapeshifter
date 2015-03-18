@@ -49,12 +49,12 @@
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
-                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}{{ (Input::get('sort') == $attr->name) ? (' table-header-sort-item-active-' . Input::get('sortdir')) : '' }}" data-header-title="{{ $attr->name }}">
+                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}{{ ($sort == $attr->name) ? (' table-header-sort-item-active-' . $sortdir) : '' }}" data-header-title="{{ $attr->name }}">
                             <div class="container">
-                                @if ( ! $currentUser->can('drag') && $currentUser->can('sort'))
+                                @if ((!$paginate || $attr->sortable) && ! $currentUser->can('drag') && $currentUser->can('sort'))
                                     <span class="table-header-sort">
-                                        <a {{ $paginate ? ('href="?'.(Input::has('search') ? ('search='.Input::get('search').'&') : '').'sort='.$attr->name.'&sortdir=asc"') : '' }} class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></a>
-                                        <a {{ $paginate ? ('href="?'.(Input::has('search') ? ('search='.Input::get('search').'&') : '').'sort='.$attr->name.'&sortdir=desc"') : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
+                                        <a {{ $attr->sortable ? "{$attr->sortable}asc\"" : '' }} class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></a>
+                                        <a {{ $attr->sortable ? "{$attr->sortable}desc\""  : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
                                     </span>
                                 @endif
                                 {{ translateAttribute($attr->name) }}

@@ -224,11 +224,21 @@ class Repository
 	 */
 	public function setAttributeValues ($mode, $attributes, $model)
 	{
+		$table = $model->getTable();
+		$search = Input::get('search');
+
 		foreach ($attributes as $key => $attr)
 		{
 			if ($key == 'translations')
 			{
 				continue;
+			}
+
+			if ($mode == 'index') {
+				$attr->sortable = false;
+				if (Schema::hasColumn($table, $attr->name)) {
+					$attr->sortable = 'href="?' . ($search ? "{$search}&" : '') . "sort={$attr->name}&sortdir=";
+				}
 			}
 
 			if ($mode == 'create' && $attr->hasFlag('hide_add')) $attributes->forget($key);

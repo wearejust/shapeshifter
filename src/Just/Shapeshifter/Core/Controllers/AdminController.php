@@ -440,6 +440,8 @@ abstract class AdminController extends Controller {
 		$this->data['form'] = $this->formModifier;
 		$this->data['attributes'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
 		$this->data['attributes_translations'] = $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model);
+		$this->data['sort'] = Input::get('sort');
+		$this->data['sortdir'] = Input::get('sortdir');
 		$this->data['currentUser'] = $user;
 		$this->data['orderBy'] = $this->orderby;
 		$this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
