@@ -53,8 +53,8 @@
                             <div class="container">
                                 @if ((!$paginate || $attr->sortable) && ! $currentUser->can('drag') && $currentUser->can('sort'))
                                     <span class="table-header-sort">
-                                        <a {{ $attr->sortable ? "{$attr->sortable}asc\"" : '' }} class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></a>
-                                        <a {{ $attr->sortable ? "{$attr->sortable}desc\""  : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
+                                        <a {{ ($paginate && $attr->sortable) ? "{$attr->sortable}asc\"" : '' }} class="table-header-sort-item table-header-sort-item-asc"><span class="accessibility">Oplopend</span></a>
+                                        <a {{ ($paginate && $attr->sortable) ? "{$attr->sortable}desc\""  : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
                                     </span>
                                 @endif
                                 {{ translateAttribute($attr->name) }}
