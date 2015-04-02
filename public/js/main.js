@@ -511,6 +511,8 @@ var MultipleFileAttribute = function (element) {
     }
     this.item.find('.mini-gallery-input').prop('checked', false);
     this.item.find('label').addClass('loader');
+
+    this.element.find('.btn-remove').on('click', this.clear.bind(this));
 }
 
 MultipleFileAttribute.prototype.drag = function (e) {
@@ -594,6 +596,12 @@ MultipleFileAttribute.prototype.change = function (e) {
     var str = this.storageDir + $(e.currentTarget).val();
     this.preview.css('background-image', "url('" + str + "')");
     this.preview.find('.js-multiplefileattribute-preview-placeholder').remove();
+}
+
+MultipleFileAttribute.prototype.clear = function (e) {
+    this.preview.css('background-image', '');
+    this.preview.find('.js-multiplefileattribute-preview-placeholder').remove();
+    this.list.find('.mini-gallery-input:checked').prop('checked', false);
 }
 
 

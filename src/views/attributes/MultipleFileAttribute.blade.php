@@ -10,9 +10,8 @@
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper media-preview">
                                 <span class="media-wrapper-content-wrapper-inner js-multiplefileattribute-preview" data-storage-dir="{{ $relativeStorageDir }}" style="background-image: url('{{ $value ? $relativeStorageDir . $value : '' }}');"></span>
-                                @if ($value)
-                                <button class="btn btn-remove btn-remove-alt confirm-delete-dialog" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
-                                @else
+                                <button class="btn btn-remove btn-remove-alt" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
+                                @if (!$value)
                                 <span class="media-placeholder js-multiplefileattribute-preview-placeholder">
                                     <span class="media-placeholder-content">
                                         <p class="section-start section-end js-multiplefileattribute-preview-placeholder">Kies een eerder geüploade afbeelding of gebruik de "+"-knop om afbeeldingen te uploaden.</p>
