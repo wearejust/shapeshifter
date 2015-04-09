@@ -130,12 +130,14 @@ class Repository
 			//die();
         }
 
+        $adding = !$this->model->id;
+
 		if ($this->model->save())
 		{
 			$translatableSaveItems = $this->prepareTranslations($relations, $parent);
 			$this->saveTranslations($translatableSaveItems);
 
-			$this->model = !$this->model->id ? $ref->afterAdd($this->model) : $ref->afterUpdate($this->model);
+			$this->model = $adding ? $ref->afterAdd($this->model) : $ref->afterUpdate($this->model);
 
 			if ($this->model->save())
 			{
