@@ -61,9 +61,11 @@
                 <div class="controls-content">
                     <div class="content container">
                         <ul class="control-list list">
-                            <li class="control-item" style="position: absolute; left: 0;">
-                                <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
-                            <!--</li>-->
+                            @if ($currentUser->can('store'))
+                                <li class="control-item" style="position: absolute; left: 0;">
+                                    <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
+                                <!--</li>-->
+                            @endif
                             {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
                     </div>
@@ -73,9 +75,6 @@
 
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
-
-
-
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
                     <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">

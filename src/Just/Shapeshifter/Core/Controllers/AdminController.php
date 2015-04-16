@@ -432,6 +432,9 @@ abstract class AdminController extends Controller {
 		$menuService = $this->app->make('Just\Shapeshifter\Services\MenuService');
 
 		$user = Sentry::getUser();
+		if (!$user->hasAccess($this->data['routes']['create'])) $this->disabledActions[] = 'create';
+		if (!$user->hasAccess(array($this->data['routes']['store'], $this->data['routes']['update']))) $this->disabledActions[] = 'store';
+		if (!$user->hasAccess($this->data['routes']['destroy'])) $this->disabledActions[] = 'delete';
 		$user->setDisabledActions($this->disabledActions);
 
 
