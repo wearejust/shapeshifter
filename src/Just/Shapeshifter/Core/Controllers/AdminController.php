@@ -5,6 +5,7 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Database\DatabaseManager as DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Paginator;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Core\Models\Language;
 use Just\Shapeshifter\Exceptions\ClassNotExistException;
@@ -17,6 +18,7 @@ use Just\Shapeshifter\Form\Tab;
 use Input;
 use Notification;
 use Sentry;
+use Schema;
 use Session;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -215,6 +217,7 @@ abstract class AdminController extends Controller {
 		$this->mode = 'index';
 		$this->model = $this->repo->getNew();
 
+		$table = $this->getModel()->getTable();
 		$form = $this->initAttributes();
 		$this->generateTimestampFields();
 
@@ -224,6 +227,25 @@ abstract class AdminController extends Controller {
 
 		if ($this->app['request']->ajax() && !count($records) && in_array('create', $this->disabledActions)) {
 			throw new NotFoundHttpException('No records, No ability to create and Ajax request');
+		}
+
+		if ($this->paginate) {
+			$sort = Input::get('sort');
+			if ($sort && !Schema::hasColumn($table, $sort)) {
+				set_time_limit(3600);
+				ini_set('memory_limit','6144M');
+
+				$recs = array();
+				$records->sortBy($sort, SORT_REGULAR, (Input::get('sortdir') == 'desc'));
+				foreach ($records as $record) {
+					$recs[] = $record;
+				}
+
+				$perPage = Input::get('count') ?: 25;
+				$page = (Input::get('page') ?: 1) - 1;
+				$recs = array_slice($recs, $page * $perPage, $perPage);
+				$records = Paginator::make($recs, count($records), $perPage);
+			}
 		}
 
 		$this->data['title'] = $this->plural;
@@ -247,8 +269,7 @@ abstract class AdminController extends Controller {
 			foreach ($records as $rec) {
 				foreach ($form->translation_attributes as $attribute) {
 
-					$table_name = $this->getModel()->getTable();
-					$result = $this->db->table($table_name . '_translations')
+					$result = $this->db->table($table . '_translations')
 					                   ->where('parent_id', '=', $rec->id)
 					                   ->where('language_id', '=', $defaultLanguage->id)
 					                   ->where('attribute', '=', $attribute->name)

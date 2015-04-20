@@ -226,7 +226,6 @@ class Repository
 	 */
 	public function setAttributeValues ($mode, $attributes, $model)
 	{
-		$table = $model->getTable();
 		$search = Input::get('search');
 
 		foreach ($attributes as $key => $attr)
@@ -237,10 +236,7 @@ class Repository
 			}
 
 			if ($mode == 'index') {
-				$attr->sortable = false;
-				if (Schema::hasColumn($table, $attr->name)) {
-					$attr->sortable = 'href="?' . ($search ? "{$search}&" : '') . "sort={$attr->name}&sortdir=";
-				}
+				$attr->sortable = 'href="?' . ($search ? "{$search}&" : '') . "sort={$attr->name}&sortdir=";
 			}
 
 			if ($mode == 'create' && $attr->hasFlag('hide_add')) $attributes->forget($key);
@@ -332,12 +328,12 @@ class Repository
 			}
 		}
 
-		if ($paginate) {
-			$sort = Input::get('sort');
-			if ($sort && Schema::hasColumn($table, $sort)) {
-				$orderBy = array($sort, Input::get('sortdir'));
-			}
+		$sort = $paginate ? Input::get('sort') : false;
+		$sortTable = $sort ? Schema::hasColumn($table, $sort) : false;
+		if ($sort && $sortTable) {
+			$orderBy = array($sort, Input::get('sortdir'));
 		}
+
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);
 
 		if ($search = Input::get('search')) {
@@ -355,7 +351,11 @@ class Repository
 		if (!$paginate) {
             return $records->get();
 		} else {
-            return $records->paginate(($count == 'all') ? PHP_INT_MAX : $count);
+			if ($sort && !$sortTable) {
+				return $records->get();
+			} else {
+				return $records->paginate(($count == 'all') ? PHP_INT_MAX : $count);
+			}
 		}
 	}
 
