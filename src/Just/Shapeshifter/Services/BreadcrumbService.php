@@ -34,7 +34,7 @@ class BreadcrumbService {
     {
         $segments = $this->app['request']->segments();
 
-        $path = '';
+        $path = $this->config->get('shapeshifter::config.menu-prefix') ? '/' . $this->config->get('shapeshifter::config.menu-prefix') : '';
         $breadcrumbs = array();
 
         foreach ($segments as $k => $segment)
