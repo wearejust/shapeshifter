@@ -470,6 +470,7 @@ abstract class AdminController extends Controller {
 		$this->data['orderBy'] = $this->orderby;
 		$this->data['breadcrumbs'] = $breadcrumbService->breadcrumbs();
 		$this->data['menu'] = $menuService->generateMenu();
+		$this->data['menuPrefix'] = ($this->config->get('shapeshifter::config.menu-prefix') ? '/' . $this->config->get('shapeshifter::config.menu-prefix') : '') . '/admin';
 		$this->data['descriptor'] = $this->getDescriptor();
 		$this->data['cancel'] = $this->generateCancelLink();
 		$this->data['disabledActions'] = $this->disabledActions;

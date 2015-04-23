@@ -22,6 +22,7 @@ return array(
 	| The structure of the main menu
 	|
 	*/
+	'menu-prefix' => '',
 	'menu' => array(
         array(
             'title' => 'Pagina\'s',

@@ -56,7 +56,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
         <div class="breadcrumbs">
             <ul class="breadcrumbs-list list">
                 <li class="breadcrumbs-item">
-                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
+                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="{{ $menuPrefix }}">{{ __('breadcrumb.home') }}</a>
                 <!--</li>-->
                 @foreach ($breadcrumbs as $crumb)
                 <li class="breadcrumbs-item">
@@ -82,12 +82,12 @@ document.documentElement.className=TOUCH?"js touch":"js";
         <ul class="main-nav-list list group">
             @foreach ($menu as $item)
             <li class="main-nav-item{{ $item['active'] ? ' main-nav-item-active' : '' }}">
-                <a class="main-nav-link" href="/admin/{{ $item['url'] }}">{{ $item['title'] }}</a>
+                <a class="main-nav-link" href="{{ $menuPrefix }}/{{ $item['url'] }}">{{ $item['title'] }}</a>
                 @if (isset($item['children']) && count($item['children']))
                 <ul class="sub-list list {{ ! $item['active'] ? 'js-hide' : ''}}">
                     @foreach ($item['children'] as $child)
                     <li class="sub-item">
-                        <a class="sub-item-button{{ $child['active'] ? ' sub-item-button-active' : '' }}" href="/admin/{{ $child['url'] }}">{{ $child['title'] }}</a>
+                        <a class="sub-item-button{{ $child['active'] ? ' sub-item-button-active' : '' }}" href="{{ $menuPrefix }}/{{ $child['url'] }}">{{ $child['title'] }}</a>
                     </li>
                     @endforeach
                 </ul>
@@ -107,7 +107,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
     </div>
 </div>
 <p class="system-name">
-    <a href="/admin" class="system-name-button">Content</a>
+    <a href="{{ $menuPrefix }}" class="system-name-button">Content</a>
 </p>
 @endif
 {{ HTML::script("/packages/just/shapeshifter/js/vendor/jquery-1.11.0.min.js") }}
