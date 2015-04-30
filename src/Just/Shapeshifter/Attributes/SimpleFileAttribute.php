@@ -205,37 +205,65 @@ class SimpleFileAttribute extends Attribute implements iAttributeInterface
             $extension = '.' . $file->getClientOriginalExtension();
 
             $filename = Input::file($this->name)->getClientOriginalName();
+            $filename = Str::slug(str_replace($extension, '', $filename));
 
 
-            if(file_exists($this->absoluteStorageDir.$filename)){
+            if(file_exists($this->absoluteStorageDir.$filename. $extension)){
                 $new_name = "";
                 $teller = 1;
                 $base_name = str_replace($extension, "", $filename);
                 while($new_name == "") {
 
-                    if(file_exists($this->absoluteStorageDir.$base_name."-".$teller.$extension)){
-                        
+
+                    if(file_exists($this->absoluteStorageDir.$base_name."_".$teller.$extension)){
+
                         //echo("bestond al".$base_name);
                         $teller ++;
 
                     }
                     else {
-                       $new_name =  $base_name."_".$teller.$extension;
+                        //echo "bestaat nog niet: ".$this->absoluteStorageDir.$base_name."_".$teller.$extension;
+                        move_uploaded_file(Input::file($this->name)->getRealPath(), $this->absoluteStorageDir .$base_name."_".$teller . $extension);
+                        if($teller>1) {
+                            $this->value = $base_name . "_" . ($teller - 1) . $extension;
+                        }
+                        else {
+                            $this->value = $base_name . $extension;
+                        }
+                        return;
+
+                       $new_name =  $base_name;
                     }
+
+                    //echo ('check voor ' . $this->absoluteStorageDir.$base_name."_".$teller.$extension);
+
+
                 }
+                $filename = $new_name."_".$teller;
+            }
+            else {
+                //die("bestond nog niet, wordt ".$filename);
             }
 
-            //die($this->absoluteStorageDir.$new_name);
-            $filename = $new_name;
 
-            $filename = Str::slug(str_replace($extension, '', $filename));
+            //die("nu naam bedacht, ".$filename);
 
-            Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
+
+
+            //Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
+            //die("move " . Input::file($this->name)->getRealPath() . " Naar " . $this->absoluteStorageDir. "/" .$filename . $extension );
+            move_uploaded_file(Input::file($this->name)->getRealPath(), $this->absoluteStorageDir .$filename . $extension);
+
+            if(isset($new_name)) {
+                //$filename = $new_name."_".$teller-1;
+            }
+
 
             $this->value = $filename . $extension;
+            return "";
         }
-
-        return '';
+        //die('uiteindelijk geworden' . $this->value);
+        return "";
     }
 
     /**
