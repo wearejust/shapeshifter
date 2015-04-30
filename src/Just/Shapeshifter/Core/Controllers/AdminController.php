@@ -178,7 +178,7 @@ abstract class AdminController extends Controller
 	 * @throws NotFoundHttpException
 	 * @return mixed
 	 */
-	final public function index ()
+	public function index ()
 	{
 		if (!$this->userHasAccess())
 		{
