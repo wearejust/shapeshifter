@@ -101,6 +101,9 @@ abstract class Attribute
      */
     public function __construct($name = '', $flags = array() )
     {
+
+
+
         $this->name = $name;
         $this->flags = $flags;
     }
@@ -152,8 +155,16 @@ abstract class Attribute
             ${$k} = $item; $array[] = $k;
         }
 
+
         $label = $this->getLabel($name);
         $array[] = 'label';
+
+        if ($this->hasFlag('default_value')) {
+            //die("DEFAULT:" . $this->flags['default_value']);
+            //echo "JAAA";
+            $array['default_value'] = $this->flags['default_value'];
+        }
+       // print_r(compact($array));
 
         return View::make('shapeshifter::attributes.'.$attribute, compact($array))->render();
     }
@@ -261,7 +272,7 @@ abstract class Attribute
      */
     public function hasFlag($flag = false)
     {
-        return $this->flags && is_array($this->flags) && in_array($flag, $this->flags);
+        return $this->flags && is_array($this->flags) && (in_array($flag, $this->flags) || array_key_exists($flag, $this->flags));
     }
 
     /**

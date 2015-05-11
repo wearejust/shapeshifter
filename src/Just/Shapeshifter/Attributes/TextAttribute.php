@@ -26,6 +26,9 @@ class TextAttribute extends Attribute implements iAttributeInterface{
         $this->name = $name;
         $this->type = $type;
         $this->flags = $flags;
+
+        print_r($flags);
+
     }
 }
 

@@ -1,11 +1,16 @@
 <label class="form-group js-placeholder" for="{{$name}}">
     <span class="form-group-content">
         <span class="form-label">
-            {{ $label }}
+            {{ $label }} 
+            
         </span>
         <span class="form-field">
         	<span class="form-control">
-    	        {{ Form::input($type, $name, (isset($translation_value)) ? $translation_value : null, array('class' => 'form-field-content' . ($required ?' js-required':''), 'id' => $name)) }}
+                @if(isset($flags['default_value']))
+    	           {{ Form::input($type, $name, (isset($translation_value)) ? $translation_value : $flags['default_value'], array('class' => 'form-field-content' . ($required ?' js-required':''), 'id' => $name)) }}
+                @else
+                    {{ Form::input($type, $name, (isset($translation_value)) ? $translation_value : '', array('class' => 'form-field-content' . ($required ?' js-required':''), 'id' => $name)) }}
+                @endif
     	        <span class="form-group-highlight"></span>
     	    </span>
     	    @include('shapeshifter::layouts.helptext')
