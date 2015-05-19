@@ -92,7 +92,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         }
 
         $results = $results->get(array($table.'.id',"{$descriptor} as name"))->toJson();
-        $all = $results->get(array($table.'.id',"{$descriptor} as name"))->toJson();
+        $all = $all->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 
         $this->html = View::make('shapeshifter::relations.ManyToManyFacebookRelation',  array(
             'results' => $results,
