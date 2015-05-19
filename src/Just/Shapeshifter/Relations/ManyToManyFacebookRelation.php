@@ -64,8 +64,35 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $descriptor = $this->destination->getDescriptor();
 
         $table = $this->destination->repo->getModel()->getTable();
-        $results = $this->model->{$this->function}()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
-        $all = $this->destination->repo->getModel()->get(array($table.'.id',"{$descriptor} as name"))->toJson();
+        $results = $this->model->{$this->function}();
+        $all = $this->destination->repo->getModel();
+
+        if ($this->destination->repo->modelHasTranslations() && preg_match('/translate./', $descriptor)) {
+            $parts = explode('.', $descriptor);
+            $regularDecriptor = array_last($parts, function ($key, $value) {
+                return $value;
+            });
+
+            $defaultLanguage = $this->fromcontroller->getLanguage();
+            $tableTranslations = "{$table}_translations";
+
+            $results = $results->join($tableTranslations, function($join) use ($table, $tableTranslations, $defaultLanguage, $regularDecriptor) {
+                $join->on("{$tableTranslations}.parent_id", '=', "{$table}.id")
+                    ->where("{$tableTranslations}.language_id", '=', $defaultLanguage->id)
+                    ->where("{$tableTranslations}.attribute", '=', $regularDecriptor);
+            });
+
+            $all = $all->join($tableTranslations, function($join) use ($table, $tableTranslations, $defaultLanguage, $regularDecriptor) {
+                $join->on("{$tableTranslations}.parent_id", '=', "{$table}.id")
+                    ->where("{$tableTranslations}.language_id", '=', $defaultLanguage->id)
+                    ->where("{$tableTranslations}.attribute", '=', $regularDecriptor);
+            });
+
+            $descriptor = "{$tableTranslations}.value";
+        }
+
+        $results = $results->get(array($table.'.id',"{$descriptor} as name"))->toJson();
+        $all = $results->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 
         $this->html = View::make('shapeshifter::relations.ManyToManyFacebookRelation',  array(
             'results' => $results,
