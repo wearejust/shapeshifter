@@ -337,13 +337,21 @@ class Repository
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);
 
 		if ($search = Input::get('search')) {
-			$records = $records->where(function($q) use ($table, $search) {
-				foreach ($this->attributes as $attribute) {
-					if (Schema::hasColumn($table, $attribute->name) && !in_array('hide_list', $attribute->flags)) {
-						$q->orWhere($attribute->name, 'LIKE', "%{$search}%");
+			if ($relation = Input::get('search_relation')) {
+				$relation = explode('.', $relation);
+				$records = $records->with($relation[0])->whereHas($relation[0], function($q) use ($relation, $search) {
+					$q->where($relation[1], 'LIKE', "%{$search}%");
+				});
+
+			} else {
+				$records = $records->where(function($q) use ($table, $search) {
+					foreach ($this->attributes as $attribute) {
+						if (Schema::hasColumn($table, $attribute->name) && !in_array('hide_list', $attribute->flags)) {
+							$q->orWhere($attribute->name, 'LIKE', "%{$search}%");
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
         $count = Input::get('count', is_int($paginate) ? $paginate : 25);
