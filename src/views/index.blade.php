@@ -4,7 +4,7 @@
 <div class="content-body-inner">
     <h1>{{ $title }}</h1>
     
-    @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
+    @if ($currentUser->can('create') || ((count($records) || $paginate) && $currentUser->can('sort')))
     <div class="group">
         @if ($currentUser->can('create'))
         <div class="add-item">
