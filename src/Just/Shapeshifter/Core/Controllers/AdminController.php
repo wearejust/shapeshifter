@@ -224,11 +224,6 @@ abstract class AdminController extends Controller {
 		$records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 		$this->getParentInfo();
 
-
-		if ($this->app['request']->ajax() && !count($records) && in_array('create', $this->disabledActions)) {
-			throw new NotFoundHttpException('No records, No ability to create and Ajax request');
-		}
-
 		if ($this->paginate) {
 			$sort = Input::get('sort');
 			if ($sort && !Schema::hasColumn($table, $sort)) {
