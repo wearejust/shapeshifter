@@ -1,7 +1,7 @@
 <?php namespace Just\Shapeshifter\Relations;
 
 use Just\Shapeshifter\Controllers as Controller;
-use Just\Shapeshifter\ShapeShifterException;
+use Just\Shapeshifter\Exceptions\ShapeShifterException;
 use Request;
 use Route;
 use View;
@@ -78,7 +78,7 @@ class OneToManyRelation extends Relation
      * display
      *
      * @access public
-     * @throws \Just\Shapeshifter\ShapeShifterException
+     * @throws \Just\Shapeshifter\Exceptions\ShapeShifterException
      * @return mixed Value.
      */
 	public function compile()
@@ -129,7 +129,7 @@ class OneToManyRelation extends Relation
 
     /**
      * @param $routes
-     * @throws \Just\Shapeshifter\ShapeShifterException
+     * @throws \Just\Shapeshifter\Exceptions\ShapeShifterException
      * @return mixed
      */
     protected function resolveControllerByName($routes)
@@ -151,7 +151,7 @@ class OneToManyRelation extends Relation
      * @param $path
      * @param $node
      * @param $numerics
-     * @throws \Just\Shapeshifter\ShapeShifterException
+     * @throws \Just\Shapeshifter\Exceptions\ShapeShifterException
      * @return string
      */
     private function getDestinationRoute($path, $node, $numerics)

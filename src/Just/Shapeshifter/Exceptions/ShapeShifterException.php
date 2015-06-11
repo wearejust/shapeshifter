@@ -1,3 +1,3 @@
-<?php namespace Just\Shapeshifter;
+<?php  namespace Just\Shapeshifter\Exceptions; 
 
 class ShapeShifterException extends \Exception{}

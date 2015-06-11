@@ -25,7 +25,6 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      * @param array $destination
      * @param $function
      * @param array $flags
-     * @throws \Just\Shapeshifter\ShapeShifterException
      */
     public function __construct($fromcontroller, $destination, $function, $flags = array())
 	{

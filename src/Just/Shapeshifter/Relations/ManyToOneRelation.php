@@ -2,6 +2,7 @@
 
 use Just\Shapeshifter\Controllers as Controller;
 use Just\Shapeshifter\Exceptions\MethodNotExistException;
+use Just\Shapeshifter\Exceptions\ShapeShifterException;
 use Route;
 use View;
 
@@ -93,7 +94,7 @@ class ManyToOneRelation extends OneToManyRelation
 
     /**
      * @return mixed
-     * @throws \Just\Shapeshifter\ShapeShifterException
+     * @throws \Just\Shapeshifter\Exceptions\ShapeShifterException
      */
     protected function setupDestination()
     {
