@@ -2,7 +2,7 @@
 
 return array(
 
-    'login.email' => 'E-mailaddrres',
+    'login.email' => 'Email address',
     'login.password' => 'Password',
     'login.signin' => 'Sign in',
     'login.failure' => 'Unknown login.',
