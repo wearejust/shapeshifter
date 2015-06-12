@@ -1043,12 +1043,15 @@ var SortableTable = function (options, table) {
 
 
 SortableTable.prototype.update = function () {
+    var order = this.tbody.sortable('toArray', {'attribute': 'data-record-id'});
+    if (this.defaultOrder == 'desc') order = order.reverse();
+
     $.ajax({
         'type': 'POST',
         'url': '/admin/ajax/sortorderchange',
         'dataType': 'json',
         'data': {
-            'order': this.tbody.sortable('toArray', {'attribute': 'data-record-id'}),
+            'order': order,
             'offset': this.sortOffset,
             'model': model,
             'url': window.location.pathname,
