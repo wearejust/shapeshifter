@@ -2,6 +2,8 @@
 
 return array
 (
+    'yes'                   => 'ja',
+    'no'                    => 'nee',
     'active'                => 'actief',
     'title'                 => 'titel',
     'menu_title'            => 'menu titel',

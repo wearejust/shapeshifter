@@ -37,7 +37,8 @@ class CheckboxAttribute extends Attribute implements iAttributeInterface
      */
     public function getDisplayValue()
     {
-        return $this->value ? 'Ja' : 'Nee';
+        $value = $this->value ? 'yes' : 'no';
+        return translateAttribute($value);
     }
 
     /**
