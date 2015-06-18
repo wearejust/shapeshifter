@@ -178,7 +178,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
     {
         if ( ! is_dir($this->absoluteStorageDir))
         {
-            mkdir($this->absoluteStorageDir);
+            mkdir($this->absoluteStorageDir, 0777, true);
             //throw new DirDoesNotExistException("Directory '{$this->absoluteStorageDir}' doesnt exists");
         }
 
