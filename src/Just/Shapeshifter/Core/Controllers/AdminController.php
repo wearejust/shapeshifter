@@ -277,9 +277,7 @@ abstract class AdminController extends Controller {
 						$form->tab('translations', function ($mod) use ($attribute) {
 							$mod->add($attribute);
 						});
-						break;
 					}
-					break;
 				}
 			}
 
