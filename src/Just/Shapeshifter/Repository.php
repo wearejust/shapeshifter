@@ -334,6 +334,12 @@ class Repository
 			$orderBy = array($sort, Input::get('sortdir'));
 		}
 
+		$orderByTranslate = false;
+		if ($this->modelHasTranslations() && substr($orderBy[0], 0, 10) == 'translate.') {
+			$orderByTranslate = explode('.', $orderBy[0]);
+			$orderByTranslate = array_pop($orderByTranslate);
+			$orderBy[0] = 'id';
+		}
 		$records = $query->orderBy($orderBy[0], $orderBy[1]);
 
 		if ($search = Input::get('search')) {
@@ -356,14 +362,27 @@ class Repository
 
         $count = Input::get('count', is_int($paginate) ? $paginate : 25);
 
-		if (!$paginate) {
-            return $records->get();
+		if ($paginate && !($sort && !$sortTable)) {
+			return $records->paginate(($count == 'all') ? PHP_INT_MAX : $count);
+
 		} else {
-			if ($sort && !$sortTable) {
-				return $records->get();
-			} else {
-				return $records->paginate(($count == 'all') ? PHP_INT_MAX : $count);
+			$records = $records->get();
+
+			if ($orderByTranslate) {
+				$lang = \Config::get('app.locale');
+				$lang = \Language::where('short_code', $lang)->first();
+				if ($lang) {
+					$records->sortBy(function($rec) use ($orderByTranslate, $lang) {
+						foreach ($rec->translations as $translation) {
+							if ($translation->language_id == $lang->id && $translation->attribute == $orderByTranslate) {
+								return $translation->value;
+							}
+						}
+					});
+				}
 			}
+
+			return $records;
 		}
 	}
 
