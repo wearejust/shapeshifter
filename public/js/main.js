@@ -54,8 +54,8 @@ $(function () {
     $('.tab-list').tabbed();
     $('.js-datatable').sortableTable();
     $('.acc-container').accordion();
-    $(".tokeninput").tokenInput(null,
-        {
+    $(".tokeninput").each(function(index, item) {
+        $(item).tokenInput(null,{
             theme: "facebook",
             preventDuplicates: true,
             hintText: "Typ om te zoeken",
@@ -63,6 +63,7 @@ $(function () {
             searchingText: "Zoeken",
             processPrePopulate: true
         });
+    });
 
     $(".js-mask").each(function (i, element) {
         element = $(element);
