@@ -90,6 +90,11 @@ class ManyToManyFacebookRelation extends OneToManyRelation
             $descriptor = "{$tableTranslations}.value";
         }
 
+        foreach ($this->destination->getFilter() as $filter) {
+            $results = $results->whereRaw($filter);
+            $all = $all->whereRaw($filter);
+        }
+
         $results = $results->get(array($table.'.id',"{$descriptor} as name"))->toJson();
         $all = $all->get(array($table.'.id',"{$descriptor} as name"))->toJson();
 

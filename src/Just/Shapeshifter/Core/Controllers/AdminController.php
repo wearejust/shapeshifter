@@ -685,6 +685,14 @@ abstract class AdminController extends Controller {
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getFilter()
+	{
+		return $this->filter;
+	}
+
+	/**
 	 * Trigger is fired before an new record is saved to the database
 	 *
 	 * @param $model
