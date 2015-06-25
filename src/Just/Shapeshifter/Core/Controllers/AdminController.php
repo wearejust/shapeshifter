@@ -272,7 +272,7 @@ abstract class AdminController extends Controller {
 
 					if ($result) {
 						$attribute->setAttributeValue($result->value);
-						$rec->translation_value = $result->value;
+						$rec->{$attribute->name} = $result->value;
 
 						$form->tab('translations', function ($mod) use ($attribute) {
 							$mod->add($attribute);
