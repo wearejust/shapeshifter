@@ -74,7 +74,13 @@
                         <tr id="itemRow_{{ $rec->id }}" class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                             @foreach ($attributes as $attr)
                                 @if ( ! $attr->hasFlag('hide_list'))
-                                    <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">{{ $rec->{$attr->name} }}</td>
+                                    <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
+                                        @if ($attr->hasFlag('image'))
+                                            <img src="{{ $attr->relativeStorageDir . $rec->{$attr->name} }}" style="max-height:100px;">
+                                        @else
+                                            {{ $rec->{$attr->name} }}
+                                        @endif
+                                    </td>
                                 @endif
                             @endforeach
                             @if ($currentUser->can('drag') && count($records) > 1)
