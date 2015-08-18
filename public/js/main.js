@@ -46,6 +46,9 @@ var removeItem = function () {
 }
 $(function () {
 
+
+    
+
     Menu = new Menu();
     Required = new Required();
 
@@ -92,6 +95,8 @@ $(function () {
 
     $('.js-multiplefileattribute').multiplefileattribute();
 
+    $(".max-length").charactercounters();
+
 
     $('.form-group-ckeditor').on('click', function (e) {
         e.preventDefault();
@@ -111,6 +116,9 @@ $(function () {
 
 
     alertShow();
+
+
+
 
     /*
      $('.sortable').nestedSortable({
@@ -153,6 +161,7 @@ function alertShow(message) {
         });
     });
 }
+
 
 
 // -----------------------------------------------------------
@@ -847,11 +856,11 @@ VideoPreview.prototype.change = function () {
 
     if (src.length) {
         this.video = $('<span class="section block container paragraph" style="z-index: 2;"> \
-							<span class="loader video-preview-loader"></span> \
-							<span class="hide section section-end paragraph video"> \
-								<iframe src="' + src + '" width="522" height="380" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> \
-							</span> \
-						</span>');
+                            <span class="loader video-preview-loader"></span> \
+                            <span class="hide section section-end paragraph video"> \
+                                <iframe src="' + src + '" width="522" height="380" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> \
+                            </span> \
+                        </span>');
         this.video.find('iframe').on('load', function () {
             this.video.find('.video-preview-loader').remove();
             this.video.find('.video').removeClass('hide');
@@ -1168,4 +1177,31 @@ Required.prototype.change = function (e) {
         }.bind(this));
         this.targets.prop('disabled', disabled);
     });
+}
+
+
+
+
+// -----------------------------------------------------------
+// CHARACTERCOUNTERS
+// -----------------------------------------------------------
+$.fn.charactercounters = function() {
+    return $(this).each(function(index, item) {
+        item = $(item);
+        if (!item.data('characterCounters')) { 
+            item.data('characterCounters', new CharacterCounters(item));
+        }
+    });
+}
+
+var CharacterCounters = function(element) {
+    this.element = element;
+    this.counter = this.element.siblings('.character-counter');
+    this.limit = this.element.prop('maxlength');
+    this.element.on('change keyup', this.change.bind(this));
+    this.change();
+}
+
+CharacterCounters.prototype.change = function(e) {
+    this.counter.text(this.limit - this.element.val().length);
 }
