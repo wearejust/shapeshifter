@@ -15,7 +15,7 @@
 
                 @if(array_key_exists('max_length', $flags)) 
 
-                   <sub class='character-counter' id='{{$name}}-counter' style='line-height: 15px;'>{{$flags['max_length'] - strlen($translation_value)}}</sub>                
+                   <sub class='character-counter' id='{{$name}}-counter' style='line-height: 15px;'>{{$flags['max_length'] - strlen($translation_value)}} characters left</sub>
 
                 @endif
 

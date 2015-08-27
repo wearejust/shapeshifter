@@ -1203,5 +1203,5 @@ var CharacterCounters = function(element) {
 }
 
 CharacterCounters.prototype.change = function(e) {
-    this.counter.text(this.limit - this.element.val().length);
+    this.counter.text((this.limit - this.element.val().length) + " characters left");
 }
