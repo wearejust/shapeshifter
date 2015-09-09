@@ -76,7 +76,9 @@
                                 @if ( ! $attr->hasFlag('hide_list'))
                                     <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
                                         @if ($attr->hasFlag('image'))
-                                            <img src="{{ $attr->relativeStorageDir . $rec->{$attr->name} }}" style="max-height:100px;">
+                                            @if ($rec->{$attr->name})
+                                                <img src="{{ $attr->relativeStorageDir . $rec->{$attr->name} }}" style="max-height:100px;">
+                                            @endif
                                         @else
                                             {{ $rec->{$attr->name} }}
                                         @endif
