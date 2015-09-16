@@ -82,6 +82,10 @@ $(function () {
 
     $('input.datepicker').datepicker({
         dateFormat: "dd-mm-yy"
+    }).keyup(function(e) {
+        if(e.keyCode == 8 || e.keyCode == 46) {
+            $.datepicker._clearDate(this);
+        }
     });
 
     $('input.datetimepicker').datetimepicker();
