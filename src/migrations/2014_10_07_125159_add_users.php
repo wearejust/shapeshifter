@@ -15,7 +15,7 @@ class AddUsers extends Migration {
 		// Create the user
 		$user = Sentry::createUser(array(
 			                           'email'     => 'info@wearejust.com',
-			                           'name'      => 'We are Just'
+			                           'name'      => 'We are Just',
 			                           'password'  => 'test',
 			                           'activated' => true,
 		                           ));
