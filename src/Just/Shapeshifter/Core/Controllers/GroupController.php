@@ -1,8 +1,13 @@
 <?php namespace Just\Shapeshifter\Core\Controllers;
 
+use Illuminate\Config\Repository as Config;
+use Illuminate\Database\DatabaseManager as DB;
+use Illuminate\Foundation\Application;
 use Just\Shapeshifter\Attributes as Attribute;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Relations as Relation;
+use Just\Shapeshifter\Core\Models\Language;
+use Sentry;
 
 class GroupController extends AdminController
 {
@@ -17,6 +22,15 @@ class GroupController extends AdminController
     protected $rules = array(
         'name' => 'required',
     );
+
+    public function __construct(Application $app, Config $config, DB $db, Language $language)
+    {
+        parent::__construct($app, $config, $db, $language);
+
+        if (!Sentry::getUser()->isSuperuser()) {
+            $this->filter[] = 'cms_groups.id != 1';
+        }
+    }
 
     protected function configureFields(Form $modifier)
     {

@@ -33,8 +33,17 @@ class ManyToManyCheckboxRelation extends ManyToManyFacebookRelation {
 
         $descriptor = $this->destination->getDescriptor();
         $table = $this->destination->repo->getModel()->getTable();
-        $results = $this->model->{$this->function}()->get(array($table . '.id', "{$descriptor} as name"))->lists('id');
-        $all = $this->destination->repo->getModel()->get(array($table . '.id', "{$descriptor} as name"))->lists('name', 'id');
+
+        $results = $this->model->{$this->function}();
+        $all = $this->destination->repo->getModel();
+
+        foreach ($this->destination->getFilter() as $filter) {
+            $results = $results->whereRaw($filter);
+            $all = $all->whereRaw($filter);
+        }
+
+        $results = $results->get(array($table . '.id', "{$descriptor} as name"))->lists('id');
+        $all = $all->get(array($table . '.id', "{$descriptor} as name"))->lists('name', 'id');
 
         $this->html = View::make('shapeshifter::relations.ManyToManyCheckboxRelation',  array(
             'results' => $results,
