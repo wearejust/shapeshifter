@@ -45,11 +45,11 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}" data-sort-offset="{{ $sort_offset }}" data-sort-type="{{ $attr->sortType }}">
+                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}" data-sort-offset="{{ $sort_offset }}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
-                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}{{ ($sort == $attr->name) ? (' table-header-sort-item-active-' . $sortdir) : '' }}" data-header-title="{{ $attr->name }}">
+                        <th class="table-header {{ $currentUser->can('drag') && ! $currentUser->can('sort') ? 'js-disable-sort' : '' }} {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-header-last' : '' }}{{ ($sort == $attr->name) ? (' table-header-sort-item-active-' . $sortdir) : '' }}" data-header-title="{{ $attr->name }}" data-sort-type="{{ $attr->sortType }}">
                             <div class="container">
                                 @if ((!$paginate || $attr->sortable) && ! $currentUser->can('drag') && $currentUser->can('sort'))
                                     <span class="table-header-sort">
