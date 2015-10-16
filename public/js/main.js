@@ -948,13 +948,32 @@ var SortableTable = function (options, table) {
         var sorting = [];
     }
 
+    
+    var columnDefs = [{
+        'bSortable': false,
+        'aTargets': ['js-disable-sort']
+    }];
+
+    var type, types = {};
+    this.table.find('.table-header').each(function(index, item) {
+        type = $(item).attr('data-sort-type');
+        if (type) {
+            if (!types[type]) types[type] = [];
+            types[type].push(index);
+        }
+    }.bind(this));
+
+    for (type in types) {
+        columnDefs.push({
+            'sType': type,
+            'aTargets': types[type]
+        });
+    }
+
     this.table = this.table.dataTable({
         "aaSorting": sorting,
         'sDom': 't',
-        'aoColumnDefs': [{
-            'bSortable': false,
-            'aTargets': ['js-disable-sort']
-        }],
+        'aoColumnDefs': columnDefs,
         'bPaginate': false,
         'bSort': (!this.options.sortable && !this.pagination.length),
         "oLanguage": {

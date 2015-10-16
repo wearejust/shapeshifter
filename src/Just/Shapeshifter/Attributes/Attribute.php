@@ -74,6 +74,14 @@ abstract class Attribute
     public $helptext;
 
     /**
+     *
+     * @var string
+     *
+     * @access public
+     */
+    public $sortType = '';
+
+    /**
      * If the boolean is set to false, the attribute isn't required.
      * If true, an * will apear by the label
      *

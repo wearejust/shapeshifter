@@ -12,6 +12,8 @@
 */
 class DateAttribute extends Attribute implements iAttributeInterface
 {
+    public $sortType = 'date-eu';
+    
     /**
      * Returns the date in the dutch format. If no date is passed, nothing is returned.
      *
