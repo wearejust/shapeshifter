@@ -18,6 +18,8 @@ class AjaxController extends Controller
 
         $model = new $model;
 
+
+
         if ($model instanceof BasePresenter) $model = $model->getResource();
 
         $orderByColumn = isset($model->orderby[0]) ? $model->orderby[0] : 'sortorder';
@@ -25,14 +27,18 @@ class AjaxController extends Controller
 
         $segments = array_reverse(explode('/', Input::get('url')));
         foreach ($segments as $segment) {
-            if (is_numeric($segment)) $numeric = $segment;
+            if (is_numeric($segment)) {
+                $numeric = $segment;
+                break;
+            }
         }
 
 
         if (Input::has('relation') && isset($numeric))
         {
+            
             $model = $model->where('id', $numeric)->first();
-
+            
             $records = $model->{Input::get('relation')}(function($q) use($orderByColumn, $orderByMode) {
                 $q->orderBy( $orderByColumn, $orderByMode );
             })->get();
