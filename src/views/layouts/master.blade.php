@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<title>{{ isset($breadcrumbs) ? end($breadcrumbs)['title'] . ' — ': '' }}Beheer — {{ Config::get('shapeshifter::config.customer') }}</title>
+<title>{{ isset($breadcrumbs) ? end($breadcrumbs)['title'] . ' — ': '' }}CMS — {{ Config::get('shapeshifter::config.customer') }}</title>
 <meta name="description" content="">
 <meta name="author" content="wearejust.com">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
