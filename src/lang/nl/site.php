@@ -28,6 +28,9 @@ return array(
     'form.remove' => 'Verwijderen',
     'form.updated_at' => 'Laatst gewijzigd',
 
+    'form.algemeen' => 'Algemeen',
+
+
     'dialog.remove' => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',
 

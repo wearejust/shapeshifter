@@ -28,6 +28,8 @@ return array(
     'form.remove' => 'Remove',
     'form.updated_at' => 'Updated at',
 
+    'form.algemeen' => 'General',
+
     'dialog.remove' => 'Are you sure you want to delete this?',
     'dialog.remove-image' => 'Are you sure you want to delete this image?',
 

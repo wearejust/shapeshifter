@@ -146,7 +146,7 @@ class Form
 
 		if ($this->attributes->count())
 		{
-			$tab = new Tab('Algemeen');
+			$tab = new Tab( __('form.algemeen') );
 			$tab->setAttributes($this->attributes);
 
 			$this->tabs->prepend($tab);
