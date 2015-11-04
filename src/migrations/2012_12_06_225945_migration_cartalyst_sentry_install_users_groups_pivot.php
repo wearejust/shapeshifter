@@ -33,6 +33,7 @@ class MigrationCartalystSentryInstallUsersGroupsPivot extends Migration {
 		{
 			$table->integer('user_id')->unsigned();
 			$table->integer('group_id')->unsigned();
+			$table->timestamps();
 
 			// We'll need to ensure that MySQL uses the InnoDB engine to
 			// support the indexes, other engines aren't affected.
