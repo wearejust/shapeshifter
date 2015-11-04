@@ -55,7 +55,7 @@ class AjaxController extends Controller
             {
                 if ($new == $rec->id)
                 {
-                    $rec->sortorder = $sortorder;
+                    $rec->$orderByColumn = $sortorder;
                     $rec->save();
 
                     $sortorder++;
