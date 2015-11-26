@@ -3,7 +3,7 @@
 use App;
 use Just\Shapeshifter\Exceptions\AttributeErrorException;
 use View;
-
+use Just\Shapeshifter\Exceptions\AttributeErrorException;
 /**
 * Attribute
 *
