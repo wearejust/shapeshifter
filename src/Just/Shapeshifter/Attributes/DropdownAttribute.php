@@ -28,7 +28,6 @@ class DropdownAttribute extends Attribute implements iAttributeInterface
 	 * @param array  $lists
 	 * @param array  $flags Description.
 	 *
-	 * @internal param array $values Description.
 	 * @access   public
 	 * @return mixed Value.
 	 */

@@ -123,11 +123,9 @@ class Repository
 
 		foreach ($this->attributes as $k=>$a)
         {
-
             if (get_class($a) == 'Just\Shapeshifter\Attributes\CustomAttribute') {
                 unset($this->model[$k]);
             }
-			//die();
         }
 
         $adding = !$this->model->id;

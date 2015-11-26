@@ -130,3 +130,4 @@ document.documentElement.className=TOUCH?"js touch":"js";
         {{ HTML::script($js) }}
     @endforeach
 @endif
+@yield('bottom_scripts')

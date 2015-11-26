@@ -383,7 +383,7 @@ abstract class AdminController extends Controller {
 	/**
 	 * @return mixed
 	 */
-	final public function update()
+	public function update()
 	{
 		if (!$this->userHasAccess()) {
 			return $this->setupView('no_access');
@@ -528,7 +528,7 @@ abstract class AdminController extends Controller {
 	/**
 	 * @return array
 	 */
-	private function getParentInfo()
+	public function getParentInfo()
 	{
 		if ($this->parent) {
 			//lame

@@ -66,30 +66,6 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $results = $this->model->{$this->function}();
         $all = $this->destination->repo->getModel();
 
-        if ($this->destination->repo->modelHasTranslations() && preg_match('/translate./', $descriptor)) {
-            $parts = explode('.', $descriptor);
-            $regularDecriptor = array_last($parts, function ($key, $value) {
-                return $value;
-            });
-
-            $defaultLanguage = $this->fromcontroller->getLanguage();
-            $tableTranslations = "{$table}_translations";
-
-            $results = $results->join($tableTranslations, function($join) use ($table, $tableTranslations, $defaultLanguage, $regularDecriptor) {
-                $join->on("{$tableTranslations}.parent_id", '=', "{$table}.id")
-                    ->where("{$tableTranslations}.language_id", '=', $defaultLanguage->id)
-                    ->where("{$tableTranslations}.attribute", '=', $regularDecriptor);
-            });
-
-            $all = $all->join($tableTranslations, function($join) use ($table, $tableTranslations, $defaultLanguage, $regularDecriptor) {
-                $join->on("{$tableTranslations}.parent_id", '=', "{$table}.id")
-                    ->where("{$tableTranslations}.language_id", '=', $defaultLanguage->id)
-                    ->where("{$tableTranslations}.attribute", '=', $regularDecriptor);
-            });
-
-            $descriptor = "{$tableTranslations}.value";
-        }
-
         foreach ($this->destination->getFilter() as $filter) {
             $results = $results->whereRaw($filter);
             $all = $all->whereRaw($filter);

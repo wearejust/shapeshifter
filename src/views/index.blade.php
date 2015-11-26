@@ -57,7 +57,7 @@
                                         <a {{ ($paginate && $attr->sortable) ? "{$attr->sortable}desc\""  : '' }} class="table-header-sort-item table-header-sort-item-desc"><span class="accessibility">Aflopend</span></a>
                                     </span>
                                 @endif
-                                {{ translateAttribute($attr->name) }}
+                                {{ translateAttribute($attr->getLabel()) }}
                             </div>
                         </th>
                         @endif
@@ -77,7 +77,7 @@
                                     <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
                                         @if ($attr->hasFlag('image'))
                                             @if ($rec->{$attr->name})
-                                                <img src="{{ $attr->relativeStorageDir . $rec->{$attr->name} }}" style="max-height:100px;">
+                                                <img src="@if(preg_match('/data\:image/', $rec->{$attr->name})){{ $rec->{$attr->name} }}@else{{ $attr->relativeStorageDir . $rec->{$attr->name} }}@endif" style="max-height:100px;">
                                             @endif
                                         @else
                                             {{ $rec->{$attr->name} }}

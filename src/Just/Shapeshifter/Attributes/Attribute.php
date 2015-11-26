@@ -109,9 +109,6 @@ abstract class Attribute
      */
     public function __construct($name = '', $flags = array() )
     {
-
-
-
         $this->name = $name;
         $this->flags = $flags;
     }
@@ -158,23 +155,16 @@ abstract class Attribute
 
     protected function view($attribute)
     {
-        $array = array();
-        foreach (get_object_vars($this) as $k=>$item) {
-            ${$k} = $item; $array[] = $k;
+        $view = View::make('shapeshifter::attributes.'.$attribute);
+
+        foreach (get_object_vars($this) as $name => $value) {
+            $view->with($name, $value);
         }
 
+        $view->with('attr', $this);
+        $view->with('label', $this->getLabel());
 
-        $label = $this->getLabel($name);
-        $array[] = 'label';
-
-        if ($this->hasFlag('default_value')) {
-            //die("DEFAULT:" . $this->flags['default_value']);
-            //echo "JAAA";
-            $array['default_value'] = $this->flags['default_value'];
-        }
-       // print_r(compact($array));
-
-        return View::make('shapeshifter::attributes.'.$attribute, compact($array))->render();
+        return $view->render();
     }
 
     /**
@@ -297,12 +287,12 @@ abstract class Attribute
     }
 
     /**
-     * @param $name
+     * Return the Label coresponding to the attribute name.
      * @return string
      */
-    protected function getLabel($name)
+    public function getLabel()
     {
-	    $name = $this->removeTranslationBrackets($name);
+	    $name = $this->removeTranslationBrackets($this->name);
 
 	    $label = translateAttribute($name);
         $label = str_replace("_", " ", $label);
@@ -339,17 +329,10 @@ abstract class Attribute
 	 *
 	 * @return mixed
 	 */
-	protected function removeTranslationBrackets ($name)
-	{
-		if (preg_match_all('/\[+(.*?)\]/', $name, $matches))
-		{
-            if(isset($matches[1][1])) {
-                $name = $matches[1][1];
-            }
-			return $name;
-		}
-		return $name;
-	}
+    protected function removeTranslationBrackets($name)
+    {
+        return preg_replace('/\[+(.*?)\]/', '', $name);
+    }
 
 }
 

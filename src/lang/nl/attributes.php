@@ -39,6 +39,4 @@ return array
     'postal'                => 'Postcode',
     'directions'            => 'Routebeschrijving',
     'lastname'              => 'Achternaam',
-    'lastname'              => 'Achternaam',
-
 );
