@@ -1067,7 +1067,11 @@ var SortableTable = function (options, table) {
         this.wrap = this.element.find('.dataTables_wrapper');
         this.wrap.css('position', 'relative');
         if (this.toggleButton) {
-            this.wrap.css('overflow', 'hidden');
+            this.wrap.css({
+                'overflow': 'hidden',
+                'padding-right': '4em',
+                'margin-right': '-4em'
+            });
             this.toggleButtonAmount.text(this.tbody.children().length - this.options.itemsMax);
             this.itemsHide();
         }
