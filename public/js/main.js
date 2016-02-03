@@ -47,7 +47,7 @@ var removeItem = function () {
 $(function () {
 
 
-    
+
 
     Menu = new Menu();
     Required = new Required();
@@ -98,6 +98,8 @@ $(function () {
     $('.js-image-delete-dialog').removeImageDialog();
 
     $('.js-multiplefileattribute').multiplefileattribute();
+
+    $('.js-latlngattribute').latlngattribute();
 
     $(".max-length").charactercounters();
 
@@ -948,7 +950,7 @@ var SortableTable = function (options, table) {
         var sorting = [];
     }
 
-    
+
     var columnDefs = [{
         'bSortable': false,
         'aTargets': ['js-disable-sort']
@@ -1215,7 +1217,7 @@ Required.prototype.change = function (e) {
 $.fn.charactercounters = function() {
     return $(this).each(function(index, item) {
         item = $(item);
-        if (!item.data('characterCounters')) { 
+        if (!item.data('characterCounters')) {
             item.data('characterCounters', new CharacterCounters(item));
         }
     });
@@ -1231,4 +1233,55 @@ var CharacterCounters = function(element) {
 
 CharacterCounters.prototype.change = function(e) {
     this.counter.text((this.limit - this.element.val().length) + " characters left");
+}
+
+
+
+// -----------------------------------------------------------
+// LATLNG ATTRIBUTE
+// -----------------------------------------------------------
+$.fn.latlngattribute = function () {
+    return $(this).each(function (index, item) {
+        item = $(item);
+        if (!item.data('latlngattribute')) {
+            item.data('latlngattribute', new LatLngAttribute(item));
+        }
+    });
+}
+
+var LatLngAttribute = function (element) {
+    this.element = element;
+
+    this.input = this.element.find('.form-field-content');
+    this.input.on('change keyup', this.change.bind(this));
+
+    var val = this.input.val() || '52.3667;4.9'; // Amsterdam
+    val = val.split(';');
+    val = new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1]));
+
+    this.map = new google.maps.Map(this.element.find('.form-map').get(0), {
+        'center': val,
+        'streetViewControl': false,
+        'mapTypeControl': false,
+        'zoom': 7
+    });
+
+    this.marker = new google.maps.Marker({
+        'icon': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAoCAYAAADg+OpoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAilJREFUeNq0lk9LAkEYxkeLCimyDl1KokvSuahLRHgJukRI+AEKPHQIoqsUgnRMTx082qUvENUhD4Ih1DkywktgCFEiSVRUz8q7sAwzszPu9sAP3Z133md2/geYWmNgFayAWTABvqmsFzyBW3ABzkCDGWoAZKjiryYNqjOgazIPHgwMeB4oh1Ix0PZgYtOmXEItgZYPJjYtytlRgH6HQAXMKL72A9yAV3oeAXMuY3IHFsi0o4xL645BVJAoSmWquhk7eBLUJUHvYF1jAq1TrChHnTzYpqI1CYMlkVDksTzYqaQwzyUaBYegSFj/Q1xMXpLr1B4wvuDTOWOgPlAWxF2DQW7mfgriLA/WFBRUuJYeKLpln4utCGKaQUl/f3HP04qxmXSp21FQc6B/mEcFJS0Ic424VOS44vKFZT1UlvT9BhecFcQccTEbklxl1a5gtbRHsOnuEvym2UN1pLvDsmJGpQ2GIa3Is2wHFRVBWcHCdCok6VabojN4y2VjtBbcDoiAfiJC7+5c6m7xLStpnDHWUfFGfGjEl0RdsOjjoWezKOvvnI8mObfr1aMPJo+US6m4D0Zx3TVR8GBSMNkDp8BLFyYvVNdIqS6MUt3s7NbJWTUwqXKnrZG2DYy2vZxXw6CmYVKjWE/a0zDaYz4oStdgmcmr5BbblU4URifMR60pjNaYz7oXmNyb3IJ0da75zrNigi+K/YfROHh2mDzTu39R0mGUNKn4J8AAhyLeINa9kDgAAAAASUVORK5CYII=',
+        'position': val,
+        'map': this.map,
+        'draggable': true
+    });
+
+    google.maps.event.addListener(this.marker, 'drag', this.dragMove.bind(this));
+}
+
+LatLngAttribute.prototype.dragMove = function() {
+    var val = this.marker.getPosition();
+    this.input.val(val.lat() + ';' + val.lng());
+}
+
+LatLngAttribute.prototype.change = function() {
+    var val = this.input.val().split(';');
+    this.marker.setPosition(new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1])));
 }
