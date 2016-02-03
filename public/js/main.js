@@ -1267,7 +1267,7 @@ var LatLngAttribute = function (element) {
     });
 
     this.marker = new google.maps.Marker({
-        'icon': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAoCAYAAADg+OpoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAilJREFUeNq0lk9LAkEYxkeLCimyDl1KokvSuahLRHgJukRI+AEKPHQIoqsUgnRMTx082qUvENUhD4Ih1DkywktgCFEiSVRUz8q7sAwzszPu9sAP3Z133md2/geYWmNgFayAWTABvqmsFzyBW3ABzkCDGWoAZKjiryYNqjOgazIPHgwMeB4oh1Ix0PZgYtOmXEItgZYPJjYtytlRgH6HQAXMKL72A9yAV3oeAXMuY3IHFsi0o4xL645BVJAoSmWquhk7eBLUJUHvYF1jAq1TrChHnTzYpqI1CYMlkVDksTzYqaQwzyUaBYegSFj/Q1xMXpLr1B4wvuDTOWOgPlAWxF2DQW7mfgriLA/WFBRUuJYeKLpln4utCGKaQUl/f3HP04qxmXSp21FQc6B/mEcFJS0Ic424VOS44vKFZT1UlvT9BhecFcQccTEbklxl1a5gtbRHsOnuEvym2UN1pLvDsmJGpQ2GIa3Is2wHFRVBWcHCdCok6VabojN4y2VjtBbcDoiAfiJC7+5c6m7xLStpnDHWUfFGfGjEl0RdsOjjoWezKOvvnI8mObfr1aMPJo+US6m4D0Zx3TVR8GBSMNkDp8BLFyYvVNdIqS6MUt3s7NbJWTUwqXKnrZG2DYy2vZxXw6CmYVKjWE/a0zDaYz4oStdgmcmr5BbblU4URifMR60pjNaYz7oXmNyb3IJ0da75zrNigi+K/YfROHh2mDzTu39R0mGUNKn4J8AAhyLeINa9kDgAAAAASUVORK5CYII=',
+        'icon': '/packages/just/shapeshifter/css/images/poi.png',
         'position': val,
         'map': this.map,
         'draggable': true
