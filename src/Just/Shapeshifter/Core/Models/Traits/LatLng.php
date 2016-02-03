@@ -37,7 +37,7 @@ trait LatLng
     private function splitLatLong($field, $index)
     {
         $field = $field ?: $this->latLongField;
-        $explode = explode($this->{$field});
+        $explode = explode(';', $this->{$field});
 
         if (! array_key_exists($index, $explode) || count($explode) !== 2) {
             throw new InvalidArgumentException(sprintf('Invalid latlong string given on field [%s]', $field));
