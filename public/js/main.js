@@ -1252,14 +1252,21 @@ $.fn.latlngattribute = function () {
 var LatLngAttribute = function (element) {
     this.element = element;
 
-    this.input = this.element.find('.form-field-content');
-    this.input.on('change keyup', this.change.bind(this));
+    this.input = this.element.find('.js-latlngattribute-input');
+    this.lat = this.element.find('.js-latlngattribute-lat');
+    this.lng = this.element.find('.js-latlngattribute-lng');
+
+    this.lat.on('change keyup', this.change.bind(this));
+    this.lng.on('change keyup', this.change.bind(this));
 
     var val = this.input.val() || '52.3667;4.9'; // Amsterdam
     val = val.split(';');
     val = new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1]));
 
-    this.map = new google.maps.Map(this.element.find('.form-map').get(0), {
+    this.lat.val(val.lat());
+    this.lng.val(val.lng());
+
+    this.map = new google.maps.Map(this.element.find('.js-latlngattribute-map').get(0), {
         'center': val,
         'streetViewControl': false,
         'mapTypeControl': false,
@@ -1273,15 +1280,37 @@ var LatLngAttribute = function (element) {
         'draggable': true
     });
 
+    google.maps.event.addListener(this.marker, 'dragstart', this.dragStart.bind(this));
     google.maps.event.addListener(this.marker, 'drag', this.dragMove.bind(this));
+    google.maps.event.addListener(this.marker, 'dragend', this.dragEnd.bind(this));
+}
+
+LatLngAttribute.prototype.dragStart = function() {
+    this.dragging = true;
 }
 
 LatLngAttribute.prototype.dragMove = function() {
     var val = this.marker.getPosition();
-    this.input.val(val.lat() + ';' + val.lng());
+    var lat = val.lat();
+    var lng = val.lng();
+    if (this.lat.length) {
+        this.lat.val(lat);
+        this.lng.val(lng);
+    }
+    this.input.val((lat && lng) ? (lat + ';' + lng) : '');
+}
+
+LatLngAttribute.prototype.dragEnd = function() {
+    this.dragging = false;
 }
 
 LatLngAttribute.prototype.change = function() {
-    var val = this.input.val().split(';');
-    this.marker.setPosition(new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1])));
+    if (!this.dragging) {
+        var lat = this.lat.val();
+        var lng = this.lng.val();
+        this.input.val((lat && lng) ? (lat + ';' + lng) : '');
+        if (lat && lng) {
+            this.marker.setPosition(new google.maps.LatLng(lat, lng));
+        }
+    }
 }
