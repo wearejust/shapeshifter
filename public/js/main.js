@@ -1292,21 +1292,23 @@ LatLngAttribute.prototype.search = function(e) {
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(function() {
         var val = this.searchInput.val();
-        $.get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A&address=' + val, function(data) {
-            if (data.results && data.results[0]) {
-                data = data.results[0].geometry.location;
-                if (this.lat.length) {
-                    this.lat.val(data.lat);
-                    this.lng.val(data.lng);
+        if (val) {
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A&address=' + val, function (data) {
+                if (data.results && data.results[0]) {
+                    data = data.results[0].geometry.location;
+                    if (this.lat.length) {
+                        this.lat.val(data.lat);
+                        this.lng.val(data.lng);
+                    }
+                    if (data.lat && data.lng) {
+                        this.input.val(data.lat + ';' + data.lng);
+                        var val = new google.maps.LatLng(data.lat, data.lng);
+                        this.marker.setPosition(val);
+                        this.map.setCenter(val);
+                    }
                 }
-                if (data.lat && data.lng) {
-                    this.input.val(data.lat + ';' + data.lng);
-                    var val = new google.maps.LatLng(data.lat, data.lng);
-                    this.marker.setPosition(val);
-                    this.map.setCenter(val);
-                }
-            }
-        }.bind(this));
+            }.bind(this));
+        }
     }.bind(this), (e.type == 'keyup') ? 300 : 0);
 }
 
