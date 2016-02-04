@@ -2,8 +2,6 @@
 
 namespace Just\Shapeshifter\Core\Models\Traits;
 
-use InvalidArgumentException;
-
 trait LatLng
 {
     /**
@@ -40,7 +38,7 @@ trait LatLng
         $explode = explode(';', $this->{$field});
 
         if (! array_key_exists($index, $explode) || count($explode) !== 2) {
-            throw new InvalidArgumentException(sprintf('Invalid latlong string given on field [%s]', $field));
+            return '';
         }
 
         return $explode[$index];
