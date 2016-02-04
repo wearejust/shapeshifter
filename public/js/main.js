@@ -1272,7 +1272,7 @@ var LatLngAttribute = function (element) {
         'icon': '/packages/just/shapeshifter/css/images/poi.png',
         'map': this.map,
         'draggable': true,
-        'visible': false
+        'opacity': 0.3
     });
 
     this.searchInput.on('change keyup', this.searchChange.bind(this));
@@ -1333,15 +1333,15 @@ LatLngAttribute.prototype.update = function(type, lat, lng) {
         }
     }
 
-    if (type != 'marker') {
-        if (lat && lng) {
+    if (lat && lng) {
+        this.marker.setOpacity(1);
+        if (type != 'marker') {
             var val = new google.maps.LatLng(lat, lng);
             this.marker.setPosition(val);
-            this.marker.setVisible(true);
             this.map.setCenter(val);
-        } else {
-            this.marker.setVisible(false);
         }
+    } else {
+        this.marker.setOpacity(0.3);
     }
 
     if (type != 'latlng' && this.latInput.length) {
