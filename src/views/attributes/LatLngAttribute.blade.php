@@ -6,6 +6,7 @@
         </span>
         <span class="form-field">
         	<span class="form-control">
+                {{ Form::input('text', $name . '-search', null, array('class' => 'js-latlngattribute-search form-field-content', 'placeholder' => 'Search')) }}
                 <div class="form-field-content" style="padding-bottom: 56.25%;">
                     <div class="js-latlngattribute-map" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;"></div>
                 </div>

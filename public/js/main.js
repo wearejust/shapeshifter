@@ -1252,6 +1252,9 @@ $.fn.latlngattribute = function () {
 var LatLngAttribute = function (element) {
     this.element = element;
 
+    this.searchInput = this.element.find('.js-latlngattribute-search');
+    this.searchInput.on('change keyup', this.search.bind(this));
+
     this.input = this.element.find('.js-latlngattribute-input');
     this.lat = this.element.find('.js-latlngattribute-lat');
     this.lng = this.element.find('.js-latlngattribute-lng');
@@ -1283,6 +1286,28 @@ var LatLngAttribute = function (element) {
     google.maps.event.addListener(this.marker, 'dragstart', this.dragStart.bind(this));
     google.maps.event.addListener(this.marker, 'drag', this.dragMove.bind(this));
     google.maps.event.addListener(this.marker, 'dragend', this.dragEnd.bind(this));
+}
+
+LatLngAttribute.prototype.search = function(e) {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(function() {
+        var val = this.searchInput.val();
+        $.get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A&address=' + val, function(data) {
+            if (data.results && data.results[0]) {
+                data = data.results[0].geometry.location;
+                if (this.lat.length) {
+                    this.lat.val(data.lat);
+                    this.lng.val(data.lng);
+                }
+                if (data.lat && data.lng) {
+                    this.input.val(data.lat + ';' + data.lng);
+                    var val = new google.maps.LatLng(data.lat, data.lng);
+                    this.marker.setPosition(val);
+                    this.map.setCenter(val);
+                }
+            }
+        }.bind(this));
+    }.bind(this), (e.type == 'keyup') ? 300 : 0);
 }
 
 LatLngAttribute.prototype.dragStart = function() {
