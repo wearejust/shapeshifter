@@ -1,6 +1,8 @@
 // -----------------------------------------------------------
 // DOCUMENT ON READY 
 // -----------------------------------------------------------
+window.GOOGLE_API_KEY = 'AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A';
+
 var removeItem = function () {
     var itemId = $(this).data('id');
     swal({
@@ -1253,21 +1255,13 @@ var LatLngAttribute = function (element) {
     this.element = element;
 
     this.searchInput = this.element.find('.js-latlngattribute-search');
-    this.searchInput.on('change keyup', this.search.bind(this));
+    this.latInput = this.element.find('.js-latlngattribute-lat');
+    this.lngInput = this.element.find('.js-latlngattribute-lng');
+    this.output = this.element.find('.js-latlngattribute-output');
 
-    this.input = this.element.find('.js-latlngattribute-input');
-    this.lat = this.element.find('.js-latlngattribute-lat');
-    this.lng = this.element.find('.js-latlngattribute-lng');
-
-    this.lat.on('change keyup', this.change.bind(this));
-    this.lng.on('change keyup', this.change.bind(this));
-
-    var val = this.input.val() || '52.3667;4.9'; // Amsterdam
+    var val = this.output.val() || '52.3667;4.9'; // Amsterdam
     val = val.split(';');
     val = new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1]));
-
-    this.lat.val(val.lat());
-    this.lng.val(val.lng());
 
     this.map = new google.maps.Map(this.element.find('.js-latlngattribute-map').get(0), {
         'center': val,
@@ -1283,61 +1277,62 @@ var LatLngAttribute = function (element) {
         'draggable': true
     });
 
-    google.maps.event.addListener(this.marker, 'dragstart', this.dragStart.bind(this));
-    google.maps.event.addListener(this.marker, 'drag', this.dragMove.bind(this));
-    google.maps.event.addListener(this.marker, 'dragend', this.dragEnd.bind(this));
+    this.searchInput.on('change keyup', this.searchChange.bind(this));
+    this.latInput.on('change keyup', this.latlngChange.bind(this));
+    this.lngInput.on('change keyup', this.latlngChange.bind(this));
+    google.maps.event.addListener(this.marker, 'drag', this.markerDrag.bind(this));
+
+    this.update('output', val.lat(), val.lng());
 }
 
-LatLngAttribute.prototype.search = function(e) {
+LatLngAttribute.prototype.searchChange = function(e) {
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(function() {
         var val = this.searchInput.val();
         if (val) {
-            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A&address=' + val, function (data) {
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&address=' + val, function (data) {
                 if (data.results && data.results[0]) {
                     data = data.results[0].geometry.location;
-                    if (this.lat.length) {
-                        this.lat.val(data.lat);
-                        this.lng.val(data.lng);
-                    }
-                    if (data.lat && data.lng) {
-                        this.input.val(data.lat + ';' + data.lng);
-                        var val = new google.maps.LatLng(data.lat, data.lng);
-                        this.marker.setPosition(val);
-                        this.map.setCenter(val);
-                    }
+                    this.update('search', data.lat, data.lng);
                 }
             }.bind(this));
         }
-    }.bind(this), (e.type == 'keyup') ? 300 : 0);
+    }.bind(this), (e.type == 'keyup') ? 500 : 0);
 }
 
-LatLngAttribute.prototype.dragStart = function() {
-    this.dragging = true;
+LatLngAttribute.prototype.latlngChange = function() {
+    this.update('latlng', this.latInput.val(), this.lngInput.val());
 }
 
-LatLngAttribute.prototype.dragMove = function() {
+LatLngAttribute.prototype.markerDrag = function() {
     var val = this.marker.getPosition();
-    var lat = val.lat();
-    var lng = val.lng();
-    if (this.lat.length) {
-        this.lat.val(lat);
-        this.lng.val(lng);
+    this.update('marker', val.lat(), val.lng());
+}
+
+LatLngAttribute.prototype.update = function(type, lat, lng) {
+    if (type != 'search' && lat && lng) {
+        clearTimeout(this.updateSearchTimeout);
+        this.updateSearchTimeout = setTimeout(function() {
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&latlng=' + lat + ',' + lng, function (data) {
+                if (data.results && data.results[0]) {
+                    this.searchInput.val(data.results[0].formatted_address);
+                }
+            }.bind(this));
+        }.bind(this), 500);
     }
-    this.input.val((lat && lng) ? (lat + ';' + lng) : '');
-}
 
-LatLngAttribute.prototype.dragEnd = function() {
-    this.dragging = false;
-}
+    if (type != 'marker' && lat && lng) {
+        var val = new google.maps.LatLng(lat, lng);
+        this.marker.setPosition(val);
+        this.map.setCenter(val);
+    }
 
-LatLngAttribute.prototype.change = function() {
-    if (!this.dragging) {
-        var lat = this.lat.val();
-        var lng = this.lng.val();
-        this.input.val((lat && lng) ? (lat + ';' + lng) : '');
-        if (lat && lng) {
-            this.marker.setPosition(new google.maps.LatLng(lat, lng));
-        }
+    if (type != 'latlng' && this.latInput.length) {
+        this.latInput.val(lat);
+        this.lngInput.val(lng);
+    }
+
+    if (type != 'output') {
+        this.output.val((lat && lng) ? (lat + ';' + lng) : '');
     }
 }
