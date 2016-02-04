@@ -1259,12 +1259,10 @@ var LatLngAttribute = function (element) {
     this.lngInput = this.element.find('.js-latlngattribute-lng');
     this.output = this.element.find('.js-latlngattribute-output');
 
-    var val = this.output.val() || '52.3667;4.9'; // Amsterdam
-    val = val.split(';');
-    val = new google.maps.LatLng(parseFloat(val[0]), parseFloat(val[1]));
+    var center = new google.maps.LatLng(52.3667, 4.9); // Amsterdam
 
     this.map = new google.maps.Map(this.element.find('.js-latlngattribute-map').get(0), {
-        'center': val,
+        'center': center,
         'streetViewControl': false,
         'mapTypeControl': false,
         'zoom': 7
@@ -1272,9 +1270,9 @@ var LatLngAttribute = function (element) {
 
     this.marker = new google.maps.Marker({
         'icon': '/packages/just/shapeshifter/css/images/poi.png',
-        'position': val,
         'map': this.map,
-        'draggable': true
+        'draggable': true,
+        'visible': false
     });
 
     this.searchInput.on('change keyup', this.searchChange.bind(this));
@@ -1282,7 +1280,15 @@ var LatLngAttribute = function (element) {
     this.lngInput.on('change keyup', this.latlngChange.bind(this));
     google.maps.event.addListener(this.marker, 'drag', this.markerDrag.bind(this));
 
-    this.update('output', val.lat(), val.lng());
+    var val = this.output.val();
+    if (!val && this.output.hasClass('js-required')) {
+        val = center.lat() + ';' + center.lng();
+        this.output.val(val);
+    }
+    if (val) {
+        val = val.split(';');
+        this.update('output', val[0], val[1]);
+    }
 }
 
 LatLngAttribute.prototype.searchChange = function(e) {
@@ -1296,6 +1302,8 @@ LatLngAttribute.prototype.searchChange = function(e) {
                     this.update('search', data.lat, data.lng);
                 }
             }.bind(this));
+        } else {
+            this.update('search');
         }
     }.bind(this), (e.type == 'keyup') ? 500 : 0);
 }
@@ -1310,21 +1318,30 @@ LatLngAttribute.prototype.markerDrag = function() {
 }
 
 LatLngAttribute.prototype.update = function(type, lat, lng) {
-    if (type != 'search' && lat && lng) {
-        clearTimeout(this.updateSearchTimeout);
-        this.updateSearchTimeout = setTimeout(function() {
-            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&latlng=' + lat + ',' + lng, function (data) {
-                if (data.results && data.results[0]) {
-                    this.searchInput.val(data.results[0].formatted_address);
-                }
-            }.bind(this));
-        }.bind(this), 500);
+    if (type != 'search') {
+        if (lat && lng) {
+            clearTimeout(this.updateSearchTimeout);
+            this.updateSearchTimeout = setTimeout(function() {
+                $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&latlng=' + lat + ',' + lng, function (data) {
+                    if (data.results && data.results[0]) {
+                        this.searchInput.val(data.results[0].formatted_address);
+                    }
+                }.bind(this));
+            }.bind(this), 500);
+        } else {
+            this.searchInput.val('');
+        }
     }
 
-    if (type != 'marker' && lat && lng) {
-        var val = new google.maps.LatLng(lat, lng);
-        this.marker.setPosition(val);
-        this.map.setCenter(val);
+    if (type != 'marker') {
+        if (lat && lng) {
+            var val = new google.maps.LatLng(lat, lng);
+            this.marker.setPosition(val);
+            this.marker.setVisible(true);
+            this.map.setCenter(val);
+        } else {
+            this.marker.setVisible(false);
+        }
     }
 
     if (type != 'latlng' && this.latInput.length) {
@@ -1334,5 +1351,6 @@ LatLngAttribute.prototype.update = function(type, lat, lng) {
 
     if (type != 'output') {
         this.output.val((lat && lng) ? (lat + ';' + lng) : '');
+        this.output.trigger('change');
     }
 }
