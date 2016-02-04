@@ -10,7 +10,7 @@
                 <div class="form-field-content" style="padding-bottom: 56.25%;">
                     <div class="js-latlngattribute-map" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;"></div>
                 </div>
-                @if (!in_array('compact', $flags))
+                @if (in_array('show_fields', $flags))
                     {{ Form::input('text', $name . '-lat', null, array('class' => 'js-latlngattribute-lat form-field-content', 'placeholder' => 'Latitude')) }}
                     {{ Form::input('text', $name . '-lon', null, array('class' => 'js-latlngattribute-lng form-field-content', 'placeholder' => 'Longitude')) }}
                 @endif
