@@ -1269,6 +1269,7 @@ var LatLngAttribute = function (element) {
     });
 
     this.marker = new google.maps.Marker({
+        'position': center,
         'icon': '/packages/just/shapeshifter/css/images/poi.png',
         'map': this.map,
         'draggable': true,
