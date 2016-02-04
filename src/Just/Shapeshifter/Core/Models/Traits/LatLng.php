@@ -43,6 +43,6 @@ trait LatLng
             throw new InvalidArgumentException(sprintf('Invalid latlong string given on field [%s]', $field));
         }
 
-        return (float) $explode[$index];
+        return $explode[$index];
     }
 }
