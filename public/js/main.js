@@ -1,6 +1,8 @@
 // -----------------------------------------------------------
 // DOCUMENT ON READY 
 // -----------------------------------------------------------
+window.GOOGLE_API_KEY = 'AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A';
+
 var removeItem = function () {
     var itemId = $(this).data('id');
     swal({
@@ -47,7 +49,7 @@ var removeItem = function () {
 $(function () {
 
 
-    
+
 
     Menu = new Menu();
     Required = new Required();
@@ -98,6 +100,8 @@ $(function () {
     $('.js-image-delete-dialog').removeImageDialog();
 
     $('.js-multiplefileattribute').multiplefileattribute();
+
+    $('.js-latlngattribute').latlngattribute();
 
     $(".max-length").charactercounters();
 
@@ -948,7 +952,7 @@ var SortableTable = function (options, table) {
         var sorting = [];
     }
 
-    
+
     var columnDefs = [{
         'bSortable': false,
         'aTargets': ['js-disable-sort']
@@ -1067,7 +1071,11 @@ var SortableTable = function (options, table) {
         this.wrap = this.element.find('.dataTables_wrapper');
         this.wrap.css('position', 'relative');
         if (this.toggleButton) {
-            this.wrap.css('overflow', 'hidden');
+            this.wrap.css({
+                'overflow': 'hidden',
+                'padding-right': '4em',
+                'margin-right': '-4em'
+            });
             this.toggleButtonAmount.text(this.tbody.children().length - this.options.itemsMax);
             this.itemsHide();
         }
@@ -1211,7 +1219,7 @@ Required.prototype.change = function (e) {
 $.fn.charactercounters = function() {
     return $(this).each(function(index, item) {
         item = $(item);
-        if (!item.data('characterCounters')) { 
+        if (!item.data('characterCounters')) {
             item.data('characterCounters', new CharacterCounters(item));
         }
     });
@@ -1227,4 +1235,122 @@ var CharacterCounters = function(element) {
 
 CharacterCounters.prototype.change = function(e) {
     this.counter.text((this.limit - this.element.val().length) + " characters left");
+}
+
+
+
+// -----------------------------------------------------------
+// LATLNG ATTRIBUTE
+// -----------------------------------------------------------
+$.fn.latlngattribute = function () {
+    return $(this).each(function (index, item) {
+        item = $(item);
+        if (!item.data('latlngattribute')) {
+            item.data('latlngattribute', new LatLngAttribute(item));
+        }
+    });
+}
+
+var LatLngAttribute = function (element) {
+    this.element = element;
+
+    this.searchInput = this.element.find('.js-latlngattribute-search');
+    this.latInput = this.element.find('.js-latlngattribute-lat');
+    this.lngInput = this.element.find('.js-latlngattribute-lng');
+    this.output = this.element.find('.js-latlngattribute-output');
+
+    var center = new google.maps.LatLng(52.3667, 4.9); // Amsterdam
+
+    this.map = new google.maps.Map(this.element.find('.js-latlngattribute-map').get(0), {
+        'center': center,
+        'streetViewControl': false,
+        'mapTypeControl': false,
+        'zoom': 7
+    });
+
+    this.marker = new google.maps.Marker({
+        'icon': '/packages/just/shapeshifter/css/images/poi.png',
+        'map': this.map,
+        'draggable': true,
+        'opacity': 0.3
+    });
+
+    this.searchInput.on('change keyup', this.searchChange.bind(this));
+    this.latInput.on('change keyup', this.latlngChange.bind(this));
+    this.lngInput.on('change keyup', this.latlngChange.bind(this));
+    google.maps.event.addListener(this.marker, 'drag', this.markerDrag.bind(this));
+
+    var val = this.output.val();
+    if (!val && this.output.hasClass('js-required')) {
+        val = center.lat() + ';' + center.lng();
+        this.output.val(val);
+    }
+    if (val) {
+        val = val.split(';');
+        this.update('output', val[0], val[1]);
+    }
+}
+
+LatLngAttribute.prototype.searchChange = function(e) {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(function() {
+        var val = this.searchInput.val();
+        if (val) {
+            $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&address=' + val, function (data) {
+                if (data.results && data.results[0]) {
+                    data = data.results[0].geometry.location;
+                    this.update('search', data.lat, data.lng);
+                }
+            }.bind(this));
+        } else {
+            this.update('search');
+        }
+    }.bind(this), (e.type == 'keyup') ? 500 : 0);
+}
+
+LatLngAttribute.prototype.latlngChange = function() {
+    this.update('latlng', this.latInput.val(), this.lngInput.val());
+}
+
+LatLngAttribute.prototype.markerDrag = function() {
+    var val = this.marker.getPosition();
+    this.update('marker', val.lat(), val.lng());
+}
+
+LatLngAttribute.prototype.update = function(type, lat, lng) {
+    if (type != 'search') {
+        if (lat && lng) {
+            clearTimeout(this.updateSearchTimeout);
+            this.updateSearchTimeout = setTimeout(function() {
+                $.get('https://maps.googleapis.com/maps/api/geocode/json?key=' + GOOGLE_API_KEY + '&latlng=' + lat + ',' + lng, function (data) {
+                    if (data.results && data.results[0]) {
+                        this.searchInput.val(data.results[0].formatted_address);
+                    }
+                }.bind(this));
+            }.bind(this), 500);
+        } else {
+            this.searchInput.val('');
+        }
+    }
+
+    if (lat && lng) {
+        this.marker.setOpacity(1);
+        if (type != 'marker') {
+            var val = new google.maps.LatLng(lat, lng);
+            this.marker.setPosition(val);
+            this.map.setCenter(val);
+        }
+    } else {
+        this.marker.setOpacity(0.3);
+    }
+
+    if (type != 'latlng' && this.latInput.length) {
+        this.latInput.val(lat);
+        this.lngInput.val(lng);
+    }
+
+    if (type != 'output') {
+        this.output.val((lat && lng) ? (lat + ';' + lng) : '');
+        this.output.trigger('change');
+    }
 }
