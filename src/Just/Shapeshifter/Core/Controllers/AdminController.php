@@ -368,7 +368,6 @@ abstract class AdminController extends Controller {
 
 		try {
 			$this->data['id'] = $this->repo->save($this, $this->getParentInfo());
-			$this->repo->save($this, $this->getParentInfo());
 		} catch (ValidationException $e) {
 			Notification::error($e->getErrors()->all());
 
