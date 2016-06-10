@@ -3,42 +3,53 @@
 // -----------------------------------------------------------
 window.GOOGLE_API_KEY = 'AIzaSyD_NhUfDH3IQ4hxNR2SqC3sZHpjvh-NU9A';
 
-var removeItem = function () {
+var removeItem = function (e) {
+    e.preventDefault();
     var itemId = $(this).data('id');
     swal({
             title: "Weet u het zeker?",
-            text: "U kunt het verwijderde item niet meer herstellen achteraf",
+            text: "U kunt het verwijderde item niet meer herstellen",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ja, Verwijderen",
+            confirmButtonText: "Ja, verwijderen",
             cancelButtonText: "Nee",
             closeOnConfirm: false,
             closeOnCancel: false
         },
         function (isConfirm) {
             if (isConfirm) {
-                $('#itemRow_' + itemId).fadeOut(300);
-                var form = $('#deleteItem_' + itemId),
-                    token = form.find('input[name="_token"]').val(),
-                    action = form.attr('action');
+                if (itemId) {
+                    $('#itemRow_' + itemId).fadeOut(300);
+                    var form = $('#deleteItem_' + itemId),
+                        token = form.find('input[name="_token"]').val(),
+                        action = form.attr('action');
 
-                var request = $.ajax({
-                    url: action,
-                    type: "POST",
-                    data: {
-                        '_method': 'DELETE',
-                        '_token': token
+                    var request = $.ajax({
+                        url: action,
+                        type: "POST",
+                        data: {
+                            '_method': 'DELETE',
+                            '_token': token
+                        }
+                    });
+
+                    request.done(function () {
+                        swal("Verwijderd!", "Ja, het item is verwijderd!", "success");
+                    });
+
+                    request.fail(function () {
+                        swal("Oops", "Er is iets misgegaan!", "error");
+                    });
+
+                } else {
+                    var form = $(e.currentTarget).closest('form');
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        swal("Oops", "Er is iets misgegaan!", "error");
                     }
-                });
-
-                request.done(function () {
-                    swal("Verwijderd!", "Ja, We hebben het verwijderd!", "success");
-                });
-
-                request.fail(function () {
-                    swal("Oops", "Er is iets misgegaan!", "error");
-                });
+                }
 
             } else {
                 swal("Geannuleerd", "Er is niks aangepast!", "error");
