@@ -1,0 +1,9 @@
+.idea
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+.sass-cache
+.php_cs.cache
+bin/
+node_modules/

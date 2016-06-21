@@ -1,0 +1,55 @@
+legend { display: block; width: 100%; padding: 0; margin-bottom: 1.5em; font-size: ($base * 1.5); line-height: inherit; color: $text-color; border: 0; border-bottom: 1px solid #ccc; }
+input[type="search"] { @include box-sizing(border-box); }
+
+.form { border-top: 1px solid #e6e6e6; }
+.form-group.error { background-color: red; }
+.form-group, .alert { padding: 1.1em 0; }
+.form-group { background-color: #ebebeb; margin: 1px 0; }
+.form-field { background-color: $tertiary-color; height: 8em; border-bottom: .35em solid #fff; padding: $col-padding; }
+.form-field:last-child { border: 0; }
+.form-control { margin: -.75em 0; }
+.search-control { background-color: lighten($tertiary-color, 5%); }
+.radio-inline + .radio-inline, .checkbox-inline + .checkbox-inline { margin-top: 0; margin-left: 1.25em; }
+input[type="radio"],
+input[type="checkbox"],
+.radio, .radio-inline, .checkbox, .checkbox-inline {
+  &[disabled],
+  fieldset[disabled] & {
+    cursor: not-allowed;
+  }
+}
+.form-control-static { margin-bottom: 0; }
+.form-inline {
+    @include respond-min-width(em(768)) {
+      .form-group { display: inline-block; margin-bottom: 0; vertical-align: middle }
+      .form-control { display: inline-block; width: auto;  vertical-align: middle }
+      .control-label { margin-bottom: 0; vertical-align: middle }
+      .radio, .checkbox { display: inline-block; margin-top: 0; margin-bottom: 0; padding-left: 0; vertical-align: middle }
+      .radio input[type="radio"], .checkbox input[type="checkbox"] { float: none; margin-left: 0; }
+      .has-feedback .form-control-feedback { top: 0; }
+    }
+}
+
+.form-group:before, .form-group:after { content: " "; display: table; }
+.form-group:after { clear: both; }
+
+@include respond-min-width(em(768)) {
+  h1 { margin: -2.75rem 0 0; padding: 1em 0; }
+  .content-body, .form-group, .alert, th, td { padding-left: 2.75em; padding-right: 2.75em; }
+  .content-body { padding-bottom: 2.75em; padding-right: 2.75em; }
+  .form-group, .alert { margin-left: -2.75em; margin-right: -2.75em; }
+  .sortable-handle { padding-right: 2.75em; }
+  .form-field { border-bottom: none; border-right: .35em solid #fff; }
+}
+.form-options { margin: -1.1em -2.75em -1.1em 0; }
+.form-options-content { margin: -1px 0; }
+.form-option { background-color: #ddd; margin: 1px 0; padding: 1.1em 1.5em; }
+.login-header-area { background-color: $primary-color; padding: 6.85em 0 4.35em; }
+.login-header { text-align: center; color: #fff; margin: 0; text-decoration: underline; text-transform: uppercase; }
+.login-header:after { content: ""; background-image: inline-image("public/packages/just/shapeshifter/css/images/content-icon.png"); background-repeat: no-repeat; background-position: right center; width: 32px; height: 65px; display: inline-block; vertical-align: -0.375em; margin-left: 0.15em; }
+.login-area { background-color: $tertiary-color; }
+.login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 18px; }
+.login-area-form .alert { padding: .65em .75em; }
+.login-area-form .separate { margin: 5px 0; }
+.login-area-form .form-control { padding: .85em 1.3em; border: 2px solid rgba(0, 0, 0, .18); @include box-shadow(inset 0 2px 0 rgba(0, 0, 0, .18)); }
+.forgot-password-action-container { text-align: center; margin: 2.222em 0; }

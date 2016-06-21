@@ -1,0 +1,48 @@
+{
+  "name": "just/shapeshifter",
+  "description": "The Just CMS package, The back-end of things.",
+  "authors": [
+    {
+      "name": "Cees van Egmond",
+      "email": "cees.vanegmond@wearejust.com"
+    },
+    {
+      "name": "John in 't Hout",
+      "email": "john.inthout@wearejust.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "edvinaskrucas/notification": "5.1.*",
+    "barryvdh/laravel-elfinder": "0.3.x",
+    "gregwar/image": "2.*",
+    "cartalyst/sentinel": "2.0.*",
+    "laravelcollective/html": "5.1.*|5.2.*"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0",
+    "wearejust/quality-assurance-hooks": "~1"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Just\\Shapeshifter\\": "src"
+    }
+  },
+  "scripts": {
+    "pre-install-cmd": [
+      "Just\\Hooks::checkHooks"
+    ],
+    "pre-update-cmd": [
+      "Just\\Hooks::checkHooks"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "bin-dir": "bin"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
