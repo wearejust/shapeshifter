@@ -65,7 +65,6 @@
                             <li class="control-item" style="position: absolute; left: 0;">
                                 <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
                             <!--</li>-->
-                            {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
                     </div>
                 </div>

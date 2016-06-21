@@ -166,4 +166,20 @@ class Form
 
         return $all;
     }
+
+    /**
+     * @return null
+     */
+    public function getLastVisibleAttribute()
+    {
+        $last = null;
+        foreach ($this->getAllAttributes() as $attribute) {
+            if (!$attribute->hasFlag('hide_list')) {
+                $last = $attribute;
+            }
+        }
+
+        return $last;
+    }
+
 }

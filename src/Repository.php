@@ -2,133 +2,104 @@
 
 namespace Just\Shapeshifter;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Collection;
-use Just\Shapeshifter\Attributes\Attribute;
-use Just\Shapeshifter\Attributes\ReadonlyAttribute;
-use Just\Shapeshifter\Core\Controllers\AdminController;
 use Just\Shapeshifter\Exceptions\ValidationException;
-use Just\Shapeshifter\Services\AttributeService;
+use Just\Shapeshifter\Form\Form;
 
 class Repository
 {
     /**
+     * @var Form
+     */
+    private $form;
+
+    /**
      * @var Model
      */
-    protected $model;
+    private $model;
 
     /**
-     * @var
+     * @param Form  $form
+     * @param Model $model
      */
-    protected $attributes;
-
-    /**
-     * @var
-     */
-    protected $rules;
-
-    /**
-     * @var
-     */
-    protected $orderby;
-
-    /**
-     * @param Model       $model
-     */
-    public function __construct(Model $model)
+    public function __construct(Form $form, Model $model)
     {
-        $this->model     = $model;
+        $this->form = $form;
+        $this->model = $model;
     }
 
     /**
-     * @param       $orderBy
-     * @param array $filters
-     * @param array $parent
+     * @param int $id
      *
-     * @return mixed
-     */
-    public function all($orderBy, array $filters = [], array $parent = [])
-    {
-        $records = $this->getRecords($orderBy, $filters, $parent);
-
-        return with(new AttributeService($this->attributes))
-            ->mutateRecords($records);
-    }
-
-    /**
-     * @param $id
-     *
-     * @return mixed
+     * @return Model
      */
     public function findById($id)
     {
-        return $this->model->find($id);
+        return $this->model->findOrFail($id);
     }
 
     /**
-     * @param string $a
-     * @param string $b
-     *
-     * @return mixed
-     */
-    public function listed($a, $b)
-    {
-        return $this->model->lists($a, $b);
-    }
-
-    /**
-     * @param AdminController$ref
+     * @param array $rules
      * @param array $parent
      *
      * @return mixed
-     *
-     * @throws Exceptions\ValidationException
      */
-    public function save(AdminController $ref, array $parent = [])
+    public function store($rules, array $parent = [])
     {
-        $this->validate();
-        $this->mutateAttributes();
-        $this->setSortorderForAdd($parent);
-        $this->checkForParent($parent);
-        $this->checkEventActions($ref);
+        $model = $this->getNew();
 
-        if (count($parent) && $ref->getMode() === 'store') {
-            unset($this->model->id);
-        }
-
-        if ($this->model->save()) {
-            $this->model = ($ref->getMode() === 'store') ? $ref->afterAdd($this->model) : $ref->afterUpdate($this->model);
-
-            $this->afterSaveAttributes();
-
-            if ($this->model->save()) {
-                return $this->model->id;
-            }
-        }
-
-        throw new ValidationException('Error');
+        return $this->save($model, $parent, $rules);
     }
 
     /**
-     * @param $parent
-     *
-     * @return bool
-     */
-    public function hasParent($parent)
-    {
-        return count($parent) === 2;
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Model                               $model
+     * @param                                     $rules
      *
      * @return mixed
+     */
+    public function update(Model $model, $rules)
+    {
+        return $this->save($model, $rules);
+    }
+
+    /**
+     * @param Model $model
+     * @param       $rules
+     * @param array $parent
+     *
+     * @return mixed
+     * @throws ValidationException
+     */
+    private function save(Model $model, $rules, array $parent = [])
+    {
+        $this->validate($rules);
+        $this->mutateAttributes($model);
+        //$this->setSortorderForAdd($parent);
+        $this->checkForParent($parent);
+
+        $model->save();
+
+        return $model;
+    }
+
+    /**
+     * @param Model $model
+     *
+     * @return bool
      * @throws \Exception
      */
     public function delete(Model $model)
     {
         return $model->delete();
+    }
+
+    /**
+     * @return Builder
+     */
+    public function getNewQuery()
+    {
+        return $this->model->newQuery();
     }
 
     /**
@@ -142,142 +113,14 @@ class Repository
     }
 
     /**
-     * @param mixed $rules
-     */
-    public function setRules($rules)
-    {
-        foreach ($rules as &$rule) {
-            $rule = (is_string($rule)) ? explode('|', $rule) : $rule;
-        }
-
-        $this->rules = $rules;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRules()
-    {
-        return $this->rules;
-    }
-
-    /**
-     * @param $attributes
-     * @param $rules
-     */
-    public function setAttributes($attributes, $rules)
-    {
-        foreach ($attributes as $key => $attribute) {
-            if (AttributeService::ignoreAttributes($attribute)) {
-                unset($attributes[$key]);
-            }
-
-            $attribute->setRequired(
-                array_key_exists($attribute->name, $rules) && in_array('required', $rules[$attribute->name])
-            );
-        }
-
-        $this->attributes = $attributes;
-    }
-
-    /**
-     * @param $mode
-     * @param Collection|Attribute[] $attributes
-     * @param $model
+     * @param array $rules
      *
-     * @return mixed
+     * @throws ValidationException
      */
-    public function setAttributeValues($mode, Collection $attributes, Model $model)
-    {
-        foreach ($attributes as $key => $attr) {
-            if ($mode === 'create' && $attr->hasFlag('hide_add')) {
-                $attributes->forget($key);
-            }
-
-            if ($mode === 'edit') {
-                if ($attr->hasFlag('hide_edit')) {
-                    $attributes->forget($key);
-                }
-
-                $model->{$attr->name} = $attr->getEditValue($model);
-            }
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @param mixed $orderBy
-     */
-    public function setOrderby($orderBy)
-    {
-        $this->orderby = $orderBy;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrderby()
-    {
-        return $this->orderby;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTable()
-    {
-        return $this->model->getTable();
-    }
-
-    /**
-     * @param $orderBy
-     * @param $filters
-     * @param $parent
-     *
-     * @return mixed
-     */
-    private function getRecords($orderBy, $filters, $parent)
-    {
-        $query = $this->model;
-
-        if ($this->hasParent($parent)) {
-            $query = $query->where($parent[0], $parent[1]);
-        }
-
-        foreach ($filters as $filter) {
-            $query = $query->whereRaw($filter);
-        }
-
-        $records = $query->orderBy($orderBy[0], $orderBy[1])->get();
-
-        return $records;
-    }
-
-    /**
-     * @throws Exceptions\ValidationException
-     */
-    private function validate()
+    public function validate(array $rules)
     {
         $messages = app('translator')->get('shapeshifter::validation');
-
-        $validator = app('validator')->make(request()->all(), $this->rules, $messages);
+        $validator = app('validator')->make(request()->all(), $rules, $messages);
         $validator->setAttributeNames($messages['attributes']);
 
         if ($validator->fails()) {
@@ -286,80 +129,24 @@ class Repository
     }
 
     /**
-     *
+     * @param Model $model
      */
-    private function mutateAttributes()
+    private function mutateAttributes(Model $model)
     {
-        foreach ($this->attributes as $attr) {
-            if ($attr instanceof ReadonlyAttribute || in_array('no_save', $attr->flags)) {
-                continue;
-            }
-
-            $attr->setAttributeValue(request()->get($attr->name), $this->model->{$attr->name});
-            $attr->getSaveValue($this->model);
+        foreach ($this->form->getAllAttributes() as $attr) {
+            $attr->setAttributeValue(request()->get($attr->name), $model->{$attr->name});
+            $attr->getSaveValue($model);
         }
     }
 
+
     /**
-     *
+     * @param array $parent
      */
-    private function afterSaveAttributes()
+    private function checkForParent(array $parent)
     {
-        foreach ($this->attributes as $attr) {
-            $attr->afterSave($this->model);
-        }
-    }
-    /**
-     * @param $parent
-     */
-    private function checkForParent($parent)
-    {
-        if ($this->hasParent($parent)) {
+        if (count($parent) === 2) {
             $this->model->{$parent[0]} = $parent[1];
         }
-    }
-
-    /**
-     * @param $parent
-     */
-    private function setSortorderForAdd($parent)
-    {
-        if (!$this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder')) {
-            $query = app('db')->table($this->model->getTable());
-
-            if ($this->hasParent($parent)) {
-                $query = $query->where($parent[0], $parent[1]);
-            }
-
-            $max = $query->max($this->orderby[0]) + 1;
-
-            $this->model->{$this->orderby[0]} = $max;
-        }
-    }
-
-    /**
-     * @param $ref
-     */
-    protected function checkEventActions(AdminController $ref)
-    {
-        if (null === $ref->getParent()) {
-            $this->model = !$this->model->id ? $ref->beforeAdd($this->model) : $ref->beforeUpdate($this->model);
-        } else {
-            $ref->getMode() === 'store'
-                ? $ref->beforeAdd($this->model)
-                : $ref->beforeUpdate($this->model);
-        }
-    }
-
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
-     * @return $this
-     */
-    public function setModel(Model $model)
-    {
-        $this->model = $model;
-
-        return $this;
     }
 }

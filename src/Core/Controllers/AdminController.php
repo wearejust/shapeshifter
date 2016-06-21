@@ -3,10 +3,9 @@
 namespace Just\Shapeshifter\Core\Controllers;
 
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Application;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\QueryException;
 use Illuminate\Routing\Controller;
-use Just\Shapeshifter\Attributes\MediumAttribute;
 use Just\Shapeshifter\Exceptions;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
@@ -20,71 +19,42 @@ abstract class AdminController extends Controller
     /**
      * @var Repository
      */
-    private $repo;
+    private $repository;
 
     /**
      * The mode of the current action (create, edit)
      *
      * @var string
      */
-    private $mode;
-
-    /**
-     * This data array holds all the data that will be send to the view
-     *
-     * @var array
-     */
-    protected $data = [];
+    protected $mode;
 
     /**
      * Disable some actions in the node (drag, sort, create, delete)
      *
      * @var array
      */
-    protected $disabledActions = [];
+    private $disabledActions = [];
 
     /**
      * Array of record ids which cannot be deleted in the node
      *
      * @var array
      */
-    protected $disableDeleting = [];
+    private $disableDeleting = [];
 
     /**
      * Array of record ids which cannot be edited in the node
      *
      * @var array
      */
-    protected $disableEditing = [];
+    private $disableEditing = [];
 
     /**
      * Array of the validation rules in the form (see laravel validation)
      *
      * @var array
      */
-    protected $rules = [];
-
-    /**
-     * Insert an array of raw where clauses, the node will extends the query with
-     * those extra where clauses.
-     *
-     * @var array
-     */
-    protected $filter = [];
-
-    /**
-     * The field in the table who is responsible for displaying the descriptor
-     *
-     * @var string
-     */
-    protected $descriptor = 'id';
-
-    /**
-     * The field and method who are responsible for the ordering
-     *
-     * @var array
-     */
-    protected $orderby = ['sortorder', 'asc'];
+    private $rules = [];
 
     /**
      * If an node has an belongsTo relation (comment has post) the database
@@ -92,32 +62,28 @@ abstract class AdminController extends Controller
      *
      * @var null
      */
-    protected $parent;
-
-    /**
-     * @var Model
-     */
-    protected $model;
+    private $parent;
 
     /**
      * @var Form
      */
-    protected $formModifier;
+    private $formModifier;
 
     /**
      * @var string
      */
-    protected $singular = 'Pagina';
+    private $viewNamespace = 'shapeshifter';
 
     /**
-     * @var string
+     * AdminController constructor.
      */
-    protected $plural = 'Paginas';
+    public function __construct()
+    {
+        $this->formModifier = new Form($this->mode);
+        $this->repository = new Repository($this->formModifier, new $this->model);
 
-    /**
-     * @var string
-     */
-    protected $viewNamespace = 'shapeshifter';
+        $this->configureFields($this->formModifier);
+    }
 
     /**
      * Function that is needed in the node, this descripbes how the node will
@@ -128,31 +94,7 @@ abstract class AdminController extends Controller
      * @return Form
      */
     abstract protected function configureFields(Form $modifier);
-
-    public function __construct()
-    {
-        $this->checkRequirements();
-
-        $this->repo = new Repository($this->model);
-        $this->repo->setOrderby($this->orderby);
-    }
-
-    /**
-     *  This method is always fired, this is the base of whole shapeshifter
-     */
-    public function initAttributes()
-    {
-        $this->formModifier = new Form($this->mode);
-
-        $this->beforeInit($this->formModifier);
-        $this->configureFields($this->formModifier);
-        $this->afterInit($this->formModifier);
-
-        $this->repo->setRules($this->rules);
-        $this->repo->setAttributes($this->formModifier->getAllAttributes(), $this->repo->getRules());
-
-        $this->data['routes'] = $this->getCurrentRouteNames();
-    }
+    abstract protected function indexQuery(Builder $query);
 
     /**
      * @throws NotFoundHttpException
@@ -161,19 +103,14 @@ abstract class AdminController extends Controller
      */
     public function index()
     {
-        $this->data['ids'] = func_get_args();
-
         $this->mode  = 'index';
-        $this->model = $this->repo->getNew();
 
-        $this->initAttributes();
-
-        $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
-
-        $this->data['title']   = $this->plural;
-        $this->data['records'] = $records;
-
-        return $this->setupView('index');
+        return $this->setupView('index', [
+            'records' => $this->indexQuery($this->repository->getNewQuery()),
+            'title' => 'dfgdfgasdfghjkl',
+            'ids' => func_get_args(),
+            'model' => $this->repository->getNew()
+        ]);
     }
 
     /**
@@ -181,17 +118,13 @@ abstract class AdminController extends Controller
      */
     public function create()
     {
-        $this->data['ids'] = func_get_args();
-
         $this->mode  = 'create';
-        $this->model = $this->repo->getNew();
 
-        $this->initAttributes();
-
-        $this->data['title']  = $this->singular . ' ' . strtolower(__('form.create'));
-        $this->data['parent'] = $this->getParentInfo();
-
-        return $this->setupView('form');
+        return $this->setupView('form', [
+            'title' => 'dfgdsdfdsffgasdfghjkl',
+            'ids' => func_get_args(),
+            'model' => $this->repository->getNew()
+        ]);
     }
 
     /**
@@ -199,16 +132,15 @@ abstract class AdminController extends Controller
      */
     public function edit()
     {
-        $this->data['ids'] = func_get_args();
-
         $this->mode  = 'edit';
-        $this->model = $this->repo->findById($this->getCurrentId());
 
-        $this->data['title'] = $this->descriptor === 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->descriptor}));
+        $ids = func_get_args();
 
-        $this->initAttributes();
-
-        return $this->setupView('form');
+        return $this->setupView('form', [
+            'ids' => $ids,
+            'title' => 'gjgjghjfghfhjgk',
+            'model' => $this->repository->findById(last($ids))
+        ]);
     }
 
     /**
@@ -216,28 +148,21 @@ abstract class AdminController extends Controller
      */
     public function store()
     {
-        $this->data['ids'] = func_get_args();
-
-        $this->mode  = 'store';
-        $this->model = $this->repo->getNew();
-
-        $this->initAttributes();
+        $this->mode = 'store';
 
         try {
-            $this->repo->setModel($this->model);
-
-            $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
-        } catch (Exceptions\ValidationException $e) {
-            array_map(function ($item) {
-                Notification::error($item);
-            }, $e->getErrors()->all());
-
+            $model = $this->repository->store($this->rules);
+        }catch (Exceptions\ValidationException $e) {
+            $this->addErrorsToFlash($e->getErrors()->all());
+            return redirect()->back()->withInput();
+        }catch (QueryException $e) {
+            $this->addErrorsToFlash($e->getMessage());
             return redirect()->back()->withInput();
         }
 
         Notification::success(__('form.stored'));
 
-        return $this->redirectAfterStore($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
+        return $this->redirectAfterStore($this->getRedirectRoute(), func_get_args(), $model->id);
     }
 
     /**
@@ -245,28 +170,24 @@ abstract class AdminController extends Controller
      */
     public function update()
     {
-        $this->data['ids'] = func_get_args();
-
         $this->mode  = 'update';
-        $this->model = $this->repo->findById($this->getCurrentId());
+        $ids = func_get_args();
 
-        $this->initAttributes();
+        $model = $this->repository->findById(last($ids));
 
         try {
-            $this->repo->setModel($this->model);
-
-            $this->data['id'] = $this->repo->save($this);
-        } catch (Exceptions\ValidationException $e) {
-            array_map(function ($item) {
-                Notification::error($item);
-            }, $e->getErrors()->all());
-
+            $model = $this->repository->update($model, $this->rules);
+        }catch (Exceptions\ValidationException $e) {
+            $this->addErrorsToFlash($e->getErrors()->all());
+            return redirect()->back()->withInput();
+        }catch (QueryException $e) {
+            $this->addErrorsToFlash($e->getMessage());
             return redirect()->back()->withInput();
         }
 
         Notification::success(__('form.updated'));
 
-        return $this->redirectAfterUpdate($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
+        return $this->redirectAfterUpdate($this->getRedirectRoute(), $ids, $model->id);
     }
 
     /**
@@ -274,59 +195,49 @@ abstract class AdminController extends Controller
      */
     public function destroy()
     {
-        $this->data['ids'] = func_get_args();
+        $ids = func_get_args();
 
         $this->mode  = 'destroy';
-        $this->model = $this->repo->findById($this->getCurrentId());
+        $model = $this->repository->findById(last($ids));
 
-        $this->initAttributes();
-
-        $this->model = $this->beforeDestroy($this->model);
-
-        if ($this->repo->delete($this->model)) {
+        if ($this->repository->delete($model)) {
             Notification::success(__('form.removed'));
         }
 
-        return $this->redirectAfterDestroy($this->getRedirectRoute(), $this->data['ids']);
+        return $this->redirectAfterDestroy($this->getRedirectRoute(), $ids);
     }
 
     /**
-     * @param $template
+     * @param       $template
+     *
+     * @param array $data
      *
      * @return mixed
      */
-    protected function setupView($template)
+    private function setupView($template, array $data = [])
     {
         $user = Sentinel::getUser();
         $user->setDisabledActions($this->disabledActions);
 
         $this->formModifier->render();
 
-        $this->beforeRender($this);
-
-        return view()->make("{$this->viewNamespace}::{$template}", array_merge($this->data, [
+        return view()->make("{$this->viewNamespace}::{$template}", array_merge($data, [
             'form'                 => $this->formModifier,
-            'attributes'           => $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model),
-            'orderBy'              => $this->orderby,
-            'cancel'               => $this->generateCancelLink(),
+            'attributes'           => $this->formModifier->getAllAttributes(),
+            'lastVisibleAttribute' => $this->formModifier->getLastVisibleAttribute(),
             'disabledActions'      => $this->disabledActions,
             'disableDeleting'      => $this->disableDeleting,
             'disableEditing'       => $this->disableEditing,
-            'model'                => $this->model,
-            'lastVisibleAttribute' => $this->getLastVisibleAttribute(),
-            'singular'             => $this->singular,
-            'plural'               => $this->plural,
             'mode'                 => $this->mode,
-            'controller'           => get_class($this),
             'parent'               => $this->parent,
-            'filters'              => $this->filter
+            'routes'               => $this->getCurrentRouteNames()
         ]));
     }
 
     /**
      * @return array
      */
-    public function getCurrentRouteNames()
+    private function getCurrentRouteNames()
     {
         $verbs   = ['update', 'edit', 'index', 'destroy', 'create', 'store'];
         $regex   = sprintf('/\.(%s)/', implode('|', $verbs));
@@ -338,95 +249,13 @@ abstract class AdminController extends Controller
     }
 
     /**
-     * @return mixed
-     */
-    protected function getCurrentId()
-    {
-        return last($this->data['ids']);
-    }
-
-    /**
-     * @return array
-     */
-    public function getParentInfo()
-    {
-        if ($this->parent) {
-            //lame
-            $segs = array_reverse(request()->segments());
-
-            foreach ($segs as $seg) {
-                if (is_numeric($seg)) {
-                    return [$this->parent, (int) $seg];
-                }
-            }
-        }
-
-        return [];
-    }
-
-    /**
-     * @return string
-     */
-    private function generateCancelLink()
-    {
-        if (!array_key_exists('ids', $this->data)) {
-            return [];
-        }
-
-        $parameters = $this->data['ids'];
-
-        if ($this->repo->hasParent($this->getParentInfo())) {
-            $edit = explode('.', $this->data['routes']['edit']);
-            unset($edit[count($edit) - 2]);
-
-            if ($this->mode == 'edit') {
-                array_pop($parameters);
-            }
-
-            return route(implode('.', $edit), $parameters);
-        }
-
-        return route($this->data['routes']['index'], $parameters);
-    }
-
-    /**
-     * @throws Exceptions\ClassNotExistException
-     * @throws Exceptions\PropertyNotExistException
-     */
-    private function checkRequirements()
-    {
-        if (!$this->singular || !$this->plural || !$this->model) {
-            throw new Exceptions\PropertyNotExistException('Property [singular] or [plural] or [model] does not exist');
-        }
-
-        if (!class_exists($this->model)) {
-            throw new Exceptions\ClassNotExistException(sprintf('Class [%s] doesn\'t exist', $this->model));
-        }
-
-        $this->model = new $this->model;
-    }
-
-    /**
-     * @return null
-     */
-    private function getLastVisibleAttribute()
-    {
-        $last = null;
-        foreach ($this->formModifier->getAllAttributes() as $attribute) {
-            if (!$attribute->hasFlag('hide_list')) {
-                $last = $attribute;
-            }
-        }
-
-        return $last;
-    }
-
-    /**
      * @return string
      */
     private function getRedirectRoute($route = null)
     {
-        $route = $route ?: $this->data['routes']['index'];
+        $routes = $this->getCurrentRouteNames();
+
+        $route = $route ?: $routes['index'];
         if ($this->parent) {
             $route = explode('.', $route);
             array_pop($route);
@@ -439,70 +268,12 @@ abstract class AdminController extends Controller
     }
 
     /**
-     * @param $name
-     *
-     * @return null
+     * @param $e
      */
-    public function mediumEditor($name)
+    private function addErrorsToFlash($e)
     {
-        $this->formModifier->tab($name, function ($tab) {
-            $tab->add(new MediumAttribute('content'));
-        });
-    }
-
-    /**
-     * @return string
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return str_replace(' ', '_', $this->plural);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescriptor()
-    {
-        return $this->descriptor;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOrderBy()
-    {
-        return $this->orderby;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMode()
-    {
-        return $this->mode;
-    }
-
-    /**
-     * @return Repository
-     */
-    public function getRepo()
-    {
-        return $this->repo;
+        array_map(function ($item) {
+            Notification::error($item);
+        }, (array) $e);
     }
 }

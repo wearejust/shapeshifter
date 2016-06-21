@@ -42,7 +42,7 @@
         @else
         <div class="content-alt">
             <div class="data-wrapper">
-                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}" data-custom-filter="{{ json_encode($filters) }}" data-sort-column="{{ $orderBy[0] }}" data-sort-order="{{ $orderBy[1] }}">
+                <table class="section section-sub section-start js-datatable {{ $currentUser->can('drag') ? 'js-datatable-order' : '' }} {{ $currentUser->can('sort') ? 'js-datatable-sortable' : ''}}">
                     <thead>
                         @foreach ($attributes as $attr)
                         @if ( ! $attr->hasFlag('hide_list'))
@@ -70,14 +70,15 @@
                         @foreach ($records as $rec)
                         <tr class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
                             @foreach ($attributes as $attr)
+
                                 @if ( ! $attr->hasFlag('hide_list'))
                                 <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
                                     @if($rec->{$attr->name} && $attr instanceof Just\Shapeshifter\Attributes\FileAttribute)
-                                        <img style='height:100px;' src='{{ $rec->{$attr->name} }}'>
+                                        <img style='height:100px;' src='{{ $attr->getDisplayValue($rec) }}'>
                                     @elseif($rec->{$attr->name} && $attr instanceof Just\Shapeshifter\Attributes\MultipleFileAttribute)
-                                        <img style='height:100px;' src='{{ $attr->getCrop($rec->{$attr->name}, null, 100) }}'>
+                                        <img style='height:100px;' src='{{ $attr->getCrop($attr->getDisplayValue($rec), null, 100) }}'>
                                     @else
-                                        {!! $rec->{$attr->name} !!}
+                                        {!! $attr->getDisplayValue($rec) !!}
                                     @endif
                                 </td>
                                 @endif

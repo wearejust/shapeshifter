@@ -23,28 +23,6 @@ class AttributeService
     }
 
     /**
-     * @param $records
-     *
-     * @return mixed
-     */
-    public function mutateRecords($records)
-    {
-        $_ignored = ['id', 'sortorder', 'updated_at','created_at'];
-
-        foreach ($records as $model) {
-            $toLoop = array_except($model->toArray(), $_ignored);
-
-            foreach ($toLoop as $k => $r) {
-                if ($this->attributes->has($k)) {
-                    $model->{$k} = $this->attributes[$k]->getDisplayValue($model);
-                }
-            }
-        }
-
-        return $records;
-    }
-
-    /**
      * @param Attribute $attribute
      *
      * @return bool
