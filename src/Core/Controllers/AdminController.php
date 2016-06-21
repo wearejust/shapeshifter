@@ -95,11 +95,6 @@ abstract class AdminController extends Controller
     protected $parent;
 
     /**
-     * @var Application
-     */
-    protected $app;
-
-    /**
      * @var Model
      */
     protected $model;
@@ -134,16 +129,11 @@ abstract class AdminController extends Controller
      */
     abstract protected function configureFields(Form $modifier);
 
-    /**
-     * @param Application $app
-     */
-    public function __construct(Application $app)
+    public function __construct()
     {
-        $this->app = $app;
-
         $this->checkRequirements();
 
-        $this->repo = $this->app->make(Repository::class, [new $this->model(), $app]);
+        $this->repo = new Repository($this->model);
         $this->repo->setOrderby($this->orderby);
     }
 
@@ -152,7 +142,7 @@ abstract class AdminController extends Controller
      */
     public function initAttributes()
     {
-        $this->formModifier = $this->app->make(Form::class, [$this->mode]);
+        $this->formModifier = new Form($this->mode);
 
         $this->beforeInit($this->formModifier);
         $this->configureFields($this->formModifier);
@@ -179,10 +169,6 @@ abstract class AdminController extends Controller
         $this->initAttributes();
 
         $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
-
-        if (!count($records) && $this->app['request']->ajax() && in_array('create', $this->disabledActions)) {
-            throw new NotFoundHttpException('No records, No ability to create and Ajax request');
-        }
 
         $this->data['title']   = $this->plural;
         $this->data['records'] = $records;
@@ -246,7 +232,7 @@ abstract class AdminController extends Controller
                 Notification::error($item);
             }, $e->getErrors()->all());
 
-            return $this->app['redirect']->back()->withInput();
+            return redirect()->back()->withInput();
         }
 
         Notification::success(__('form.stored'));
@@ -275,7 +261,7 @@ abstract class AdminController extends Controller
                 Notification::error($item);
             }, $e->getErrors()->all());
 
-            return $this->app['redirect']->back()->withInput();
+            return redirect()->back()->withInput();
         }
 
         Notification::success(__('form.updated'));
@@ -318,7 +304,7 @@ abstract class AdminController extends Controller
 
         $this->beforeRender($this);
 
-        return $this->app['view']->make("{$this->viewNamespace}::{$template}", array_merge($this->data, [
+        return view()->make("{$this->viewNamespace}::{$template}", array_merge($this->data, [
             'form'                 => $this->formModifier,
             'attributes'           => $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model),
             'orderBy'              => $this->orderby,
@@ -344,7 +330,7 @@ abstract class AdminController extends Controller
     {
         $verbs   = ['update', 'edit', 'index', 'destroy', 'create', 'store'];
         $regex   = sprintf('/\.(%s)/', implode('|', $verbs));
-        $current = preg_replace($regex, '', $this->app['router']->currentRouteName());
+        $current = preg_replace($regex, '', $this->getRouter()->currentRouteName());
 
         return array_map(function ($item) use ($current) {
             return $current . '.' . $item;
@@ -366,7 +352,7 @@ abstract class AdminController extends Controller
     {
         if ($this->parent) {
             //lame
-            $segs = array_reverse($this->app['request']->segments());
+            $segs = array_reverse(request()->segments());
 
             foreach ($segs as $seg) {
                 if (is_numeric($seg)) {
@@ -416,6 +402,8 @@ abstract class AdminController extends Controller
         if (!class_exists($this->model)) {
             throw new Exceptions\ClassNotExistException(sprintf('Class [%s] doesn\'t exist', $this->model));
         }
+
+        $this->model = new $this->model;
     }
 
     /**

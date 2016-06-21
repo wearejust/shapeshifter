@@ -34,18 +34,11 @@ class Repository
     protected $orderby;
 
     /**
-     * @var Application
-     */
-    private $app;
-
-    /**
      * @param Model       $model
-     * @param Application $app
      */
-    public function __construct(Model $model, Application $app)
+    public function __construct(Model $model)
     {
         $this->model     = $model;
-        $this->app       = $app;
     }
 
     /**
@@ -59,7 +52,7 @@ class Repository
     {
         $records = $this->getRecords($orderBy, $filters, $parent);
 
-        return $this->app->make(AttributeService::class, [$this->attributes])
+        return with(new AttributeService($this->attributes))
             ->mutateRecords($records);
     }
 
@@ -282,9 +275,9 @@ class Repository
      */
     private function validate()
     {
-        $messages = $this->app['translator']->get('shapeshifter::validation');
+        $messages = app('translator')->get('shapeshifter::validation');
 
-        $validator = $this->app['validator']->make($this->app['request']->all(), $this->rules, $messages);
+        $validator = app('validator')->make(request()->all(), $this->rules, $messages);
         $validator->setAttributeNames($messages['attributes']);
 
         if ($validator->fails()) {
@@ -302,7 +295,7 @@ class Repository
                 continue;
             }
 
-            $attr->setAttributeValue($this->app['request']->get($attr->name), $this->model->{$attr->name});
+            $attr->setAttributeValue(request()->get($attr->name), $this->model->{$attr->name});
             $attr->getSaveValue($this->model);
         }
     }
@@ -332,7 +325,7 @@ class Repository
     private function setSortorderForAdd($parent)
     {
         if (!$this->model->id && \Schema::hasColumn($this->model->getTable(), 'sortorder')) {
-            $query = $this->app['db']->table($this->model->getTable());
+            $query = app('db')->table($this->model->getTable());
 
             if ($this->hasParent($parent)) {
                 $query = $query->where($parent[0], $parent[1]);

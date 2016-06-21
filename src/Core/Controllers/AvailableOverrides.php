@@ -76,7 +76,7 @@ trait AvailableOverrides
      */
     protected function redirectAfterUpdate($route, $args, $currentId)
     {
-        return $this->app['redirect']->route($route, $args);
+        return redirect()->route($route, $args);
     }
 
     /**
@@ -88,7 +88,7 @@ trait AvailableOverrides
      */
     protected function redirectAfterStore($route, $args, $currentId)
     {
-        return $this->app['redirect']->route($route, $args);
+        return redirect()->route($route, $args);
     }
 
     /**
@@ -99,7 +99,7 @@ trait AvailableOverrides
      */
     protected function redirectAfterDestroy($route, $args)
     {
-        return $this->app['redirect']->route($route, $args);
+        return redirect()->route($route, $args);
     }
 
     /**
