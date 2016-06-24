@@ -26,6 +26,34 @@ class FileAttribute extends Attribute implements iAttributeInterface
     protected $relativeStorageDir;
 
     /**
+     * Maximum file width
+     *
+     * @var integer
+     */
+    protected $maxWidth = 1920;
+
+    /**
+     * Maximum file height
+     *
+     * @var integer
+     */
+    protected $maxHeight = 1080;
+
+    /**
+     * Maximum file size
+     *
+     * @var integer
+     */
+    protected $maxSize = 3145728;
+
+    /**
+     * File type
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
      * @var array relative files in same dir
      */
     protected $relatives = [];
@@ -39,6 +67,13 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     public function __construct($name, $storageDir, $flags = [])
     {
+        foreach (['maxWidth', 'maxHeight', 'maxSize'] as $option) {
+            if (isset($flags[$option])) {
+                $this->{$option} = $flags[$option];
+                unset($flags[$option]);
+            }
+        }
+
         $this->name  = $name;
         $this->flags = $flags;
 
@@ -79,6 +114,16 @@ class FileAttribute extends Attribute implements iAttributeInterface
         $this->moveUploadedFile();
 
         return true;
+    }
+
+    public function getEditValue(Model $model)
+    {
+        $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
+        if ((bool) getimagesize($absPath)) {
+           $this->type = 'image';
+        }
+
+        return parent::getEditValue($model);
     }
 
     /**
