@@ -118,9 +118,11 @@ class FileAttribute extends Attribute implements iAttributeInterface
 
     public function getEditValue(Model $model)
     {
-        $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
-        if ((bool) getimagesize($absPath)) {
-           $this->type = 'image';
+        if ($model->{$this->name}) {
+            $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
+            if ((bool) getimagesize($absPath)) {
+                $this->type = 'image';
+            }
         }
 
         return parent::getEditValue($model);
