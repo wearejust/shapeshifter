@@ -52,8 +52,13 @@ $(function() {
 		});
 	});
 
-	flatpickr('input.datepicker',  { dateFormat: 'd-m-Y'})
-
+	flatpickr('input.datepicker', {
+		dateFormat: 'd-m-Y',
+		enableTime: false,
+		timeFormat: "H:i",
+		time_24hr: true
+	});
+	
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
