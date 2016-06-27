@@ -47,13 +47,6 @@ class FileAttribute extends Attribute implements iAttributeInterface
     protected $maxSize = 3145728;
 
     /**
-     * File type
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @var array relative files in same dir
      */
     protected $relatives = [];
@@ -116,18 +109,6 @@ class FileAttribute extends Attribute implements iAttributeInterface
         return true;
     }
 
-    public function getEditValue(Model $model)
-    {
-        if ($model->{$this->name}) {
-            $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
-            if ((bool) getimagesize($absPath)) {
-                $this->type = 'image';
-            }
-        }
-
-        return parent::getEditValue($model);
-    }
-
     /**
      * getDisplayValue
      *
@@ -140,16 +121,17 @@ class FileAttribute extends Attribute implements iAttributeInterface
         $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
         $relPath = rtrim($this->relativeStorageDir, '/') . '/' . $model->{$this->name};
 
+        if ($this->hasFlag('force')) {
+            return $model->{$this->name};
+        }
+
         if (! is_file($absPath)) {
-            return __('form.file.doesntexist');
+            return $model->{$this->name} ? __('form.file.doesntexist') : '';
         }
 
         if ((bool) getimagesize($absPath)) {
-            return Image::open($absPath)->resize(500, null)->inline();
-        }
-
-        if ($this->hasFlag('force')) {
-            return $model->{$this->name};
+            $src = Image::open($absPath)->resize(null, 100)->inline();
+            return "<img style='height:100px;' src='{$src}'>";
         }
 
         return Html::link($relPath, $model->{$this->name}, ['target' => '_blank']);
@@ -157,7 +139,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
 
     /**
      * Deletes the file
-     * 
+     *
      * @param mixed $file Description.
      *
      * @access private

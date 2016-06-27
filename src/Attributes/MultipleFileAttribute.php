@@ -32,16 +32,4 @@ class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
             $this->existing = [''];
         }
     }
-
-    /**
-     * @param      $value
-     * @param null $width
-     * @param null $height
-     *
-     * @return string
-     */
-    public function getCrop($value, $width = null, $height = null)
-    {
-        return '/' . Image::open($this->getAbsolutePath() . $value)->cropResize($width, $height)->jpeg();
-    }
 }
