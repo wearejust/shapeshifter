@@ -164,7 +164,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function deleteFile($file)
     {
-        $file = $this->absoluteStorageDir . DIRECTORY_SEPARATOR . $file;
+        $file = $this->absoluteStorageDir . '/' . $file;
 
         if (file_exists($file)) {
             unlink($file);
@@ -242,7 +242,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     protected function getRelativePath($storageDir)
     {
-        return DIRECTORY_SEPARATOR . trim($storageDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return '/' . trim($storageDir, '/') . '/';
     }
 
     /**
@@ -250,6 +250,6 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     protected function getAbsolutePath()
     {
-        return public_path() . DIRECTORY_SEPARATOR . $this->relativeStorageDir;
+        return public_path() . '/' . $this->relativeStorageDir;
     }
 }
