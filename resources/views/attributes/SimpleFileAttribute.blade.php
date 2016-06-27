@@ -10,9 +10,6 @@
                 @if($model->{$name})
                     <span class="block" style="padding: 1em;">
                         <strong>{{ trans('shapeshifter::site.form.current') }}:</strong> {!! $model->{$name} !!}
-                        @if($type == 'image')
-                            <img class="block" src="{{ $relativeStorageDir . '/' . $model->{$name} }}">
-                        @endif
                     </span>
                 @endif
             </span>
