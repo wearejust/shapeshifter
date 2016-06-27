@@ -33,6 +33,7 @@ return [
     'form.removed'          => 'Het item is verwijderd.',
     'form.remove'           => 'Verwijderen',
     'form.updated_at'       => 'Laatst gewijzigd',
+    'form.current'          => 'Huidig',
 
     'dialog.remove'       => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',

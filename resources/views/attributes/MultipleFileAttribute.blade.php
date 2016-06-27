@@ -1,7 +1,8 @@
-<label class="form-group js-multiplefileattribute">
+<label class="form-group js-multiplefileattribute" data-storage-dir="{{ $relativeStorageDir }}" data-max-width="{{ $maxWidth }}" data-max-height="{{ $maxHeight }}" data-max-size="{{ $maxSize }}">
     <span class="form-group-content">
         <span class="form-label">
             {{ $label }}
+            @include('shapeshifter::layouts.filesizes')
         </span>
         <span class="form-field js-image-container">
             <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
@@ -9,7 +10,7 @@
                     <span class="media-wrapper module-1">
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper media-preview">
-                                <span class="media-wrapper-content-wrapper-inner js-multiplefileattribute-preview" data-storage-dir="{{ $relativeStorageDir }}" style="background-image: url('{{ $model->{$name} ? ($relativeStorageDir . $model->{$name}) : '' }}');"></span>
+                                <span class="media-wrapper-content-wrapper-inner js-multiplefileattribute-preview" style="background-image: url('{{ $model->{$name} ? ($relativeStorageDir . $model->{$name}) : '' }}');"></span>
                                 <button class="btn btn-remove btn-remove-alt confirm-delete-dialog {{ $model->{$name} ? '' : 'hide' }}" data-callback="removeImage" data-name="{{ $name }}" style="height: 2.75em; line-height: 2.75em; padding: 0; position: absolute; right: 0; top: 0; width: 2.75em;" type="button">X</button>
                                 <span class="media-placeholder js-multiplefileattribute-preview-placeholder {{ $model->{$name} ? 'hide' : '' }}">
                                     <span class="media-placeholder-content">
