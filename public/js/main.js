@@ -623,7 +623,7 @@ MultipleFileAttribute.prototype.upload = function(e) {
 		this.drag();
         ImageSizeChecker.validate(e.currentTarget.files, this.uploadValidation, function(passed) {
             if (passed) {
-                MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files);
+                MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files.length);
                 this.uploadInput = $(e.currentTarget);
                 this.uploadInput.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
                 this.uploadInput.execute(this, function() {
@@ -675,6 +675,7 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 
 	this.list.execute(this, function() {
 		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
+        this.list.stop(true).animate({'scrollTop':this.list.children().last().position().top});
 		this.loading = false;
 	});
 }
