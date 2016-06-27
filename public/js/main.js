@@ -52,11 +52,8 @@ $(function() {
 		});
 	});
 
-	$('input.datepicker').datepicker({
-		dateFormat: "dd-mm-yy"
-	});
+	flatpickr('input.datepicker',  { dateFormat: 'd-m-Y'})
 
-	$('input.datetimepicker').datetimepicker();
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
