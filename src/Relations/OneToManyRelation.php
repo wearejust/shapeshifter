@@ -80,7 +80,7 @@ class OneToManyRelation extends Attribute
 
         return View::make('shapeshifter::relations.OneToManyRelation', [
             'route'    => $this->getDestinationRoute($path, $node, $numerics),
-            'title'    => $controller->getTitle(),
+            'title'    => str_replace('_', ' ', $controller->getTitle()),
             'function' => $this->function,
         ])->render();
     }
