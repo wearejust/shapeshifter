@@ -68,7 +68,8 @@ $(function () {
             'embeds': {
                 'label': '<span class="fa fa-code"></span>',
                 'placeholder': translations.embedPlaceholder,
-                'styles': null
+                'styles': null,
+                'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + translations.iframelyApiKey
             }
         }
     }).data('MediumEditor', editor);

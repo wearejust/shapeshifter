@@ -11,6 +11,7 @@
         var translations = {
             captionPlaceholder : "{{ trans('shapeshifter::editor.captionPlaceholder') }}",
             embedPlaceholder   : "{{ trans('shapeshifter::editor.embedPlaceholder') }}",
+            iframelyApiKey: ''
         };
     </script>
 
