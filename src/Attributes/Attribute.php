@@ -104,12 +104,13 @@ abstract class Attribute
     protected function view(Model $model)
     {
         $data = get_object_vars($this);
+
         $data = array_add($data, 'label', $this->getLabel($this->name));
         $data = array_add($data, 'model', $model);
 
-        $attribute = (new ReflectionClass($this))->getShortName();
+        $attribute = (new ReflectionClass($this));
 
-        return View::make('shapeshifter::attributes.' . $attribute, $data)->render();
+        return View::make('shapeshifter::attributes.' . $attribute->getShortName(), $data)->render();
     }
 
     /**
