@@ -52,11 +52,13 @@ $(function() {
 		});
 	});
 
-	$('input.datepicker').datepicker({
-		dateFormat: "dd-mm-yy"
+	flatpickr('input.datepicker', {
+		dateFormat: 'd-m-Y',
+		enableTime: false,
+		timeFormat: "H:i",
+		time_24hr: true
 	});
 
-	$('input.datetimepicker').datetimepicker();
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();

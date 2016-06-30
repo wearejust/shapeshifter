@@ -25,6 +25,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!! Html::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') !!}
 {!! Html::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') !!}
 {!! Html::style("/packages/just/shapeshifter/js/colorbox/colorbox.css")  !!}
+{!! Html::style("/packages/just/shapeshifter/js/flatpickr/flatpickr.dark.min.css")  !!}
 {!! Html::style("//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")  !!}
 @yield('styles')
 </head>
@@ -104,7 +105,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!!  Html::script("/packages/just/shapeshifter/js/tracer.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/includes.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/transforms.js")  !!}
-{!!  Html::script("/packages/just/shapeshifter/js/datetimepicker/jquery.datetimepicker.min.js")  !!}
+{!!  Html::script("/packages/just/shapeshifter/js/flatpickr/flatpickr.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/main.js")  !!}
 
 @yield('scripts')
