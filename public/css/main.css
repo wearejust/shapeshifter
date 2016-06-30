@@ -556,7 +556,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .mini-gallery-add { background-color: #000; }
 
-.mini-gallery-add:after {content: "+"; color: #fff; font-size: 34px; font-weight: bold; position: absolute; left: 50%; top: 50%; margin-left: -10px; margin-top: -23px; }
+.mini-gallery-add:after { content: "+"; color: #fff; font-size: 34px; font-weight: bold; position: absolute; left: 50%; top: 50%; margin-left: -10px; margin-top: -23px; }
 
 .mini-gallery-add-button { opacity: 0; }
 
@@ -749,37 +749,17 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .js .js-placeholder.active .form-label { display: none; }
 
-@-webkit-keyframes login-annimation { from { margin-top: -3em;
-    opacity: 0; }
-  to { margin-top: -3em;
-    opacity: 1; } }
+.login { padding-top: 5em; background-color: #000000; -webkit-animation: login-animation 2s ease forwards; animation: login-animation 2s ease forwards; }
 
-@keyframes login-annimation { from { margin-top: -3em;
-    opacity: 0; }
-  to { margin-top: -3em;
-    opacity: 1; } }
+.login-area { background-color: #000; color: #797979; }
 
-.login { padding-top: 5em; background-color: #000000; -webkit-animation: login-annimation 2s ease forwards; animation: login-annimation 2s ease forwards; /* to hide the checkbox itself */ /* unchecked icon */ /* space between checkbox and label */ /* allow space for check mark */ /* allow space for check mark */ /* space between checkbox and label */ }
+.login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
 
-.login .logo-shapeshifter { margin: 2em auto auto; width: 250px; height: 150px; background-image: url("/packages/just/shapeshifter/css/images/logo_just.svg"); background-size: contain; display: block; }
+.login-area-form .separate { margin: 5px 0; }
 
-.login .login { background-color: #3e3e3e; opacity: 0; }
-
-.login .login-header-area { background-color: #000; padding: 2em 0; }
-
-.login .login-header { text-align: center; color: #fff; margin: 0; text-decoration: underline; text-transform: uppercase; }
-
-.login .login-header:after { content: ""; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAABBCAYAAAHH1ZadAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAARFJREFUeNpi+P//fwEQNwAxA4hmgDJA2AFEMzGgAZoIgKwzgFkJogECiBHsGCQAEqC9OzAEWIDYAVkAIICQAwgloGAY028EPT8UFQAEEHoEgdgBQGyAM8KGZziMKsCeUQ4AsQIUgwFAAGHLOHgzEjom6ASK/TBqwKgBowbQyQCAAMKo4ZHABCD+gFSxYAMbCFUwIEnG0VgYNWDUgFEDRg0YNWDUgKFkAGbPG7VzAavacam5ABBgoPbBeiBDgESLC0GaoQ2PBUD8AMq2J9GchQR7wAQASLMj1LcDEwcDnghGHTDqgFEHjDpg1AGjDhh1wKgDRh0w6oBRB4w6YNQBw8IB76G9XFKwA1o3HQTWk2FOAwDwDbPxu1t1AQAAAABJRU5ErkJggg==); background-repeat: no-repeat; background-position: right center; width: 32px; height: 65px; display: inline-block; vertical-align: -0.375em; margin-left: 0.15em; }
-
-.login .login-area { background-color: #000; color: #797979; }
-
-.login .login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 18px; }
-
-.login .login-area-form .separate { margin: 5px 0; }
+.login { /* to hide the checkbox itself */ /* unchecked icon */ /* space between checkbox and label */ /* allow space for check mark */ /* allow space for check mark */ /* space between checkbox and label */ }
 
 .login input[type="password"], .login input[type="email"] { transition: all 200ms; background-color: #000000; border: none; color: #e4e4e4; border-bottom: 1px solid #797979; }
-
-.login input[type="password"]:autofill, .login input[type="email"]:autofill { background-color: #3e3e3e !important; color: #000 !important; }
 
 .login input[type=checkbox] { display: none; }
 
@@ -797,17 +777,35 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .login input[type="password"]:focus, .login input[type="email"]:focus { border-bottom: 1px solid #e4e4e4; }
 
-.login .forgot-password-action-container { text-align: center; margin: 2.222em 0; }
+.login label[for="remember"] { font-size: 0.875rem; }
 
-.login .remember-me-box { font-size: .8em; margin: 1em 0; clear: both; }
+.forgot-password-action-container { text-align: center; margin: 2.222em 0; }
 
-.login .buttons-group { clear: both; text-align: center; margin-top: 3em; }
+.remember-me-box { font-size: .8em; margin: 1em 0; clear: both; }
 
-.login .buttons-group .btn:first-child { margin-right: 1em; }
+.login-button { background-color: #373737; color: #fff; display: inline-block; font-weight: bold; line-height: 1.2; padding: .75em 1em; text-align: center; text-decoration: none; vertical-align: top; }
 
-.login .btn { background-color: #e4e4e4; color: #3e3e3e; font-weight: 300; text-transform: uppercase; margin-top: 1em; width: 40%; }
+.login-checkbox { margin-bottom: 1.5em; margin-top: 1.5em; margin-left: 1em; }
 
-.login .btn.contrast { background-color: transparent; color: #e4e4e4; border: 1px solid #797979; }
+.login-area { display: table; height: 100%; width: 100%; }
+
+.login-area > .page { display: table-cell; vertical-align: middle; }
+
+.login-heading { max-width: 25.6em; margin: 0 auto; }
+
+.login-heading > h1 { margin: 0; padding: 0; }
+
+.login-area .content-body { background-color: transparent; border: none; padding: 0; }
+
+@-webkit-keyframes login-animation { from { margin-top: -3em;
+    opacity: 0; }
+  to { margin-top: -3em;
+    opacity: 1; } }
+
+@keyframes login-animation { from { margin-top: -3em;
+    opacity: 0; }
+  to { margin-top: -3em;
+    opacity: 1; } }
 
 @media screen and (min-width: 30em) { .main-content { padding-top: 0; }
   .header-bottom { background-color: #f2f2f2; border-bottom: 1px solid #e6e6e6; display: table-caption; padding-top: 3.357em; position: static; width: 100%; }
