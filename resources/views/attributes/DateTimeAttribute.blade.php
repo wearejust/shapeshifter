@@ -5,7 +5,7 @@
     .datepicker .btn {
         border: 1px solid #dadada;
         border-left: none;
-        font-size:1.12em;
+        font-size:1.125em;
         padding: 0.7em 0.8em;
     }
 </style>

@@ -56,7 +56,7 @@ $(function() {
 		dateFormat: 'd-m-Y',
 		enableTime: false,
 		timeFormat: "H:i",
-		time_24hr: true,
+		time_24hr: true
 	});
 
 	$('.embedded-video').videoPreview();
