@@ -556,7 +556,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .mini-gallery-add { background-color: #000; }
 
-.mini-gallery-add:after {content: "+"; color: #fff; font-size: 34px; font-weight: bold; position: absolute; left: 50%; top: 50%; margin-left: -10px; margin-top: -23px; }
+.mini-gallery-add:after { content: "+"; color: #fff; font-size: 34px; font-weight: bold; position: absolute; left: 50%; top: 50%; margin-left: -10px; margin-top: -23px; }
 
 .mini-gallery-add-button { opacity: 0; }
 
