@@ -1,4 +1,4 @@
-<label class="form-group js-multiplefileattribute" data-storage-dir="{{ $relativeStorageDir }}" data-max-width="{{ $maxWidth }}" data-max-height="{{ $maxHeight }}" data-max-size="{{ $maxSize }}">
+<label class="form-group js-multiplefileattribute" data-storage-dir="{{ $relativeStorageDir }}" data-max-width="{{ $maxWidth }}" data-max-height="{{ $maxHeight }}" data-name="{{ $name }}" data-max-size="{{ $maxSize }}">
     <span class="form-group-content">
         <span class="form-label">
             {{ $label }}
