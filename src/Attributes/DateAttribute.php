@@ -20,7 +20,7 @@ class DateAttribute extends Attribute implements iAttributeInterface
         try {
             $date = new DateTime($model->{$this->name});
 
-            return $date->format('d-m-Y');
+            return $date->format('Y-m-d');
         } catch (Exception $e) {
             return '';
         }

@@ -1,16 +1,37 @@
-<label class="form-group js-placeholder" for="{{$name}}">
+<style>
+    .datepicker input {
+        width: 40%;
+    }
+    .datepicker .btn {
+        border: 1px solid #dadada;
+        border-left: none;
+        font-size:1.14em;
+        padding: 0.7em 0.8em;
+    }
+</style>
+
+<div class="form-group" for="{{$name}}">
     <span class="form-group-content">
-        <span class="form-label">
+        <label for="" class="form-label">
             {{ $label }}
-        </span>
+        </label>
         <span class="form-field">
-            <span class="form-control form-field-short">
-                <span class="module-1">
-                    {!! Form::text($name, null, array('class' => 'form-field-content datepicker' . ($required?' js-required':''), 'id' => $name, 'pattern' => '(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))-(?:(?:0[1-9]|1[0-2])-(?:19|20)[0-9]{2}', /*'placeholder' => 'dd-mm-jjjj', */'autocorrect' => 'off')) !!}
-                </span>
-                <span class="form-group-highlight"></span>
-            </span>
-            @include('shapeshifter::layouts.helptext')
+
+            <p class="datepicker input-group" data-wrap="true" data-clickOpens="false">
+
+                <input placeholder="{{ date('d-m-Y') }}"
+                       maxlength="0"
+                       value="{{ $model->{$name} }}"
+                       name="{{ $name }}"
+                       class="{{ ($required ? ' js-required':'') }}"
+                       id="{{ $name }}"
+                       autocorrect="off"
+                       data-input><!--
+                --><a class="btn" data-toggle><i class="fa fa-calendar"></i></a><!--
+                --><a class="btn" data-clear><i class="fa fa-close"></i> </a>
+
+            </p>
+
         </span>
     </span>
-</label>
+</div>
