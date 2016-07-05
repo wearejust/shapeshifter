@@ -18,7 +18,8 @@
 .item { float: left; }
 .item-alt { float: right; }
 .item-start { clear: both; }
-.fill { box-sizing: border-box; bottom: 0; height: 100%; left: 0; margin: 0; padding: 0; position: absolute; right: 0; top: 0; width: 100%; }
+.accent { font-weight: bold; }
+.fill { bottom: 0; height: 100%; left: 0; margin: 0; padding: 0; position: absolute; right: 0; top: 0; width: 100%; }
 .number::-webkit-outer-spin-button, .number::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .video { background-color: #000; display: block; padding-bottom: 56.25%; position: relative; }
 .video iframe, .video object, .video embed { height: 100%; left: 0; margin: 0; position: absolute; top: 0; width: 100%; }

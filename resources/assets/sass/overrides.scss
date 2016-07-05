@@ -1,0 +1,17 @@
+//confirmation dialog
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br,
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl,
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr,
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { border-radius: 0!important; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: #900; border-color: #900; color: #ffffff; font-weight: bold; }
+.ui-state-default:hover { background-color: #700000; border-color: #700000;}
+.ui-button.btn-cancel, .ui-button.btn-cancel:hover, .ui-button.btn-cancel:focus { background: #e6e6e6; border-color: #e6e6e6; color: #222; }
+.ui-dialog { padding: 4em; }
+.ui-widget-content { margin: 2em 0 0; }
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { margin: 0; margin-left: -1.1em; }
+.ui-dialog-titlebar-close, .ui-icon-closethick { background-color: transparent !important; color: #222; }
+.ui-dialog .ui-dialog-titlebar-close { border: none; left: calc(100% - 17px); bottom: calc(100% - 17px); }
+.ui-icon-closethick { font-weight: normal; padding: 0.35em; padding-top: 0; }
+.ui-icon-closethick:before { content: "\00D7"; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { opacity: 0.6; }
+.ui-dialog { box-sizing: content-box; }
