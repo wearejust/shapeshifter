@@ -1,13 +1,17 @@
+.login { padding-top: 5em; background-color: #000000; animation: login-animation 2s ease forwards; }
+.login-area { background-color: #000; color: $muted-color; }
+.login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
+.login-area-form .separate { margin: 5px 0; }
 
-.login{
+.login {
   input[type="password"], input[type="email"] { transition: all 200ms; background-color: #000000; border: none; color: $light-color; border-bottom: 1px solid $muted-color; }
-  input[type=checkbox] { display: none; }
+  input[type=checkbox] { display:none; } /* to hide the checkbox itself */
   input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; }
-  input[type=checkbox] + label:before { content: "\f10c"; } 
-  input[type=checkbox] + label:before { margin-right: 1em; transition: all 300ms; } 
-  input[type=checkbox]:checked + label:before { content: "\f05d"; letter-spacing: 10px; color:#fff; }
-  input[type=checkbox]:checked + label { color:#fff; } 
-  input[type=checkbox]:checked + label:before { margin-right: 1.2em; transition: all 300ms; } 
+  input[type=checkbox] + label:before { content: "\f10c"; } /* unchecked icon */
+  input[type=checkbox] + label:before { margin-right: 1em; transition: all 300ms; } /* space between checkbox and label */
+  input[type=checkbox]:checked + label:before { content: "\f05d"; letter-spacing: 10px; color:#fff; } /* allow space for check mark */
+  input[type=checkbox]:checked + label { color:#fff; } /* allow space for check mark */
+  input[type=checkbox]:checked + label:before { margin-right: 1.2em; transition: all 300ms; } /* space between checkbox and label */
   input[type="password"]:focus, input[type="email"]:focus { border-bottom: 1px solid $light-color; }
   label[for="remember"] { font-size: 0.875rem; }
 }
@@ -16,13 +20,13 @@
 
 .login-button { background-color: #373737; color: #fff; display: inline-block; font-weight: bold; line-height: 1.2; padding: .75em 1em; text-align: center; text-decoration: none; vertical-align: top; }
 .login-checkbox { margin-bottom: 1.5em; margin-top: 1.5em; margin-left: 1em; }
-.login-area { display: table; height: 100%; width: 100%; }
+.login-area { display: table; height: 100vh; width: 100%; }
 .login-area > .page { display: table-cell; vertical-align: middle; }
 .login-heading { max-width: 25.6em; margin: 0 auto; }
 .login-heading > h1 { margin: 0; padding: 0; }
 .login-area .content-body { background-color: transparent; border: none; padding: 0; }
 
-@keyframes login-annimation {
+@keyframes login-animation {
   from {
     margin-top: -3em;
     opacity: 0;

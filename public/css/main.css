@@ -754,6 +754,16 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   .js .js-placeholder.focus .form-label { color: #666; }
   .js .js-placeholder.active .form-label { display: none; } }
 
+.login { padding-top: 5em; background-color: #000000; -webkit-animation: login-animation 2s ease forwards; animation: login-animation 2s ease forwards; }
+
+.login-area { background-color: #000; color: #797979; }
+
+.login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
+
+.login-area-form .separate { margin: 5px 0; }
+
+.login { /* to hide the checkbox itself */ /* unchecked icon */ /* space between checkbox and label */ /* allow space for check mark */ /* allow space for check mark */ /* space between checkbox and label */ }
+
 .login input[type="password"], .login input[type="email"] { transition: all 200ms; background-color: #000000; border: none; color: #e4e4e4; border-bottom: 1px solid #797979; }
 
 .login input[type=checkbox] { display: none; }
@@ -782,7 +792,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .login-checkbox { margin-bottom: 1.5em; margin-top: 1.5em; margin-left: 1em; }
 
-.login-area { display: table; height: 100%; width: 100%; }
+.login-area { display: table; height: 100vh; width: 100%; }
 
 .login-area > .page { display: table-cell; vertical-align: middle; }
 
@@ -792,12 +802,12 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .login-area .content-body { background-color: transparent; border: none; padding: 0; }
 
-@-webkit-keyframes login-annimation { from { margin-top: -3em;
+@-webkit-keyframes login-animation { from { margin-top: -3em;
     opacity: 0; }
   to { margin-top: -3em;
     opacity: 1; } }
 
-@keyframes login-annimation { from { margin-top: -3em;
+@keyframes login-animation { from { margin-top: -3em;
     opacity: 0; }
   to { margin-top: -3em;
     opacity: 1; } }
