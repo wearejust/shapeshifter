@@ -14,10 +14,12 @@
 
 .ui-dialog-titlebar-close, .ui-icon-closethick { background-color: transparent !important; color: #222; }
 
-.ui-dialog .ui-dialog-titlebar-close { border: none; left: calc(100% - 69px); bottom: calc(100% - 65px); }
+.ui-dialog .ui-dialog-titlebar-close { border: none; left: calc(100% - 17px); bottom: calc(100% - 17px); }
 
 .ui-icon-closethick { font-weight: normal; padding: 0.35em; padding-top: 0; }
 
 .ui-icon-closethick:before { content: "\00D7"; }
 
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { opacity: 0.6; }
+
+.ui-dialog { box-sizing: content-box; }

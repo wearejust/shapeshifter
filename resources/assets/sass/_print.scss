@@ -1,0 +1,13 @@
+@media print {
+    * { background: transparent !important; box-shadow: none !important; color: #000 !important; text-shadow: none !important; }
+	aside, audio, button, canvas, embed, footer, form, header, menu, nav, object, video, .no-print, #menu { display: none; }
+	a[href]:after { content: " (" attr(href) ") "; font-size: 90%; }
+	a[href^="/"]:after { content: " (http://" attr(href) ") "; }
+	abbr:after { content: " (" attr(title) ")"; }
+	thead { display: table-header-group; }
+	tr, img, pre, blockquote { page-break-inside: avoid; }
+	img { max-width: 100% !important; }
+	h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+	h2, h3, p { orphans: 3; widows: 3; }
+	@page { margin: 0.5cm; }
+}

@@ -52,7 +52,7 @@ $(function() {
 		});
 	});
 
-	flatpickr('input.datepicker', {
+	flatpickr('.datepicker', {
 		dateFormat: 'd-m-Y',
 		enableTime: false,
 		timeFormat: "H:i",

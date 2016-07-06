@@ -5,10 +5,13 @@
         </span>
         <span class="form-field">
             <span class="form-control form-field-medium">
-            	{!! Form::password($name, array('class' => 'form-field-content' . ($required?' js-required':''), 'id' => $name)) !!}
+                <span class="module-1">
+            	   {!! Form::password($name, array('class' => 'form-field-content' . ($required?' js-required':''), 'id' => $name)) !!}
+                </span>
             	<span class="form-group-highlight"></span>
             </span>
             @include('shapeshifter::layouts.helptext')
         </span>
     </span>
 </label>
+
