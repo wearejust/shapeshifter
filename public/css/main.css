@@ -506,6 +506,10 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .sortable-placeholder { outline: 1px dashed #222; }
 
+.datepicker input { width: 40%; }
+
+.datepicker .btn { border: 1px solid #dadada; border-left: none; font-size: 1.14em; padding: 0.7em 0.8em; }
+
 .media-wrapper { display: block; }
 
 .media-wrapper-content { display: block; padding-bottom: 100%; position: relative; }

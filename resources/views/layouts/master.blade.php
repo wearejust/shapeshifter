@@ -38,13 +38,11 @@ document.documentElement.className=TOUCH?"js touch":"js";
 <div class="content-wrapper">
     <div class="main-content" id="top">
         <div class="page">
-            <div class="content">
-                <div class="content-body">
-                    @yield('content')
-                </div>
-                <div id="dialog-confirm" style="display: none;">
-                    <p>{{ __('dialog.remove') }}</p>
-                </div>
+            <div class="content-body">
+                @yield('content')
+            </div>
+            <div id="dialog-confirm" style="display: none;">
+                <p>{{ __('dialog.remove') }}</p>
             </div>
         </div>
     </div>

@@ -17,9 +17,9 @@
 .ui-dialog { box-sizing: content-box; }
 
 //flatpickr
-.flatpickr-calendar { border-radius: 0; background: #fff; border-color: #999; }
-.flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.today:hover { background-color: #999; border-color: #999; }
+.flatpickr-calendar { border-radius: 0; background: #fff; border-color: #dadada; }
+.flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.today:hover { background-color: #dadada; border-color: #dadada; }
 .flatpickr-day:hover { background-color: #ddd; border-color: #ddd; }
 .flatpickr-day.today { border-color: #999; }
 .flatpickr-month, .flatpickr-weekdays span, .flatpickr-day, .flatpickr-current-month, .flatpickr-current-month .cur_month { color: #222; }
-.flatpickr-day.disabled, .flatpickr-day.disabled:hover { color: #999; }
+.flatpickr-day.disabled, .flatpickr-day.disabled:hover, .flatpickr-next-month:hover, .flatpickr-prev-month:hover { color: #999; }
