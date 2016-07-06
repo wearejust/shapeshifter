@@ -25,20 +25,11 @@ class Form
      */
     private $sections;
 
-    /**
-     * @var string
-     */
-    private $mode;
-
-    /**
-     * @param string $mode
-     */
-    public function __construct($mode)
+    public function __construct()
     {
         $this->attributes = new Collection();
         $this->tabs       = new Collection();
         $this->sections   = new Collection();
-        $this->mode       = $mode;
     }
 
     /**
@@ -46,10 +37,6 @@ class Form
      */
     public function add(Attribute $attribute)
     {
-        if ($this->mode === 'create' && $attribute->hasFlag('hide_add')) {
-            return;
-        }
-
         $this->attributes->push($attribute);
     }
 

@@ -30,9 +30,9 @@ class MenuService
      */
     public function __construct(Application $app, Collection $collection, Module $modules)
     {
-        $this->app        = $app;
+        $this->app = $app;
         $this->collection = $collection;
-        $this->modules    = $modules;
+        $this->modules = $modules;
     }
 
     /**
@@ -50,7 +50,7 @@ class MenuService
         } else {
             foreach ($this->modules->getOrdered() as $module) {
                 $attributes = $module->json()->getAttributes();
-                $item       = $this->parseItem($attributes);
+                $item = $this->parseItem($attributes);
                 $menu->push($item);
             }
         }
@@ -68,15 +68,15 @@ class MenuService
         $itemActive = $this->app['router']->is($item['route']);
 
         $children = array_get($item, 'children', []);
-        $url      = count($children) ? '#' : $this->getFullRoute($item);
+        $url = count($children) ? '#' : $this->getFullRoute($item);
 
         $children = array_map(function ($menuItem) use (&$itemActive) {
 
-            $url        = $this->getFullRoute($menuItem);
-            $name       = array_get($menuItem, 'name');
+            $url = $this->getFullRoute($menuItem);
+            $name = array_get($menuItem, 'name');
 
             $active = false;
-            if (! $itemActive && str_is($url . '*', '/' . $this->app['request']->path())) {
+            if (!$itemActive && str_is($url.'*', '/'.$this->app['request']->path())) {
                 $itemActive = true;
                 $active = true;
             }
@@ -90,7 +90,7 @@ class MenuService
             'name'     => $item['name'],
             'url'      => $url,
             'icon'     => $item['icon'],
-            'children' => $children
+            'children' => $children,
         ];
     }
 

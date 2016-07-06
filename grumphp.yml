@@ -1,0 +1,20 @@
+parameters:
+    bin_dir: "./bin"
+    stop_on_failure: true
+    tasks:
+        composer: ~
+        git_blacklist:
+            keywords:
+                - "dd("
+                - "die("
+                - "var_dump("
+                - "exit;"
+        git_commit_message:
+            matchers:
+                - /(Feature|Hotfix|Chore|Bugfix)\:\s*/
+        gulp: ~
+        jsonlint: ~
+        php_cs_auto_fixer: ~
+        securitychecker: ~
+    extensions:
+        - Wearejust\GrumPHPExtra\Extension\Loader

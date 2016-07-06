@@ -20,7 +20,7 @@ return [
     | The name of default dashboard URI.
     |
     */
-    'home' => '/admin/example',
+    'home' => '/admin/user',
 
     /*
     |--------------------------------------------------------------------------

@@ -71,7 +71,7 @@
             </div>
         {!! Form::close() !!}
 
-        @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
+        @if ($currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">

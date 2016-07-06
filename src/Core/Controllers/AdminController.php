@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Just\Shapeshifter\Exceptions;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
+use Just\Shapeshifter\ShapeshifterServiceProvider;
 use Notification;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -20,13 +21,6 @@ abstract class AdminController extends Controller
      * @var Repository
      */
     private $repository;
-
-    /**
-     * The mode of the current action (create, edit)
-     *
-     * @var string
-     */
-    protected $mode;
 
     /**
      * Disable some actions in the node (drag, sort, create, delete)
@@ -72,14 +66,14 @@ abstract class AdminController extends Controller
     /**
      * @var string
      */
-    private $viewNamespace = 'shapeshifter';
+    private $viewNamespace = ShapeshifterServiceProvider::PACKAGE_NAMESPACE;
 
     /**
      * AdminController constructor.
      */
     public function __construct()
     {
-        $this->formModifier = new Form($this->mode);
+        $this->formModifier = new Form();
         $this->repository = new Repository($this->formModifier, new $this->model);
 
         $this->configureFields($this->formModifier);
@@ -94,6 +88,15 @@ abstract class AdminController extends Controller
      * @return Form
      */
     abstract protected function configureFields(Form $modifier);
+
+    /**
+     * Build the query used to get an collection of items to use in the
+     * list (table) of items.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     abstract protected function indexQuery(Builder $query);
 
     /**
@@ -103,13 +106,12 @@ abstract class AdminController extends Controller
      */
     public function index()
     {
-        $this->mode  = 'index';
 
         return $this->setupView('index', [
             'records' => $this->indexQuery($this->repository->getNewQuery()),
-            'title' => 'dfgdfgasdfghjkl',
-            'ids' => func_get_args(),
-            'model' => $this->repository->getNew()
+            'title'   => 'dfgdfgasdfghjkl',
+            'ids'     => func_get_args(),
+            'model'   => $this->repository->getNew(),
         ]);
     }
 
@@ -118,12 +120,10 @@ abstract class AdminController extends Controller
      */
     public function create()
     {
-        $this->mode  = 'create';
-
-        return $this->setupView('form', [
+        return $this->setupView('form.create', [
             'title' => 'dfgdsdfdsffgasdfghjkl',
-            'ids' => func_get_args(),
-            'model' => $this->repository->getNew()
+            'ids'   => func_get_args(),
+            'model' => $this->repository->getNew(),
         ]);
     }
 
@@ -132,14 +132,12 @@ abstract class AdminController extends Controller
      */
     public function edit()
     {
-        $this->mode  = 'edit';
-
         $ids = func_get_args();
 
-        return $this->setupView('form', [
-            'ids' => $ids,
+        return $this->setupView('form.edit', [
+            'ids'   => $ids,
             'title' => 'gjgjghjfghfhjgk',
-            'model' => $this->repository->findById(last($ids))
+            'model' => $this->repository->findById(last($ids)),
         ]);
     }
 
@@ -148,15 +146,15 @@ abstract class AdminController extends Controller
      */
     public function store()
     {
-        $this->mode = 'store';
-
         try {
             $model = $this->repository->store($this->rules);
-        }catch (Exceptions\ValidationException $e) {
+        } catch (Exceptions\ValidationException $e) {
             $this->addErrorsToFlash($e->getErrors()->all());
+
             return redirect()->back()->withInput();
-        }catch (QueryException $e) {
+        } catch (QueryException $e) {
             $this->addErrorsToFlash($e->getMessage());
+
             return redirect()->back()->withInput();
         }
 
@@ -170,18 +168,18 @@ abstract class AdminController extends Controller
      */
     public function update()
     {
-        $this->mode  = 'update';
         $ids = func_get_args();
-
         $model = $this->repository->findById(last($ids));
 
         try {
             $model = $this->repository->update($model, $this->rules);
-        }catch (Exceptions\ValidationException $e) {
+        } catch (Exceptions\ValidationException $e) {
             $this->addErrorsToFlash($e->getErrors()->all());
+
             return redirect()->back()->withInput();
-        }catch (QueryException $e) {
+        } catch (QueryException $e) {
             $this->addErrorsToFlash($e->getMessage());
+
             return redirect()->back()->withInput();
         }
 
@@ -196,8 +194,6 @@ abstract class AdminController extends Controller
     public function destroy()
     {
         $ids = func_get_args();
-
-        $this->mode  = 'destroy';
         $model = $this->repository->findById(last($ids));
 
         if ($this->repository->delete($model)) {
@@ -228,9 +224,8 @@ abstract class AdminController extends Controller
             'disabledActions'      => $this->disabledActions,
             'disableDeleting'      => $this->disableDeleting,
             'disableEditing'       => $this->disableEditing,
-            'mode'                 => $this->mode,
             'parent'               => $this->parent,
-            'routes'               => $this->getCurrentRouteNames()
+            'routes'               => $this->getCurrentRouteNames(),
         ]));
     }
 
@@ -239,16 +234,18 @@ abstract class AdminController extends Controller
      */
     private function getCurrentRouteNames()
     {
-        $verbs   = ['update', 'edit', 'index', 'destroy', 'create', 'store'];
-        $regex   = sprintf('/\.(%s)/', implode('|', $verbs));
+        $verbs = ['update', 'edit', 'index', 'destroy', 'create', 'store'];
+        $regex = sprintf('/\.(%s)/', implode('|', $verbs));
         $current = preg_replace($regex, '', $this->getRouter()->currentRouteName());
 
         return array_map(function ($item) use ($current) {
-            return $current . '.' . $item;
+            return $current.'.'.$item;
         }, array_combine($verbs, $verbs));
     }
 
     /**
+     * @param null $route
+     *
      * @return string
      */
     private function getRedirectRoute($route = null)
@@ -274,6 +271,7 @@ abstract class AdminController extends Controller
     {
         array_map(function ($item) {
             Notification::error($item);
-        }, (array) $e);
+        }, (array)$e);
     }
+
 }

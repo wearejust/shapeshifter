@@ -16,6 +16,7 @@ use Krucas\Notification\NotificationServiceProvider;
 
 class ShapeshifterServiceProvider extends ServiceProvider
 {
+    const PACKAGE_NAMESPACE = 'shapeshifter';
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -35,9 +36,9 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'shapeshifter');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'shapeshifter');
-        $this->mergeConfigFrom(__DIR__ . '/../resources/config/shapeshifter.php', 'shapeshifter');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', self::PACKAGE_NAMESPACE);
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', self::PACKAGE_NAMESPACE);
+        $this->mergeConfigFrom(__DIR__ . '/../resources/config/shapeshifter.php', self::PACKAGE_NAMESPACE);
 
         $this->publishes(
             [
@@ -76,7 +77,7 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['shapeshifter'];
+        return [self::PACKAGE_NAMESPACE];
     }
 
     /**
