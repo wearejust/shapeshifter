@@ -32,3 +32,11 @@ if (! function_exists('getAction')) {
         return $class . '@' . $method;
     }
 }
+
+function formatBytes($size, $precision = 2) {
+    $base = log($size, 1024);
+    $suffix = ['', 'K', 'M', 'G', 'T'][floor($base)];
+    $size = round(pow(1024, $base - floor($base)), $precision);
+    if ($size >= 100) $size = round($size);
+    return $size . $suffix . 'B';
+}

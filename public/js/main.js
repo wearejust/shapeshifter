@@ -8,6 +8,7 @@ $(function() {
 
 	Menu = new Menu();
 	Required = new Required();
+	ImageSizeChecker = new ImageSizeChecker();
 
     $('label.js-placeholder').placeholderText();
 
@@ -51,17 +52,20 @@ $(function() {
 		});
 	});
 
-	$('input.datepicker').datepicker({
-		dateFormat: "dd-mm-yy"
+	flatpickr('.datepicker', {
+		dateFormat: 'd-m-Y',
+		enableTime: false,
+		timeFormat: "H:i",
+		time_24hr: true
 	});
 
-	$('input.datetimepicker').datetimepicker();
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
 	$('.js-image-delete-dialog').removeImageDialog();
 
-	$('.js-multiplefileattribute').multiplefileattribute();
+    $('.js-simplefileattribute').simplefileattribute();
+    $('.js-multiplefileattribute').multiplefileattribute();
 
 
 	$('.form-group-ckeditor').on('click', function(e) {
@@ -126,6 +130,62 @@ function alertShow(message) {
             });
         });
     });
+}
+
+
+
+// -----------------------------------------------------------
+// IMAGE SIZE CHECKER
+// -----------------------------------------------------------
+var ImageSizeChecker = function() {
+    this.loader = new Image();
+    this.loader.onload = this.loaded.bind(this);
+    this.url = window.URL || window.webkitURL;
+}
+
+ImageSizeChecker.prototype.validate = function(images, options, callback) {
+    this.options = options;
+    this.callback = callback;
+    this.errors = [];
+    this.images = [];
+    for (var i=0; i<images.length; i++) {
+        this.images.push(images[i]);
+    }
+    this.check();
+}
+
+ImageSizeChecker.prototype.check = function() {
+    if (this.images.length) {
+        this.image = this.images.shift();
+        if (this.options.size && this.image.size > this.options.size) {
+            var base = Math.log(this.image.size) / Math.log(1024);
+            var suffix = ['', 'K', 'M', 'G', 'T'][Math.floor(base)];
+            var size = (Math.round(Math.pow(1024, base - Math.floor(base)) * 100) / 100);
+            if (size >= 100) size = Math.round(size);
+            this.errors.push(this.image.name + ' is too large (' + size + suffix + 'B)');
+        }
+
+        if (this.options.width || this.options.height) {
+            this.loader.src = this.url.createObjectURL(this.image);
+        } else {
+            this.check();
+        }
+
+    } else {
+        if (this.errors.length) {
+            alert(this.errors.join("\n"));
+        }
+        this.callback(!this.errors.length);
+    }
+}
+
+ImageSizeChecker.prototype.loaded = function(e) {
+    if (this.options.width && e.currentTarget.width > this.options.width) {
+        this.errors.push(this.image.name + ' is too wide (' + e.currentTarget.width + 'px)');
+    } else if (this.options.height && e.currentTarget.height > this.options.height) {
+        this.errors.push(this.image.name + ' is too high (' + e.currentTarget.height + 'px)');
+    }
+    this.check();
 }
 
 
@@ -257,6 +317,7 @@ Menu.prototype.dragStop = function(e) {
 		}
 	});
 }
+
 
 
 // -----------------------------------------------------------
@@ -417,9 +478,46 @@ $.fn.accordion = function(settings) {
 }
 
 
+// -----------------------------------------------------------
+// SIMPLE FILE ATTRIBUTE
+// -----------------------------------------------------------
+$.fn.simplefileattribute = function() {
+    return $(this).each(function(index, item) {
+        item = $(item);
+        if (!item.data('simplefileattribute')) {
+            item.data('simplefileattribute', new SimpleFileAttribute(item));
+        }
+    });
+}
+
+var SimpleFileAttribute = function(element) {
+    if (!element.length) return;
+    this.element = element;
+
+    this.validation = {
+        'width': parseInt(this.element.attr('data-max-width')),
+        'height': parseInt(this.element.attr('data-max-height')),
+        'size': parseInt(this.element.attr('data-max-size'))
+    };
+
+    this.input = this.element.find('input');
+    this.input.on('change', this.validate.bind(this));
+}
+
+SimpleFileAttribute.prototype.validate = function(e) {
+    ImageSizeChecker.validate(e.currentTarget.files, this.validation, function(passed) {
+        if (!passed) {
+            this.input.wrap('<form></form>');
+            this.input.parent().get(0).reset();
+            this.input.unwrap();
+        }
+    }.bind(this));
+}
+
+
 
 // -----------------------------------------------------------
-// FILE ATTRIBUTE
+// MULTIPLE FILE ATTRIBUTE
 // -----------------------------------------------------------
 var MultipleFileAttributes = function() {
 	this.items = [];
@@ -462,6 +560,14 @@ var MultipleFileAttribute = function(element) {
 	this.element = element;
 	this.id = MultipleFileAttributes.add(this);
 
+	this.storageDir = this.element.attr('data-storage-dir');
+	this.name = this.element.attr('data-name');
+    this.uploadValidation = {
+        'width': parseInt(this.element.attr('data-max-width')),
+        'height': parseInt(this.element.attr('data-max-height')),
+        'size': parseInt(this.element.attr('data-max-size'))
+    };
+
 	var input = this.element.find('.mini-gallery-add-button').on('change', this.upload.bind(this));
 	input.closest('.mini-gallery-list-item').addClass('mini-gallery-list-item-input').removeClass('hide');
 
@@ -475,7 +581,6 @@ var MultipleFileAttribute = function(element) {
 
     this.preview = this.element.find('.js-multiplefileattribute-preview');
     this.previewPlaceholder = this.element.find('.js-multiplefileattribute-preview-placeholder');
-    this.storageDir = this.preview.attr('data-storage-dir');
 
     this.clearButton = this.element.find('.btn-remove');
     this.clearButton.on('click', this.clear.bind(this));
@@ -517,17 +622,27 @@ MultipleFileAttribute.prototype.drag = function(e) {
 
 MultipleFileAttribute.prototype.upload = function(e) {
 	if (!this.loading && e.currentTarget.files) {
+        this.loading = true;
 		this.drag();
-		MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files.length)
-		this.input = $(e.currentTarget);
-		this.input.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
-		this.input.execute(this, function() {
-			this.input.parent().ajaxSubmit({
-				'headers': window.AJAX_HEADERS,
-				'data': { 'storagedir': this.storageDir },
-				'success': this.uploaded.bind(this)
-			});
-		});
+        ImageSizeChecker.validate(e.currentTarget.files, this.uploadValidation, function(passed) {
+            if (passed) {
+                MultipleFileAttributes.loaders(this.storageDir, e.currentTarget.files.length);
+                this.uploadInput = $(e.currentTarget);
+                this.uploadInput.wrap('<form class="js-multiplefileattribute-form" action="/admin/ajax/upload" method="POST" multipart/form-data></form>');
+                this.uploadInput.execute(this, function() {
+                    this.uploadInput.parent().ajaxSubmit({
+                        'headers': window.AJAX_HEADERS,
+                        'data': { 'storagedir': this.storageDir },
+                        'success': this.uploaded.bind(this)
+                    });
+                });
+
+            } else {
+                setTimeout(function() {
+                    this.loading = false;
+                }.bind(this));
+            }
+        }.bind(this));
 	}
 }
 
@@ -548,7 +663,7 @@ MultipleFileAttribute.prototype.loaders = function(amount) {
 }
 
 MultipleFileAttribute.prototype.uploaded = function(data) {
-	this.input.unwrap();
+    this.uploadInput.unwrap();
 	this.list.find('.mini-gallery-input').prop('checked', false);
 	this.drag();
 
@@ -563,6 +678,7 @@ MultipleFileAttribute.prototype.uploaded = function(data) {
 
 	this.list.execute(this, function() {
 		this.list.find('label.loader').closest('.mini-gallery-list-item').remove();
+        this.list.stop(true).animate({'scrollTop':this.list.children().last().position().top});
 		this.loading = false;
 	});
 }
@@ -594,6 +710,7 @@ MultipleFileAttribute.prototype.clear = function() {
     this.preview.css('background-image', '');
     this.previewPlaceholder.removeClass('hide');
     this.clearButton.addClass('hide');
+    this.element.append('<input type="hidden" name="delete-image[]" value="' + this.name + '">');
 }
 
 

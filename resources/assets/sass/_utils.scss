@@ -4,11 +4,13 @@ $fix-mqH: false !default;
 @mixin respond-min-width($width) {
 	@if $fix-mqW {
 		@if $fix-mqW >= $width {
-			@content;	
+			body:after { content:"#{$width}"; }
+			@content;
 		}
 	}
 	@else {
 		@media screen and (min-width: $width) {
+			body:after { content:"#{$width}"; }
 			@content;
 		}
 	}
@@ -16,7 +18,7 @@ $fix-mqH: false !default;
 @mixin respond-max-width($width) {
 	@if $fix-mqW {
 		@if $fix-mqW <= $width {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -28,7 +30,7 @@ $fix-mqH: false !default;
 @mixin respond-min-height($height) {
 	@if $fix-mqH {
 		@if $fix-mqH >= $height {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -40,7 +42,7 @@ $fix-mqH: false !default;
 @mixin respond-max-height($height) {
 	@if $fix-mqH {
 		@if $fix-mqH <= $height {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -53,15 +55,17 @@ $fix-mqH: false !default;
 @mixin respond-min-combi($width, $height) {
 	@if $fix-mqW {
 		@if $fix-mqW >= $width {
-			@content;	
+			body:after { content:"#{$width}"; }
+			@content;
 		}
 	} @else if $fix-mqH {
 		@if $fix-mqH >= $height {
-			@content;	
+			@content;
 		}
 	}
 	@else {
 		@media screen and (min-width: $width) and (min-height: $height) {
+			body:after { content:"#{$width}"; }
 			@content;
 		}
 	}
@@ -70,11 +74,11 @@ $fix-mqH: false !default;
 @mixin respond-max-combi($width, $height) {
 	@if $fix-mqW {
 		@if $fix-mqW <= $width {
-			@content;	
+			@content;
 		}
 	} @else if $fix-mqH {
 		@if $fix-mqH <= $height {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -114,6 +118,14 @@ $fix-mqH: false !default;
 	@return $global;
 }
 
+@function rem($pxval) {
+	@if (unitless($pxval)) {
+		$pxval: $pxval * 1px;
+	}
+
+	@return $pxval / 16 * 1em;
+}
+
 @function cols($colcount, $partial: 1) {
 	$total: (percentage(100 / $colcount) / 100) * $partial;
 	@return $total;
@@ -126,88 +138,55 @@ $fix-mqH: false !default;
 	font-size: $sizeValue + rem;
 }
 
-
-
-// http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-
-@function strip-unit($num) {
-  @return $num / ($num * 0 + 1);
-}
-
-@mixin rem-fallback($property, $values...) {
-  $max: length($values);
-  $pxValues: '';
-  $remValues: '';
-
-  @for $i from 1 through $max {
-    $value: strip-unit(nth($values, $i));
-    $pxValues: #{$pxValues + $value*16}px;
-
-    @if $i < $max {
-      $pxValues: #{$pxValues + " "};
-    }
-  } 
-
-  @for $i from 1 through $max {
-    $value: strip-unit(nth($values, $i));
-    $remValues: #{$remValues + $value}rem;
-
-    @if $i < $max {
-      $remValues: #{$remValues + " "};
-    }
-  } 
-  
-  #{$property}: $pxValues; 
-  #{$property}: $remValues; 
-}
-
-
-
-//============================================================
-//
-// arrow
-//
-// @param width           :  px, em
-// @param height          :  px, em
-// @param direction       :  up, down, left, right
-// @param color           :  hex, rgb
-//
-//============================================================
-
 @mixin arrow($width: 20px, $height: 20px, $direction: up, $color: red){
 
-	width: 0; 
-	height: 0;
+  width: 0;
+  height: 0;
 
-	// Right
-	@if $direction == right{
-		border-top: $height/2 solid transparent;
-		border-bottom: $height/2 solid transparent;
-		border-left: $width solid $color;
-	}
-	// Left
-	@if $direction == left{
-		border-top: $height/2 solid transparent;
-		border-bottom: $height/2 solid transparent;
-		border-right: $width solid $color;
-	}
-	// Up
-	@if $direction == up{
-		border-left: $width/2 solid transparent;
-		border-right: $width/2 solid transparent;
-		border-bottom: $height solid $color;
-	}  // Down
-	@if $direction == down{
-		border-left: $width/2 solid transparent;
-		border-right: $width/2 solid transparent;
-		border-top: $height solid $color;
-	}
+  // Right
+  @if $direction == right{
+    border-top: $height/2 solid transparent;
+    border-bottom: $height/2 solid transparent;
+    border-left: $width solid $color;
+}
+  // Left
+  @if $direction == left{
+    border-top: $height/2 solid transparent;
+    border-bottom: $height/2 solid transparent;
+    border-right: $width solid $color;
+}
+  // Up
+  @if $direction == up{
+    border-left: $width/2 solid transparent;
+    border-right: $width/2 solid transparent;
+    border-bottom: $height solid $color;
+}  // Down
+  @if $direction == down{
+    border-left: $width/2 solid transparent;
+    border-right: $width/2 solid transparent;
+    border-top: $height solid $color;
 }
 
-@mixin placeholder($color: #999) {
-	&:-moz-placeholder            { color: $color; } // Firefox 4-18
-	&::-moz-placeholder           { color: $color;   // Firefox 19+
-									opacity: 1; } // See https://github.com/twbs/bootstrap/pull/11526
-	&:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
-	&::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}
+
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+	}
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+	}
+}
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -26,6 +26,27 @@ class FileAttribute extends Attribute implements iAttributeInterface
     protected $relativeStorageDir;
 
     /**
+     * Maximum file width
+     *
+     * @var integer
+     */
+    protected $maxWidth = 1920;
+
+    /**
+     * Maximum file height
+     *
+     * @var integer
+     */
+    protected $maxHeight = 1080;
+
+    /**
+     * Maximum file size
+     *
+     * @var integer
+     */
+    protected $maxSize = 3145728;
+
+    /**
      * @var array relative files in same dir
      */
     protected $relatives = [];
@@ -39,6 +60,13 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     public function __construct($name, $storageDir, $flags = [])
     {
+        foreach (['maxWidth', 'maxHeight', 'maxSize'] as $option) {
+            if (isset($flags[$option])) {
+                $this->{$option} = $flags[$option];
+                unset($flags[$option]);
+            }
+        }
+
         $this->name  = $name;
         $this->flags = $flags;
 
@@ -93,16 +121,17 @@ class FileAttribute extends Attribute implements iAttributeInterface
         $absPath = rtrim($this->absoluteStorageDir, '/') . '/' . $model->{$this->name};
         $relPath = rtrim($this->relativeStorageDir, '/') . '/' . $model->{$this->name};
 
+        if ($this->hasFlag('force')) {
+            return $model->{$this->name};
+        }
+
         if (! is_file($absPath)) {
-            return __('form.file.doesntexist');
+            return $model->{$this->name} ? __('form.file.doesntexist') : '';
         }
 
         if ((bool) getimagesize($absPath)) {
-            return Image::open($absPath)->resize(500, null)->inline();
-        }
-
-        if ($this->hasFlag('force')) {
-            return $model->{$this->name};
+            $src = Image::open($absPath)->resize(null, 100)->inline();
+            return "<img style='height:100px;' src='{$src}'>";
         }
 
         return Html::link($relPath, $model->{$this->name}, ['target' => '_blank']);
@@ -110,7 +139,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
 
     /**
      * Deletes the file
-     * 
+     *
      * @param mixed $file Description.
      *
      * @access private
@@ -119,7 +148,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     private function deleteFile($file)
     {
-        $file = $this->absoluteStorageDir . DIRECTORY_SEPARATOR . $file;
+        $file = $this->absoluteStorageDir . '/' . $file;
 
         if (file_exists($file)) {
             unlink($file);
@@ -197,7 +226,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     protected function getRelativePath($storageDir)
     {
-        return DIRECTORY_SEPARATOR . trim($storageDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return '/' . trim($storageDir, '/') . '/';
     }
 
     /**
@@ -205,6 +234,6 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     protected function getAbsolutePath()
     {
-        return public_path() . DIRECTORY_SEPARATOR . $this->relativeStorageDir;
+        return public_path() . '/' . $this->relativeStorageDir;
     }
 }

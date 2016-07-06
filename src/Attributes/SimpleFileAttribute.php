@@ -2,26 +2,10 @@
 
 namespace Just\Shapeshifter\Attributes;
 
-use Illuminate\Database\Eloquent\Model;
 use Input;
 
 class SimpleFileAttribute extends FileAttribute implements iAttributeInterface
 {
-    /**
-     * getDisplayValue
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
-     * @return mixed Value.
-     */
-    public function getDisplayValue(Model $model)
-    {
-        if ($this->hasFlag('force')) {
-            return $model->{$this->name};
-        }
-
-        return "<a target='_blank' href='" . $this->relativeStorageDir . strip_tags($model->{$this->name}) . "'>" . strip_tags($model->{$this->name})  . '</a>';
-    }
 
     /**
      * Moves the file to an certain location
@@ -55,8 +39,6 @@ class SimpleFileAttribute extends FileAttribute implements iAttributeInterface
                         }
 
                         return;
-
-                        $new_name =  $base_name;
                     }
                 }
                 $filename = $new_name . '_' . $teller;

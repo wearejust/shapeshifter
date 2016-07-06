@@ -28,6 +28,7 @@ return [
     'form.removed'          => 'Item is removed.',
     'form.remove'           => 'Delete',
     'form.updated_at'       => 'Updated',
+    'form.current'          => 'Current',
 
     'dialog.remove'       => 'Are you sure you want to delete this file?',
     'dialog.remove-image' => 'Are you sure you want to delete this image?',
