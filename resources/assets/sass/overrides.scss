@@ -15,3 +15,11 @@
 .ui-icon-closethick:before { content: "\00D7"; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { opacity: 0.6; }
 .ui-dialog { box-sizing: content-box; }
+
+//flatpickr
+.flatpickr-calendar { border-radius: 0; background: #fff; border-color: #999; }
+.flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.today:hover { background-color: #999; border-color: #999; }
+.flatpickr-day:hover { background-color: #ddd; border-color: #ddd; }
+.flatpickr-day.today { border-color: #999; }
+.flatpickr-month, .flatpickr-weekdays span, .flatpickr-day, .flatpickr-current-month, .flatpickr-current-month .cur_month { color: #222; }
+.flatpickr-day.disabled, .flatpickr-day.disabled:hover { color: #999; }
