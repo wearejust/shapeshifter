@@ -1,12 +1,12 @@
-<label class="form-group js-multiplefileattribute" data-storage-dir="{{ $relativeStorageDir }}" data-max-width="{{ $maxWidth }}" data-max-height="{{ $maxHeight }}" data-max-size="{{ $maxSize }}">
+<label class="form-group js-multiplefileattribute" data-storage-dir="{{ $relativeStorageDir }}" data-max-width="{{ $maxWidth }}" data-max-height="{{ $maxHeight }}" data-name="{{ $name }}" data-max-size="{{ $maxSize }}">
     <span class="form-group-content">
         <span class="form-label">
             {{ $label }}
             @include('shapeshifter::layouts.filesizes')
         </span>
         <span class="form-field js-image-container">
-            <span class="form-control" style="display: table; table-layout: fixed; width: 100%;">
-                <span class="" style="display: table-cell; vertical-align: top; width: 50%;">
+            <span class="form-control form-control-table">
+                <span class="form-control-cell">
                     <span class="media-wrapper module-1">
                         <span class="media-wrapper-content">
                             <span class="media-wrapper-content-wrapper media-preview">
@@ -21,7 +21,7 @@
                         </span>
                     </span>
                 </span>
-                <span class="" style="position: relative; display: table-cell; vertical-align: top; width: 50%;">
+                <span class="form-control-cell">
                     <span class="mini-gallery module-2">
                         <fieldset>
                             <ul class="mini-gallery-list">

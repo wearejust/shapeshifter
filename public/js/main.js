@@ -52,11 +52,13 @@ $(function() {
 		});
 	});
 
-	$('input.datepicker').datepicker({
-		dateFormat: "dd-mm-yy"
+	flatpickr('.datepicker', {
+		dateFormat: 'd-m-Y',
+		enableTime: false,
+		timeFormat: "H:i",
+		time_24hr: true
 	});
 
-	$('input.datetimepicker').datetimepicker();
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
@@ -559,6 +561,7 @@ var MultipleFileAttribute = function(element) {
 	this.id = MultipleFileAttributes.add(this);
 
 	this.storageDir = this.element.attr('data-storage-dir');
+	this.name = this.element.attr('data-name');
     this.uploadValidation = {
         'width': parseInt(this.element.attr('data-max-width')),
         'height': parseInt(this.element.attr('data-max-height')),
@@ -707,6 +710,7 @@ MultipleFileAttribute.prototype.clear = function() {
     this.preview.css('background-image', '');
     this.previewPlaceholder.removeClass('hide');
     this.clearButton.addClass('hide');
+    this.element.append('<input type="hidden" name="delete-image[]" value="' + this.name + '">');
 }
 
 

@@ -16,20 +16,19 @@ var model = '{{ addslashes(get_class($model)) }}';
 window.TOUCH=(function(){try{document.createEvent('TouchEvent');return true;}catch(e){return false;}})();
 document.documentElement.className=TOUCH?"js touch":"js";
 </script>
-<!--[if IE]><![endif]-->
 <link href="/apple-touch-icon-precomposed.png" rel="image_src">
 <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
-<!--[if (lte IE 8)&(!IEMobile)]><link href="/packages/just/shapeshifter/css/all-old-ie.css" rel="stylesheet"><![endif]-->
-<!--[if gte IE 9]><!--><link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet"><!--<![endif]-->
+<link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet">
 {!! Html::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') !!}
 {!! Html::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') !!}
 {!! Html::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') !!}
 {!! Html::style("/packages/just/shapeshifter/js/colorbox/colorbox.css")  !!}
+{!! Html::style("/packages/just/shapeshifter/js/flatpickr/flatpickr.dark.min.css")  !!}
 {!! Html::style("//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")  !!}
 @yield('styles')
+<link href="/packages/just/shapeshifter/css/overrides.css" rel="stylesheet">
 </head>
-<!--[if lte IE 8]><body class="{{ ! $currentUser ? 'login ' : '' }}ie8"><![endif]-->
-<!--[if gte IE 9]><!--> <body class="{{ ! $currentUser ? 'login ' : '' }}"><!--<![endif]-->
+<body class="{{ ! $currentUser ? 'login ' : '' }}">
 @if ( ! $currentUser)
     @yield('login')
 @else
@@ -104,7 +103,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!!  Html::script("/packages/just/shapeshifter/js/tracer.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/includes.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/transforms.js")  !!}
-{!!  Html::script("/packages/just/shapeshifter/js/datetimepicker/jquery.datetimepicker.min.js")  !!}
+{!!  Html::script("/packages/just/shapeshifter/js/flatpickr/flatpickr.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/main.js")  !!}
 
 @yield('scripts')
