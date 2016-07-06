@@ -16,7 +16,6 @@ var model = '{{ addslashes(get_class($model)) }}';
 window.TOUCH=(function(){try{document.createEvent('TouchEvent');return true;}catch(e){return false;}})();
 document.documentElement.className=TOUCH?"js touch":"js";
 </script>
-<!--[if IE]><![endif]-->
 <link href="/apple-touch-icon-precomposed.png" rel="image_src">
 <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
 <link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet">
@@ -29,7 +28,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 @yield('styles')
 <link href="/packages/just/shapeshifter/css/overrides.css" rel="stylesheet">
 </head>
-<body class="{{ ! $currentUser ? 'login ' : '' }}"><!--<![endif]-->
+<body class="{{ ! $currentUser ? 'login ' : '' }}">
 @if ( ! $currentUser)
     @yield('login')
 @else
