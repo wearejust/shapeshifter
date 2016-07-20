@@ -4,6 +4,7 @@ namespace Just\Shapeshifter\Relations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Just\Shapeshifter\Core\Controllers\AdminController;
 use Just\Shapeshifter\Exceptions\MethodNotExistException;
 use Just\Shapeshifter\Exceptions\ShapeShifterException;
@@ -25,23 +26,24 @@ class ManyToManyFacebookRelation extends OneToManyRelation
     {
         $routes = Route::getRoutes();
 
-        $this->destination = 'admin.' . $destination . '.index';
+        $this->destination = 'admin.'.$destination.'.index';
         $this->destination = $this->resolveControllerByName($routes);
 
         $this->fromcontroller = $fromController;
 
         if ($current = $this->getCurrentRecordId()) {
-            $repo        = $fromController->getRepo();
+            $repo = $fromController->getRepo();
             $this->model = $repo->findById($current);
 
             if (null == $this->model) {
-                throw new ShapeShifterException(sprintf('Model [%s] with id [%s] doesn\'t exist', get_class($repo->getModel()), $current));
+                throw new ShapeShifterException(sprintf('Model [%s] with id [%s] doesn\'t exist',
+                    get_class($repo->getModel()), $current));
             }
         }
 
         $this->function = $function;
-        $this->name     = $this->destination->getTitle();
-        $this->flags    = array_merge($flags, ['hide_list']);
+        $this->name = $this->destination->getTitle();
+        $this->flags = array_merge($flags, ['hide_list']);
     }
 
     /**
@@ -58,20 +60,29 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $this->checkDestinationModel($model);
 
         $descriptor = $this->destination->getDescriptor();
-        $table      = $this->destination->getRepo()->getModel()->getTable();
-        $results    = $model->{$this->function}()->get([$table . '.id', "{$descriptor} as name"])->toJson();
-        $all        = $this->destination->getRepo()->getModel()->get([$table . '.id', "{$descriptor} as name"])->toJson();
+        $table = $this->destination->getRepo()->getModel()->getTable();
+        $results = $model->{$this->function}()
+            ->select($table.'.id')
+            ->lists('id')
+        ->filter(function($item){
+            return string($item);
+        })->toJson();
 
-        return View::make('shapeshifter::relations.ManyToManyFacebookRelation',  [
+        $all = $this->destination->getRepo()->getModel()
+                                 ->select($table.'.id', "{$descriptor} as name")
+                                 ->get()
+                                 ->toJson();
+
+        return View::make('shapeshifter::relations.ManyToManyFacebookRelation', [
             'results' => $results,
             'all'     => $all,
             'name'    => $this->name,
-            'label'   => translateAttribute($this->name)
+            'label'   => translateAttribute($this->name),
         ])->render();
     }
 
     /**
-     * @param $val
+     * @param      $val
      * @param null $oldValue
      *
      * @return mixed|void
@@ -79,7 +90,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
     public function setAttributeValue($val, $oldValue = null)
     {
         if (is_array($val)) {
-            $val = implode(',',  $val);
+            $val = implode(',', $val);
         }
         $this->value = $val ? explode(',', $val) : [];
     }
@@ -91,6 +102,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      */
     public function getSaveValue(Model $model)
     {
+        $model->{$this->function}()->sync([]);
         $model->{$this->function}()->withTimestamps()->sync($this->value);
     }
 
@@ -102,7 +114,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $segments = (new Collection(Request::segments()))->reverse();
 
         return $segments->first(function ($index, $value) {
-           return is_numeric($value);
+            return is_numeric($value);
         }, false);
     }
 
@@ -113,7 +125,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      */
     protected function checkDestinationModel(Model $model)
     {
-        if (! method_exists($model, $this->function)) {
+        if (!method_exists($model, $this->function)) {
             $modelName = get_class($model);
 
             throw new MethodNotExistException("Relation method [{$this->function}] doest not exist on [{$modelName}] model");
