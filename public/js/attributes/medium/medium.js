@@ -67,9 +67,9 @@ $(function () {
             'images': false,
             'embeds': {
                 'label': '<span class="fa fa-code"></span>',
-                'placeholder': translations.embedPlaceholder,
+                'placeholder': mediumAttribute.translations.embedPlaceholder,
                 'styles': null,
-                'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + translations.iframelyApiKey
+                'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + mediumAttribute.config.iframelyApiKey
             }
         }
     }).data('MediumEditor', editor);
