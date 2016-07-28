@@ -17,16 +17,16 @@ use Krucas\Notification\NotificationServiceProvider;
 class ShapeshifterServiceProvider extends ServiceProvider
 {
     /**
+     * @var bool
+     */
+    private $resources_path = __DIR__.'/../resources/';
+
+    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = false;
-
-    /**
-     * Location of the Providers folder from the current __DIR__
-     */
-    protected $providersPath = '/Providers';
 
     /**
      * Bootstrap the application events.
@@ -35,21 +35,21 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'shapeshifter');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'shapeshifter');
-        $this->mergeConfigFrom(__DIR__ . '/../resources/config/shapeshifter.php', 'shapeshifter');
+        $this->loadViewsFrom($this->resources_path.'views', 'shapeshifter');
+        $this->loadTranslationsFrom($this->resources_path.'lang', 'shapeshifter');
+        $this->mergeConfigFrom($this->resources_path.'config/shapeshifter.php', 'shapeshifter');
 
         $this->publishes(
             [
-                __DIR__ . '/../resources/config/shapeshifter.php' => config_path('shapeshifter.php'),
-                __DIR__ . '/../resources/lang'                    => base_path('resources/lang/vendor/shapeshifter'),
+                __DIR__.'/../resources/config/shapeshifter.php' => config_path('shapeshifter.php'),
+                __DIR__.'/../resources/lang'                    => base_path('resources/lang/vendor/shapeshifter'),
             ],
             'core'
         );
 
         $this->publishes(
             [
-                __DIR__ . '/../public' => public_path('packages/just/shapeshifter'),
+                __DIR__.'/../public' => public_path('packages/just/shapeshifter'),
             ],
             'public'
         );
@@ -86,9 +86,12 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     protected function requireBootstrapFiles()
     {
-        require_once __DIR__ . '/routes.php';
+        require_once __DIR__.'/routes.php';
     }
 
+    /**
+     * Register the Aliases.
+     */
     private function registerAliasses()
     {
         AliasLoader::getInstance()->alias('Form', FormFacade::class);
@@ -97,6 +100,9 @@ class ShapeshifterServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('Notification', Notification::class);
     }
 
+    /**
+     * Registering the dependend ServiceProvider(s).
+     */
     private function registerServiceProviders()
     {
         $this->app->register(HtmlServiceProvider::class);

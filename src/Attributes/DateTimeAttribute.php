@@ -34,8 +34,11 @@ class DateTimeAttribute extends DateAttribute implements iAttributeInterface
      */
     public function getSaveValue(Model $model)
     {
-        $model->{$this->name} = $this->value
-            ? date('d-m-Y H:i:s', strtotime($this->value))
-            : null;
+       if (! $this->value) {
+            $model->{$this->name} = null;
+        } else {
+            $date = new DateTime($this->value);
+            $model->{$this->name} = $date->format('Y-m-d H:i');
+        }
     }
 }
