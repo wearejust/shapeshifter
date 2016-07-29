@@ -1,38 +1,41 @@
-.login { padding-top: 5em; background-color: #000000; animation: login-animation 2s ease forwards; }
-.login-area { background-color: #000; color: $muted-color; }
+.login { padding: 0;  animation: login-animation 1.5s ease forwards; }
+.login-area { color: $muted-color; }
 .login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
 .login-area-form .separate { margin: 5px 0; }
 
 .login {
-  input[type="password"], input[type="email"] { transition: all 200ms; background-color: #000000; border: none; color: $light-color; border-bottom: 1px solid $muted-color; }
-  input[type=checkbox] { display:none; } /* to hide the checkbox itself */
-  input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; }
-  input[type=checkbox] + label:before { content: "\f10c"; } /* unchecked icon */
-  input[type=checkbox] + label:before { margin-right: 1em; transition: all 300ms; } /* space between checkbox and label */
-  input[type=checkbox]:checked + label:before { content: "\f05d"; letter-spacing: 10px; color:#fff; } /* allow space for check mark */
-  input[type=checkbox]:checked + label { color:#fff; } /* allow space for check mark */
-  input[type=checkbox]:checked + label:before { margin-right: 1.2em; transition: all 300ms; } /* space between checkbox and label */
-  input[type="password"]:focus, input[type="email"]:focus { border-bottom: 1px solid $light-color; }
+  input[type="password"], input[type="email"] { transition: 0.3s; background-color: #eee; border: none; color: $light-color; }
+  input[type=checkbox] { opacity: 0; position: absolute; }
+  input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; vertical-align: middle; }
+  input[type=checkbox] + label:before { content: "\f096"; } 
+  input[type=checkbox] + label:before { margin-right: 0.7em; transition: 0.2s; } 
+  input[type=checkbox]:checked + label:before { content: "\f14a"; margin-right: 0.95em; transition: 0.2s; } 
+  input[type=checkbox]:checked + label { } 
+  input[type="password"]:focus, input[type="email"]:focus { color: #000; }
   label[for="remember"] { font-size: 0.875rem; }
 }
 .forgot-password-action-container { text-align: center; margin: 2.222em 0; }
-.remember-me-box { font-size: .8em; margin: 1em 0; clear: both; }
 
 .login-button { background-color: #373737; color: #fff; display: inline-block; font-weight: bold; line-height: 1.2; padding: .75em 1em; text-align: center; text-decoration: none; vertical-align: top; }
 .login-checkbox { margin-bottom: 1.5em; margin-top: 1.5em; margin-left: 1em; }
 .login-area { display: table; height: 100vh; width: 100%; }
 .login-area > .page { display: table-cell; vertical-align: middle; }
 .login-heading { max-width: 25.6em; margin: 0 auto; }
-.login-heading > h1 { margin: 0; padding: 0; }
-.login-area .content-body { background-color: transparent; border: none; padding: 0; }
+.login-heading > h1 { margin: 0; padding: 0; text-transform: uppercase; }
+.login-heading > h1:after { background-image: url('content-icon-alt.png'); content:''; display: inline-block; height: 1em; vertical-align: -0.15em; width: 0.8em; } 
+.login-area .content-body { background-color: transparent; border: none; padding-bottom: 0; padding-top: 0; }
 
 @keyframes login-animation {
-  from {
+  0% {
     margin-top: -3em;
     opacity: 0;
   }
-  to {
+  50% {
     margin-top: -3em;
+    opacity: 0;
+  }
+  100% {
+    margin-top: 0em;
     opacity: 1;
   }
 }

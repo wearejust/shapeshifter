@@ -668,39 +668,31 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   .js .js-placeholder.focus .form-label { color: #666; }
   .js .js-placeholder.active .form-label { display: none; } }
 
-.login { padding-top: 5em; background-color: #000000; -webkit-animation: login-animation 2s ease forwards; animation: login-animation 2s ease forwards; }
+.login { padding: 0; -webkit-animation: login-animation 1.5s ease forwards; animation: login-animation 1.5s ease forwards; }
 
-.login-area { background-color: #000; color: #797979; }
+.login-area { color: #797979; }
 
 .login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
 
 .login-area-form .separate { margin: 5px 0; }
 
-.login { /* to hide the checkbox itself */ /* unchecked icon */ /* space between checkbox and label */ /* allow space for check mark */ /* allow space for check mark */ /* space between checkbox and label */ }
+.login input[type="password"], .login input[type="email"] { transition: 0.3s; background-color: #eee; border: none; color: #e4e4e4; }
 
-.login input[type="password"], .login input[type="email"] { transition: all 200ms; background-color: #000000; border: none; color: #e4e4e4; border-bottom: 1px solid #797979; }
+.login input[type=checkbox] { opacity: 0; position: absolute; }
 
-.login input[type=checkbox] { display: none; }
+.login input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; vertical-align: middle; }
 
-.login input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; }
+.login input[type=checkbox] + label:before { content: "\f096"; }
 
-.login input[type=checkbox] + label:before { content: "\f10c"; }
+.login input[type=checkbox] + label:before { margin-right: 0.7em; transition: 0.2s; }
 
-.login input[type=checkbox] + label:before { margin-right: 1em; transition: all 300ms; }
+.login input[type=checkbox]:checked + label:before { content: "\f14a"; margin-right: 0.95em; transition: 0.2s; }
 
-.login input[type=checkbox]:checked + label:before { content: "\f05d"; letter-spacing: 10px; color: #fff; }
-
-.login input[type=checkbox]:checked + label { color: #fff; }
-
-.login input[type=checkbox]:checked + label:before { margin-right: 1.2em; transition: all 300ms; }
-
-.login input[type="password"]:focus, .login input[type="email"]:focus { border-bottom: 1px solid #e4e4e4; }
+.login input[type="password"]:focus, .login input[type="email"]:focus { color: #000; }
 
 .login label[for="remember"] { font-size: 0.875rem; }
 
 .forgot-password-action-container { text-align: center; margin: 2.222em 0; }
-
-.remember-me-box { font-size: .8em; margin: 1em 0; clear: both; }
 
 .login-button { background-color: #373737; color: #fff; display: inline-block; font-weight: bold; line-height: 1.2; padding: .75em 1em; text-align: center; text-decoration: none; vertical-align: top; }
 
@@ -712,18 +704,24 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .login-heading { max-width: 25.6em; margin: 0 auto; }
 
-.login-heading > h1 { margin: 0; padding: 0; }
+.login-heading > h1 { margin: 0; padding: 0; text-transform: uppercase; }
 
-.login-area .content-body { background-color: transparent; border: none; padding: 0; }
+.login-heading > h1:after { background-image: url("content-icon-alt.png"); content: ''; display: inline-block; height: 1em; vertical-align: -0.15em; width: 0.8em; }
 
-@-webkit-keyframes login-animation { from { margin-top: -3em;
+.login-area .content-body { background-color: transparent; border: none; padding-bottom: 0; padding-top: 0; }
+
+@-webkit-keyframes login-animation { 0% { margin-top: -3em;
     opacity: 0; }
-  to { margin-top: -3em;
+  50% { margin-top: -3em;
+    opacity: 0; }
+  100% { margin-top: 0em;
     opacity: 1; } }
 
-@keyframes login-animation { from { margin-top: -3em;
+@keyframes login-animation { 0% { margin-top: -3em;
     opacity: 0; }
-  to { margin-top: -3em;
+  50% { margin-top: -3em;
+    opacity: 0; }
+  100% { margin-top: 0em;
     opacity: 1; } }
 
 @media screen and (min-width: 30em) { body:after { content: "30em"; }
