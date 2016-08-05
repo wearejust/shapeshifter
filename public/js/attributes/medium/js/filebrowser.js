@@ -20,7 +20,7 @@
                 styles : null
             },
             captions: true,
-            captionPlaceholder: translations.captionPlaceholder,
+            captionPlaceholder: mediumAttribute.translations.captionPlaceholder,
         };
 
     /**
