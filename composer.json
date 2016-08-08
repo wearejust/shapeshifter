@@ -21,7 +21,7 @@
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0",
-    "wearejust/quality-assurance-hooks": "~1"
+    "wearejust/grumphp-extra-tasks": "dev-master"
   },
   "autoload": {
     "files": [

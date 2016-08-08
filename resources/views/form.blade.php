@@ -65,14 +65,13 @@
                             <li class="control-item" style="position: absolute; left: 0;">
                                 <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
                             <!--</li>-->
-                            {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
                         </ul>
                     </div>
                 </div>
             </div>
         {!! Form::close() !!}
 
-        @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
+        @if ($currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
         <div class="footer controls" style="min-height: 0; background-color: transparent; overflow: visible;">
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">

@@ -35,21 +35,21 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        $this->loadViewsFrom($this->resources_path.'views', 'shapeshifter');
-        $this->loadTranslationsFrom($this->resources_path.'lang', 'shapeshifter');
-        $this->mergeConfigFrom($this->resources_path.'config/shapeshifter.php', 'shapeshifter');
+        $this->loadViewsFrom($this->resources_path.'views', self::PACKAGE_NAMESPACE);
+        $this->loadTranslationsFrom($this->resources_path.'lang', self::PACKAGE_NAMESPACE);
+        $this->mergeConfigFrom($this->resources_path.'config/shapeshifter.php', self::PACKAGE_NAMESPACE);
 
         $this->publishes(
             [
-                __DIR__.'/../resources/config/shapeshifter.php' => config_path('shapeshifter.php'),
-                __DIR__.'/../resources/lang'                    => base_path('resources/lang/vendor/shapeshifter'),
+                __DIR__ . '/../resources/config/shapeshifter.php' => config_path('shapeshifter.php'),
+                __DIR__ . '/../resources/lang'                    => base_path('resources/lang/vendor/shapeshifter'),
             ],
             'core'
         );
 
         $this->publishes(
             [
-                __DIR__.'/../public' => public_path('packages/just/shapeshifter'),
+                __DIR__ . '/../public' => public_path('packages/just/shapeshifter'),
             ],
             'public'
         );
@@ -86,7 +86,7 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     protected function requireBootstrapFiles()
     {
-        require_once __DIR__.'/routes.php';
+        require_once __DIR__ . '/routes.php';
     }
 
     /**

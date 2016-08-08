@@ -1,8 +1,36 @@
 @extends('shapeshifter::layouts.master')
 
 @section('content')
-    <div class="content-body-inner">
-        <h1>{{ $title }}</h1>
+<div class="content-body-inner">
+    <h1>{{ $title }}</h1>
+    
+    <!-- Hier nog iets omheen if'en -->
+    @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
+    <div class="group">
+        @if ($currentUser->can('create'))
+        <div class="add-item">
+            @if ( isset($addItems) )
+               @foreach ($addItems as $item)
+                   <a href="{{ route($routes['create'], $ids) }}{{ $item['url'] }}" class="btn btn-default add-item-button" style="margin:0;">{{ $item['title'] }}</a>
+               @endforeach
+            @else
+              <a class="btn btn-default add-item-button" href="{{ route($routes['create'], $ids) }}" id="add-item">{{ __('form.create') }}</a>
+            @endif
+        </div>
+        @endif
+        @if (count($records) && $currentUser->can('sort'))
+        <div class="filter-search">
+            <form action="" class="section-start section-end" method="get">
+                <fieldset>
+                    <label class="accessibility" for="search">{{ __('form.search') }}</label>
+                    <input class="search-control" id="search" placeholder="{{ __('form.search') }}…" type="search">
+                    <button class="js-hide" type="submit">{{ __('form.search') }}</button>
+                </fieldset>
+            </form>
+        </div>
+        @endif
+    </div>
+    @endif
 
         <!-- Hier nog iets omheen if'en -->
         @if ($currentUser->can('create') || (count($records) && $currentUser->can('sort')))
