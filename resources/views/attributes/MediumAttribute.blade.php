@@ -1,4 +1,4 @@
-{!! Form::textarea($name, null, ['class' => 'medium-editable', 'id' => $name])  !!}
+{!! Form::textarea($name, null, ['class' => 'medium-editable', 'id' => $name,  'data-placeholder' => trans('shapeshifter::editor.placeholder')])  !!}
 
 @section('scripts')
 
