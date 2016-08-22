@@ -53,11 +53,13 @@ class Repository
      * @param array $filters
      * @param array $parent
      *
+     * @param bool  $pagination
+     *
      * @return mixed
      */
-    public function all($orderBy, array $filters = [], array $parent = [])
+    public function all($orderBy, array $filters = [], array $parent = [], $pagination = false)
     {
-        $records = $this->getRecords($orderBy, $filters, $parent);
+        $records = $this->getRecords($orderBy, $filters, $parent, $pagination);
 
         return $this->app->make(AttributeService::class, [$this->attributes])
             ->mutateRecords($records);
@@ -260,7 +262,7 @@ class Repository
      *
      * @return mixed
      */
-    private function getRecords($orderBy, $filters, $parent)
+    private function getRecords($orderBy, $filters, $parent, $pagination)
     {
         $query = $this->model;
 
@@ -272,9 +274,13 @@ class Repository
             $query = $query->whereRaw($filter);
         }
 
-        $records = $query->orderBy($orderBy[0], $orderBy[1])->get();
+        $records = $query->orderBy($orderBy[0], $orderBy[1]);
 
-        return $records;
+        if($pagination) {
+           return $records->paginate(25);
+        }
+
+        return $records->get();
     }
 
     /**

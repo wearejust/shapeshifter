@@ -41,6 +41,13 @@ abstract class AdminController extends Controller
      *
      * @var array
      */
+    protected $paginate = false;
+
+    /**
+     * Disable some actions in the node (drag, sort, create, delete)
+     *
+     * @var array
+     */
     protected $disabledActions = [];
 
     /**
@@ -178,7 +185,7 @@ abstract class AdminController extends Controller
 
         $this->initAttributes();
 
-        $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo());
+        $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 
         if (!count($records) && $this->app['request']->ajax() && in_array('create', $this->disabledActions)) {
             throw new NotFoundHttpException('No records, No ability to create and Ajax request');
@@ -330,6 +337,7 @@ abstract class AdminController extends Controller
             'lastVisibleAttribute' => $this->getLastVisibleAttribute(),
             'singular'             => $this->singular,
             'plural'               => $this->plural,
+            'paginate'             => $this->paginate,
             'mode'                 => $this->mode,
             'controller'           => get_class($this),
             'parent'               => $this->parent,

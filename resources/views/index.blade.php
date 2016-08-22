@@ -101,6 +101,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @if($paginate)
+                            {!! $records->render()  !!}
+                        @endif
                     </div>
                 </div>
             @endif
