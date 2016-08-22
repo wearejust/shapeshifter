@@ -5,7 +5,7 @@
 
 CKEDITOR.editorConfig = function (config) {
 
-    config.filebrowserBrowseUrl = '/admin/elfinder';
+    config.filebrowserBrowseUrl = '/admin/elfinder/ckeditor';
 
     //config.contentsCss = '/css/mysitestyles.css';
 
