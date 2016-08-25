@@ -65,7 +65,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
             ->select($table.'.id')
             ->lists('id')
         ->filter(function($item){
-            return string($item);
+            return (string)$item;
         })->toJson();
 
         $all = $this->destination->getRepo()->getModel()
