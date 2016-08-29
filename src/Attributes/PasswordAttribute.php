@@ -35,6 +35,8 @@ class PasswordAttribute extends Attribute implements iAttributeInterface
      */
     public function getSaveValue(Model $model)
     {
-        $model->{$this->name} = $this->value ?: null;
+        if ($this->value) {
+            $model->{$this->name} = $this->value;
+        }
     }
 }
