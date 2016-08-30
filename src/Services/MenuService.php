@@ -141,6 +141,6 @@ class MenuService
      */
     private function hasAccessToRoute($route)
     {
-        return $route === null || $this->auth->getUser()->hasAnyAccess($route, 'superuser');
+        return ! config('shapeshifter.menu_strict_auth_checking') || $route === null || $this->auth->getUser()->hasAnyAccess($route, 'superuser');
     }
 }
