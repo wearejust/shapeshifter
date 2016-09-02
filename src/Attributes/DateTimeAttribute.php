@@ -16,6 +16,10 @@ class DateTimeAttribute extends DateAttribute implements iAttributeInterface
      */
     public function getDisplayValue(Model $model)
     {
+        if (! $model->{$this->name}) {
+            return '';
+        }
+        
         try {
             $date = new DateTime($model->{$this->name});
 
