@@ -355,7 +355,7 @@
 
 function processSelectedFile(filePath, requestingField) {
     var element = $('.medium-insert-active');
-    element.find('img').attr('src', '/media/uploads/' + filePath).click();
+    element.find('img').attr('src', '/media/' + filePath).click();
 
     var editor = element.closest('.medium-editable').data('MediumEditor');
     editor.trigger('editableInput', editor.elements[0], editor.elements[0]);
