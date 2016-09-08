@@ -49,6 +49,30 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </div>
         </div>
     </div>
+
+
+
+    <div class="header-bottom">
+        <div class="breadcrumbs">
+            <ul class="breadcrumbs-list list">
+                <li class="breadcrumbs-item">
+                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
+                <!--</li>-->
+                @foreach ($breadcrumbs as $crumb)
+                <li class="breadcrumbs-item" style="background-size: contain !important">
+                    @if ($crumb == end($breadcrumbs))
+                    <span class="breadcrumbs-link">{{ $crumb['title'] }}</span>
+                    @else
+                    <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}"><span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span></a>
+                    @endif
+                <!--</li>-->
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 </div>
 <div class="header">
     <div class="header-middle" style="display: none;">

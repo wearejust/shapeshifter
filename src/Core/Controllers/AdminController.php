@@ -321,6 +321,9 @@ abstract class AdminController extends Controller
         $user = Sentinel::getUser();
         $user->setDisabledActions($this->disabledActions);
 
+        $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
+
+
         $this->formModifier->render();
 
         $this->beforeRender($this);
@@ -329,6 +332,7 @@ abstract class AdminController extends Controller
             'form'                 => $this->formModifier,
             'attributes'           => $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model),
             'orderBy'              => $this->orderby,
+            'breadcrumbs'          => $breadcrumbService->breadcrumbs(),
             'cancel'               => $this->generateCancelLink(),
             'disabledActions'      => $this->disabledActions,
             'disableDeleting'      => $this->disableDeleting,

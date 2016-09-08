@@ -12,6 +12,8 @@ return [
     */
     'customer' => 'Just',
 
+    'breadcrumbs' => true,
+
     /*
     |--------------------------------------------------------------------------
     | Default admin route
