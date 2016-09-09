@@ -322,8 +322,7 @@ abstract class AdminController extends Controller
         $user->setDisabledActions($this->disabledActions);
 
         $breadcrumbService = $this->app->make('Just\Shapeshifter\Services\BreadcrumbService');
-
-
+        
         $this->formModifier->render();
 
         $this->beforeRender($this);
