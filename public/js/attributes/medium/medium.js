@@ -73,4 +73,11 @@ $(function () {
             }
         }
     }).data('MediumEditor', editor);
+    
+    setTimeout(function(){
+        $('.medium-insert-embed iframe').each(function(key, item){
+            var iframe = $(item);
+            iframe.attr('src', iframe.data('iframely-url'));
+        });
+    }, 1000);
 });
