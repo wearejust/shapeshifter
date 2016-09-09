@@ -185,6 +185,10 @@ abstract class AdminController extends Controller
 
         $this->initAttributes();
 
+        if($query = request('search')) {
+            array_push($this->filter, $this->getDescriptor() . " LIKE '%" . $query."%'");
+        }
+        
         $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 
         if (!count($records) && $this->app['request']->ajax() && in_array('create', $this->disabledActions)) {
