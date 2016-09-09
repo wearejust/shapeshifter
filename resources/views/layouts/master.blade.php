@@ -49,9 +49,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </div>
         </div>
     </div>
-
-
-
     <div class="header-bottom">
         <div class="breadcrumbs">
             <ul class="breadcrumbs-list list">
@@ -71,8 +68,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
         </div>
     </div>
 </div>
-
-
 </div>
 <div class="header">
     <div class="header-middle" style="display: none;">
