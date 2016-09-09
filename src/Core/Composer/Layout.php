@@ -43,7 +43,7 @@ class Layout
     {
         $view->with('currentUser',  $this->sentinel->getUser());
         $view->with('mode', array_get($view->getData(), 'mode', ''));
-        $view->with('breadcrumbs', config('shapeshifter.config.breadcrumbs') ? $this->breadcrumbService->breadcrumbs() : []);
+        $view->with('breadcrumbs', config('shapeshifter.breadcrumbs') ? $this->breadcrumbService->breadcrumbs() : []);
         $view->with('menu', $this->menuService->generateMenu());
     }
 }
