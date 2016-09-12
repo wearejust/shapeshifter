@@ -297,7 +297,6 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 	.breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:focus, .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:hover, .breadcrumbs-item:nth-last-child(2) .breadcrumbs-link:active { background-color: transparent; color: inherit; }
 	.breadcrumbs-item:first-child .breadcrumbs-link { background-image: url("home.png"); background-repeat: no-repeat; background-position: 1.5rem center; padding-left: 1.5rem; padding-right: 2em; text-indent: -9999em; width: 15px; }
 	.breadcrumbs-link { color: inherit; font-size: .875em; line-height: 1rem; padding: 1rem .85em; padding-right: 1.75em; position: relative; text-align: center; }
-	.breadcrumbs-first { background-size: 1em; }
 }
 @include respond-min-width(40em) {
 	body { background-color: #ebebeb; }
