@@ -53,7 +53,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
         <div class="breadcrumbs">
             <ul class="breadcrumbs-list list">
                 <li class="breadcrumbs-item">
-                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin">{{ __('breadcrumb.home') }}</a>
+                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin" style="background-size: 1em;">{{ __('breadcrumb.home') }}</a>
                 <!--</li>-->
                 @foreach ($breadcrumbs as $crumb)
                 <li class="breadcrumbs-item" style="background-size: contain !important">

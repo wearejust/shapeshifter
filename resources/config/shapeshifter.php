@@ -17,7 +17,7 @@ return [
     | Breadcrumbs
     |--------------------------------------------------------------------------
     |
-    | Shwo a breadcrumb on top ?
+    | When true, a breadcrumb-bar is shown on the top of the admin pages
     |
     */
     'breadcrumbs' => true,
