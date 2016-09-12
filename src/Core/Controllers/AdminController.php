@@ -528,21 +528,4 @@ abstract class AdminController extends Controller
         return $this->repo;
     }
 
-    public function getDateFormat()
-    {
-        $patterns = array(
-            '/11\D21\D(1999|99)/',
-            '/21\D11\D(1999|99)/',
-            '/(1999|99)\D11\D21/',
-        );
-        $replacements = array('mdy', 'dmy', 'ymd');
-
-        $date = new \DateTime();
-        $date->setDate(1999, 11, 21);
-
-        return preg_replace($patterns, $replacements, strftime('%x', $date->getTimestamp()));
-    }
-
-
-
 }
