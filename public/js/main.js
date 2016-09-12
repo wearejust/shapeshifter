@@ -58,7 +58,7 @@ $(function() {
 	});
 
 	flatpickr('.datepicker', {
-		dateFormat: 'd-m-Y',
+		dateFormat: 'Y-m-d',
 		enableTime: false,
 		timeFormat: "H:i",
 		time_24hr: true

@@ -19,7 +19,7 @@
 
             <p class="datepicker input-group" data-wrap="true" data-clickOpens="false">
 
-                <input placeholder="{{strftime('%c')}} {{ Carbon\Carbon::now(config::get('app.timezone'))->toDateString() }} {{ config::get('app.timezone') }}"
+                <input placeholder="{{strftime('%Y-%m-%d')}}"
                        value="{{ $model->{$name} }}"
                        name="{{ $name }}"
                        class="{{ ($required ? ' js-required':'') }}"
