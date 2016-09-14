@@ -16,6 +16,8 @@ use Krucas\Notification\NotificationServiceProvider;
 
 class ShapeshifterServiceProvider extends ServiceProvider
 {
+    const PACKAGE_NAMESPACE = 'shapeshifter';
+
     /**
      * @var bool
      */

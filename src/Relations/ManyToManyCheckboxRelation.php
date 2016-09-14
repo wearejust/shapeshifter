@@ -21,9 +21,9 @@ class ManyToManyCheckboxRelation extends ManyToManyFacebookRelation
         $this->checkDestinationModel($model);
 
         $descriptor = $this->destination->getDescriptor();
-        $table      = $this->destination->getRepo()->getModel()->getTable();
+        $table      = $this->destination->getRepository()->getModel()->getTable();
         $results    = $model->{$this->function}()->get([$table . '.id', "{$descriptor} as name"])->lists('id');
-        $all        = $this->destination->getRepo()->getModel()->get([$table . '.id', "{$descriptor} as name"])->lists('name', 'id');
+        $all        = $this->destination->getRepository()->getModel()->get([$table . '.id', "{$descriptor} as name"])->lists('name', 'id');
 
         return View::make('shapeshifter::relations.ManyToManyCheckboxRelation',  [
             'results' => $results,

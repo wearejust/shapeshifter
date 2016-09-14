@@ -14,14 +14,20 @@ use View;
 class ManyToManyFacebookRelation extends OneToManyRelation
 {
     /**
+     * @var string
+     */
+    private $descriptorField;
+
+    /**
      * @param AdminController $fromController
      * @param string          $destination
      * @param string          $function
+     * @param array           $descriptorField
      * @param array           $flags
      *
-     * @throws ShapeShifterException
+     * @throws \Just\Shapeshifter\Exceptions\ShapeShifterException
      */
-    public function __construct(AdminController $fromController, $destination, $function, $flags = [])
+    public function __construct(AdminController $fromController, $destination, $function, $descriptorField, $flags = [])
     {
         $routes = Route::getRoutes();
 
@@ -31,17 +37,18 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $this->fromcontroller = $fromController;
 
         if ($current = $this->getCurrentRecordId()) {
-            $repo        = $fromController->getRepo();
+            $repo        = $fromController->getRepository();
             $this->model = $repo->findById($current);
 
             if (null == $this->model) {
-                throw new ShapeShifterException(sprintf('Model [%s] with id [%s] doesn\'t exist', get_class($repo->getModel()), $current));
+                throw new ShapeShifterException(sprintf('Model [%s] with id [%s] doesn\'t exist', get_class($repo->getNew()), $current));
             }
         }
 
         $this->function = $function;
         $this->name     = $this->destination->getTitle();
         $this->flags    = array_merge($flags, ['hide_list']);
+        $this->descriptorField = $descriptorField;
     }
 
     /**
@@ -57,10 +64,10 @@ class ManyToManyFacebookRelation extends OneToManyRelation
     {
         $this->checkDestinationModel($model);
 
-        $descriptor = $this->destination->getDescriptor();
-        $table      = $this->destination->getRepo()->getModel()->getTable();
+        $descriptor = $this->descriptorField;
+        $table      = $this->destination->getRepository()->getNew()->getTable();
         $results    = $model->{$this->function}()->get([$table . '.id', "{$descriptor} as name"])->toJson();
-        $all        = $this->destination->getRepo()->getModel()->get([$table . '.id', "{$descriptor} as name"])->toJson();
+        $all        = $this->destination->getRepository()->getNew()->get([$table . '.id', "{$descriptor} as name"])->toJson();
 
         return View::make('shapeshifter::relations.ManyToManyFacebookRelation',  [
             'results' => $results,

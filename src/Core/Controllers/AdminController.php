@@ -15,6 +15,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AdminController extends Controller
 {
+    const MODE_INDEX = 'index';
+    const MODE_CREATE = 'create';
+    const MODE_EDIT = 'edit';
+
     use AvailableOverrides;
 
     /**
@@ -69,14 +73,17 @@ abstract class AdminController extends Controller
     private $viewNamespace = ShapeshifterServiceProvider::PACKAGE_NAMESPACE;
 
     /**
+     * @var string
+     */
+    private $mode;
+
+    /**
      * AdminController constructor.
      */
     public function __construct()
     {
         $this->formModifier = new Form();
         $this->repository = new Repository($this->formModifier, new $this->model);
-
-        $this->configureFields($this->formModifier);
     }
 
     /**
@@ -100,12 +107,21 @@ abstract class AdminController extends Controller
     abstract protected function indexQuery(Builder $query);
 
     /**
+     * Returns string with title of the module
+     *
+     * @return string
+     */
+    abstract public function getTitle();
+
+    /**
      * @throws NotFoundHttpException
      *
      * @return mixed
      */
     public function index()
     {
+        $this->mode = self::MODE_INDEX;
+        $this->configureFields($this->formModifier);
 
         return $this->setupView('index', [
             'records' => $this->indexQuery($this->repository->getNewQuery()),
@@ -120,6 +136,9 @@ abstract class AdminController extends Controller
      */
     public function create()
     {
+        $this->mode = self::MODE_CREATE;
+        $this->configureFields($this->formModifier);
+
         return $this->setupView('form.create', [
             'title' => 'dfgdsdfdsffgasdfghjkl',
             'ids'   => func_get_args(),
@@ -132,6 +151,8 @@ abstract class AdminController extends Controller
      */
     public function edit()
     {
+        $this->mode = self::MODE_EDIT;
+        $this->configureFields($this->formModifier);
         $ids = func_get_args();
 
         return $this->setupView('form.edit', [
@@ -146,6 +167,8 @@ abstract class AdminController extends Controller
      */
     public function store()
     {
+        $this->configureFields($this->formModifier);
+
         try {
             $model = $this->repository->store($this->rules);
         } catch (Exceptions\ValidationException $e) {
@@ -168,6 +191,7 @@ abstract class AdminController extends Controller
      */
     public function update()
     {
+        $this->configureFields($this->formModifier);
         $ids = func_get_args();
         $model = $this->repository->findById(last($ids));
 
@@ -193,6 +217,7 @@ abstract class AdminController extends Controller
      */
     public function destroy()
     {
+        $this->configureFields($this->formModifier);
         $ids = func_get_args();
         $model = $this->repository->findById(last($ids));
 
@@ -225,6 +250,7 @@ abstract class AdminController extends Controller
             'disableDeleting'      => $this->disableDeleting,
             'disableEditing'       => $this->disableEditing,
             'parent'               => $this->parent,
+            'mode'                 => $this->mode,
             'routes'               => $this->getCurrentRouteNames(),
         ]));
     }
@@ -274,4 +300,19 @@ abstract class AdminController extends Controller
         }, (array)$e);
     }
 
+    /**
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    /**
+     * @return \Just\Shapeshifter\Repository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
 }

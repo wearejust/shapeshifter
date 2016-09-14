@@ -44,7 +44,7 @@ class OneToManyRelation extends Attribute
     {
         $this->destination    = 'admin.' . $destination . '.index';
         $this->fromcontroller = $fromController;
-        $this->model          = $fromController->getRepo()->getModel();
+        $this->model          = $fromController->getRepository()->getModel();
         $this->function       = $function;
         $this->name           = $destination;
 

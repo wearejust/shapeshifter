@@ -28,7 +28,7 @@ class ManyToOneRelation extends OneToManyRelation
         $this->destination    = 'admin.' . $destination . '.index';
         $this->destination    = $this->setupDestination();
         $this->fromcontroller = $fromController;
-        $this->model          = $fromController->getRepo()->getModel();
+        $this->model          = $fromController->getRepository()->getModel();
         $this->function       = $function;
         $this->name           = $destination;
         $this->flags          = $flags;
@@ -73,7 +73,7 @@ class ManyToOneRelation extends OneToManyRelation
      */
     public function getForeignField()
     {
-        $model = $this->fromcontroller->getRepo()->getModel();
+        $model = $this->fromcontroller->getRepository()->getModel();
 
         if (! method_exists($model, $this->function)) {
             $modelName = get_class($model);
@@ -95,7 +95,7 @@ class ManyToOneRelation extends OneToManyRelation
             $field = $this->getForeignField();
             $model->{$field} = null;
         } else {
-            $associate = $this->getDestination()->getRepo()->getModel()->findOrFail($this->value);
+            $associate = $this->getDestination()->getRepository()->getModel()->findOrFail($this->value);
             $model->{$this->function}()->associate($associate);
         }
     }
@@ -117,7 +117,7 @@ class ManyToOneRelation extends OneToManyRelation
     {
         $descriptor = $this->destination->getDescriptor();
 
-        $values = $this->destination->getRepo()->listed($descriptor, 'id')->toArray();
+        $values = $this->destination->getRepository()->listed($descriptor, 'id')->toArray();
         if (! $this->required) {
             $values = ['' => ''] + $values;
         }
