@@ -67,9 +67,17 @@ $(function () {
             'images': false,
             'embeds': {
                 'label': '<span class="fa fa-code"></span>',
-                'placeholder': translations.embedPlaceholder,
-                'styles': null
+                'placeholder': mediumAttribute.translations.embedPlaceholder,
+                'styles': null,
+                'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + mediumAttribute.config.iframelyApiKey
             }
         }
     }).data('MediumEditor', editor);
+    
+    setTimeout(function(){
+        $('.medium-insert-embed iframe').each(function(key, item){
+            var iframe = $(item);
+            iframe.attr('src', iframe.data('iframely-url'));
+        });
+    }, 1000);
 });

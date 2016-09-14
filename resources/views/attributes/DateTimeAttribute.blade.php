@@ -20,7 +20,6 @@
             <p class="datepicker input-group" data-wrap="true" data-clickOpens="false" data-enableTime="true">
 
                 <input placeholder="{{ date('d-m-Y H:i') }}"
-                       maxlength="0"
                        value="{{ $model->{$name} }}"
                        name="{{ $name }}"
                        class="{{ ($required ? ' js-required':'') }}"

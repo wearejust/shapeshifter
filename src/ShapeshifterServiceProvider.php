@@ -19,7 +19,7 @@ class ShapeshifterServiceProvider extends ServiceProvider
     const PACKAGE_NAMESPACE = 'shapeshifter';
 
     /**
-     * @var bool
+     * @var string
      */
     private $resources_path = __DIR__.'/../resources/';
 
@@ -29,6 +29,11 @@ class ShapeshifterServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
+    /**
+     * Location of the Providers folder from the current __DIR__
+     */
+    protected $providersPath = '/Providers';
 
     /**
      * Bootstrap the application events.
@@ -91,9 +96,6 @@ class ShapeshifterServiceProvider extends ServiceProvider
         require_once __DIR__ . '/routes.php';
     }
 
-    /**
-     * Register the Aliases.
-     */
     private function registerAliasses()
     {
         AliasLoader::getInstance()->alias('Form', FormFacade::class);
@@ -102,9 +104,6 @@ class ShapeshifterServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('Notification', Notification::class);
     }
 
-    /**
-     * Registering the dependend ServiceProvider(s).
-     */
     private function registerServiceProviders()
     {
         $this->app->register(HtmlServiceProvider::class);

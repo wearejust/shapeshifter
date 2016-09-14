@@ -36,5 +36,7 @@ return [
     'postal'                => 'Postcode',
     'directions'            => 'Routebeschrijving',
     'lastname'              => 'Achternaam',
+    'yes'                   => 'Ja',
+    'no'                    => 'Nee',
 
 ];

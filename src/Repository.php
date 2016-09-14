@@ -53,17 +53,6 @@ class Repository
     }
 
     /**
-     * @param Model                               $model
-     * @param                                     $rules
-     *
-     * @return mixed
-     */
-    public function update(Model $model, $rules)
-    {
-        return $this->save($model, $rules);
-    }
-
-    /**
      * @param Model $model
      * @param       $rules
      * @param array $parent
@@ -71,7 +60,7 @@ class Repository
      * @return mixed
      * @throws ValidationException
      */
-    private function save(Model $model, $rules, array $parent = [])
+    public function save(Model $model, $rules, array $parent = [])
     {
         $this->validate($rules);
         $this->mutateAttributes($model);
@@ -113,9 +102,7 @@ class Repository
     }
 
     /**
-     * @param array $rules
-     *
-     * @throws ValidationException
+     * @throws Exceptions\ValidationException
      */
     public function validate(array $rules)
     {

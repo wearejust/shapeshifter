@@ -4,6 +4,7 @@ namespace Just\Shapeshifter\Relations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Just\Shapeshifter\Core\Controllers\AdminController;
 use Just\Shapeshifter\Exceptions\MethodNotExistException;
 use Just\Shapeshifter\Exceptions\ShapeShifterException;
@@ -31,7 +32,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
     {
         $routes = Route::getRoutes();
 
-        $this->destination = 'admin.' . $destination . '.index';
+        $this->destination = 'admin.'.$destination.'.index';
         $this->destination = $this->resolveControllerByName($routes);
 
         $this->fromcontroller = $fromController;
@@ -42,6 +43,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
 
             if (null == $this->model) {
                 throw new ShapeShifterException(sprintf('Model [%s] with id [%s] doesn\'t exist', get_class($repo->getNew()), $current));
+
             }
         }
 
@@ -73,12 +75,12 @@ class ManyToManyFacebookRelation extends OneToManyRelation
             'results' => $results,
             'all'     => $all,
             'name'    => $this->name,
-            'label'   => translateAttribute($this->name)
+            'label'   => translateAttribute($this->name),
         ])->render();
     }
 
     /**
-     * @param $val
+     * @param      $val
      * @param null $oldValue
      *
      * @return mixed|void
@@ -86,7 +88,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
     public function setAttributeValue($val, $oldValue = null)
     {
         if (is_array($val)) {
-            $val = implode(',',  $val);
+            $val = implode(',', $val);
         }
         $this->value = $val ? explode(',', $val) : [];
     }
@@ -109,7 +111,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
         $segments = (new Collection(Request::segments()))->reverse();
 
         return $segments->first(function ($index, $value) {
-           return is_numeric($value);
+            return is_numeric($value);
         }, false);
     }
 
@@ -120,7 +122,7 @@ class ManyToManyFacebookRelation extends OneToManyRelation
      */
     protected function checkDestinationModel(Model $model)
     {
-        if (! method_exists($model, $this->function)) {
+        if (!method_exists($model, $this->function)) {
             $modelName = get_class($model);
 
             throw new MethodNotExistException("Relation method [{$this->function}] doest not exist on [{$modelName}] model");

@@ -24,6 +24,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!! Html::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') !!}
 {!! Html::style("/packages/just/shapeshifter/js/colorbox/colorbox.css")  !!}
 {!! Html::style("/packages/just/shapeshifter/js/flatpickr/flatpickr.dark.min.css")  !!}
+{!! Html::style("/packages/just/shapeshifter/js/selectize/dist/css/selectize.default.css")  !!}
 {!! Html::style("//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")  !!}
 @yield('styles')
 <link href="/packages/just/shapeshifter/css/overrides.css" rel="stylesheet">
@@ -97,11 +98,11 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!!  Html::script("/packages/just/shapeshifter/js/vendor/jquery.maskedinput.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/vendor/jquery.form.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/vendor/hashchange.js")  !!}
-{!!  Html::script("/packages/just/shapeshifter/js/vendor/spectrum.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/tracer.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/includes.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/transforms.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/flatpickr/flatpickr.min.js")  !!}
+{!!  Html::script("/packages/just/shapeshifter/js/selectize/dist/js/standalone/selectize.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/main.js")  !!}
 
 @yield('scripts')

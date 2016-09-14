@@ -6,7 +6,6 @@
         <span class="form-field">
             <p class="datepicker input-group" data-wrap="true">
                 <input placeholder="{{ date('d-m-Y') }}"
-                       maxlength="0"
                        value="{{ $model->{$name} }}"
                        name="{{ $name }}"
                        class="{{ ($required ? ' js-required':'') }}"

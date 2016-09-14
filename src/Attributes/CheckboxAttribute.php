@@ -9,6 +9,8 @@ class CheckboxAttribute extends Attribute implements iAttributeInterface
     /**
      * @param string $value
      * @param int    $oldValue
+     *
+     * @return bool
      */
     public function setAttributeValue($value, $oldValue = 0)
     {
@@ -24,7 +26,7 @@ class CheckboxAttribute extends Attribute implements iAttributeInterface
      */
     public function getDisplayValue(Model $model)
     {
-        return $model->{$this->name} ? 'Ja' : 'Nee';
+        return $model->{$this->name} ? translateAttribute('yes') : translateAttribute('no');
     }
 
     /**

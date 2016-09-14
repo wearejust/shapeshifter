@@ -16,17 +16,22 @@ $(function() {
 	$('.js-datatable').sortableTable();
 	$('.acc-container').accordion();
 
+	var el;
 	$(".tokeninput").each(function(){
-		$(this).tokenInput(null, {
-			theme: "facebook",
-			preventDuplicates: true,
-			hintText: "Typ om te zoeken",
-			noResultsText: "Geen resultaten",
-			searchingText: "Zoeken",
-			processPrePopulate: true
+		el = $(this);
+		el.selectize({
+			valueField: 'id',
+			labelField: 'name',
+			searchField: 'name',
+			'items' : el.data('prepopulate'),
+			'options' : el.data('allresults'),
+			'plugins' : [
+				'drag_drop',
+				'remove_button'
+			]
 		});
 	});
-	
+
 	$(".js-mask").each(function(i, element) {
 		element = $(element);
 		element.mask(element.attr('data-mask'));

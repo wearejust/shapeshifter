@@ -18,6 +18,8 @@ abstract class AdminController extends Controller
     const MODE_INDEX = 'index';
     const MODE_CREATE = 'create';
     const MODE_EDIT = 'edit';
+    const MODE_UPDATE = 'update';
+    const MODE_STORE = 'store';
 
     use AvailableOverrides;
 
@@ -31,28 +33,28 @@ abstract class AdminController extends Controller
      *
      * @var array
      */
-    private $disabledActions = [];
+    protected $disabledActions = [];
 
     /**
      * Array of record ids which cannot be deleted in the node
      *
      * @var array
      */
-    private $disableDeleting = [];
+    protected $disableDeleting = [];
 
     /**
      * Array of record ids which cannot be edited in the node
      *
      * @var array
      */
-    private $disableEditing = [];
+    protected $disableEditing = [];
 
     /**
      * Array of the validation rules in the form (see laravel validation)
      *
      * @var array
      */
-    private $rules = [];
+    protected $rules = [];
 
     /**
      * If an node has an belongsTo relation (comment has post) the database
@@ -60,7 +62,7 @@ abstract class AdminController extends Controller
      *
      * @var null
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @var Form
@@ -125,7 +127,7 @@ abstract class AdminController extends Controller
 
         return $this->setupView('index', [
             'records' => $this->indexQuery($this->repository->getNewQuery()),
-            'title'   => 'dfgdfgasdfghjkl',
+            'title'   => $this->getTitle(),
             'ids'     => func_get_args(),
             'model'   => $this->repository->getNew(),
         ]);
@@ -140,7 +142,7 @@ abstract class AdminController extends Controller
         $this->configureFields($this->formModifier);
 
         return $this->setupView('form.create', [
-            'title' => 'dfgdsdfdsffgasdfghjkl',
+            'title' => $this->getTitle(),
             'ids'   => func_get_args(),
             'model' => $this->repository->getNew(),
         ]);
@@ -157,7 +159,7 @@ abstract class AdminController extends Controller
 
         return $this->setupView('form.edit', [
             'ids'   => $ids,
-            'title' => 'gjgjghjfghfhjgk',
+            'title' => $this->getTitle(),
             'model' => $this->repository->findById(last($ids)),
         ]);
     }
@@ -167,10 +169,12 @@ abstract class AdminController extends Controller
      */
     public function store()
     {
+        $this->mode = self::MODE_STORE;
         $this->configureFields($this->formModifier);
 
         try {
             $model = $this->repository->store($this->rules);
+            $model = $this->afterAdd($model);
         } catch (Exceptions\ValidationException $e) {
             $this->addErrorsToFlash($e->getErrors()->all());
 
@@ -191,12 +195,16 @@ abstract class AdminController extends Controller
      */
     public function update()
     {
+        $this->mode = self::MODE_UPDATE;
         $this->configureFields($this->formModifier);
+
         $ids = func_get_args();
         $model = $this->repository->findById(last($ids));
 
         try {
-            $model = $this->repository->update($model, $this->rules);
+            $model = $this->repository->save($model, $this->rules);
+            $model = $this->afterUpdate($model);
+
         } catch (Exceptions\ValidationException $e) {
             $this->addErrorsToFlash($e->getErrors()->all());
 
