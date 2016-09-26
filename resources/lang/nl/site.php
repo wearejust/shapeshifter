@@ -34,6 +34,9 @@ return [
     'form.remove'           => 'Verwijderen',
     'form.updated_at'       => 'Laatst gewijzigd',
     'form.current'          => 'Huidig',
+    'form.update_revisions' => 'Laatst gewijzigd op :date door :user',
+    'form.no_revisions'     => 'Er zijn nog geen wijzigingen gedaan',
+    'form.btn_revision'     => 'Geschiedenis bekijken',
 
     'dialog.remove'       => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',

@@ -3,10 +3,72 @@
 @section('content')
 
 <h1 class="record-title">{{ $title }}</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/3.0.0/diff.js"></script>
 
 @if ($mode == 'edit' && $model->updated_at)
 <div class="section section-start paragraph record-updated">
-    <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%d %B %Y, %H:%M') }}</p>
+
+    @if(method_exists($model, 'revisionHistory'))
+        <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.update_revisions', ['date' => $model->updated_at->formatLocalized('%d %B %Y, %H:%M'), 'user' => $model->revisionHistory->first()->userResponsible()->first_name]) }}</p>
+        <p class="section-start section-end quiet" style="font-size: 11px;"><a href="#history-summary" class="js-popup-view"><i class="fa fa-clock-o"></i> {{ __('form.btn_revision') }} ({{ $model->revisionHistory->count()  }})</a></p>
+        <div class="js-hide">
+            <div class="history-view" id="history-summary">
+            @if($model->revisionHistory->first()->key == 'created_at' && !$model->revisionHistory->first()->old_value)
+                <p>{{ $model->revisionHistory->first()->userResponsible()->first_name }} created this resource at {{ $model->revisionHistory->first()->newValue() }}</p>
+            @endif
+
+            @if($model->revisionHistory->count() > 0)
+            <table>
+                <thead>
+                    <th>User</th>
+                    <th>Field</th>
+                    <th>Option</th>
+                </thead>
+
+                @foreach($model->revisionHistory as $history)
+                    <tr>
+                        <td>{{ $history->userResponsible()->first_name }}</td>
+                        <td>{{ translateAttribute($history->fieldName()) }}</td>
+                        <td><a href="#view-diff-{{ $history->id }}" class="js-popup-view"><i class="fa fa-search"></i></a></td>
+                    </tr>
+                @endforeach
+            </table>
+                @foreach($model->revisionHistory as $history)
+                    <div class="js-hide">
+                        <div id="view-diff-{{ $history->id }}">
+
+                            <a href="#history-summary" class="js-popup-view btn btn-alt"> Back to overview</a>
+                            <div id="display-diff-{{ $history->id }}"></div>
+
+                            <script>
+                                var diff = JsDiff.diffChars("{!! $history->oldValue() !!}", "{!! $history->newValue() !!}"),
+                                    display = document.getElementById('display-diff-{{ $history->id }}'),
+                                    fragment = document.createDocumentFragment();
+
+                                diff.forEach(function(part){
+                                    color = part.added ? 'green' :
+                                            part.removed ? 'red' : 'grey';
+                                    span = document.createElement('span');
+                                    span.style.color = color;
+                                    span.appendChild(document
+                                            .createTextNode(part.value));
+                                    fragment.appendChild(span);
+                                });
+
+                                display.appendChild(fragment);
+                            </script>
+
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p>{{ __('form.no_revisions') }}</p>
+            @endif
+        </div>
+        </div>
+    @else
+        <p class="section-start section-end quiet" style="font-size: 11px;">{{ __('form.updated_at') }}: {{ $model->updated_at->formatLocalized('%d %B %Y, %H:%M') }}</p>
+    @endif
 </div>
 @endif
 

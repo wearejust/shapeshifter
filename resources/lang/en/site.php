@@ -28,7 +28,11 @@ return [
     'form.removed'          => 'Item is removed.',
     'form.remove'           => 'Delete',
     'form.updated_at'       => 'Updated',
+    'form.update_revisions' => 'Last updated at :date by :user',
+    'form.no_revisions'     => 'No revisions have been made yet',
+    'form.btn_revision'     => 'Browse revisions',
     'form.current'          => 'Current',
+
 
     'dialog.remove'       => 'Are you sure you want to delete this file?',
     'dialog.remove-image' => 'Are you sure you want to delete this image?',
