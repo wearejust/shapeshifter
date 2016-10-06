@@ -107,7 +107,6 @@ TextExpanderElement.prototype.show = function() {
 
     setTimeout(function() {
         this.modalCKE = this.modalTextarea.ckeditor().editor;
-        $window.on('click', this.closeBound);
     }.bind(this), 100);
 };
 
@@ -129,6 +128,5 @@ TextExpanderElement.prototype.hide = function() {
         this.element.contents().unwrap();
     }
     this.modalCKE.destroy();
-    $window.off('click', this.closeBound);
     this.modal.detach();
 };
