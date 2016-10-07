@@ -17,7 +17,7 @@
         </label>
         <span class="form-field">
 
-            <p class="datepicker input-group" data-wrap="true" data-clickOpens="false">
+            <p class="datepicker input-group" id="datepicker-{{ $name }}" data-wrap="true" data-clickOpens="false">
 
                 <input placeholder="{{ date('d-m-Y') }}"
                        value="{{ $model->{$name} }}"
