@@ -57,13 +57,7 @@ $(function() {
 		});
 	});
 
-	flatpickr('.datepicker', {
-		dateFormat: 'd-m-Y',
-		enableTime: false,
-		timeFormat: "H:i",
-		time_24hr: true
-	});
-
+	$('.datepicker').datepicker();
 	$('.embedded-video').videoPreview();
 	$('.onetomany-relation-content').oneToManyLoader();
 	$('.confirm-delete-dialog').removeDialog();
@@ -1281,6 +1275,12 @@ Required.prototype.change = function(e) {
 					disabled = true;
 				}
 
+			} else if (item.hasClass('flatpickr-input')) {
+				var datepicker = item.closest('.datepicker').data('Datepicker');
+				if (!datepicker.validate()) {
+					disabled = true;
+				}
+
 			} else if (!item.val()) {
 				disabled = true;
 			}
@@ -1299,3 +1299,40 @@ function processSelectedFile(filePath, requestingField) {
 		$('<a></a>').attr('href', filePath).text(filePath).attr('target', '_blank')
 	);
 }
+
+
+
+// -----------------------------------------------------------
+// DATEPICKER
+// -----------------------------------------------------------
+$.fn.datepicker = function() {
+	return $(this).each(function(index, item) {
+		item = $(item);
+		if (!item.data('Datepicker')) {
+			item.data('Datepicker', new Datepicker(item));
+		}
+	}.bind(this));
+};
+
+var Datepicker = function(element) {
+	this.element = element;
+	this.input = this.element.find('input');
+
+	this.flatpickr = new flatpickr(this.element.get(0), {
+		'dateFormat': 'd-m-Y',
+		'timeFormat': 'H:i',
+		'time_24hr': true,
+		'onChange': function() {
+			this.input.trigger('change');
+		}.bind(this)
+	});
+};
+
+Datepicker.prototype.validate = function() {
+	var val = this.input.val();
+	if (this.flatpickr.config.enableTime) {
+		return /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-(\d{4})\s([01]\d|2[0-4])\:([0-5]\d)$/.test(val);
+	} else {
+		return /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-(\d{4})$/.test(val);
+	}
+};
