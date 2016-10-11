@@ -229,7 +229,7 @@ abstract class AdminController extends Controller
         $this->mode  = 'edit';
         $this->model = $this->repo->findById($this->getCurrentId());
 
-        $this->data['title'] = $this->descriptor === 'id' ? $this->singular . ' bewerken' : strip_tags(translateAttribute($this->model->{$this->descriptor}));
+        $this->data['title'] = $this->descriptor === 'id' ? trans('shapeshifter::site.form.edit', ['descriptor' => $this->singular]) : strip_tags(translateAttribute($this->model->{$this->descriptor}));
 
         $this->initAttributes();
 

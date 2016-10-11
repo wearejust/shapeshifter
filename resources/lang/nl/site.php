@@ -34,6 +34,7 @@ return [
     'form.remove'           => 'Verwijderen',
     'form.updated_at'       => 'Laatst gewijzigd',
     'form.current'          => 'Huidig',
+    'form.edit'             => ':descriptor bewerken',
 
     'dialog.remove'       => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',
