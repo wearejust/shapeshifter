@@ -33,5 +33,7 @@ return [
 
     'dialog.remove'       => 'Are you sure you want to delete this file?',
     'dialog.remove-image' => 'Are you sure you want to delete this image?',
+    'dialog.yes'          => 'Yes, delete',
+    'dialog.no'           => 'No, nevermind',
 
 ];

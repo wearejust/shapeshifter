@@ -38,5 +38,7 @@ return [
 
     'dialog.remove'       => 'Weet je zeker dat je dit item wilt verwijderen?',
     'dialog.remove-image' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',
+    'dialog.yes'          => 'Ja, verwijderen',
+    'dialog.no'           => 'Nee, toch niet',
 
 ];
