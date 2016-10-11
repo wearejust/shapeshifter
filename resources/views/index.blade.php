@@ -85,7 +85,7 @@
                                             <div class="container">
                                                 @if ( ! in_array($rec->id, $disableDeleting) )
                                                     <div class="table-control-content media-wrapper js-remove-wrapper">
-                                                        <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button">X</button>
+                                                        <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button" data-yes="{{__('dialog.yes')}}" data-no="{{__('dialog.no')}}">X</button>
                                                         {!! Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id)))))  !!}
                                                         {!! Form::close() !!}
                                                         <div class="dialog-confirm" style="display: none;">
