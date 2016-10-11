@@ -1,5 +1,5 @@
 <?php return [
-    'captionPlaceholder' => 'Uw caption hier',
-    'embedPlaceholder'   => 'Voeg een url in naar een website, youtube, twitter, facebook etc..',
-    'placeholder'        => 'Type hier uw tekst...',
+    'captionPlaceholder' => 'Onderschrift',
+    'embedPlaceholder'   => 'URL naar een website, Facebook, Twitter, Youtube, etc..',
+    'placeholder'        => 'Type hier...',
 ];

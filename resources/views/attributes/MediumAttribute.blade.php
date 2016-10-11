@@ -1,5 +1,17 @@
-{!! Form::textarea($name, null, ['class' => 'medium-editable', 'id' => $name,  'data-placeholder' => trans('shapeshifter::editor.placeholder')])  !!}
+<label class="form-group" for="{{$name}}">
+    <span class="form-group-content">
+        <span class="form-label">
+            {{ $label }}
+        </span>
+        <span class="form-field">
+            @include('shapeshifter::layouts.helptext')
+        </span>
+    </span>
+</label>
 
+{!! Form::textarea($name, null, ['class' => 'medium-editable', 'id' => $name,  'data-placeholder' => trans('shapeshifter::editor.placeholder')])  !!}
+<br>
+<br>
 @section('scripts')
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
