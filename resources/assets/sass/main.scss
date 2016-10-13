@@ -165,10 +165,11 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .mini-gallery-add-button { opacity: 0; }
 .mini-gallery-add-button::-webkit-file-upload-button { visibility: hidden; }
 .mini-gallery-thumb-button { background-color: #fff; border: 1px solid #dadada; position: absolute; }
-.mini-gallery-thumb-button:after { background-image: url("ajax-loader-2.gif"); }
+.mini-gallery-thumb-button.loader:after { background-image: url("ajax-loader-2.gif"); }
 .mini-gallery-thumb { z-index: 10; }
 .mini-gallery-input { z-index: -1; }
-.mini-gallery-input:checked + .mini-gallery-thumb-button { border-color: #999; }
+.mini-gallery-input:checked + .mini-gallery-thumb-button:after { content: ""; border: 2px solid #222; box-sizing: border-box; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 11; }
+.mini-gallery-input:checked + .mini-gallery-thumb-button:before { content: ""; border: 1px solid #fff; box-sizing: border-box; position: absolute; left: 2px; right: 2px; top: 2px; bottom: 2px; z-index: 12; }
 
 .sortable-dragging { table-layout: fixed; }
 .sortable-dragging .table-control-content { display: none; }

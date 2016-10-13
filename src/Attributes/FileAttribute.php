@@ -130,7 +130,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
         }
 
         if ((bool) getimagesize($absPath)) {
-            $src = Image::open($absPath)->resize(null, 100)->inline();
+            $src = asset(\Croppa::url($absPath, null, 100));
             return "<img style='height:100px;' src='{$src}'>";
         }
 
