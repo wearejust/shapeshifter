@@ -3,6 +3,7 @@
 namespace Just\Shapeshifter\Attributes;
 
 use Gregwar\Image\Image;
+use Illuminate\Database\Eloquent\Model;
 
 class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
 {
@@ -14,22 +15,19 @@ class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
     /**
      * Get files in same dir
      */
-    protected function getFilesSameDirectory()
+    public function getEditValue(Model $model)
     {
         $files = (array) glob($this->absoluteStorageDir . '*');
         $files = array_filter($files, 'is_file');
 
-        foreach ($files as $file) {
-            $file = pathinfo($file);
-            $path = $this->relativeStorageDir . $file['basename'];
-            if (substr($path, 0, 1) == '/' || substr($path, 0, 1) == '\\') {
-                $path = substr($path, 1);
-            }
-            $this->existing[$file['basename']] = '/' . Image::open($path)->zoomCrop(100, 100)->jpeg();
+        foreach ($files as $path) {
+            $file = pathinfo($path);
+            $this->existing[$file['basename']] = asset(\Croppa::url($path, null, 41));
         }
-
         if (!$this->existing) {
             $this->existing = [''];
         }
+
+        return parent::getEditValue($model);
     }
 }

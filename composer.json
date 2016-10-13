@@ -15,9 +15,9 @@
     "php": ">=5.5.9",
     "edvinaskrucas/notification": "5.1.*",
     "barryvdh/laravel-elfinder": "0.3.x",
-    "gregwar/image": "2.*",
     "cartalyst/sentinel": "2.0.*",
-    "laravelcollective/html": "5.1.*|5.2.*"
+    "laravelcollective/html": "5.1.*|5.2.*",
+    "bkwld/croppa": "~4.0"
   },
   "require-dev": {
     "phpspec/phpspec": "~2.0",
