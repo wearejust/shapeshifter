@@ -114,7 +114,7 @@
         this.$place.addClass('medium-insert-images');
 
         $.colorbox({
-            href: '/elfinder/popup/editor',
+            href: '/admin/elfinder/popup/editor',
             fastIframe: true,
             iframe: true,
             width: '70%',
