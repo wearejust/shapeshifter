@@ -131,7 +131,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
 
         if ((bool) getimagesize($absPath)) {
             $src = asset(\Croppa::url($absPath, null, 100));
-            return "<img style='height:100px;' src='{$src}'>";
+            return "<img style='max-height:100px;' src='{$src}'>";
         }
 
         return Html::link($relPath, $model->{$this->name}, ['target' => '_blank']);
