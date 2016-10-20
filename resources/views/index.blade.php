@@ -23,7 +23,7 @@
                         <form action="" class="section-start section-end" method="get">
                             <fieldset>
                                 <label class="accessibility" for="search">{{ __('form.search') }}</label>
-                                <input class="search-control" id="search" placeholder="{{ __('form.search') }}…" type="search">
+                                <input class="search-control" id="search" placeholder="{{ __('form.search') }}…" name="search" type="search">
                                 <button class="js-hide" type="submit">{{ __('form.search') }}</button>
                             </fieldset>
                         </form>

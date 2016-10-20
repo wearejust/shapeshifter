@@ -10,7 +10,6 @@ use Just\Shapeshifter\Attributes\MediumAttribute;
 use Just\Shapeshifter\Exceptions;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
-use Just\Shapeshifter\Services\BreadcrumbService;
 use Notification;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -186,6 +185,10 @@ abstract class AdminController extends Controller
 
         $this->initAttributes();
 
+        if($query = request('search')) {
+            array_push($this->filter, $this->getDescriptor() . " LIKE '%" . $query."%'");
+        }
+        
         $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 
         if (!count($records) && $this->app['request']->ajax() && in_array('create', $this->disabledActions)) {
@@ -322,8 +325,6 @@ abstract class AdminController extends Controller
         $user = Sentinel::getUser();
         $user->setDisabledActions($this->disabledActions);
 
-        $breadcrumbService = $this->app->make(\Just\Shapeshifter\Services\BreadcrumbService::class);
-
         $this->formModifier->render();
 
         $this->beforeRender($this);
@@ -332,7 +333,6 @@ abstract class AdminController extends Controller
             'form'                 => $this->formModifier,
             'attributes'           => $this->repo->setAttributeValues($this->mode, $this->formModifier->getAllAttributes(), $this->model),
             'orderBy'              => $this->orderby,
-            'breadcrumbs'          => $breadcrumbService->breadcrumbs(),
             'cancel'               => $this->generateCancelLink(),
             'disabledActions'      => $this->disabledActions,
             'disableDeleting'      => $this->disableDeleting,

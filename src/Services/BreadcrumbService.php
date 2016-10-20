@@ -39,7 +39,7 @@ class BreadcrumbService
 
             $breadcrumbs[] = [
                 'url'   => $path . $edit,
-                'title' => str_replace("_", " ", $mode),
+                'title' => $mode
             ];
         }
 
