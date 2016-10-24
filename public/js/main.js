@@ -1149,13 +1149,18 @@ SortableTable.prototype.wrapLock = function(release) {
 
 
 SortableTable.prototype.update = function() {
+	var order = this.tbody.sortable('toArray', {'attribute': 'data-record-id'});
+	if (this.defaultOrder == 'desc') {
+		order.reverse();
+	}
+
 	$.ajax({
 		'type': 'POST',
 		'url': '/admin/ajax/sortorderchange',
 		'headers': window.AJAX_HEADERS,
 		'dataType': 'json',
 		'data': {
-			'order': this.tbody.sortable('toArray', {'attribute': 'data-record-id'}),
+			'order': order,
 			'model': model,
 			'url': window.location.pathname,
 			'relation': this.tbody.closest('.onetomany-relation-content').attr('data-relation')
