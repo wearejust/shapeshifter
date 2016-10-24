@@ -15,7 +15,7 @@ class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
     /**
      * Get files in same dir
      */
-    public function getEditValue(Model $model)
+    protected function getFilesSameDirectory()
     {
         $files = (array) glob($this->absoluteStorageDir . '*');
         $files = array_filter($files, 'is_file');
@@ -24,10 +24,9 @@ class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
             $file = pathinfo($path);
             $this->existing[$file['basename']] = asset(\Croppa::url($path, null, 41));
         }
+
         if (!$this->existing) {
             $this->existing = [''];
         }
-
-        return parent::getEditValue($model);
     }
 }
