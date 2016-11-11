@@ -13,7 +13,7 @@
 <br>
 <br>
 @section('scripts')
-
+    @parent
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.runtime.min.js"></script>
     <script src="{{ asset('packages/just/shapeshifter/js/attributes/medium/jquery.ui.widget.js') }} "></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.iframe-transport.min.js"></script>
@@ -41,6 +41,7 @@
 @stop
 
 @section('styles')
+    @parent
     <link rel="stylesheet" href="{{ asset('packages/just/shapeshifter/js/attributes/medium/medium/css/medium-editor.css') }}">
     <link rel="stylesheet" href="{{ asset('packages/just/shapeshifter/js/attributes/medium/medium/css/themes/default.css') }}">
     <link rel="stylesheet" href="{{ asset('packages/just/shapeshifter/js/attributes/medium/medium.css') }}">
