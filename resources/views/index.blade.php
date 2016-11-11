@@ -68,7 +68,7 @@
                             </thead>
                             <tbody>
                             @foreach ($records as $rec)
-                                <tr class="table-row js-transform {{ ! in_array($rec->id, $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->id, $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->id))) }}" data-record-id="{{ $rec->id }}">
+                                <tr class="table-row js-transform {{ ! in_array($rec->getKey(), $disableEditing) ? 'table-row-editable' : '' }} {{ ! in_array($rec->getKey(), $disableDeleting) ? 'table-row-deletable' : '' }}" data-edit-href="{{ route($routes['edit'], array_merge($ids, array($rec->getKey()))) }}" data-record-id="{{ $rec->getKey() }}">
                                     @foreach ($attributes as $attr)
                                         @if ( ! $attr->hasFlag('hide_list'))
                                             <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
@@ -84,10 +84,10 @@
                                     @if ($currentUser->can('delete'))
                                         <td class="table-cell table-control">
                                             <div class="container">
-                                                @if ( ! in_array($rec->id, $disableDeleting) )
+                                                @if ( ! in_array($rec->getKey(), $disableDeleting) )
                                                     <div class="table-control-content media-wrapper js-remove-wrapper">
                                                         <button class="btn btn-remove table-control-remove-button confirm-delete-dialog" type="button" data-yes="{{__('dialog.yes')}}" data-no="{{__('dialog.no')}}">X</button>
-                                                        {!! Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->id)))))  !!}
+                                                        {!! Form::model($rec, array('class' => 'accessibility', 'method' => 'DELETE', 'url' => route($routes['destroy'], array_merge($ids, array($rec->getKey())))))  !!}
                                                         {!! Form::close() !!}
                                                         <div class="dialog-confirm" style="display: none;">
                                                             <p>{{ __('dialog.remove') }}</p>
