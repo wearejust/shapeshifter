@@ -1,12 +1,12 @@
 <?php
 
 if (! function_exists('__')) {
-    function __($string)
+    function __($string, array $arguments = [])
     {
         $string = 'shapeshifter::site.' . $string;
 
         if (Lang::has($string)) {
-            return Lang::get($string);
+            return Lang::get($string, $arguments);
         }
 
         return $string;

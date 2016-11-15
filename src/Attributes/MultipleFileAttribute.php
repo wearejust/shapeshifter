@@ -2,8 +2,7 @@
 
 namespace Just\Shapeshifter\Attributes;
 
-use Gregwar\Image\Image;
-use Illuminate\Database\Eloquent\Model;
+use Croppa;
 
 class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
 {
@@ -22,7 +21,7 @@ class MultipleFileAttribute extends FileAttribute implements iAttributeInterface
 
         foreach ($files as $path) {
             $file = pathinfo($path);
-            $this->existing[$file['basename']] = asset(\Croppa::url($path, null, 41));
+            $this->existing[$file['basename']] = asset(Croppa::url($path, null, 41));
         }
 
         if (!$this->existing) {

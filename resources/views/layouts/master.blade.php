@@ -86,7 +86,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
     </div>
 </div>
 <p class="system-name">
-    <a href="/admin" class="system-name-button">Content</a>
+    <a href="/admin" class="system-name-button">
+        @if(file_exists(public_path('/css/images/logo-cms.png')))<img src="/css/images/logo-cms.png"  style="max-width: 4em; padding: .5em 0; "> @else Content @endif
+    </a>
 </p>
 @endif
 
