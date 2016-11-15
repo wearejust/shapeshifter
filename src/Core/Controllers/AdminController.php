@@ -12,6 +12,7 @@ use Just\Shapeshifter\Repository;
 use Just\Shapeshifter\ShapeshifterServiceProvider;
 use Notification;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Event;
 
 abstract class AdminController extends Controller
 {
@@ -187,6 +188,8 @@ abstract class AdminController extends Controller
 
         Notification::success(__('form.stored'));
 
+        Event::fire('shapeshifter.eloquent.created: ' . get_class($model), [$model)]);
+
         return $this->redirectAfterStore($this->getRedirectRoute(), func_get_args(), $model->id);
     }
 
@@ -217,6 +220,8 @@ abstract class AdminController extends Controller
 
         Notification::success(__('form.updated'));
 
+        Event::fire('shapeshifter.eloquent.updated: ' . get_class($model), [$model)]);
+
         return $this->redirectAfterUpdate($this->getRedirectRoute(), $ids, $model->id);
     }
 
@@ -227,11 +232,16 @@ abstract class AdminController extends Controller
     {
         $this->configureFields($this->formModifier);
         $ids = func_get_args();
+
         $model = $this->repository->findById(last($ids));
+
+        $modelId = $model->getKey();
 
         if ($this->repository->delete($model)) {
             Notification::success(__('form.removed'));
         }
+
+        Event::fire('shapeshifter.eloquent.deleted: ' . get_class($model), [$model, $modelId]);
 
         return $this->redirectAfterDestroy($this->getRedirectRoute(), $ids);
     }
