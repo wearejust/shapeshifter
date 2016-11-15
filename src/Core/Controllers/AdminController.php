@@ -12,6 +12,7 @@ use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
 use Notification;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Event;
 
 abstract class AdminController extends Controller
 {
@@ -262,6 +263,8 @@ abstract class AdminController extends Controller
 
         Notification::success(__('form.stored'));
 
+        Event::fire('shapeshifter.eloquent.created: ' . get_class($this->repo->getModel()), [$this->repo->getModel()]);
+
         return $this->redirectAfterStore($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
     }
 
@@ -291,6 +294,8 @@ abstract class AdminController extends Controller
 
         Notification::success(__('form.updated'));
 
+        Event::fire('shapeshifter.eloquent.updated: ' . get_class($this->repo->getModel()), [$this->repo->getModel()]);
+
         return $this->redirectAfterUpdate($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
     }
 
@@ -307,10 +312,13 @@ abstract class AdminController extends Controller
         $this->initAttributes();
 
         $this->model = $this->beforeDestroy($this->model);
+        $modelId = $this->model->getKey();
 
         if ($this->repo->delete($this->model)) {
             Notification::success(__('form.removed'));
         }
+
+        Event::fire('shapeshifter.eloquent.deleted: ' . get_class($this->repo->getModel()), [$this->repo->getModel(), $modelId]);
 
         return $this->redirectAfterDestroy($this->getRedirectRoute(), $this->data['ids']);
     }
