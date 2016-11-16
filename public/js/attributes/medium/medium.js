@@ -35,44 +35,47 @@ if (buttons.has('textexpander')) {
     extensions.textexpander = new TextExpander();
 }
 
-
-var editor = new MediumEditor('.medium-editable', {
-    'toolbar': {
-        'allowMultiParagraphSelection': true,
-        'buttons': buttons,
-        'sticky': true,
-        'updateOnEmptySelection': true,
-        'diffLeft': 0,
-        'diffTop': -5
-    },
-    'paste': {
-        'forcePlainText': true,
-        'cleanPastedHTML': true,
-        'cleanReplacements': [],
-        'cleanAttrs': ['class', 'style', 'dir'],
-        'cleanTags': ['meta']
-    },
-    'imageDragging': false,
-    'buttonLabels': 'fontawesome',
-    'extensions': extensions,
-    'disableExtraSpaces': true
-});
-
 $(function () {
-    $('.medium-editable').mediumInsert({
-        'editor': editor,
-        'enabled': true,
-        'addons': {
-            'filebrowser': true,
-            'images': false,
-            'embeds': {
-                'label': '<span class="fa fa-code"></span>',
-                'placeholder': mediumAttribute.translations.embedPlaceholder,
-                'styles': null,
-                'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + mediumAttribute.config.iframelyApiKey
+    var editor;
+    $('.medium-editable').each(function(index, item) {
+        editor = new MediumEditor(item, {
+            'toolbar': {
+                'allowMultiParagraphSelection': true,
+                'buttons': buttons,
+                'sticky': true,
+                'updateOnEmptySelection': true,
+                'diffLeft': 0,
+                'diffTop': -5
+            },
+            'paste': {
+                'forcePlainText': true,
+                'cleanPastedHTML': true,
+                'cleanReplacements': [],
+                'cleanAttrs': ['class', 'style', 'dir'],
+                'cleanTags': ['meta']
+            },
+            'imageDragging': false,
+            'buttonLabels': 'fontawesome',
+            'extensions': extensions,
+            'disableExtraSpaces': true
+        });
+
+        $(item).mediumInsert({
+            'editor': editor,
+            'enabled': true,
+            'addons': {
+                'filebrowser': true,
+                'images': false,
+                'embeds': {
+                    'label': '<span class="fa fa-code"></span>',
+                    'placeholder': mediumAttribute.translations.embedPlaceholder,
+                    'styles': null,
+                    'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + mediumAttribute.config.iframelyApiKey
+                }
             }
-        }
-    }).data('MediumEditor', editor);
+        }).data('MediumEditor', editor);
+    });
+
     
     setTimeout(function(){
         $('.medium-insert-embed iframe').each(function(key, item){

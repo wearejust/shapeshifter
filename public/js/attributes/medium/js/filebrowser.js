@@ -45,6 +45,8 @@
         this._defaults = defaults;
         this._name = pluginName;
 
+        this.elfinderUrl = this.$el.attr('data-elfinder-url');
+
         this.init();
     }
 
@@ -114,7 +116,7 @@
         this.$place.addClass('medium-insert-images');
 
         $.colorbox({
-            href: '/admin/elfinder/popup/editor',
+            href: this.elfinderUrl,
             fastIframe: true,
             iframe: true,
             width: '70%',
@@ -355,8 +357,15 @@
 
 function processSelectedFile(filePath, requestingField) {
     var element = $('.medium-insert-active');
-    element.find('img').attr('src', '/media/' + filePath).click();
+    var editor = element.closest('.medium-editable');
 
-    var editor = element.closest('.medium-editable').data('MediumEditor');
+    var dir = editor.attr('data-dir');
+    if (dir.substr(dir.length - 1, 1) == '/') dir = dir.substr(0, dir.length - 1);
+    dir = dir.split('/');
+    dir.pop();
+    dir = dir.join('/') + '/';
+    element.find('img').attr('src', dir + filePath).click();
+
+    editor = editor.data('MediumEditor');
     editor.trigger('editableInput', editor.elements[0], editor.elements[0]);
 }
