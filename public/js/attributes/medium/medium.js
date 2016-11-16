@@ -1,7 +1,7 @@
 // -----------------------------------------------------------
 // EDITOR
 // -----------------------------------------------------------
-var i, ext, buttons = ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'orderedlist', 'unorderedlist', 'blockquote_small', 'blockquote_big'];
+var i, ext, buttons = ['bold', 'italic', 'anchor', 'h2', 'h3', 'orderedlist', 'unorderedlist', 'blockquote_small', 'blockquote_big'];
 if (window.removeExtensions && window.removeExtensions.length) {
     for (i=0; i<window.removeExtensions.length; i++) {
          buttons.remove(window.removeExtensions[i]);
