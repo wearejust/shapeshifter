@@ -358,6 +358,7 @@
 function processSelectedFile(filePath, requestingField) {
     var element = $('.medium-insert-active');
     var editor = element.closest('.medium-editable');
+    editor = editor.siblings('[medium-editor-textarea-id="' + editor.attr('id') + '"]');
 
     var dir = editor.attr('data-dir');
     if (dir.substr(dir.length - 1, 1) == '/') dir = dir.substr(0, dir.length - 1);
