@@ -15,6 +15,7 @@ $(function() {
 	$('.tab-list').tabbed();
 	$('.js-datatable').sortableTable();
 	$('.acc-container').accordion();
+	$('.js-ranged').ranged();
 
 	var el;
 	$(".tokeninput").each(function(){
@@ -868,7 +869,42 @@ $.fn.removeImageDialog = function() {
 	})
 }
 
+// -----------------------------------------------------------
+// RANGED
+// -----------------------------------------------------------
+$.fn.ranged = function() {
+	return $(this).each(function(index, item) {
+		item = $(item);
+		item.data('ranged', new Ranged(item))
+	});
+};
 
+var Ranged = function(element) {
+
+	this.element = element;
+	this.input = this.element.siblings('input');
+	this.change = this.change.bind(this);
+	this.inputChange = this.inputChange.bind(this);
+
+	this.element.on('input', this.change);
+	this.input.on('change input', this.inputChange);
+
+	this.change();
+};
+
+Ranged.prototype.change = function(){
+	this.input.val(this.element.val() );
+};
+
+Ranged.prototype.inputChange = function(){
+	var val = this.input.val();
+	this.element.val(val);
+
+	var result = this.element.val();
+	if (result != val) {
+		this.input.val(result);
+	}
+};
 
 // -----------------------------------------------------------
 // TABBED
