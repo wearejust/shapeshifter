@@ -23,12 +23,9 @@
 
         <script>
             var mediumAttribute = {
-                'config' : {
-                    iframelyApiKey: ''
-                },
                 'translations': {
                     captionPlaceholder: "{{ trans('shapeshifter::editor.captionPlaceholder') }}",
-                    embedPlaceholder: "{{ trans('shapeshifter::editor.embedPlaceholder') }}",
+                    embedPlaceholder: "{{ trans('shapeshifter::editor.embedPlaceholder') }}"
                 }
             };
         </script>

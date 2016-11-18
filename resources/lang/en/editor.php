@@ -1,5 +1,5 @@
 <?php return [
     'captionPlaceholder' => 'Caption',
-    'embedPlaceholder'   => 'Enter a URL to a website, Facebook, Twitter, Youtube, etc..',
+    'embedPlaceholder'   => 'Paste a YouTube, Vimeo, Facebook, Twitter or Instagram link and press Enter',
     'placeholder'        => 'Type here...',
 ];

@@ -69,14 +69,12 @@ $(function () {
                 'embeds': {
                     'label': '<span class="fa fa-code"></span>',
                     'placeholder': mediumAttribute.translations.embedPlaceholder,
-                    'styles': null,
-                    'oembedProxy': '//iframe.ly/api/oembed?iframe=1&api_key=' + mediumAttribute.config.iframelyApiKey
+                    'styles': null
                 }
             }
         }).data('MediumEditor', editor);
     });
 
-    
     setTimeout(function(){
         $('.medium-insert-embed iframe').each(function(key, item){
             var iframe = $(item);
