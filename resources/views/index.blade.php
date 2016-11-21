@@ -72,7 +72,7 @@
                                     @foreach ($attributes as $attr)
                                         @if ( ! $attr->hasFlag('hide_list'))
                                             <td class="table-cell {{ ! $currentUser->can('drag') && $lastVisibleAttribute == $attr ? 'table-cell-last' : '' }}">
-                                                {!! $rec->{$attr->name} !!}
+                                                {!! $attr->getDisplayValue($rec) !!}
                                             </td>
                                         @endif
                                     @endforeach
