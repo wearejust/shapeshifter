@@ -74,6 +74,10 @@ class BreadcrumbService
         $routes = $this->app['router']->getRoutes();
         $route  = $routes->getByName($name);
 
+
+        if($route ===null) {
+            return null;
+        }
         $action     = $route->getActionName();
         $controller = $this->getFullControllerPath($action);
 
@@ -121,6 +125,9 @@ class BreadcrumbService
                     break;
                 default:
                     $controller = $this->resolveController($url, $k, $path);
+                    if($controller === null) {
+                        return null;
+                    }
                     $mode       = $controller->getTitle();
                     break;
             }

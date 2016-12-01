@@ -47,6 +47,27 @@ document.documentElement.className=TOUCH?"js touch":"js";
             </div>
         </div>
     </div>
+    <div class="header-bottom">
+        <div class="breadcrumbs">
+            <ul class="breadcrumbs-list list">
+                <li class="breadcrumbs-item">
+                    <a class="breadcrumbs-link breadcrumbs-first link-alt" href="/admin" style="background-size: 1em;">{{ __('breadcrumb.home') }}</a>
+                <!--</li>-->
+                @foreach ($breadcrumbs as $crumb)
+                <li class="breadcrumbs-item" style="background-size: contain !important">
+                    @if ($crumb == end($breadcrumbs))
+                    <span class="breadcrumbs-link">{{ $crumb['title'] }}</span>
+                    @else
+                    <a class="breadcrumbs-link breadcrumbs-link-button link-alt" href="{{ $crumb['url'] }}">
+                        <span class="breadcrumbs-link-text">{{ $crumb['title'] }}</span>
+                    </a>
+                    @endif
+                <!--</li>-->
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
 </div>
 <div class="header">
     <div class="header-middle" style="display: none;">
@@ -58,7 +79,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
         <ul class="main-nav-list list group">
             @foreach ($menu as $module)
                 <li class="main-nav-item">
-                    <a class="main-nav-link {{ $module['active'] ? ' main-nav-item-active' : '' }}" href="{{ $module['url'] }}"><i class="fa fa-{{ $module['icon'] }}"></i> &nbsp; {{ $module['name'] }}</a>
+                    <a class="main-nav-link {{ $module['active'] ? ' main-nav-item-active' : '' }}" href="{{ $module['url'] }}">
+                        <i class="fa fa-{{ $module['icon'] }}"></i> &nbsp; {{ $module['name'] }}
+                    </a>
                     @if (count($module['children']))
                         <ul class="sub-list list {{ ! $module['active'] ? 'js-hide' : ''}}">
                             @foreach ($module['children'] as $child)
