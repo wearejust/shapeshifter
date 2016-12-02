@@ -59,10 +59,7 @@ class Repository
      */
     public function all($orderBy, array $filters = [], array $parent = [], $pagination = false)
     {
-        $records = $this->getRecords($orderBy, $filters, $parent, $pagination);
-
-        return $this->app->make(AttributeService::class, [$this->attributes])
-            ->mutateRecords($records);
+        return $this->getRecords($orderBy, $filters, $parent, $pagination);
     }
 
     /**
