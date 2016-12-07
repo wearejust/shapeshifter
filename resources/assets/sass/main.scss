@@ -202,8 +202,8 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 .messages {  }
 .alert { font-weight: bold; margin-bottom: 1px; margin-top: 1px; }
 .alert-info { background-color: #ccc; color: $primary-color; }
-.alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; transition: top .5s; }
-.js .controls .alert-success { top: 3.15em; }
+.alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; transition: top .5s; z-index: 99999; }
+.js .controls .alert-success { top: 3.5em; }
 .js .controls .alert-success-active { top: 0; }
 .alert-warning { background-color: #d76e19; color: #fff; }
 .alert-error { background-color: #a31616; color: #fff; }

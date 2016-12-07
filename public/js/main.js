@@ -121,15 +121,27 @@ function alertShow(message) {
         message = $('.alert-success');
     }
 
-    message.execute(function() {
-        message.addClass('alert-success-active');
-        message.execute(3500, function(){
-            message.removeClass('alert-success-active');
-            message.execute(1000, function(){
-                message.remove();
-            });
-        });
-    });
+    if (message.length) {
+		message.one('click', function() {
+			message.stop(true);
+			message.removeClass('alert-success-active');
+			message.execute(1000, function(){
+				message.remove();
+			});
+		});
+
+		message.execute(function() {
+			message.addClass('alert-success-active');
+			message.execute(3500, function(){
+				message.removeClass('alert-success-active');
+				message.execute(1000, function(){
+					message.off('click');
+					message.remove();
+				});
+			});
+		});
+	}
+
 }
 
 

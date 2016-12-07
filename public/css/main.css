@@ -620,9 +620,9 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .alert-info { background-color: #ccc; color: #222; }
 
-.alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; transition: top .5s; }
+.alert-success { background-color: #529948; color: #fff; margin: 0; position: relative; top: 0; transition: top .5s; z-index: 99999; }
 
-.js .controls .alert-success { top: 3.15em; }
+.js .controls .alert-success { top: 3.5em; }
 
 .js .controls .alert-success-active { top: 0; }
 
