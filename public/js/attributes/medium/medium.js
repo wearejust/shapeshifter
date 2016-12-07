@@ -16,28 +16,28 @@ if (window.addExtensions && window.addExtensions.length) {
     }
 }
 
-var extensions = {};
-if (buttons.has('blockquote_small')) {
-    extensions.blockquote_small = new MediumButton({
-        'label':'<i class="fa fa-quote-right">&nbsp;&nbsp;<sub>Klein</sub></i>',
-        'start':'<blockquote class="small">',
-        'end':'</blockquote>'
-    });
-}
-if (buttons.has('blockquote_big')) {
-    extensions.blockquote_big = new MediumButton({
-        'label':'<i class="fa fa-quote-right">&nbsp;&nbsp;<sub>Groot</sub></i>',
-        'start':'<blockquote class="big">',
-        'end':'</blockquote>'
-    });
-}
-if (buttons.has('textexpander')) {
-    extensions.textexpander = new TextExpander();
-}
-
 $(function () {
-    var editor;
+    var editor, extensions = {};
     $('.medium-editable').each(function(index, item) {
+
+        if (buttons.has('blockquote_small')) {
+            extensions.blockquote_small = new MediumButton({
+                'label':'<i class="fa fa-quote-right">&nbsp;&nbsp;<sub>Klein</sub></i>',
+                'start':'<blockquote class="small">',
+                'end':'</blockquote>'
+            });
+        }
+        if (buttons.has('blockquote_big')) {
+            extensions.blockquote_big = new MediumButton({
+                'label':'<i class="fa fa-quote-right">&nbsp;&nbsp;<sub>Groot</sub></i>',
+                'start':'<blockquote class="big">',
+                'end':'</blockquote>'
+            });
+        }
+        if (buttons.has('textexpander')) {
+            extensions.textexpander = new TextExpander();
+        }
+
         editor = new MediumEditor(item, {
             'toolbar': {
                 'allowMultiParagraphSelection': true,
