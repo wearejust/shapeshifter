@@ -178,6 +178,7 @@ abstract class AdminController extends Controller
      */
     public function index()
     {
+
         $this->data['ids'] = func_get_args();
 
         $this->mode  = 'index';
@@ -206,6 +207,7 @@ abstract class AdminController extends Controller
      */
     public function create()
     {
+
         $this->data['ids'] = func_get_args();
 
         $this->mode  = 'create';
@@ -529,4 +531,5 @@ abstract class AdminController extends Controller
     {
         return $this->repo;
     }
+
 }

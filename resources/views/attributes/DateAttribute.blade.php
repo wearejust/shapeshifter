@@ -19,7 +19,7 @@
 
             <p class="datepicker input-group" data-wrap="true" data-clickOpens="false">
 
-                <input placeholder="{{ date('d-m-Y') }}"
+                <input placeholder="{{strftime('%Y-%m-%d')}}"
                        value="{{ $model->{$name} }}"
                        name="{{ $name }}"
                        class="{{ ($required ? ' js-required':'') }}"
