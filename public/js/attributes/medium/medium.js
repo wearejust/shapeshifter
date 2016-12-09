@@ -69,7 +69,8 @@ $(function () {
                 'embeds': {
                     'label': '<span class="fa fa-code"></span>',
                     'placeholder': mediumAttribute.translations.embedPlaceholder,
-                    'styles': null
+                    'styles': null,
+                    'oembedProxy': mediumAttribute.oembedProxy
                 }
             }
         }).data('MediumEditor', editor);
