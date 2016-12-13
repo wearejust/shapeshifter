@@ -25,7 +25,9 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!! Html::style("/packages/just/shapeshifter/js/colorbox/colorbox.css")  !!}
 {!! Html::style("/packages/just/shapeshifter/js/flatpickr/flatpickr.dark.min.css")  !!}
 {!! Html::style("/packages/just/shapeshifter/js/selectize/dist/css/selectize.default.css")  !!}
+{!! Html::style("/packages/just/shapeshifter/js/sweetalert/sweetalert2.css")  !!}
 {!! Html::style("//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")  !!}
+
 @yield('styles')
 <link href="/packages/just/shapeshifter/css/overrides.css" rel="stylesheet">
 </head>
@@ -106,5 +108,6 @@ document.documentElement.className=TOUCH?"js touch":"js";
 {!!  Html::script("/packages/just/shapeshifter/js/flatpickr/flatpickr.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/selectize/dist/js/standalone/selectize.min.js")  !!}
 {!!  Html::script("/packages/just/shapeshifter/js/main.js")  !!}
+{!!  Html::script("/packages/just/shapeshifter/js/sweetalert/sweetalert2.js")  !!}
 
 @yield('scripts')

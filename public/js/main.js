@@ -1,5 +1,5 @@
 // -----------------------------------------------------------
-// DOCUMENT ON READY 
+// DOCUMENT ON READY
 // -----------------------------------------------------------
 $(function() {
 	window.AJAX_HEADERS = {
@@ -9,6 +9,7 @@ $(function() {
 	Menu = new Menu();
 	Required = new Required();
 	ImageSizeChecker = new ImageSizeChecker();
+	AuthChecker = new AuthChecker();
 
     $('label.js-placeholder').placeholderText();
 
@@ -87,31 +88,6 @@ $(function() {
 
 	alertShow();
 
-	/*
-	 $('.sortable').nestedSortable({
-	 forcePlaceholderSize: true,
-	 handle: 'div',
-	 items: 'li',
-	 toleranceElement: '> div',
-	 placeholder: 'sortable-placeholder',
-	 protectRoot: true
-	 // isAllowed: function(item, parent) {
-	 //     $('.form-group').css('opacity', 0);
-	 //     return true;
-	 // }
-	 });
-
-	 $('.sortable ul ul, .sortable ul').hide();
-	 $('.sortable-item').click(function(e){
-	 $(e.currentTarget).find('~ ul').toggle();
-	 $(this).toggleClass('open');
-	 });
-	 $('.sortable-item ul').on('click', function(e){
-	 $(e.currentTarget).find('~ ul').toggle();
-	 $(this).toggleClass('open');
-	 });
-	 */
-
 });
 
 function alertShow(message) {
@@ -144,6 +120,32 @@ function alertShow(message) {
 
 }
 
+// -----------------------------------------------------------
+// AUTHENTICATION POLLER
+// -----------------------------------------------------------
+var AuthChecker = function() {
+	if(!$body.hasClass('login')) {
+		this.loaded = this.loaded.bind(this);
+		this.interval = setInterval(this.load.bind(this), 10000);
+	}
+};
+
+AuthChecker.prototype.load = function() {
+	$.getJSON('/admin/alive-check', this.loaded);
+};
+
+AuthChecker.prototype.loaded = function(data) {
+	if(!data.is_alive) {
+		swal({
+			title: 'Session expired',
+			text: 'Please log back in.',
+			confirmButtonText: "Login"
+		}).then(function () {
+			location.reload();
+		});
+		clearInterval(this.interval);
+	}
+};
 
 
 // -----------------------------------------------------------
@@ -381,7 +383,7 @@ PlaceholderText.prototype.firstInit = function() {
     if (this.input.val() || this.input.text()) {
         this.label.addClass(this.activeClass);
     } else {
-        this.label.removeClass(this.activeClass);        
+        this.label.removeClass(this.activeClass);
     }
 }
 
@@ -596,7 +598,7 @@ var MultipleFileAttribute = function(element) {
 
     this.clearButton = this.element.find('.btn-remove');
     this.clearButton.on('click', this.clear.bind(this));
-	
+
 	this.list = this.element.find('.mini-gallery-list');
 	this.item = this.list.find('.mini-gallery-list-item').last();
 
