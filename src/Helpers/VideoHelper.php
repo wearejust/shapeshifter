@@ -13,20 +13,32 @@ class VideoHelper
      */
     public static function preview($url, $width = 160, $height = 90)
     {
-        $tag     = "<div class='video'><iframe style='margin:0;' src='%s' width='{$width}' height='{$height}'></iframe></div>";
-        $vimeoID = static::getVimeoID($url);
+        $tag = "<div class='video'><iframe style='margin:0;' src='%s' width='{$width}' height='{$height}'></iframe></div>";
 
-        if ($vimeoID) {
-            return sprintf($tag,
-                "//player.vimeo.com/video/{$vimeoID}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff"
-            );
+        if ($url = static::getUrl($url, true)) {
+            return sprintf($tag, $url);
         }
 
-        $youtubeID = static::getYoutubeID($url);
-        if ($youtubeID) {
-            return sprintf($tag,
-                "//youtube.com/embed/{$youtubeID}?modestbranding=1&showinfo=0&controls=0&rel=0&autohide=1"
-            );
+        return '';
+    }
+    /**
+     * @param string    $url
+     * @param boolean   $styled
+     *
+     * @return string
+     */
+    public static function getUrl($url, $styled = false)
+    {
+        if ($vimeoID = static::getVimeoID($url)) {
+            $url = '//player.vimeo.com/video/' . $vimeoID;
+            if ($styled) $url .= '?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff';
+            return $url;
+        }
+
+        if ($youtubeID = static::getYoutubeID($url)) {
+            $url = '//youtube.com/embed/' . $youtubeID;
+            if ($styled) $url .= '?modestbranding=1&showinfo=0&controls=0&rel=0&autohide=1';
+            return $url;
         }
 
         return '';
