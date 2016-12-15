@@ -24,6 +24,12 @@ View::composer(['shapeshifter::*'], Layout::class);
 
 Route::group(['prefix' => 'admin'], function () {
 
+    Route::get('alive-check', function(){
+        return [
+            'is_alive' => (bool) \Sentinel::check()
+        ];
+    });
+
     Route::group(['before' => 'admin-auth'], function () {
         Route::post('ajax/sortorderchange', getAction(AjaxController::class, 'sortorderChange'))->before('ajax');
         Route::post('ajax/upload', getAction(AjaxController::class, 'upload'))->before('ajax');
