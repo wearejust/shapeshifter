@@ -4,7 +4,7 @@
 var i, ext, buttons = ['bold', 'italic', 'anchor', 'h2', 'h3', 'orderedlist', 'unorderedlist', 'blockquote_small', 'blockquote_big'];
 if (window.removeExtensions && window.removeExtensions.length) {
     for (i=0; i<window.removeExtensions.length; i++) {
-         buttons.remove(window.removeExtensions[i]);
+        buttons.remove(window.removeExtensions[i]);
     }
 }
 if (window.addExtensions && window.addExtensions.length) {
@@ -60,7 +60,11 @@ $(function () {
             'disableExtraSpaces': true
         });
 
-        $(item).mediumInsert({
+        $(editor.elements).data('MediumEditor', editor);
+
+        item = $(item);
+        item.data('MediumEditor', editor);
+        item.mediumInsert({
             'editor': editor,
             'enabled': true,
             'addons': {
@@ -73,9 +77,9 @@ $(function () {
                     'oembedProxy': mediumAttribute.oembedProxy
                 }
             }
-        }).data('MediumEditor', editor);
+        });
     });
-
+    
     setTimeout(function(){
         $('.medium-insert-embed iframe').each(function(key, item){
             var iframe = $(item);
