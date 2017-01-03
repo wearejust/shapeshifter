@@ -57,7 +57,10 @@ $(function () {
             'imageDragging': false,
             'buttonLabels': 'fontawesome',
             'extensions': extensions,
-            'disableExtraSpaces': true
+            'disableExtraSpaces': true,
+            'anchor': {
+                'targetCheckbox': true
+            }
         });
 
         $(editor.elements).data('MediumEditor', editor);
