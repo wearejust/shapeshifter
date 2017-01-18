@@ -18,6 +18,9 @@ function MediumButton(options) {
 	options.start = (options.start === undefined) ? '' : options.start;
 	options.end = (options.end === undefined) ? '' : options.end;
 	
+    var element = $(options.start + options.end);
+    options.element = element.prop('tagName').toLowerCase() + '.' + element.attr('class').split(' ').join('.');
+
     this.options = options;
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
@@ -38,6 +41,7 @@ function MediumButton(options) {
 			if(options.action != undefined) html = options.action(html, false);
 			html = String(html).split(options.start).join('');
 			html = String(html).split(options.end).join('');
+            mark = false;
         }
 		
 		
@@ -47,31 +51,45 @@ function MediumButton(options) {
         //Set new Content
         if (sel.getRangeAt && sel.rangeCount) {
             range = window.getSelection().getRangeAt(0);
-            range.deleteContents();
+            var container = $(range.startContainer);
 
-            // Create a DocumentFragment to insert and populate it with HTML
-            // Need to test for the existence of range.createContextualFragment
-            // because it's non-standard and IE 9 does not support it
-            if (range.createContextualFragment) {
-                fragment = range.createContextualFragment(html);
+            if (container.closest(options.element).length) {
+               container.unwrap().wrapAll('<p></p>');
+
             } else {
-                var div = document.createElement('div');
-                div.innerHTML = html;
-                fragment = document.createDocumentFragment();
-                while ((child = div.firstChild)) {
-                    fragment.appendChild(child);
+               range.deleteContents();
+                if (mark) {
+                    container.unwrap();
                 }
-				
+
+                // Create a DocumentFragment to insert and populate it with HTML
+               // Need to test for the existence of range.createContextualFragment
+               // because it's non-standard and IE 9 does not support it
+               if (range.createContextualFragment) {
+                   fragment = range.createContextualFragment(html);
+               } else {
+                   var div = document.createElement('div');
+                   div.innerHTML = html;
+                   fragment = document.createDocumentFragment();
+                   while ((child = div.firstChild)) {
+                       fragment.appendChild(child);
+                   }
+
+               }
+               var firstInsertedNode = fragment.firstChild;
+               var lastInsertedNode = fragment.lastChild;
+               range.insertNode(fragment);
+               if (firstInsertedNode) {
+                   range.setStartBefore(firstInsertedNode);
+                   range.setEndAfter(lastInsertedNode);
+               }
+               sel.removeAllRanges();
+               sel.addRange(range);
             }
-            var firstInsertedNode = fragment.firstChild;
-            var lastInsertedNode = fragment.lastChild;
-            range.insertNode(fragment);
-            if (firstInsertedNode) {
-                range.setStartBefore(firstInsertedNode);
-                range.setEndAfter(lastInsertedNode);
-            }
-            sel.removeAllRanges();
-            sel.addRange(range);
+
+            // Trigger change on editor
+            var editor = container.closest('.medium-editable').data('MediumEditor');
+            editor.trigger('editableInput',  editor.elements[0],  editor.elements[0]);
         }
 	
     };

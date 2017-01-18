@@ -17,7 +17,7 @@ if (window.addExtensions && window.addExtensions.length) {
 }
 
 $(function () {
-    var editor, extensions = {};
+    var editor, elements, extensions = {};
     $('.medium-editable').each(function(index, item) {
 
         if (buttons.has('blockquote_small')) {
@@ -63,7 +63,9 @@ $(function () {
             }
         });
 
-        $(editor.elements).data('MediumEditor', editor);
+        elements = $(editor.elements);
+        elements.find('p:empty').remove();
+        elements.data('MediumEditor', editor);
 
         item = $(item);
         item.data('MediumEditor', editor);
