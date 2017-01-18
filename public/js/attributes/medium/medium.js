@@ -59,7 +59,9 @@ $(function () {
             'extensions': extensions,
             'disableExtraSpaces': true,
             'anchor': {
-                'targetCheckbox': true
+                'customClassOption': (mediumAttribute.anchor && mediumAttribute.anchor.class) ? mediumAttribute.anchor.class : null,
+                'customClassOptionText': (mediumAttribute.anchor && mediumAttribute.anchor.class && mediumAttribute.anchor.title) ? mediumAttribute.anchor.title : '',
+                'targetCheckbox': (mediumAttribute.anchor && mediumAttribute.anchor.target) ? mediumAttribute.anchor.target : true
             }
         });
 
