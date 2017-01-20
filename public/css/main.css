@@ -670,47 +670,33 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
   .js .js-placeholder.focus .form-label { color: #666; }
   .js .js-placeholder.active .form-label { display: none; } }
 
-.login { padding: 0; -webkit-animation: login-animation 1.5s ease forwards; animation: login-animation 1.5s ease forwards; }
+.login { height: 100%; padding: 0; -webkit-animation: login-animation 1.5s ease forwards; animation: login-animation 1.5s ease forwards; }
 
-.login-area { color: #797979; }
+.login-area { color: #797979; display: table; height: 100%; table-layout: fixed; width: 100%; }
 
-.login-area-form { max-width: 22em; margin: 0 auto; padding: 2.222em 0; font-size: 1.25em; }
+.login-area-heading { margin: 0; padding: 0; }
 
-.login-area-form .separate { margin: 5px 0; }
+.login-area-inner { display: table-cell; vertical-align: middle; }
 
-.login input[type="password"], .login input[type="email"] { transition: 0.3s; background-color: #eee; border: none; color: #e4e4e4; }
+.login-content { margin: auto; max-width: 24rem; }
 
-.login input[type=checkbox] { opacity: 0; position: absolute; }
+.login-area-form { font-size: 1.25em; }
 
-.login input[type=checkbox] + label:before { font-family: FontAwesome; display: inline-block; vertical-align: middle; }
+.login-checkbox-row { margin-bottom: 1.5rem; margin-top: 1.5rem; }
 
-.login input[type=checkbox] + label:before { content: "\f096"; }
+.login-checkbox-row input { bottom: 0; left: 0; opacity: 0; position: absolute; right: 0; top: 0; }
 
-.login input[type=checkbox] + label:before { margin-right: 0.7em; transition: 0.2s; }
+.login-checkbox-row label { font-size: 0.875rem; }
 
-.login input[type=checkbox]:checked + label:before { content: "\f14a"; margin-right: 0.95em; transition: 0.2s; }
+.login-checkbox-field { border: 1px solid #797979; display: block; float: left; height: 0.875rem; margin-right: 0.5rem; margin-top: 2px; width: 0.875rem; }
 
-.login input[type="password"]:focus, .login input[type="email"]:focus { color: #000; }
+.login-checkbox-row input:checked + .login-checkbox-field { background-color: #797979; }
 
-.login label[for="remember"] { font-size: 0.875rem; }
+.login-button, .login input { padding: 1rem 1.25rem; }
+
+.login-button:hover, .login-button:focus, .login-button:active { background-color: #555; }
 
 .forgot-password-action-container { text-align: center; margin: 2.222em 0; }
-
-.login-button { background-color: #373737; color: #fff; display: inline-block; font-weight: bold; line-height: 1.2; padding: .75em 1em; text-align: center; text-decoration: none; vertical-align: top; }
-
-.login-checkbox { margin-bottom: 1.5em; margin-top: 1.5em; margin-left: 1em; }
-
-.login-area { display: table; height: 100vh; width: 100%; }
-
-.login-area > .page { display: table-cell; vertical-align: middle; }
-
-.login-heading { max-width: 25.6em; margin: 0 auto; }
-
-.login-heading > h1 { margin: 0; padding: 0; text-transform: uppercase; }
-
-.login-heading > h1:after { background-image: url("content-icon-alt.png"); content: ''; display: inline-block; height: 1em; vertical-align: -0.15em; width: 0.8em; }
-
-.login-area .content-body { background-color: transparent; border: none; padding-bottom: 0; padding-top: 0; }
 
 @-webkit-keyframes login-animation { 0% { margin-top: -3em;
     opacity: 0; }
