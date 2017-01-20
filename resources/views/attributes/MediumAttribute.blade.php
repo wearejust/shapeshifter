@@ -51,7 +51,7 @@
                     },
                     'toolbar': {
                         'allowMultiParagraphSelection': true,
-                        'buttons': ['bold', 'italic', 'anchor', 'h2', 'h3', 'orderedlist', 'unorderedlist', 'quote', 'textexpander'],
+                        'buttons': ['bold', 'italic', 'anchor', 'h2', 'h3', 'orderedlist', 'unorderedlist', 'quote'],
                         'sticky': true,
                         'updateOnEmptySelection': true,
                         'diffLeft': 0,
