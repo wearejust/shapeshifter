@@ -28,6 +28,14 @@
                     'buttonLabels': 'fontawesome',
                     'disableExtraSpaces': true,
                     'extensions': {
+                        'anchor': new Anchor({
+//                            'filebrowser': '/media/',
+//                            'customClassOption': 'btn',
+                            'customClassOptionText': '{{ trans('shapeshifter::editor.anchorButtonText') }}',
+                            'placeholderText': '{{ trans('shapeshifter::editor.anchorPlaceholder') }}',
+                            'targetCheckbox': true,
+                            'targetCheckboxText': '{{ trans('shapeshifter::editor.targetCheckboxText') }}'
+                        })
 //                        'blockquote_small': new MediumButton({
 //                            'label': '<i class="fa fa-quote-right">&nbsp;&nbsp;<sub>Klein</sub></i>',
 //                            'tag': 'blockquote',
@@ -82,6 +90,7 @@
         <script src="{{ asset('packages/just/shapeshifter/js/medium/rangy-core.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/rangy-classapplier.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-editor.min.js') }}"></script>
+        <script src="{{ asset('packages/just/shapeshifter/js/medium/extensions/anchor.js') }}"></script>
 {{--        <script src="{{ asset('packages/just/shapeshifter/js/medium/extensions/textexpander.js') }}"></script>--}}
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/medium-editor-insert-plugin.min.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/addons/filebrowser.js') }}"></script>

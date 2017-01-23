@@ -25,6 +25,7 @@
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li{margin-top:1.8875rem;}
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons{left:-7px;}
 .medium-insert-images-toolbar.medium-editor-toolbar.medium-toolbar-arrow-under.medium-editor-toolbar-active .medium-toolbar-arrow-under:after{display:none;}
+.medium-toolbar-arrow-under:after { top: 100%; }
 
 .medium-insert-action { display: table-cell !important; vertical-align: middle; text-align: center;}
 .fa:before { display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -41,3 +42,9 @@
 .medium-editor-toolbar-anchor-button + label { padding: 0; }
 .medium-editable .btn { background-color: #000; color: #fff; padding: 0.125em; }
 .medium-editable .btn:after { content: "\0000a0›"; }
+
+.medium-editor-toolbar-anchor { padding: 1em 0.375em 0.6875em 1em; }
+.medium-editor-toolbar-anchor .medium-editor-toolbar-input { background-color: #444; margin: 0 1em 0.5em 0; padding-right: 3em; }
+.medium-editor-toolbar-anchor-browse { padding: 12px; position: absolute; right: 7em; top: 1.3125em; }
+.medium-editor-toolbar-anchor-browse, .medium-editor-toolbar-anchor-browse:hover, .medium-editor-toolbar-anchor-browse:focus, .medium-editor-toolbar-anchor-browse:active { background-color: transparent; }
+.medium-editor-toolbar-anchor-target + label, .medium-editor-toolbar-anchor-button + label { padding: 0; padding-left: 0.5em; }

@@ -98,6 +98,7 @@
      */
 
     Filebrowser.prototype.add = function () {
+        window.processSelectedFile = this.processSelectedFile;
 
         this.$place = $(document).find('.medium-insert-active');
         var element = '<figure contenteditable="false"><img class="js-medium-insert-image-placeholder" src="#" alt=""></figure>';
@@ -283,6 +284,30 @@
 
     };
 
+    /**
+     * Process selected file
+     *
+     * @param filePath
+     * @param requestingField
+     * @returns {void}
+     */
+    Filebrowser.prototype.processSelectedFile = function (filePath, requestingField) {
+        var element = $('.medium-insert-active');
+        var editor = element.closest('.medium-editable');
+        editor = editor.siblings('[medium-editor-textarea-id="' + editor.attr('id') + '"]');
+
+        var dir = editor.attr('data-dir');
+        if (dir.substr(dir.length - 1, 1) == '/') dir = dir.substr(0, dir.length - 1);
+        dir = dir.split('/');
+        dir.pop();
+        dir = dir.join('/') + '/';
+        element.find('img').attr('src', dir + filePath).click();
+
+        editor = editor.data('MediumEditor');
+        editor.trigger('editableInput', editor.elements[0], editor.elements[0]);
+    };
+
+
     /** Addon initialization */
 
     $.fn[pluginName + addonName] = function (options) {
@@ -295,18 +320,3 @@
 
 })(jQuery, window, document);
 
-function processSelectedFile(filePath, requestingField) {
-    var element = $('.medium-insert-active');
-    var editor = element.closest('.medium-editable');
-    editor = editor.siblings('[medium-editor-textarea-id="' + editor.attr('id') + '"]');
-
-    var dir = editor.attr('data-dir');
-    if (dir.substr(dir.length - 1, 1) == '/') dir = dir.substr(0, dir.length - 1);
-    dir = dir.split('/');
-    dir.pop();
-    dir = dir.join('/') + '/';
-    element.find('img').attr('src', dir + filePath).click();
-
-    editor = editor.data('MediumEditor');
-    editor.trigger('editableInput', editor.elements[0], editor.elements[0]);
-}
