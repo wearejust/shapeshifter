@@ -20,11 +20,6 @@
         <script>
             function mediumAttributeOptions() {
                 return {
-                    'anchor': {
-                        'customClassOption': null,
-                        'customClassOptionText': 'Button',
-                        'targetCheckbox': true
-                    },
                     'buttonLabels': 'fontawesome',
                     'disableExtraSpaces': true,
                     'extensions': {
