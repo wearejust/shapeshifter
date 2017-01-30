@@ -23,16 +23,10 @@ class ReadonlyHandler extends Handler
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model|null $model
      *
-     * @return mixed
      */
-    public function view(Model $model, Attribute $attribute)
+    protected function getViewName()
     {
-        return new AttributeView('Readonly', [
-            'name' => $attribute->getName(),
-            'flags' => $attribute->getFlags(),
-            'model' => $model,
-        ]);
+        return 'Readonly';
     }
 }

@@ -34,18 +34,10 @@ class CheckboxHandler extends Handler
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model     $model
-     * @param \Just\Shapeshifter\Attributes\Attribute $attribute
      *
-     * @return mixed
      */
-    public function view(Model $model, Attribute $attribute)
+    protected function getViewName()
     {
-        return new AttributeView('Checkbox', [
-            'model' => $model,
-            'name' => $attribute->getName(),
-            'flags' => $attribute->getFlags(),
-        ]);
+        return 'Checkbox';
     }
-
 }

@@ -30,20 +30,11 @@ class DropdownHandler extends Handler
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model     $model
-     * @param \Just\Shapeshifter\Attributes\Attribute $attribute
      *
-     * @return \Just\Shapeshifter\View\AttributeView
      */
-//    public function view(Model $model, Attribute $attribute)
-    public function view(Model $model, Attribute $attribute)
+    protected function getViewName()
     {
-        return new AttributeView('Dropdown', [
-            'model' => $model,
-            'name' => $attribute->getName(),
-            'flags' => $attribute->getFlags(),
-            'options' => $attribute->getOptions(),
-        ]);
+        return 'Dropdown';
     }
 
 }

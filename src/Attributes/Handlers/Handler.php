@@ -8,12 +8,8 @@ use Just\Shapeshifter\Attributes\Attribute;
 abstract class Handler
 {
     /**
-     * @param \Illuminate\Database\Eloquent\Model     $model
-     * @param \Just\Shapeshifter\Attributes\Attribute $attribute
-     *
-     * @return \Just\Shapeshifter\View\AttributeView
      */
-    abstract public function view(Model $model, Attribute $attribute);
+    abstract protected function getViewName();
 
     /**
      * Base display function to display the view of the attribute.
@@ -80,5 +76,16 @@ abstract class Handler
     public function getDisplayValue(Model $model, Attribute $attribute)
     {
         return $model->{$attribute->getName()};
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Model|null $model
+     * @param \Just\Shapeshifter\Attributes\Attribute  $attribute
+     *
+     * @return AttributeView
+     */
+    public function view(Model $model, Attribute $attribute)
+    {
+        return new AttributeView($this->getViewName(), array_merge($attribute->toArray(), compact('model')));
     }
 }
