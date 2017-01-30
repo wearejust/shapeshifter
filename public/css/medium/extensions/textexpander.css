@@ -1,8 +1,0 @@
-.js-textexpander-modal { position: absolute; z-index: 9999; background-color: #fff; width: 32em; padding: 0.25em; border: 1px solid #000; text-align: right; }
-.js-textexpander-modal-content { position: relative; height: 100%; }
-.js-textexpander-modal textarea { opacity: 0; }
-.js-textexpander-modal button { padding: 0.25em; margin-top: 0.25em; margin-left: 0.25em; }
-.js-textexpander { font-weight: bold; }
-.js-textexpander:before { content: "["; }
-.js-textexpander:after { content: "]"; }
-.js-textexpander-content { display: none; }

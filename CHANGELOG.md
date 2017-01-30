@@ -1,7 +1,7 @@
-# Change Log
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
+# Changelog
 
-## [Unreleased]
-## [beta 0.0.1] - 2016-06-09
+All notable changes to `:package_name` will be documented in this file
 
+## 1.0.0 - 201X-XX-XX
+
+- initial release

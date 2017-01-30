@@ -1,48 +1,41 @@
 {
-  "name": "wearejust/shapeshifter",
-  "description": "The Just CMS package, The back-end of things.",
-  "authors": [
-    {
-      "name": "Cees van Egmond",
-      "email": "cees.vanegmond@wearejust.com"
+    "name": "wearejust/shapeshifter",
+    "description": "",
+    "keywords": [
+        "wearejust",
+        "shapeshifter"
+    ],
+    "homepage": "https://github.com/wearejust/shapeshifter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cees van Egmond",
+            "email": "cees.vanegmond@wearejust.com",
+            "homepage": "https://wearejust.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "illuminate/database": "5.4.*"
     },
-    {
-      "name": "John in 't Hout",
-      "email": "john.inthout@wearejust.com"
-    }
-  ],
-  "require": {
-    "php": ">=5.5.9",
-    "edvinaskrucas/notification": "5.1.*",
-    "barryvdh/laravel-elfinder": "0.3.x",
-    "cartalyst/sentinel": "2.0.*",
-    "laravelcollective/html": "5.1.*|5.2.*",
-    "bkwld/croppa": "~4.0"
-  },
-  "require-dev": {
-    "phpspec/phpspec": "~2.0",
-    "wearejust/quality-assurance-hooks": "~1"
-  },
-  "autoload": {
-    "files": [
-      "src/helpers.php"
-    ],
-    "psr-4": {
-      "Just\\Shapeshifter\\": "src"
-    }
-  },
-  "scripts": {
-    "pre-install-cmd": [
-      "Just\\Hooks::checkHooks"
-    ],
-    "pre-update-cmd": [
-      "Just\\Hooks::checkHooks"
-    ]
-  },
-  "config": {
-    "preferred-install": "dist",
-    "bin-dir": "bin"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "require-dev": {
+        "phpunit/phpunit": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Just\\Shapeshifter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Just\\Shapeshifter\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+  }
 }

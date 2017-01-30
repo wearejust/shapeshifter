@@ -1,1 +1,0 @@
-<div class="section section-main onetomany-relation-content" data-title="{{ $title }}" data-url="{{ $route }}" data-relation="{{ $function }}"></div>
