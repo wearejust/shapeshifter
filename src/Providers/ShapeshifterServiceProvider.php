@@ -11,10 +11,9 @@ class ShapeshifterServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        die();
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../config/skeleton.php' => config_path('shapeshifter.php'),
+                __DIR__.'/../../config/shapeshifter.php' => config_path('shapeshifter.php'),
             ], 'config');
 
             /*

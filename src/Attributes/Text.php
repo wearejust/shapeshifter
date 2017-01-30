@@ -2,9 +2,10 @@
 
 namespace Just\Shapeshifter\Attributes;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Just\Shapeshifter\Attributes\Handlers\TextHandler;
 
-class Text extends Attribute
+class Text extends Attribute implements Arrayable
 {
     /**
      * @var string
@@ -40,5 +41,17 @@ class Text extends Attribute
     public function getHandler()
     {
         return Handlers\TextHandler::class;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return array_merge(parent::toArray(), [
+            'type' => $this->getType()
+        ]);
     }
 }

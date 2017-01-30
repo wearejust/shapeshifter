@@ -60,4 +60,15 @@ abstract class Attribute
     {
         return $this->flags;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'name' => $this->getName(),
+            'flags' => $this->getFlags()
+        ];
+    }
 }
