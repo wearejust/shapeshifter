@@ -4,6 +4,7 @@ namespace Just\Shapeshifter\Attributes\Handlers;
 
 use Illuminate\Database\Eloquent\Model;
 use Just\Shapeshifter\Attributes\Attribute;
+use Just\Shapeshifter\View\AttributeView;
 
 abstract class Handler
 {

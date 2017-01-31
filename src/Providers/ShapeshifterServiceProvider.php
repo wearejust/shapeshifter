@@ -3,6 +3,7 @@
 namespace Just\Shapeshifter\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use TwigBridge;
 
 class ShapeshifterServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,9 @@ class ShapeshifterServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'shapeshifter');
+
+        // Register TWIG in the container
+        $this->app->register(TwigBridge\ServiceProvider::class);
+        $this->app->alias('Twig', TwigBridge\Facade\Twig::class);
     }
 }
