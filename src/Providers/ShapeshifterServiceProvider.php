@@ -25,6 +25,8 @@ class ShapeshifterServiceProvider extends ServiceProvider
             ], 'views');
             */
         }
+
+        require_once __DIR__ .  '/../Http/routes.php';
     }
 
     /**
