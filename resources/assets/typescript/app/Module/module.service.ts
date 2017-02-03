@@ -7,13 +7,13 @@ export class ModuleService {
     constructor(private _http: Http) {}
 
     getModules() : Observable<Module[]> {
-        let url = '/admin/modules/';
+        let url = 'http://boilerplate.dev/admin/modules/';
 
         return this._http.get(url).map(res => Module.fromJSONArray(res.json()));
     }
 
     getModule(module) : Observable<Module> {
-        let url = '/admin/modules/' + module;
+        let url = 'http://boilerplate.dev/admin/modules/' + module;
 
         return this._http.get(url).map(res => Module.fromJSON(res.json()));
     }
