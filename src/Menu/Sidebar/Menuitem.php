@@ -31,13 +31,13 @@ class Menuitem implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         return [
             'name' => $this->name,
-            'module' => $this->module,
+            'module' => $this->getModule(),
             'actions' => [
-                'index' => route($this->module . '.index')
+                'index' => route($this->getModule() . '.index')
             ]
         ];
     }
@@ -45,7 +45,7 @@ class Menuitem implements Arrayable
     /**
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -53,7 +53,7 @@ class Menuitem implements Arrayable
     /**
      * @return string
      */
-    public function getModule()
+    public function getModule() : string
     {
         return $this->module;
     }

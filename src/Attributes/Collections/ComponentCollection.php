@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Collection;
 use Just\Shapeshifter\Attributes\Attribute;
 
-class AttributeCollection extends Collection
+class ComponentCollection extends Collection
 {
     /**
      * @param Attribute $attribute

@@ -4,7 +4,7 @@ namespace Just\Shapeshifter\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Just\Shapeshifter\Attributes\Collections\AttributeCollection;
+use Just\Shapeshifter\Attributes\Collections\ComponentCollection;
 use Just\Shapeshifter\Attributes\Collections\Section;
 use Just\Shapeshifter\Attributes\Collections\Tab;
 use Just\Shapeshifter\Attributes\Text;
@@ -17,11 +17,11 @@ class Test2Controller extends AdminController
     protected $model = \App\Blog::class;
 
     /**
-     * @param \Just\Shapeshifter\Attributes\Collections\AttributeCollection $collection
+     * @param \Just\Shapeshifter\Attributes\Collections\ComponentCollection $collection
      *
-     * @return $this
+     * @return ComponentCollection
      */
-    protected function components(AttributeCollection $collection)
+    protected function components(ComponentCollection $collection) : ComponentCollection
     {
         $collection->tab('tabX', function(Tab $c) {
             $c->add(new Text('testcees'));

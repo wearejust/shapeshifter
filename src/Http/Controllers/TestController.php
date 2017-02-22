@@ -2,9 +2,9 @@
 
 namespace Just\Shapeshifter\Http\Controllers;
 
+use App\News;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Just\Shapeshifter\Attributes\Collections\AttributeCollection;
+use Just\Shapeshifter\Attributes\Collections\ComponentCollection;
 use Just\Shapeshifter\Attributes\Collections\Section;
 use Just\Shapeshifter\Attributes\Collections\Tab;
 use Just\Shapeshifter\Attributes\Text;
@@ -14,24 +14,24 @@ class TestController extends AdminController
     /**
      * @var string
      */
-    protected $model = \App\News::class;
+    protected $model = News::class;
 
     /**
-     * @param \Just\Shapeshifter\Attributes\Collections\AttributeCollection $collection
+     * @param ComponentCollection $collection
      *
-     * @return $this
+     * @return ComponentCollection
      */
-    protected function components(AttributeCollection $collection)
+    protected function components(ComponentCollection $collection) : ComponentCollection
     {
-        $collection->tab('tabX', function(Tab $c) {
-            $c->add(new Text('testcees'));
+        $collection->tab('First tab', function(Tab $c) {
+            $c->add(new Text('title'));
 
-            $c->section('sectionX', function(Section $c) {
-                $c->add(new Text('test'));
+            $c->section('Section A', function(Section $c) {
+                $c->add(new Text('intro'));
             });
         });
 
-        $collection->section('sectionX', function(Section $c) {
+        $collection->section('Section B', function(Section $c) {
             $c->add(new Text('test'));
         });
 
@@ -42,13 +42,13 @@ class TestController extends AdminController
             ->add(new Text('name4'));
     }
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Model $model
-     *
-     * @return mixed
-     */
-    protected function indexQuery(Model $model)
+
+    protected function columns() : array
     {
-        return $model->get();
+        return [
+            'title',
+            'test',
+            'unkown_component'
+        ];
     }
 }
