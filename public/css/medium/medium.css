@@ -13,6 +13,9 @@
     .blog-list-collection-item:nth-of-type(even){padding-right:0;}
 }
 
+.medium-editable { min-height: 5rem; padding: 1rem 0; }
+.medium-editable :first-child { margin-top: 0; }
+.medium-editable :last-child { margin-bottom: 0; }
 .medium-insert-buttons-show{color:#b8b8b8;position:absolute;margin-left:-3em;background:none;}
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-show:hover{background:none;}
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-show:hover{background:none;color:#909090;}
@@ -26,6 +29,7 @@
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons{left:-7px;}
 .medium-insert-images-toolbar.medium-editor-toolbar.medium-toolbar-arrow-under.medium-editor-toolbar-active .medium-toolbar-arrow-under:after{display:none;}
 .medium-toolbar-arrow-under:after { top: 100%; }
+.medium-editor-insert-plugin.medium-editor-placeholder:after { font-size: 1.75rem; line-height: 1.1; padding: 1rem 0; }
 
 .medium-insert-action { display: table-cell !important; vertical-align: middle; text-align: center;}
 .fa:before { display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }

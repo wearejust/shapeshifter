@@ -22,7 +22,6 @@ var Medium = function(element) {
     this.element.data('MediumEditor', this.editor);
 
     this.elements = $(this.editor.elements);
-    this.elements.find('p:empty').remove();
     this.elements.data('MediumEditor', this.editor);
 
     this.insertOptions = mediumInsertOptions();
@@ -34,13 +33,19 @@ var Medium = function(element) {
 
 Medium.prototype.blur = function(e) {
     this.elements.find('.medium-insert-buttons, .medium-insert-active').remove();
+    this.elements.find('p,h2,h3,ul,ol,a,strong,b,i,em').filter(':empty').remove();
+
     setTimeout(function() {
         this.editor.checkContentChanged(this.elements.get(0));
+
+        if (!this.elements.children().length) {
+            this.elements.addClass('medium-editor-placeholder');
+        }
 
         if (this.required) {
             Required.change(e);
         }
-    }.bind(this));
+    }.bind(this), 100);
 };
 
 Medium.prototype.validate = function() {
