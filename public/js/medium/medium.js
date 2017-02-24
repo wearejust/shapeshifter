@@ -14,9 +14,11 @@ $(function() {
 
 var Medium = function(element) {
     this.element = element;
-
+    this.required = this.element.hasClass('js-required');
+    
     this.editorOptions = mediumAttributeOptions();
     this.editor = new MediumEditor(this.element, this.editorOptions);
+    this.editor.subscribe('blur', this.blur.bind(this));
     this.element.data('MediumEditor', this.editor);
 
     this.elements = $(this.editor.elements);
@@ -26,6 +28,23 @@ var Medium = function(element) {
     this.insertOptions = mediumInsertOptions();
     this.insertOptions.editor = this.editor;
     this.element.mediumInsert(this.insertOptions);
+
+    this.blur();
+};
+
+Medium.prototype.blur = function(e) {
+    this.elements.find('.medium-insert-buttons, .medium-insert-active').remove();
+    setTimeout(function() {
+        this.editor.checkContentChanged(this.elements.get(0));
+
+        if (this.required) {
+            Required.change(e);
+        }
+    }.bind(this));
+};
+
+Medium.prototype.validate = function() {
+    return !!this.elements.text().length;
 };
 
 var MediumButton = MediumEditor.extensions.button.extend({

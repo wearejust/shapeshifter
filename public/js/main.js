@@ -1324,6 +1324,12 @@ Required.prototype.change = function(e) {
 					disabled = true;
 				}
 
+			} else if (item.hasClass('medium-editable')) {
+                var medium = item.data('Medium');
+                if (!medium || !medium.validate()) {
+                    disabled = true;
+                }
+
 			} else if (item.hasClass('ckeditor')) {
 				var cke = CKEDITOR.instances[item.attr('id')];
 				if (!cke || !cke.getData()) {

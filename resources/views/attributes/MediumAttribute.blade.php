@@ -9,7 +9,7 @@
     </span>
 </label>
 
-{!! Form::textarea($name, null, ['class' => 'medium-editable', 'id' => $name, 'data-placeholder' => trans('shapeshifter::editor.placeholder'), 'data-dir' => url(config('elfinder.dir')[0]).'/', 'data-elfinder-url' => route('elfinder.popup', 'editor')])  !!}
+{!! Form::textarea($name, null, ['class' => 'medium-editable'.($required?' js-required':''), 'id' => $name, 'data-placeholder' => trans('shapeshifter::editor.placeholder'), 'data-dir' => url(config('elfinder.dir')[0]).'/', 'data-elfinder-url' => route('elfinder.popup', 'editor')])  !!}
 <br>
 <br>
 @section('scripts')
