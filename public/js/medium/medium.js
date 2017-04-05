@@ -32,20 +32,27 @@ var Medium = function(element) {
 };
 
 Medium.prototype.blur = function(e) {
-    this.elements.find('.medium-insert-buttons, .medium-insert-active').remove();
-    this.elements.find('p,h2,h3,ul,ol,a,strong,b,i,em').filter(':empty').remove();
+    if (!e || !$(e.target).is('#colorbox')) {
+        this.elements.find('.medium-insert-buttons, .medium-insert-active, .medium-insert-embeds').remove();
+        this.elements.find('p,h2,h3,ul,ol,a,strong,b,i,em').each(function(index, item) {
+            item = $(item);
+            if (!$.trim(item.text()).length) {
+                item.remove();
+            }
+        }.bind(this));
 
-    setTimeout(function() {
-        this.editor.checkContentChanged(this.elements.get(0));
+        setTimeout(function() {
+            this.editor.checkContentChanged(this.elements.get(0));
 
-        if (!this.elements.children().length) {
-            this.elements.addClass('medium-editor-placeholder');
-        }
+            if (!this.elements.children().length) {
+                this.elements.addClass('medium-editor-placeholder');
+            }
 
-        if (this.required) {
-            Required.change(e);
-        }
-    }.bind(this), 100);
+            if (this.required) {
+                Required.change(e);
+            }
+        }.bind(this), 100);
+    }
 };
 
 Medium.prototype.validate = function() {

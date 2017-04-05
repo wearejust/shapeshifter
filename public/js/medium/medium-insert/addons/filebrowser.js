@@ -101,6 +101,7 @@
         window.processSelectedFile = this.processSelectedFile;
 
         this.$place = $(document).find('.medium-insert-active');
+        var editor = this.$place.closest('.medium-editable').data('MediumEditor');
         var element = '<figure contenteditable="false"><img class="js-medium-insert-image-placeholder" src="#" alt=""></figure>';
 
         this.core.hideButtons();
@@ -123,6 +124,7 @@
             height: '70%',
             onClosed: function() {
                 $(document).find('[src="#"]').remove();
+                editor.trigger('blur');
             }
         });
     };
