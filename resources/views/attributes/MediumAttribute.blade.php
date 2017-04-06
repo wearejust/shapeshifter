@@ -21,7 +21,6 @@
             function mediumAttributeOptions() {
                 return {
                     'buttonLabels': 'fontawesome',
-                    'disableExtraSpaces': true,
                     'extensions': {
                         'anchor': new Anchor({
 //                            'filebrowser': '/media/',
