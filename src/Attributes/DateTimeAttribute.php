@@ -42,7 +42,7 @@ class DateTimeAttribute extends DateAttribute implements iAttributeInterface
             $model->{$this->name} = null;
         } else {
             $date = new DateTime($this->value);
-            $model->{$this->name} = $date->format('Y-m-d H:i');
+            $model->{$this->name} = $date->format('Y-m-d H:i:s');
         }
     }
 }
