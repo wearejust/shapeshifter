@@ -17,7 +17,7 @@
         </label>
         <span class="form-field">
 
-            <p class="datepicker input-group" id="datepicker-{{ $name }}" data-wrap="true" data-clickOpens="false" data-enableTime="true">
+            <p class="datepicker input-group" id="datepicker-{{ $name }}" data-wrap="true" data-clickOpens="false" data-enableTime="true" data-defaultDate="{{ date('H:i:s') }}" data-defaultHour="{{ date('H') }}" data-defaultMinute="{{ date('m') }}">
 
                 <input placeholder="{{ date('d-m-Y H:i') }}"
                        value="{{ $model->{$name} }}"
