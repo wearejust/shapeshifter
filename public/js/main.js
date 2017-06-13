@@ -1053,7 +1053,7 @@ var SortableTable = function(options, table) {
 	}, options);
 
 	this.table = table;
-	this.element = this.table.closest('.content-body');
+	this.element = this.table.closest('.onetomany-relation-content, .content-body').first();
 	this.tbody = this.table.find('tbody');
 
 	this.options.itemsMaxRanged = this.options.itemsMax + 5;
