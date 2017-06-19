@@ -27,12 +27,19 @@ var Medium = function(element) {
     this.insertOptions = mediumInsertOptions();
     this.insertOptions.editor = this.editor;
     this.element.mediumInsert(this.insertOptions);
-
+    
+    this.keys = 0;
+    $window.on('keyup keydown', this.key.bind(this));
+    
     this.blur();
 };
 
+Medium.prototype.key = function(e) {
+    this.keys = Math.max(0, this.keys + (e.type == 'keydown' ? 1 : -1));
+};
+
 Medium.prototype.blur = function(e) {
-    if (!e || !$(e.target).is('#colorbox')) {
+    if (!this.keys && (!e || !$(e.target).is('#colorbox'))) {
         this.elements.find('.medium-insert-buttons, .medium-insert-active, .medium-insert-embeds').remove();
         this.elements.find('p,h2,h3,ul,ol,a,strong,b,i,em').each(function(index, item) {
             item = $(item);
