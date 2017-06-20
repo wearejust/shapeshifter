@@ -40,7 +40,13 @@ Medium.prototype.key = function(e) {
 
 Medium.prototype.blur = function(e) {
     if (!this.keys && (!e || !$(e.target).is('#colorbox'))) {
-        this.elements.find('.medium-insert-buttons, .medium-insert-active, .medium-insert-embeds').remove();
+        this.elements.find('.medium-insert-buttons, .medium-insert-active').remove();
+        this.elements.find('.medium-insert-embeds').each(function(index, item) {
+            item = $(item);
+            if (!item.contents().length) {
+                item.remove();
+            }
+        }.bind(this));
         this.elements.find('p,h2,h3,ul,ol,a,strong,b,i,em').each(function(index, item) {
             item = $(item);
             if (!$.trim(item.text()).length) {
