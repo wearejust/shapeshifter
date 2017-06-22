@@ -86,7 +86,8 @@
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-editor.min.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/extensions/anchor.js') }}"></script>
 {{--        <script src="{{ asset('packages/just/shapeshifter/js/medium/extensions/textexpander.js') }}"></script>--}}
-        <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/medium-editor-insert-plugin.min.js') }}"></script>
+{{--        <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/medium-editor-insert-plugin.min.js') }}"></script>--}}
+        <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/medium-editor-insert-plugin.fix.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium-insert/addons/filebrowser.js') }}"></script>
         <script src="{{ asset('packages/just/shapeshifter/js/medium/medium.js') }}"></script>
 
