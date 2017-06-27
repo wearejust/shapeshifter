@@ -1069,7 +1069,7 @@ var SortableTable = function(options, table) {
 	this.toggleButtonAmount = this.toggleButton.find('.toggle-button-amount');
 	this.toggleButtonMore = this.toggleButton.find('.toggle-button-more');
 	this.toggleButtonLess = this.toggleButton.find('.toggle-button-less');
-
+    this.itemsHidden = true;
 
 	$.fn.dataTableExt.oStdClasses.sRowEmpty = "table-cell";
 	$.fn.dataTableExt.oStdClasses.sSortDesc = 'table-header-sort-item-active-asc';
@@ -1108,7 +1108,8 @@ var SortableTable = function(options, table) {
 				"sPrevious": "Vorige"
 			},
 			"sSearchPlaceholder": 'Zoeken'
-		}
+		},
+        'fnDrawCallback': this.itemsCheck.bind(this)
 	});
 
 	this.items = this.tbody.children();
@@ -1174,27 +1175,12 @@ var SortableTable = function(options, table) {
 		});
 	}
 
-	this.itemsHide();
 
 	this.element.execute(this, function() {
 		this.wrap = this.element.find('.dataTables_wrapper');
 		this.wrap.css('position', 'relative');
+        this.itemsVisibility();
 	});
-}
-
-SortableTable.prototype.wrapLock = function(release) {
-	if (release) {
-		this.wrap.css({
-			'height': '',
-			'overflow': ''
-		});
-
-	} else {
-		this.wrap.css({
-			'height': (this.wrap.outerHeight() + parseFloat(this.table.css('margin-bottom'))) + 'px',
-			'overflow': 'hidden'
-		});
-	}
 }
 
 
@@ -1227,68 +1213,48 @@ SortableTable.prototype.update = function() {
 
 SortableTable.prototype.search = function(e) {
 	var value = $(e.currentTarget).val();
-	this.wrapLock();
-	this.tbody.children().show().execute(this, function() {
-		this.table.fnFilter(value);
-		this.toggleButton.hide();
-		this.toggleButtonMore.hide();
-		this.toggleButtonLess.hide();
 
-		if (this.tbody.children().length > this.options.itemsMaxRanged) {
-			this.itemsHide();
-		}
-		this.wrapLock(true);
-		if (this.options.sortable) {
-			this.sortHandles.toggle(!value.length);
-		}
-	});
+    this.table.fnFilter(value);
+
+    if (this.options.sortable) {
+        this.sortHandles.toggle(!value.length);
+    }
 }
 
 SortableTable.prototype.itemsToggle = function(e) {
-	if (this.toggleButtonMore.is(':visible')) {
-		this.itemsShow(e);
-	} else {
-		this.itemsHide(e);
-	}
+    this.itemsVisibility(e, true);
 }
 
-SortableTable.prototype.itemsHide = function(e) {
-	var items = this.tbody.children();
-	if (items.length > this.options.itemsMaxRanged) {
-		this.toggleButton.show();
-		this.toggleButtonMore.show();
-		this.toggleButtonLess.hide();
-
-		if (!e) {
-			this.toggleButtonAmount.text(items.length - this.options.itemsMax);
-			items.slice(this.options.itemsMax).hide();
-		} else {
-			var item = items.eq(this.options.itemsMax-1);
-			this.wrap.css('overflow', 'hidden').animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px'}, function() {
-				items.slice(this.options.itemsMax).hide();
-				this.wrapLock(true);
-			}.bind(this));
-		}
-	}
+SortableTable.prototype.itemsCheck = function() {
+    clearTimeout(this.itemsVisibilityTimeout);
+    this.itemsVisibilityTimeout = setTimeout(this.itemsVisibility.bind(this), 300);
 }
 
-SortableTable.prototype.itemsShow = function(e) {
-	var items = this.tbody.children();
-	if (items.length > this.options.itemsMaxRanged) {
-		this.wrapLock();
+SortableTable.prototype.itemsVisibility = function(e, toggle) {
+    var items = this.tbody.children();
+    if (items.length > this.options.itemsMaxRanged) {
+         var hide = this.itemsHidden;
+         if (toggle) hide = !hide;
+        this.itemsHidden = hide;
 
-		items.slice(this.options.itemsMax).show();
+        this.toggleButton.show();
+        this.toggleButtonAmount.text(items.length - this.options.itemsMax);
+        this.toggleButtonMore.toggle(hide);
+        this.toggleButtonLess.toggle(!hide);
 
-		this.toggleButton.show();
-		this.toggleButtonMore.hide();
-		this.toggleButtonLess.show();
+        var item = hide ? items.eq(this.options.itemsMax - 1) : items.last();
+        var height = (item.position().top + item.outerHeight()) + 'px';
+        this.wrap.css('overflow', 'hidden');
+        if (e) {
+            this.wrap.animate({'height': height});
+        } else {
+            this.wrap.css('height', height);
+        }
 
-		var item = items.last();
-		this.wrap.animate({'height': (item.position().top + item.outerHeight() + parseFloat(this.table.css('margin-bottom')))+'px'}, function() {
-			this.wrapLock(true);
-		}.bind(this));
-
-	}
+    } else {
+        this.toggleButton.hide();
+        this.wrap.css('height', '');
+    }
 }
 
 
