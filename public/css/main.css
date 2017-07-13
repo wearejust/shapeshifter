@@ -636,7 +636,7 @@ label.form-group:hover, .form-field-content:focus + .form-group-highlight, .sing
 
 .header, .header-top { display: none; }
 
-.header { background-color: #222; bottom: 0; right: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: fixed; top: 3em; }
+.header { background-color: #222; bottom: 0; right: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; position: fixed; top: 3em; height: calc(100% - 89px); }
 
 .header-top { background-color: #222; bottom: 0; right: 0; margin: 0; overflow: hidden; position: fixed; }
 
