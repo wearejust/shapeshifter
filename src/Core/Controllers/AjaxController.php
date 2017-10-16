@@ -71,7 +71,7 @@ class AjaxController extends Controller
         foreach ($this->request->get('order') as $new) {
             $new = (int) $new;
             foreach ($records as $rec) {
-                if ($new === $rec->id) {
+                if ($new == $rec->id) {
                     $rec->sortorder = $newOrder;
                     $rec->save();
 
