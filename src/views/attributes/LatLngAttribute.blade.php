@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
 <label class="form-group js-placeholder js-latlngattribute" for="{{$name}}">
     <span class="form-group-content">
         <span class="form-label">
