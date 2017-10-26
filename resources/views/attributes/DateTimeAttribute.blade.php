@@ -17,10 +17,14 @@
         </label>
         <span class="form-field">
 
-            <p class="datepicker input-group" id="datepicker-{{ $name }}" data-wrap="true" data-clickOpens="false" data-enableTime="true" data-defaultDate="{{ date('H:i:s') }}" data-defaultHour="{{ date('H') }}" data-defaultMinute="{{ date('m') }}">
-
-                <input placeholder="{{ date('d-m-Y H:i') }}"
-                       value="{{ $model->{$name} }}"
+            <p class="datepicker input-group" id="datepicker-{{ $name }}" data-wrap="true" data-clickOpens="false" data-enableTime="true">
+                <input value="
+                            @if ($model->id && $model->{$name})
+                               {{ date('Y-m-d H:i:s', strtotime($model->{$name})) }}
+                            @elseif ($model->id)
+                                {{ date('Y-m-d H:i:s') }}
+                            @endif
+                        "
                        name="{{ $name }}"
                        class="{{ ($required ? ' js-required':'') }}"
                        id="{{ $name }}"
