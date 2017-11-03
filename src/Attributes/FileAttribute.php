@@ -131,7 +131,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
 
         if ((bool) getimagesize($absPath)) {
             $src = Image::open($absPath)->resize(null, 100)->inline();
-            return "<img style='height:100px;' src='{$src}'>";
+            return "<img style='max-height:100px;' src='{$src}'>";
         }
 
         return Html::link($relPath, $model->{$this->name}, ['target' => '_blank']);
