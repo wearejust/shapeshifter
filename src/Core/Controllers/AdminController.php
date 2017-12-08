@@ -11,6 +11,7 @@ use Just\Shapeshifter\Exceptions;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
 use Notification;
+use Spatie\MediaLibrary\Exceptions\FileTooBig;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Event;
 
@@ -259,6 +260,12 @@ abstract class AdminController extends Controller
             }, $e->getErrors()->all());
 
             return $this->app['redirect']->back()->withInput();
+        } catch(FileTooBig $e) {
+            Notification::error('Afbeelding is te groot');
+            return $this->app['redirect']->back()->withInput();
+        } catch(\Exception $e) {
+            Notification::error($e->getMessage());
+            return $this->app['redirect']->back()->withInput();
         }
 
         Notification::success(__('form.stored'));
@@ -289,6 +296,12 @@ abstract class AdminController extends Controller
                 Notification::error($item);
             }, $e->getErrors()->all());
 
+            return $this->app['redirect']->back()->withInput();
+        } catch(FileTooBig $e) {
+            Notification::error('Afbeelding is te groot');
+            return $this->app['redirect']->back()->withInput();
+        } catch(\Exception $e) {
+            Notification::error($e->getMessage());
             return $this->app['redirect']->back()->withInput();
         }
 
