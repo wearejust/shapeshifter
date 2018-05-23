@@ -132,9 +132,11 @@ class FileAttribute extends Attribute implements iAttributeInterface
         }
         else if ($this->isImage())
         {
-            return Image::open($this->absoluteStorageDir . $this->value)->resize(500, null)->inline();
+            return asset(
+                Image::open($this->absoluteStorageDir . $this->value)->resize(500, null)->jpeg()
+            );
         }
-
+        
         if ($this->hasFlag('force'))
         {
             return $this->value;
