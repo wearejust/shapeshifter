@@ -18,7 +18,7 @@ document.documentElement.className=TOUCH?"js touch":"js";
 </script>
 <link href="/apple-touch-icon-precomposed.png" rel="image_src">
 <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
-<link href="/packages/just/shapeshifter/css/main.css" rel="stylesheet">
+{!! Html::style('/packages/just/shapeshifter/css/main.css') !!}
 {!! Html::style('/packages/just/shapeshifter/css/jquery-ui/jquery-ui-1.10.4.custom.css') !!}
 {!! Html::style('/packages/just/shapeshifter/js/jquery-tokeninput/styles/token-input-bootstrap.css') !!}
 {!! Html::style('/packages/just/shapeshifter/css/colorpicker/spectrum.css') !!}
