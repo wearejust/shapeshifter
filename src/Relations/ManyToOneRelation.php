@@ -117,7 +117,10 @@ class ManyToOneRelation extends OneToManyRelation
     {
         $descriptor = $this->destination->getDescriptor();
 
-        $values = $this->destination->getRepo()->listed($descriptor, 'id')->toArray();
+        $class = $this->destination->getModel();
+        $model = new $class;
+
+        $values = $this->destination->getRepo()->listed($descriptor, $model->getKeyName())->toArray();
         if (! $this->required) {
             $values = ['' => ''] + $values;
         }
