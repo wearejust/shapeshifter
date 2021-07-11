@@ -10,9 +10,7 @@ use Collective\Html\HtmlServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Krucas\Notification\Facades\Notification;
-use Krucas\Notification\Middleware\NotificationMiddleware;
-use Krucas\Notification\NotificationServiceProvider;
+use Laracasts\Flash\FlashServiceProvider;
 
 class ShapeshifterServiceProvider extends ServiceProvider
 {
@@ -53,8 +51,6 @@ class ShapeshifterServiceProvider extends ServiceProvider
             ],
             'public'
         );
-
-        $kernel->pushMiddleware(NotificationMiddleware::class);
     }
 
     /**
@@ -94,13 +90,12 @@ class ShapeshifterServiceProvider extends ServiceProvider
         AliasLoader::getInstance()->alias('Form', FormFacade::class);
         AliasLoader::getInstance()->alias('Html', HtmlFacade::class);
         AliasLoader::getInstance()->alias('Sentinel', Sentinel::class);
-        AliasLoader::getInstance()->alias('Notification', Notification::class);
     }
 
     private function registerServiceProviders()
     {
         $this->app->register(HtmlServiceProvider::class);
-        $this->app->register(NotificationServiceProvider::class);
+        $this->app->register(FlashServiceProvider::class);
         $this->app->register(ElfinderServiceProvider::class);
     }
 }

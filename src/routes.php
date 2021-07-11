@@ -22,10 +22,10 @@ View::composer(['shapeshifter::*'], Layout::class);
 |
 */
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
 
     Route::group(['before' => 'admin-auth'], function () {
-        Route::post('ajax/sortorderchange', getAction(AjaxController::class, 'sortorderChange'))->before('ajax');
-        Route::post('ajax/upload', getAction(AjaxController::class, 'upload'))->before('ajax');
+        Route::post('ajax/sortorderchange', getAction(AjaxController::class, 'sortorderChange'));
+        Route::post('ajax/upload', getAction(AjaxController::class, 'upload'));
     });
 });

@@ -3,6 +3,7 @@
 namespace Just\Shapeshifter\Attributes;
 
 use Input;
+use Illuminate\Support\Str;
 
 class SimpleFileAttribute extends FileAttribute implements iAttributeInterface
 {
@@ -21,7 +22,7 @@ class SimpleFileAttribute extends FileAttribute implements iAttributeInterface
             $extension = '.' . $file->getClientOriginalExtension();
 
             $filename = Input::file($this->name)->getClientOriginalName();
-            $filename = str_slug(str_replace($extension, '', $filename));
+            $filename = Str::slug(str_replace($extension, '', $filename));
 
             if (file_exists($this->absoluteStorageDir . $filename . $extension)) {
                 $new_name  = '';
@@ -29,7 +30,7 @@ class SimpleFileAttribute extends FileAttribute implements iAttributeInterface
                 $base_name = str_replace($extension, '', $filename);
                 while ($new_name == '') {
                     if (file_exists($this->absoluteStorageDir . $base_name . '_' . $teller . $extension)) {
-                        $teller ++;
+                        $teller++;
                     } else {
                         move_uploaded_file(Input::file($this->name)->getRealPath(), $this->absoluteStorageDir . $base_name . '_' . $teller . $extension);
                         if ($teller > 1) {

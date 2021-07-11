@@ -4,8 +4,9 @@ namespace Just\Shapeshifter\Services;
 
 use Cartalyst\Sentinel\Sentinel;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Pingpong\Modules\Contracts\RepositoryInterface as Module;
+use Nwidart\Modules\Contracts\RepositoryInterface as Module;
 
 class MenuService
 {
@@ -50,7 +51,7 @@ class MenuService
     {
         $menu = new Collection();
 
-        if (! $this->auth->getUser()) {
+        if (!$this->auth->getUser()) {
             return $menu;
         }
 
@@ -68,18 +69,18 @@ class MenuService
         }
 
         return $menu
-            ->filter(function($item) {
+            ->filter(function ($item) {
                 return $this->hasAccessToRoute($item['route']);
             })
-            ->map(function($item) {
-                $item['children'] = array_filter($item['children'], function($item) {
+            ->map(function ($item) {
+                $item['children'] = array_filter($item['children'], function ($item) {
                     return $this->hasAccessToRoute($item['route']);
                 });
 
                 return $item;
             })
-            ->filter(function($item) {
-               return $this->hasAccessToRoute('superuser') || (count($item['children']) === 0 && $item['route'] !== null);
+            ->filter(function ($item) {
+                return $this->hasAccessToRoute('superuser') || (count($item['children']) === 0 && $item['route'] !== null);
             });
     }
 
@@ -92,16 +93,16 @@ class MenuService
     {
         $itemActive = $this->app['router']->is($item['route']);
 
-        $children = array_get($item, 'children', []);
+        $children = Arr::get($item, 'children', []);
         $url      = count($children) ? '#' : $this->getFullRoute($item);
 
         $children = array_map(function ($menuItem) use (&$itemActive) {
             $url    = $this->getFullRoute($menuItem);
-            $name   = array_get($menuItem, 'name');
-            $route  = array_get($menuItem, 'route');
+            $name   = Arr::get($menuItem, 'name');
+            $route  = Arr::get($menuItem, 'route');
 
             $active = false;
-            if (! $itemActive && str_is($url . '*', '/' . $this->app['request']->path())) {
+            if (!$itemActive && str_is($url . '*', '/' . $this->app['request']->path())) {
                 $itemActive = true;
                 $active = true;
             }
@@ -126,7 +127,7 @@ class MenuService
      */
     private function getFullRoute($menuItem)
     {
-        $parameters = array_get($menuItem, 'parameters', []);
+        $parameters = Arr::get($menuItem, 'parameters', []);
         if (is_callable($parameters)) {
             $parameters = $parameters();
         }
@@ -141,6 +142,6 @@ class MenuService
      */
     private function hasAccessToRoute($route)
     {
-        return ! config('shapeshifter.menu_strict_auth_checking') || $route === null || $this->auth->getUser()->hasAnyAccess($route, 'superuser');
+        return !config('shapeshifter.menu_strict_auth_checking') || $route === null || $this->auth->getUser()->hasAnyAccess($route, 'superuser');
     }
 }

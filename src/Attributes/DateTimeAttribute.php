@@ -24,7 +24,7 @@ class DateTimeAttribute extends DateAttribute implements iAttributeInterface
             $date = new DateTime($model->{$this->name});
 
             return $date->format('Y-m-d H:i:s');
-        } catch (Exception $e) {
+        } catch (Exception) {
             return '';
         }
     }

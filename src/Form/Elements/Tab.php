@@ -3,6 +3,7 @@
 namespace Just\Shapeshifter\Form\Elements;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Just\Shapeshifter\Attributes\Attribute;
 
 class Tab
@@ -76,7 +77,7 @@ class Tab
      */
     public function getSlug()
     {
-        return str_slug($this->name);
+        return Str::slug($this->name);
     }
 
     /**

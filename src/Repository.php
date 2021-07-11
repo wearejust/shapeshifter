@@ -10,6 +10,7 @@ use Just\Shapeshifter\Attributes\ReadonlyAttribute;
 use Just\Shapeshifter\Core\Controllers\AdminController;
 use Just\Shapeshifter\Exceptions\ValidationException;
 use Just\Shapeshifter\Services\AttributeService;
+use Modules\Page\Entities\Page;
 
 class Repository
 {
@@ -42,9 +43,9 @@ class Repository
      * @param Model       $model
      * @param Application $app
      */
-    public function __construct(Model $model, Application $app)
+    public function __construct(Page $model, Application $app)
     {
-        $this->model     = $model;
+        $this->model = $model;
         $this->app       = $app;
     }
 
@@ -276,8 +277,8 @@ class Repository
 
         $records = $query->orderBy($orderBy[0], $orderBy[1]);
 
-        if($pagination) {
-           return $records->paginate(25);
+        if ($pagination) {
+            return $records->paginate(25);
         }
 
         return $records->get();
