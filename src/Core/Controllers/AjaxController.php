@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Krucas\Notification\Facades\Notification;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,7 +32,7 @@ class AjaxController extends Controller
      */
     protected function sortorderChange()
     {
-        if (! $model = $this->request->get('model')) {
+        if (!$model = $this->request->get('model')) {
             return new JsonResponse(['You have to specify an model']);
         }
 
@@ -100,7 +101,7 @@ class AjaxController extends Controller
         if ($input) {
             foreach ($input as $file) {
                 if ($file->isValid()) {
-                    $name       = str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+                    $name       = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
                     $extension  = $file->getClientOriginalExtension();
                     $path       = public_path() . $storageDir;
 

@@ -125,7 +125,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
             return $model->{$this->name};
         }
 
-        if (! is_file($absPath)) {
+        if (!is_file($absPath)) {
             return $model->{$this->name} ? __('form.file.doesntexist') : '';
         }
 
@@ -167,12 +167,12 @@ class FileAttribute extends Attribute implements iAttributeInterface
      */
     protected function checkDirectory()
     {
-        if (! is_dir($this->absoluteStorageDir)) {
+        if (!is_dir($this->absoluteStorageDir)) {
             throw new DirDoesNotExistException("Directory '{$this->absoluteStorageDir}' doesnt exists");
         }
 
-        if (! is_writable($this->absoluteStorageDir)) {
-            if (! @chmod($this->absoluteStorageDir, 0777)) {
+        if (!is_writable($this->absoluteStorageDir)) {
+            if (!@chmod($this->absoluteStorageDir, 0777)) {
                 throw new DirNotWritableException("Directory '{$this->absoluteStorageDir}' is not writable");
             }
         }
@@ -192,7 +192,7 @@ class FileAttribute extends Attribute implements iAttributeInterface
             $extension = '.' . $file->getClientOriginalExtension();
 
             $filename = Input::file($this->name)->getClientOriginalName();
-            $filename = str_slug(str_replace($extension, '', $filename));
+            $filename = Str::slug(str_replace($extension, '', $filename));
 
             Input::file($this->name)->move($this->absoluteStorageDir, ($filename . $extension));
 

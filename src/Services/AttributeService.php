@@ -2,6 +2,7 @@
 
 namespace Just\Shapeshifter\Services;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Just\Shapeshifter\Attributes\Attribute;
 use Just\Shapeshifter\Relations\OneToManyRelation;
@@ -29,10 +30,10 @@ class AttributeService
      */
     public function mutateRecords($records)
     {
-        $_ignored = ['id', 'sortorder', 'updated_at','created_at'];
+        $_ignored = ['id', 'sortorder', 'updated_at', 'created_at'];
 
         foreach ($records as $model) {
-            $toLoop = array_except($model->toArray(), $_ignored);
+            $toLoop = Arr::except($model->toArray(), $_ignored);
 
             foreach ($toLoop as $k => $r) {
                 if ($this->attributes->has($k)) {

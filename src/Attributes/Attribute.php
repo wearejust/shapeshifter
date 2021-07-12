@@ -3,6 +3,7 @@
 namespace Just\Shapeshifter\Attributes;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use ReflectionClass;
 use View;
 
@@ -30,7 +31,7 @@ abstract class Attribute
     public $flags;
 
     /**
-     * The system uses tabs in forms. You can specify 
+     * The system uses tabs in forms. You can specify
      * the tab within the Controller
      *
      * @var mixed
@@ -45,7 +46,7 @@ abstract class Attribute
     public $standardtab = '_default';
 
     /**
-     * You can set various helptexts to help the user 
+     * You can set various helptexts to help the user
      * fill inl the right data
      *
      * @var mixed
@@ -105,8 +106,8 @@ abstract class Attribute
     {
         $data = get_object_vars($this);
 
-        $data = array_add($data, 'label', $this->getLabel($this->name));
-        $data = array_add($data, 'model', $model);
+        $data = Arr::add($data, 'label', $this->getLabel($this->name));
+        $data = Arr::add($data, 'model', $model);
 
         $attribute = (new ReflectionClass($this));
 

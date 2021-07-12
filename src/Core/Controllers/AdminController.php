@@ -10,7 +10,6 @@ use Just\Shapeshifter\Attributes\MediumAttribute;
 use Just\Shapeshifter\Exceptions;
 use Just\Shapeshifter\Form\Form;
 use Just\Shapeshifter\Repository;
-use Notification;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AdminController extends Controller
@@ -147,7 +146,6 @@ abstract class AdminController extends Controller
     public function __construct(Application $app)
     {
         $this->app = $app;
-
         $this->checkRequirements();
 
         $this->repo = $this->app->make(Repository::class, [new $this->model(), $app]);
@@ -159,7 +157,7 @@ abstract class AdminController extends Controller
      */
     public function initAttributes()
     {
-        $this->formModifier = $this->app->make(Form::class, [$this->mode]);
+        $this->formModifier = $this->app->makeWith(Form::class, ['mode' => $this->mode]);
 
         $this->beforeInit($this->formModifier);
         $this->configureFields($this->formModifier);
@@ -185,10 +183,10 @@ abstract class AdminController extends Controller
 
         $this->initAttributes();
 
-        if($query = request('search')) {
-            array_push($this->filter, $this->getDescriptor() . " LIKE '%" . $query."%'");
+        if ($query = request('search')) {
+            array_push($this->filter, $this->getDescriptor() . " LIKE '%" . $query . "%'");
         }
-        
+
         $records = $this->repo->all($this->orderby, $this->filter, $this->getParentInfo(), $this->paginate);
 
         if (!count($records) && $this->app['request']->ajax() && in_array('create', $this->disabledActions)) {
@@ -254,13 +252,13 @@ abstract class AdminController extends Controller
             $this->data['id'] = $this->repo->save($this, $this->getParentInfo());
         } catch (Exceptions\ValidationException $e) {
             array_map(function ($item) {
-                Notification::error($item);
+                flash($item)->error();
             }, $e->getErrors()->all());
 
             return $this->app['redirect']->back()->withInput();
         }
 
-        Notification::success(__('form.stored'));
+        flash(__('form.stored'))->success();
 
         return $this->redirectAfterStore($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
     }
@@ -283,13 +281,13 @@ abstract class AdminController extends Controller
             $this->data['id'] = $this->repo->save($this);
         } catch (Exceptions\ValidationException $e) {
             array_map(function ($item) {
-                Notification::error($item);
+                flash($item)->error();
             }, $e->getErrors()->all());
 
             return $this->app['redirect']->back()->withInput();
         }
 
-        Notification::success(__('form.updated'));
+        flash(__('form.updated'))->success();
 
         return $this->redirectAfterUpdate($this->getRedirectRoute(), $this->data['ids'], $this->data['id']);
     }
@@ -299,6 +297,8 @@ abstract class AdminController extends Controller
      */
     public function destroy()
     {
+        var_dump(123);
+        exit;
         $this->data['ids'] = func_get_args();
 
         $this->mode  = 'destroy';
@@ -309,7 +309,7 @@ abstract class AdminController extends Controller
         $this->model = $this->beforeDestroy($this->model);
 
         if ($this->repo->delete($this->model)) {
-            Notification::success(__('form.removed'));
+            flash(__('form.removed'))->success();
         }
 
         return $this->redirectAfterDestroy($this->getRedirectRoute(), $this->data['ids']);

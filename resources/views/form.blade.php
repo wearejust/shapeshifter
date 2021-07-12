@@ -12,17 +12,9 @@
 
 <div class="section">
 
-    @if ( Notification::get('error')->first())
-    <div class="messages">
-        <div class="alert alert-error">
-            <ul class="section-start section-end">
-                @foreach (Notification::get('error') as $error)
-                <li class="section">{{ $error->getMessage() }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-    @endif
+
+
+    @include('flash::message')
 
     @if ($form->getTabs()->count())
     <ul class="section section-sub section-end tab-list content-alt group">
@@ -36,40 +28,41 @@
 
     <div class="section section-start section-main">
         {!! Form::model($model, array('class' => 'section-start', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data', 'method' => $mode == 'edit' ? 'PUT' : "POST", 'url' => route($routes[$mode == 'edit' ? 'update' : 'store'], array_merge($ids,array($model->id))))) !!}
-            <div class="section">
-                <fieldset class="section section-sub">
-                    <legend class="accessibility">{{ $title }}</legend>
-                    <div class="section">
-                        @foreach ($form->getTabs() as  $tab)
-                            <div class="tab-pane" id="{{ $tab->getSlug() }}">
-                                @foreach ($tab->getSections() as $section)
-                                    @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
-                                @endforeach
-                                @include('shapeshifter::attribute', array('attributes' => $tab->getAttributes(), 'model' => $model))
-                            </div>
+        <div class="section">
+            <fieldset class="section section-sub">
+                <legend class="accessibility">{{ $title }}</legend>
+                <div class="section">
+                    @foreach ($form->getTabs() as $tab)
+                    <div class="tab-pane" id="{{ $tab->getSlug() }}">
+                        @foreach ($tab->getSections() as $section)
+                        @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
                         @endforeach
-
-                        @foreach($form->getSections() as $section)
-                            @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
-                        @endforeach
-
-                        @include('shapeshifter::attribute', array('attributes' => $form->getAttributes(), 'model' => $model))
+                        @include('shapeshifter::attribute', array('attributes' => $tab->getAttributes(), 'model' => $model))
                     </div>
-                </fieldset>
-                @yield('extra')
-            </div>
-            <div class="footer controls">
-                <div class="controls-content">
-                    <div class="content container">
-                        <ul class="control-list list">
-                            <li class="control-item" style="position: absolute; left: 0;">
-                                <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
+                    @endforeach
+
+                    @foreach($form->getSections() as $section)
+                    @include('shapeshifter::section', array('attributes' => $section->getAttributes()))
+                    @endforeach
+
+                    @include('shapeshifter::attribute', array('attributes' => $form->getAttributes(), 'model' => $model))
+                </div>
+            </fieldset>
+            @yield('extra')
+        </div>
+        <div class="footer controls">
+            <div class="controls-content">
+                <div class="content container">
+                    <ul class="control-list list">
+                        <li class="control-item" style="position: absolute; left: 0;">
+                            <button class="control-item-button btn btn-save js-required-target" type="submit">{{ __('form.save') }}</button>
                             <!--</li>-->
-                            {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a></li>--}}
-                        </ul>
-                    </div>
+                            {{--<li class="control-item"><a class="btn btn-cancel" href="{{ $cancel }}">{{__('form.cancel')}}</a>
+                        </li>--}}
+                    </ul>
                 </div>
             </div>
+        </div>
         {!! Form::close() !!}
 
         @if ($mode == 'edit' && $currentUser->can('delete') && ! in_array($model->id, $disableDeleting))
@@ -77,10 +70,10 @@
             <div class="controls-content" style="padding: 0;">
                 <div class="content container">
                     <div class="js-remove-wrapper" style="bottom: 0; position: absolute; right: 0; z-index: 1000;">
-                        {!! Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids)))  !!}
-                            <div class="controls-content">
-                                <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
-                            </div>
+                        {!! Form::model($model, array('method' => 'DELETE', 'url' => route($routes['destroy'], $ids))) !!}
+                        <div class="controls-content">
+                            <button class="control-item-button btn btn-remove confirm-delete-dialog" type="submit">{{__('form.remove') }}</button>
+                        </div>
                         {!! Form::close() !!}
                         <div class="dialog-confirm" style="display: none;">
                             <p>{{ __('dialog.remove') }}</p>
@@ -92,10 +85,10 @@
         @endif
     </div>
 
-    @foreach ($form->getTabs() as  $tab)
-        <div id="{{ $tab->getSlug() }}-extra">
-            @include('shapeshifter::relation', array('attributes' => $tab->getAttributes()))
-        </div>
+    @foreach ($form->getTabs() as $tab)
+    <div id="{{ $tab->getSlug() }}-extra">
+        @include('shapeshifter::relation', array('attributes' => $tab->getAttributes()))
+    </div>
     @endforeach
 
     @include('shapeshifter::relation', array('attributes' => $form->getAttributes()))
