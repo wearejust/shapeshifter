@@ -148,7 +148,7 @@ abstract class AdminController extends Controller
         $this->app = $app;
         $this->checkRequirements();
 
-        $this->repo = $this->app->make(Repository::class, [new $this->model(), $app]);
+        $this->repo = new Repository(new $this->model, $app);
         $this->repo->setOrderby($this->orderby);
     }
 
