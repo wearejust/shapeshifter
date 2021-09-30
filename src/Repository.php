@@ -43,7 +43,7 @@ class Repository
      * @param Model       $model
      * @param Application $app
      */
-    public function __construct(Page $model, Application $app)
+    public function __construct($model, Application $app)
     {
         $this->model = $model;
         $this->app       = $app;
